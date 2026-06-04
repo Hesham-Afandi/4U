@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📚 Educational Platform - Curriculum Library</title>
+    <title>📚 المنصة التعليمية - مكتبة المناهج</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'Cairo', sans-serif; }
+        .en-content { font-family: 'Inter', sans-serif; direction: ltr; text-align: left; }
         .gradient-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
         .gradient-secondary { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
         .gradient-success { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
@@ -20,8 +21,9 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .formula { font-family: 'Times New Roman', serif; font-style: italic; direction: ltr; display: inline-block; }
         table.comparison { width: 100%; border-collapse: collapse; margin: 1rem 0; }
-        table.comparison th, table.comparison td { border: 1px solid #e5e7eb; padding: 0.75rem; text-align: left; }
+        table.comparison th, table.comparison td { border: 1px solid #e5e7eb; padding: 0.75rem; }
         table.comparison th { background: #f3f4f6; font-weight: bold; }
+        .en-content table.comparison th, .en-content table.comparison td { text-align: left; }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -32,13 +34,13 @@
         <div class="flex items-center gap-3">
             <span class="text-3xl">📚</span>
             <div>
-                <h1 class="font-bold text-lg">Educational Platform</h1>
-                <p class="text-xs opacity-80">Complete Curriculum • Interactive • Professional</p>
+                <h1 class="font-bold text-lg">المنصة التعليمية</h1>
+                <p class="text-xs opacity-80">منهج متكامل • تفاعلي • احترافي</p>
             </div>
         </div>
         <div class="flex items-center gap-4 text-sm">
-            <span class="hidden md:block">Welcome 👋</span>
-            <button onclick="showHome()" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition">🏠 Home</button>
+            <span class="hidden md:block">مرحباً بك 👋</span>
+            <button onclick="showHome()" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition">🏠 الرئيسية</button>
         </div>
     </div>
 </div>
@@ -46,7 +48,7 @@
 <!-- Breadcrumbs -->
 <div id="breadcrumbs" class="max-w-7xl mx-auto px-6 py-4 hidden">
     <div class="flex items-center gap-2 text-sm text-gray-600 flex-wrap">
-        <button onclick="showHome()" class="hover:text-indigo-600">🏠 Home</button>
+        <button onclick="showHome()" class="hover:text-indigo-600">🏠 الرئيسية</button>
         <span id="bc-term-sep" class="hidden">›</span>
         <button id="bc-term-btn" class="hidden hover:text-indigo-600"></button>
         <span id="bc-stream-sep" class="hidden">›</span>
@@ -71,8 +73,8 @@
 <footer class="bg-gray-900 text-white py-8 mt-16">
     <div class="max-w-7xl mx-auto px-6 text-center">
         <p class="text-2xl mb-2">📚✨</p>
-        <p class="font-bold">Complete Educational Platform</p>
-        <p class="text-sm opacity-70 mt-1">All Rights Reserved © 2026</p>
+        <p class="font-bold">المنصة التعليمية المتكاملة</p>
+        <p class="text-sm opacity-70 mt-1">جميع الحقوق محفوظة © 2026</p>
     </div>
 </footer>
 
@@ -80,33 +82,34 @@
 // ==================== DATABASE ====================
 const DB = {
     terms: [
-        { id: 1, name: 'Term 1', icon: '📘' },
-        { id: 2, name: 'Term 2', icon: '📗' },
-        { id: 3, name: 'Term 3', icon: '📕' }
+        { id: 1, name: 'الترم الأول', icon: '📘' },
+        { id: 2, name: 'الترم الثاني', icon: '📗' },
+        { id: 3, name: 'الترم الثالث', icon: '📕' }
     ],
     streams: [
-        { id: 'advanced', name: 'Advanced', icon: '🚀', desc: 'Advanced and intensive curriculum' },
-        { id: 'general', name: 'General', icon: '📚', desc: 'Basic and comprehensive curriculum' }
+        { id: 'advanced', name: 'متقدم', icon: '🚀', desc: 'منهج متقدم ومكثف' },
+        { id: 'general', name: 'عام', icon: '📚', desc: 'منهج أساسي وشامل' }
     ],
     programs: [
-        { id: 'inspire', name: 'INSPIRE', icon: '🌟', desc: 'Inspiration and Excellence Program' },
-        { id: 'bridge', name: 'BRIDGE', icon: '🌉', desc: 'Preparatory Bridge Program' }
+        { id: 'inspire', name: 'INSPIRE', icon: '🌟', desc: 'برنامج الإلهام والتميز - المحتوى باللغة الإنجليزية', isEnglish: true },
+        { id: 'bridge', name: 'BRIDGE', icon: '🌉', desc: 'برنامج الجسر التأهيلي', isEnglish: false }
     ],
     grades: [
-        { id: 9, name: 'Grade 9', icon: '🎒' },
-        { id: 10, name: 'Grade 10', icon: '📐' },
-        { id: 11, name: 'Grade 11', icon: '⚡' },
-        { id: 12, name: 'Grade 12', icon: '🎓' }
+        { id: 9, name: 'الصف التاسع', icon: '🎒' },
+        { id: 10, name: 'الصف العاشر', icon: '📐' },
+        { id: 11, name: 'الصف الحادي عشر', icon: '⚡' },
+        { id: 12, name: 'الصف الثاني عشر', icon: '🎓' }
     ],
     subjects: [
-        { id: 'physics', name: 'Physics', icon: '⚛️' },
-        { id: 'math', name: 'Mathematics', icon: '📐' },
-        { id: 'chemistry', name: 'Chemistry', icon: '🧪' },
-        { id: 'biology', name: 'Biology', icon: '🧬' }
+        { id: 'physics', name: 'الفيزياء', icon: '⚛️' },
+        { id: 'math', name: 'الرياضيات', icon: '📐' },
+        { id: 'chemistry', name: 'الكيمياء', icon: '🧪' },
+        { id: 'biology', name: 'الأحياء', icon: '🧬' }
     ],
     
     curriculum: {
         'physics-12-inspire-3': {
+            isEnglish: true,
             units: [
                 {
                     id: 1,
@@ -143,7 +146,7 @@ const DB = {
                         },
                         {
                             id: 2,
-                            title: 'Lesson 2: Planck\'s Solution - Energy is Quantized',
+                            title: "Lesson 2: Planck's Solution - Energy is Quantized",
                             icon: '⚛️',
                             duration: '60 minutes',
                             lessonUrl: 'https://hesham-afandi.github.io/Particle-model-of-Wave/',
@@ -154,10 +157,10 @@ const DB = {
                                 intro: 'To solve this anomaly, Max Planck proposed a radical solution: vibrating atoms cannot emit energy continuously. Energy only exists in specific, indivisible bundles.',
                                 sections: [
                                     { title: 'The Fundamental Equation', type: 'formula', content: 'E = nhf' },
-                                    { title: 'Planck\'s Constant', type: 'text', content: 'h = 6.63 × 10⁻³⁴ J·Hz⁻¹' },
+                                    { title: "Planck's Constant", type: 'text', content: 'h = 6.63 × 10⁻³⁴ J·Hz⁻¹' },
                                     { 
-                                        title: 'Comparison: Classical vs Planck', type: 'table',
-                                        headers: ['Classical Theory', 'Planck\'s Theory'],
+                                        title: "Comparison: Classical vs Planck", type: 'table',
+                                        headers: ['Classical Theory', "Planck's Theory"],
                                         rows: [
                                             ['Energy is continuous', 'Energy is quantized (packets)'],
                                             ['Fractional values allowed', 'Only integer values (n = 1, 2, 3...)'],
@@ -195,7 +198,7 @@ const DB = {
                         },
                         {
                             id: 4,
-                            title: 'Lesson 4: Einstein\'s Solution - Light is a Particle',
+                            title: "Lesson 4: Einstein's Solution - Light is a Particle",
                             icon: '🔆',
                             duration: '65 minutes',
                             lessonUrl: 'https://hesham-afandi.github.io/Particle-model-of-Wave/',
@@ -203,10 +206,10 @@ const DB = {
                             examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
                             examTitle: '📝 Take the Quiz',
                             content: {
-                                intro: 'In 1905, Albert Einstein proposed that Planck\'s quantized energy wasn\'t just a mathematical trick for atoms. Light itself travels in discrete, massless bundles called photons.',
+                                intro: "In 1905, Albert Einstein proposed that Planck's quantized energy wasn't just a mathematical trick for atoms. Light itself travels in discrete, massless bundles called photons.",
                                 sections: [
                                     { title: 'Key Concepts', type: 'bullets', content: ['One-to-one interaction: One photon interacts with exactly one electron', 'Energy E = hf is transferred all at once, instantly', 'No energy pooling: Electrons cannot "save up" from multiple weak photons', 'If a single photon lacks sufficient energy, the electron remains trapped'] },
-                                    { title: 'Photoelectric Decision Gates', type: 'bullets', content: ['Energy check: Is f ≥ f₀? (Does frequency exceed the metal\'s threshold?)', 'YES → Electron breaks free! (Kinetic energy = hf - hf₀)', 'NO → Photon energy absorbed as heat only, electron remains bound'] }
+                                    { title: 'Photoelectric Decision Gates', type: 'bullets', content: ["Energy check: Is f ≥ f₀? (Does frequency exceed the metal's threshold?)", 'YES → Electron breaks free! (Kinetic energy = hf - hf₀)', 'NO → Photon energy absorbed as heat only, electron remains bound'] }
                                 ]
                             }
                         },
@@ -224,7 +227,7 @@ const DB = {
                                 sections: [
                                     { title: 'The Fundamental Equation', type: 'formula', content: 'KE_max = hf - hf₀' },
                                     { title: 'Components', type: 'bullets', content: ['KE_max: Maximum kinetic energy of the electron', 'hf: Incident energy (depends entirely on frequency/color of light)', 'hf₀ = W: Work function (minimum energy to free the electron)', 'Work function is a fixed value unique to each metal'] },
-                                    { title: 'Graph Properties (KE vs f)', type: 'bullets', content: ['Parallel lines = identical slope for all metals', 'Slope = Planck\'s constant h (universal law of nature)', 'X-intercept = threshold frequency f₀', 'Equation: KE = hf - W in the form y = mx + b'] }
+                                    { title: 'Graph Properties (KE vs f)', type: 'bullets', content: ['Parallel lines = identical slope for all metals', "Slope = Planck's constant h (universal law of nature)", 'X-intercept = threshold frequency f₀', 'Equation: KE = hf - W in the form y = mx + b'] }
                                 ]
                             }
                         },
@@ -242,7 +245,7 @@ const DB = {
                                 sections: [
                                     { title: 'Basic Conversion', type: 'formula', content: '1 eV = 1.602 × 10⁻¹⁹ J' },
                                     { title: 'The Magic Shortcut Formula', type: 'formula', content: 'E (eV) = 1240 / λ (nm)' },
-                                    { title: 'How the Shortcut Works', type: 'text', content: 'Since h (Planck\'s constant) and c (speed of light) are both constants, they can be combined into one useful number: hc = 1240 eV·nm. If you know the wavelength λ in nanometers, simply divide 1240 by it to instantly find the photon\'s energy in eV!' }
+                                    { title: 'How the Shortcut Works', type: 'text', content: "Since h (Planck's constant) and c (speed of light) are both constants, they can be combined into one useful number: hc = 1240 eV·nm. If you know the wavelength λ in nanometers, simply divide 1240 by it to instantly find the photon's energy in eV!" }
                                 ]
                             }
                         },
@@ -256,9 +259,9 @@ const DB = {
                             examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
                             examTitle: '📝 Take the Quiz',
                             content: {
-                                intro: 'If light is a physical particle, it must have momentum. In 1922, Arthur Compton proved that X-ray photons can physically crash into electrons, transferring both energy and momentum.',
+                                intro: "If light is a physical particle, it must have momentum. In 1922, Arthur Compton proved that X-ray photons can physically crash into electrons, transferring both energy and momentum.",
                                 sections: [
-                                    { title: 'Compton\'s Discovery', type: 'text', content: 'The scattered photon has a noticeably longer wavelength (λ\') than when it arrived. Since wavelength is inversely proportional to energy, this shift acts as irrefutable proof that the photon lost energy to the electron during the collision.' },
+                                    { title: "Compton's Discovery", type: 'text', content: "The scattered photon has a noticeably longer wavelength (λ') than when it arrived. Since wavelength is inversely proportional to energy, this shift acts as irrefutable proof that the photon lost energy to the electron during the collision." },
                                     { title: 'Billiard Balls at the Atomic Scale', type: 'text', content: 'Compton discovered that photon-electron collisions obey the exact same laws of conservation of momentum as elastic collisions in the macro world.' },
                                     { title: 'Momentum Without Mass', type: 'bullets', content: ['Classical physics: p = mv (momentum = mass × velocity)', 'Photon is massless, but has momentum stored in its wavelength', 'Equation: p = h/λ', 'Short wavelength = high momentum (X-rays)', 'Long wavelength = low momentum (visible light)'] },
                                     { title: 'Limits of Observation', type: 'text', content: 'Because h is incredibly small, a measurable shift in momentum is only noticeable with extremely short electromagnetic waves, like X-rays (wavelengths less than 10⁻² nm).' }
@@ -299,22 +302,24 @@ const DB = {
             ]
         },
         'physics-12-bridge-3': {
+            isEnglish: false,
             units: [
                 {
                     id: 1,
-                    name: 'Unit 1: Basic Mechanics',
+                    name: 'الوحدة الأولى: الميكانيكا الأساسية',
                     icon: '⚙️',
                     color: 'from-blue-500 to-cyan-600',
-                    description: 'Review and foundation in mechanics',
+                    description: 'مراجعة وتأسيس في الميكانيكا',
                     lessons: [
-                        { id: 1, title: 'Lesson 1: Motion in a Straight Line', icon: '🏃', duration: '50 minutes', lessonUrl: 'https://hesham-afandi.github.io/Particle-model-of-Wave/', lessonTitle: '📖 Lesson Explanation', examUrl: 'https://hesham-afandi.github.io/12Adv-Bridge-Phy-En-T3/', examTitle: '📝 Take the Quiz' }
+                        { id: 1, title: 'الدرس الأول: الحركة في خط مستقيم', icon: '🏃', duration: '50 دقيقة', lessonUrl: '#', lessonTitle: '📖 شرح الدرس', examUrl: '#', examTitle: '📝 ابدأ الاختبار' }
                     ]
                 }
             ]
         },
         'physics-12-advanced-3': {
+            isEnglish: false,
             units: [
-                { id: 1, name: 'Unit 1: General Advanced Content', icon: '📘', color: 'from-indigo-500 to-blue-600', lessons: [{ id: 1, title: 'Lesson 1', icon: '📖', duration: '45 minutes', lessonUrl: 'https://hesham-afandi.github.io/Particle-model-of-Wave/', lessonTitle: '📖 Lesson Explanation', examUrl: '#', examTitle: '📝 Take the Quiz' }] }
+                { id: 1, name: 'الوحدة الأولى: محتوى عام للمتقدم', icon: '📘', color: 'from-indigo-500 to-blue-600', lessons: [{ id: 1, title: 'الدرس الأول', icon: '📖', duration: '45 دقيقة', lessonUrl: '#', lessonTitle: '📖 شرح الدرس', examUrl: '#', examTitle: '📝 ابدأ الاختبار' }] }
             ]
         }
     }
@@ -332,6 +337,10 @@ function getCurriculumKey() {
 function getSubjectKey(subjectId) {
     const key = state.stream.id === 'advanced' ? (state.program ? state.program.id : 'advanced') : 'general';
     return `${subjectId}-${state.grade.id}-${key}-${state.term.id}`;
+}
+
+function isCurrentEnglish() {
+    return state.program && state.program.isEnglish;
 }
 
 // ==================== ROUTER ====================
@@ -408,7 +417,7 @@ function openExam() {
     if (state.lesson && state.lesson.examUrl && state.lesson.examUrl !== '#') {
         window.open(state.lesson.examUrl, '_blank');
     } else {
-        alert('Quiz is under preparation! 🚧');
+        alert('الاختبار قيد التحضير! 🚧');
     }
 }
 
@@ -416,7 +425,7 @@ function openLesson() {
     if (state.lesson && state.lesson.lessonUrl && state.lesson.lessonUrl !== '#') {
         window.open(state.lesson.lessonUrl, '_blank');
     } else {
-        alert('Lesson explanation is under preparation! 🚧');
+        alert('شرح الدرس قيد التحضير! 🚧');
     }
 }
 
@@ -449,26 +458,26 @@ function updateBreadcrumbs() {
 function renderHome() {
     document.getElementById('app').innerHTML = `
         <div class="gradient-primary rounded-3xl p-8 md:p-12 text-white mb-8 fade-in">
-            <div class="text-center md:text-left">
-                <h1 class="text-3xl md:text-5xl font-bold mb-3">🎓 Welcome to Your Educational Platform</h1>
-                <p class="text-lg opacity-90 mb-4">Interactive learning journey from Grade 9 to Grade 12</p>
+            <div class="text-center md:text-right">
+                <h1 class="text-3xl md:text-5xl font-bold mb-3">🎓 أهلاً بك في منصتك التعليمية</h1>
+                <p class="text-lg opacity-90 mb-4">رحلة تعلم تفاعلية من الصف التاسع للثاني عشر</p>
                 <div class="flex flex-wrap gap-3 justify-center md:justify-start">
-                    <span class="bg-white/20 px-4 py-2 rounded-full text-sm">✅ 3 Academic Terms</span>
-                    <span class="bg-white/20 px-4 py-2 rounded-full text-sm">📚 4 Science Subjects</span>
+                    <span class="bg-white/20 px-4 py-2 rounded-full text-sm">✅ 3 ترمات دراسية</span>
+                    <span class="bg-white/20 px-4 py-2 rounded-full text-sm">📚 4 مواد علمية</span>
                     <span class="bg-white/20 px-4 py-2 rounded-full text-sm">🎯 INSPIRE & BRIDGE</span>
                 </div>
             </div>
         </div>
-        <h2 class="text-2xl font-bold mb-4 text-gray-800">📅 Select Academic Term</h2>
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">📅 اختر الترم الدراسي</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5 fade-in">
             ${DB.terms.map(t => `
-                <button onclick="selectTerm(${t.id})" class="card-hover bg-white rounded-2xl p-6 shadow-md text-left border-2 border-transparent hover:border-indigo-500">
+                <button onclick="selectTerm(${t.id})" class="card-hover bg-white rounded-2xl p-6 shadow-md text-right border-2 border-transparent hover:border-indigo-500">
                     <div class="text-5xl mb-3">${t.icon}</div>
                     <h3 class="font-bold text-xl mb-1">${t.name}</h3>
-                    <p class="text-sm text-gray-500 mb-3">Click to browse content</p>
+                    <p class="text-sm text-gray-500 mb-3">اضغط لاستعراض المحتوى</p>
                     <div class="flex items-center justify-between">
-                        <span class="text-indigo-600 text-sm font-semibold">Browse now →</span>
-                        <span class="bg-gray-100 text-xs px-2 py-1 rounded">General + Advanced</span>
+                        <span class="text-indigo-600 text-sm font-semibold">استعرض الآن ←</span>
+                        <span class="bg-gray-100 text-xs px-2 py-1 rounded">عام + متقدم</span>
                     </div>
                 </button>
             `).join('')}
@@ -480,15 +489,15 @@ function renderStreams() {
     document.getElementById('app').innerHTML = `
         <div class="gradient-secondary rounded-3xl p-8 text-white mb-8 fade-in">
             <h1 class="text-3xl md:text-4xl font-bold mb-2">${state.term.icon} ${state.term.name}</h1>
-            <p class="opacity-90">Select academic stream</p>
+            <p class="opacity-90">اختر القسم الدراسي</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 fade-in">
             ${DB.streams.map(s => `
-                <button onclick="selectStream('${s.id}')" class="card-hover bg-white rounded-2xl p-8 shadow-md text-left border-2 border-transparent hover:border-pink-500">
+                <button onclick="selectStream('${s.id}')" class="card-hover bg-white rounded-2xl p-8 shadow-md text-right border-2 border-transparent hover:border-pink-500">
                     <div class="text-6xl mb-4">${s.icon}</div>
                     <h3 class="font-bold text-2xl mb-2">${s.name}</h3>
                     <p class="text-gray-500 mb-4">${s.desc}</p>
-                    <div class="flex items-center gap-2 text-pink-600 font-semibold"><span>Click to enter</span><span>→</span></div>
+                    <div class="flex items-center gap-2 text-pink-600 font-semibold"><span>اضغط للدخول</span><span>←</span></div>
                 </button>
             `).join('')}
         </div>
@@ -498,16 +507,17 @@ function renderStreams() {
 function renderPrograms() {
     document.getElementById('app').innerHTML = `
         <div class="gradient-warm rounded-3xl p-8 text-white mb-8 fade-in">
-            <h1 class="text-3xl md:text-4xl font-bold mb-2">${state.term.icon} ${state.term.name} - Advanced</h1>
-            <p class="opacity-90">Select specialized program</p>
+            <h1 class="text-3xl md:text-4xl font-bold mb-2">${state.term.icon} ${state.term.name} - متقدم</h1>
+            <p class="opacity-90">اختر البرنامج الدراسي المتخصص</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 fade-in">
             ${DB.programs.map(p => `
-                <button onclick="selectProgram('${p.id}')" class="card-hover bg-white rounded-2xl p-8 shadow-md text-left border-2 border-transparent hover:border-amber-500">
+                <button onclick="selectProgram('${p.id}')" class="card-hover bg-white rounded-2xl p-8 shadow-md text-right border-2 border-transparent hover:border-amber-500 relative overflow-hidden">
+                    ${p.isEnglish ? '<div class="absolute top-3 left-3 bg-blue-500 text-white text-xs px-3 py-1 rounded-full font-bold">🇬🇧 English</div>' : ''}
                     <div class="text-6xl mb-4">${p.icon}</div>
                     <h3 class="font-bold text-2xl mb-2">${p.name}</h3>
                     <p class="text-gray-500 mb-4">${p.desc}</p>
-                    <div class="flex items-center gap-2 text-amber-600 font-semibold"><span>Click to select</span><span>→</span></div>
+                    <div class="flex items-center gap-2 text-amber-600 font-semibold"><span>اضغط للاختيار</span><span>←</span></div>
                 </button>
             `).join('')}
         </div>
@@ -516,13 +526,13 @@ function renderPrograms() {
 
 function renderGrades() {
     const title = state.stream.id === 'advanced' && state.program 
-        ? `${state.term.icon} ${state.term.name} - Advanced - ${state.program.name}`
+        ? `${state.term.icon} ${state.term.name} - متقدم - ${state.program.name}`
         : `${state.term.icon} ${state.term.name} - ${state.stream.name}`;
     
     document.getElementById('app').innerHTML = `
         <div class="gradient-success rounded-3xl p-8 text-white mb-8 fade-in">
             <h1 class="text-3xl md:text-4xl font-bold mb-2">${title}</h1>
-            <p class="opacity-90">Select grade level</p>
+            <p class="opacity-90">اختر الصف الدراسي</p>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-5 fade-in">
             ${DB.grades.map(g => `
@@ -550,7 +560,7 @@ function renderSubjects() {
                     <button onclick="selectSubject('${s.id}')" class="card-hover bg-white rounded-2xl p-6 shadow-md text-center border-2 border-transparent hover:border-purple-500">
                         <div class="text-5xl mb-3">${s.icon}</div>
                         <h3 class="font-bold text-lg">${s.name}</h3>
-                        <p class="text-xs text-gray-500 mt-2">${hasContent ? '✅ Available' : '🚧 Coming Soon'}</p>
+                        <p class="text-xs text-gray-500 mt-2">${hasContent ? '✅ متاح' : '🚧 قريباً'}</p>
                     </button>
                 `;
             }).join('')}
@@ -562,6 +572,8 @@ function renderUnits() {
     const key = getCurriculumKey();
     const curriculum = DB.curriculum[key];
     const programInfo = state.program ? ` • ${state.program.name}` : '';
+    const isEnglish = isCurrentEnglish();
+    const contentClass = isEnglish ? 'en-content' : '';
     
     if (!curriculum) {
         document.getElementById('app').innerHTML = `
@@ -571,7 +583,7 @@ function renderUnits() {
             </div>
             <div class="bg-yellow-50 border-2 border-yellow-200 rounded-2xl p-8 text-center fade-in">
                 <div class="text-5xl mb-3">🚧</div>
-                <p class="text-gray-600">Content is under preparation and will be added soon</p>
+                <p class="text-gray-600">المحتوى قيد التحضير وسيتم إضافته قريباً</p>
             </div>
         `;
         return;
@@ -581,22 +593,23 @@ function renderUnits() {
         <div class="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-3xl p-8 text-white mb-8 fade-in">
             <h1 class="text-3xl md:text-4xl font-bold mb-2">${state.subject.icon} ${state.subject.name}</h1>
             <p class="opacity-90">${state.term.name} • ${state.stream.name}${programInfo} • ${state.grade.name}</p>
+            ${isEnglish ? '<div class="mt-3 inline-block bg-blue-500 text-white text-sm px-3 py-1 rounded-full">🇬🇧 Content in English</div>' : ''}
         </div>
-        <h2 class="text-2xl font-bold mb-4 text-gray-800">📚 Select Unit</h2>
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">📚 اختر الوحدة</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5 fade-in">
             ${curriculum.units.map(u => {
                 const lessonCount = u.lessons ? u.lessons.length : 0;
                 return `
-                    <button onclick="selectUnit(${u.id})" class="card-hover bg-white rounded-2xl p-6 shadow-md text-left border-2 border-transparent hover:border-indigo-500">
+                    <button onclick="selectUnit(${u.id})" class="card-hover bg-white rounded-2xl p-6 shadow-md text-right border-2 border-transparent hover:border-indigo-500 ${contentClass}">
                         <div class="flex items-center gap-4 mb-3">
                             <div class="bg-gradient-to-br ${u.color} w-16 h-16 rounded-xl flex items-center justify-center text-3xl shadow-lg">${u.icon}</div>
                             <div class="flex-1">
                                 <h3 class="font-bold text-xl">${u.name}</h3>
                                 ${u.description ? `<p class="text-sm text-gray-500 mt-1">${u.description}</p>` : ''}
-                                <p class="text-xs text-indigo-600 mt-2 font-semibold">📖 ${lessonCount} lessons</p>
+                                <p class="text-xs text-indigo-600 mt-2 font-semibold">📖 ${lessonCount} ${isEnglish ? 'lessons' : 'دروس'}</p>
                             </div>
                         </div>
-                        <div class="flex items-center justify-between text-indigo-600 font-semibold text-sm"><span>Browse lessons</span><span>→</span></div>
+                        <div class="flex items-center justify-between text-indigo-600 font-semibold text-sm"><span>${isEnglish ? 'Browse lessons' : 'استعرض الدروس'}</span><span>${isEnglish ? '→' : '←'}</span></div>
                     </button>
                 `;
             }).join('')}
@@ -606,22 +619,26 @@ function renderUnits() {
 
 function renderLessons() {
     const programInfo = state.program ? ` • ${state.program.name}` : '';
+    const isEnglish = isCurrentEnglish();
+    const contentClass = isEnglish ? 'en-content' : '';
+    
     document.getElementById('app').innerHTML = `
         <div class="gradient-violet rounded-3xl p-8 text-white mb-8 fade-in">
-            <h1 class="text-3xl md:text-4xl font-bold mb-2">${state.unit.icon} ${state.unit.name}</h1>
-            <p class="opacity-90">${state.subject.name} • ${state.grade.name}${programInfo}</p>
-            ${state.unit.description ? `<p class="opacity-90 text-sm mt-2">${state.unit.description}</p>` : ''}
+            <h1 class="text-3xl md:text-4xl font-bold mb-2 ${contentClass}">${state.unit.icon} ${state.unit.name}</h1>
+            <p class="opacity-90 ${contentClass}">${state.subject.name} • ${state.grade.name}${programInfo}</p>
+            ${state.unit.description ? `<p class="opacity-90 text-sm mt-2 ${contentClass}">${state.unit.description}</p>` : ''}
+            ${isEnglish ? '<div class="mt-3 inline-block bg-blue-500 text-white text-sm px-3 py-1 rounded-full">🇬🇧 English Content</div>' : ''}
         </div>
-        <h2 class="text-2xl font-bold mb-4 text-gray-800">📖 Lessons</h2>
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">${isEnglish ? '📖 Lessons' : '📖 الدروس'}</h2>
         <div class="space-y-4 fade-in">
             ${state.unit.lessons.map((l, idx) => `
-                <button onclick="selectLesson(${l.id})" class="card-hover w-full bg-white rounded-2xl p-5 shadow-md flex items-center gap-4 text-left border-2 border-transparent hover:border-violet-500">
+                <button onclick="selectLesson(${l.id})" class="card-hover w-full bg-white rounded-2xl p-5 shadow-md flex items-center gap-4 text-right border-2 border-transparent hover:border-violet-500 ${contentClass}">
                     <div class="bg-violet-100 text-violet-600 rounded-xl w-14 h-14 flex items-center justify-center text-2xl font-bold flex-shrink-0">${l.icon}</div>
                     <div class="flex-1">
                         <h3 class="font-bold text-lg">${idx + 1}. ${l.title}</h3>
                         <p class="text-sm text-gray-500 mt-1">⏱️ ${l.duration}</p>
                     </div>
-                    <div class="text-violet-600 text-2xl">→</div>
+                    <div class="text-violet-600 text-2xl">${isEnglish ? '→' : '←'}</div>
                 </button>
             `).join('')}
         </div>
@@ -631,6 +648,8 @@ function renderLessons() {
 function renderLessonDetails() {
     const c = state.lesson.content;
     const programInfo = state.program ? ` • ${state.program.name}` : '';
+    const isEnglish = isCurrentEnglish();
+    const contentClass = isEnglish ? 'en-content' : '';
     
     let sectionsHTML = '';
     if (c && c.sections) {
@@ -664,53 +683,52 @@ function renderLessonDetails() {
     document.getElementById('app').innerHTML = `
         <div class="gradient-teal rounded-3xl p-8 text-white mb-8 fade-in">
             <div class="flex items-center gap-4 mb-4 flex-wrap">
-                <button onclick="selectUnit(${state.unit.id})" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition">← Back to Unit</button>
+                <button onclick="selectUnit(${state.unit.id})" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition">${isEnglish ? '← Back to Unit' : '→ رجوع للوحدة'}</button>
             </div>
-            <div class="flex items-center gap-4 flex-wrap">
+            <div class="flex items-center gap-4 flex-wrap ${contentClass}">
                 <span class="text-6xl">${state.lesson.icon}</span>
                 <div>
                     <h1 class="text-3xl md:text-4xl font-bold mb-2">${state.lesson.title}</h1>
                     <p class="opacity-90">⏱️ ${state.lesson.duration} • ${state.subject.name}${programInfo}</p>
+                    ${isEnglish ? '<div class="mt-2 inline-block bg-blue-500 text-white text-xs px-3 py-1 rounded-full">🇬🇧 English</div>' : ''}
                 </div>
             </div>
         </div>
         <div class="grid md:grid-cols-3 gap-6 fade-in">
-            <div class="md:col-span-2 space-y-6">
+            <div class="md:col-span-2 space-y-6 ${contentClass}">
                 ${c ? `
                     <div class="bg-white rounded-2xl p-6 shadow-md">
-                        <h2 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">📚</span> Lesson Introduction</h2>
-                        <div class="bg-gradient-to-r from-purple-50 to-indigo-50 border-l-4 border-purple-500 p-4 rounded-lg"><p class="text-gray-700 leading-relaxed">${c.intro}</p></div>
+                        <h2 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">📚</span> ${isEnglish ? 'Lesson Introduction' : 'مقدمة الدرس'}</h2>
+                        <div class="bg-gradient-to-r from-purple-50 to-indigo-50 ${isEnglish ? 'border-l-4' : 'border-r-4'} border-purple-500 p-4 rounded-lg"><p class="text-gray-700 leading-relaxed">${c.intro}</p></div>
                     </div>
                     <div class="bg-white rounded-2xl p-6 shadow-md">
-                        <h2 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">💡</span> Lesson Content</h2>
+                        <h2 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">💡</span> ${isEnglish ? 'Lesson Content' : 'محتوى الدرس'}</h2>
                         ${sectionsHTML}
                     </div>
-                ` : `<div class="bg-white rounded-2xl p-6 shadow-md"><h2 class="text-xl font-bold mb-4"><span class="text-2xl">📚</span> Lesson Content</h2><p class="text-gray-700">Lesson content is under preparation...</p></div>`}
+                ` : `<div class="bg-white rounded-2xl p-6 shadow-md"><h2 class="text-xl font-bold mb-4"><span class="text-2xl">📚</span> ${isEnglish ? 'Lesson Content' : 'محتوى الدرس'}</h2><p class="text-gray-700">${isEnglish ? 'Lesson content is under preparation...' : 'محتوى الدرس قيد التحضير...'}</p></div>`}
             </div>
             <div class="space-y-6">
                 <div class="bg-white rounded-2xl p-6 shadow-md sticky top-24">
-                    <h3 class="font-bold mb-4 flex items-center gap-2"><span>📋</span> Lesson Information</h3>
+                    <h3 class="font-bold mb-4 flex items-center gap-2"><span>📋</span> ${isEnglish ? 'Lesson Information' : 'معلومات الدرس'}</h3>
                     <div class="space-y-3 text-sm">
-                        <div class="bg-gray-50 p-3 rounded-lg"><span class="text-xs text-gray-500">Unit</span><p class="font-semibold">${state.unit.name}</p></div>
-                        <div class="bg-gray-50 p-3 rounded-lg"><span class="text-xs text-gray-500">Duration</span><p class="font-semibold">⏱️ ${state.lesson.duration}</p></div>
-                        <div class="bg-gray-50 p-3 rounded-lg"><span class="text-xs text-gray-500">Grade</span><p class="font-semibold">${state.grade.name}</p></div>
+                        <div class="bg-gray-50 p-3 rounded-lg"><span class="text-xs text-gray-500">${isEnglish ? 'Unit' : 'الوحدة'}</span><p class="font-semibold ${contentClass}">${state.unit.name}</p></div>
+                        <div class="bg-gray-50 p-3 rounded-lg"><span class="text-xs text-gray-500">${isEnglish ? 'Duration' : 'المدة الزمنية'}</span><p class="font-semibold">⏱️ ${state.lesson.duration}</p></div>
+                        <div class="bg-gray-50 p-3 rounded-lg"><span class="text-xs text-gray-500">${isEnglish ? 'Grade' : 'الصف'}</span><p class="font-semibold">${state.grade.name}</p></div>
                     </div>
                     
-                    <!-- Lesson Explanation Button -->
                     <button onclick="openLesson()" class="mt-6 w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white py-4 rounded-xl font-bold transition transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
-                        <span class="text-2xl">📖</span><span>${state.lesson.lessonTitle || 'Lesson Explanation'}</span><span>↗</span>
+                        <span class="text-2xl">📖</span><span>${state.lesson.lessonTitle || (isEnglish ? 'Lesson Explanation' : 'شرح الدرس')}</span><span>↗</span>
                     </button>
-                    <p class="text-xs text-gray-500 mt-2 text-center">Opens in new tab</p>
+                    <p class="text-xs text-gray-500 mt-2 text-center">${isEnglish ? 'Opens in new tab' : 'سيفتح في نافذة جديدة'}</p>
                     
-                    <!-- Quiz Button -->
                     <button onclick="openExam()" class="mt-3 w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white py-4 rounded-xl font-bold transition transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
-                        <span class="text-2xl">📝</span><span>${state.lesson.examTitle || 'Take the Quiz'}</span><span>↗</span>
+                        <span class="text-2xl">📝</span><span>${state.lesson.examTitle || (isEnglish ? 'Take the Quiz' : 'ابدأ الاختبار')}</span><span>↗</span>
                     </button>
-                    <p class="text-xs text-gray-500 mt-2 text-center">Opens in new tab</p>
+                    <p class="text-xs text-gray-500 mt-2 text-center">${isEnglish ? 'Opens in new tab' : 'سيفتح في نافذة جديدة'}</p>
                 </div>
                 <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-6">
-                    <h4 class="font-bold text-amber-700 mb-2 flex items-center gap-2"><span>💡</span> Tip</h4>
-                    <p class="text-sm text-gray-700">Review the lesson thoroughly before starting the quiz for the best results!</p>
+                    <h4 class="font-bold text-amber-700 mb-2 flex items-center gap-2"><span>💡</span> ${isEnglish ? 'Tip' : 'نصيحة'}</h4>
+                    <p class="text-sm text-gray-700">${isEnglish ? 'Review the lesson thoroughly before starting the quiz for the best results!' : 'راجع الدرس جيداً قبل البدء في الاختبار للحصول على أفضل نتيجة!'}</p>
                 </div>
             </div>
         </div>
