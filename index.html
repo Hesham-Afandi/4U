@@ -12,21 +12,24 @@
     .gradient-secondary { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
     .gradient-success { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
     .gradient-warm { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+    .gradient-violet { background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%); }
+    .gradient-rose { background: linear-gradient(135deg, #fb7185 0%, #e11d48 100%); }
+    .gradient-amber { background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); }
+    .gradient-teal { background: linear-gradient(135deg, #2dd4bf 0%, #0891b2 100%); }
     .card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
     .card-hover:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
     .fade-in { animation: fadeIn 0.4s ease-out; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     .progress-ring { transition: stroke-dashoffset 0.5s ease; }
-    .nav-active { background: rgba(255,255,255,0.2); border-bottom: 3px solid white; }
 </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
 
 <!-- Top Bar -->
-<div class="gradient-primary text-white py-3 px-6 shadow-lg">
+<div class="gradient-primary text-white py-3 px-6 shadow-lg sticky top-0 z-50">
     <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-3">
         <div class="flex items-center gap-3">
-            <span class="text-3xl"></span>
+            <span class="text-3xl">📚</span>
             <div>
                 <h1 class="font-bold text-lg">المنصة التعليمية</h1>
                 <p class="text-xs opacity-80">منهج متكامل • تفاعلي • احترافي</p>
@@ -43,21 +46,23 @@
 <div id="breadcrumbs" class="max-w-7xl mx-auto px-6 py-4 hidden">
     <div class="flex items-center gap-2 text-sm text-gray-600 flex-wrap">
         <button onclick="showHome()" class="hover:text-indigo-600">🏠 الرئيسية</button>
-        <span id="bc-terms" class="hidden">›</span>
+        <span id="bc-term-sep" class="hidden">›</span>
         <button id="bc-term-btn" class="hidden hover:text-indigo-600"></button>
-        <span id="bc-stream" class="hidden">›</span>
+        <span id="bc-stream-sep" class="hidden">›</span>
         <button id="bc-stream-btn" class="hidden hover:text-indigo-600"></button>
-        <span id="bc-grade" class="hidden">›</span>
+        <span id="bc-grade-sep" class="hidden">›</span>
         <button id="bc-grade-btn" class="hidden hover:text-indigo-600"></button>
-        <span id="bc-content" class="hidden">›</span>
-        <button id="bc-content-btn" class="hidden hover:text-indigo-600"></button>
+        <span id="bc-subject-sep" class="hidden">›</span>
+        <button id="bc-subject-btn" class="hidden hover:text-indigo-600"></button>
+        <span id="bc-unit-sep" class="hidden">›</span>
+        <button id="bc-unit-btn" class="hidden hover:text-indigo-600"></button>
+        <span id="bc-lesson-sep" class="hidden">›</span>
+        <button id="bc-lesson-btn" class="hidden hover:text-indigo-600"></button>
     </div>
 </div>
 
 <!-- Main Container -->
-<div id="app" class="max-w-7xl mx-auto px-4 md:px-6 pb-12">
-    <!-- Content rendered here -->
-</div>
+<div id="app" class="max-w-7xl mx-auto px-4 md:px-6 pb-12"></div>
 
 <!-- Footer -->
 <footer class="bg-gray-900 text-white py-8 mt-16">
@@ -72,9 +77,9 @@
 // ==================== DATABASE ====================
 const DB = {
     terms: [
-        { id: 1, name: 'الترم الأول', icon: '📘', color: 'blue' },
-        { id: 2, name: 'الترم الثاني', icon: '📗', color: 'green' },
-        { id: 3, name: 'الترم الثالث', icon: '📕', color: 'red' }
+        { id: 1, name: 'الترم الأول', icon: '📘' },
+        { id: 2, name: 'الترم الثاني', icon: '📗' },
+        { id: 3, name: 'الترم الثالث', icon: '📕' }
     ],
     streams: [
         { id: 'advanced', name: 'متقدم', icon: '🚀', desc: 'منهج متقدم ومكثف' },
@@ -87,27 +92,103 @@ const DB = {
         { id: 12, name: 'الصف الثاني عشر', icon: '🎓' }
     ],
     subjects: [
-        { id: 'physics', name: 'الفيزياء', icon: '⚛️', color: 'purple' },
-        { id: 'math', name: 'الرياضيات', icon: '📐', color: 'blue' },
-        { id: 'chemistry', name: 'الكيمياء', icon: '🧪', color: 'green' },
-        { id: 'biology', name: 'الأحياء', icon: '🧬', color: 'emerald' }
+        { id: 'physics', name: 'الفيزياء', icon: '⚛️' },
+        { id: 'math', name: 'الرياضيات', icon: '📐' },
+        { id: 'chemistry', name: 'الكيمياء', icon: '🧪' },
+        { id: 'biology', name: 'الأحياء', icon: '🧬' }
     ],
-    contentTypes: [
-        { id: 'lessons', name: '📖 الشرح', desc: 'دروس تفاعلية' },
-        { id: 'exams', name: '📝 الامتحانات', desc: 'اختبارات تفاعلية' },
-        { id: 'pdfs', name: '📄 الملخصات', desc: 'ملفات PDF' }
-    ],
-    // Sample lessons (قابل للتعديل)
-    lessons: {
-        'physics-g11-advanced-t3': [
-            { id: 'momentum', title: 'الزخم والدفع', icon: '💥', duration: '45 دقيقة', completed: false },
-            { id: 'quantum', title: 'نظرية الكم', icon: '⚛️', duration: '60 دقيقة', completed: false },
-            { id: 'circuits', title: 'الدوائر الكهربائية', icon: '⚡', duration: '50 دقيقة', completed: false }
-        ],
-        'math-g12-advanced-t3': [
-            { id: 'integrals', title: 'التكامل', icon: '∫', duration: '90 دقيقة', completed: false },
-            { id: 'derivatives', title: 'المشتقات', icon: 'dx', duration: '75 دقيقة', completed: false }
-        ]
+    
+    // 📚 هيكل الوحدات والدروس والاختبارات
+    // المفتاح: {subject}-{grade}-{stream}-{term}
+    curriculum: {
+        'physics-12-advanced-3': {
+            units: [
+                {
+                    id: 1,
+                    name: 'الوحدة الأولى: الكم والضوء',
+                    icon: '💡',
+                    color: 'from-violet-500 to-purple-600',
+                    lessons: [
+                        {
+                            id: 1,
+                            title: 'الدرس الأول: نظرية الكم',
+                            icon: '⚛️',
+                            duration: '60 دقيقة',
+                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
+                            examTitle: 'اختبار نظرية الكم'
+                        },
+                        {
+                            id: 2,
+                            title: 'الدرس الثاني: التأثير الكهروضوئي',
+                            icon: '💡',
+                            duration: '55 دقيقة',
+                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
+                            examTitle: 'اختبار التأثير الكهروضوئي'
+                        },
+                        {
+                            id: 3,
+                            title: 'الدرس الثالث: موجات دي برولي',
+                            icon: '🌊',
+                            duration: '45 دقيقة',
+                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
+                            examTitle: 'اختبار موجات دي برولي'
+                        }
+                    ]
+                },
+                {
+                    id: 2,
+                    name: 'الوحدة الثانية: الفيزياء النووية',
+                    icon: '☢️',
+                    color: 'from-rose-500 to-red-600',
+                    lessons: [
+                        {
+                            id: 1,
+                            title: 'الدرس الأول: النشاط الإشعاعي',
+                            icon: '☢️',
+                            duration: '50 دقيقة',
+                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
+                            examTitle: 'اختبار النشاط الإشعاعي'
+                        },
+                        {
+                            id: 2,
+                            title: 'الدرس الثاني: الانشطار والاندماج',
+                            icon: '💥',
+                            duration: '65 دقيقة',
+                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
+                            examTitle: 'اختبار الانشطار والاندماج'
+                        }
+                    ]
+                }
+            ]
+        },
+        'math-12-advanced-3': {
+            units: [
+                {
+                    id: 1,
+                    name: 'الوحدة الأولى: التفاضل',
+                    icon: '📈',
+                    color: 'from-blue-500 to-cyan-600',
+                    lessons: [
+                        {
+                            id: 1,
+                            title: 'الدرس الأول: المشتقات',
+                            icon: 'd/dx',
+                            duration: '75 دقيقة',
+                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
+                            examTitle: 'اختبار المشتقات'
+                        },
+                        {
+                            id: 2,
+                            title: 'الدرس الثاني: التكامل',
+                            icon: '∫',
+                            duration: '90 دقيقة',
+                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
+                            examTitle: 'اختبار التكامل'
+                        }
+                    ]
+                }
+            ]
+        }
     }
 };
 
@@ -117,163 +198,112 @@ let state = {
     stream: null,
     grade: null,
     subject: null,
-    contentType: null,
-    lessonId: null
+    unit: null,
+    lesson: null
 };
 
-// Load progress
-const saved = localStorage.getItem('edu-progress');
-if (saved) {
-    const progress = JSON.parse(saved);
-    Object.keys(progress).forEach(key => {
-        if (DB.lessons[key]) {
-            DB.lessons[key].forEach(l => {
-                if (progress[key].includes(l.id)) l.completed = true;
-            });
-        }
-    });
+function getCurriculumKey() {
+    if (!state.subject || !state.grade || !state.stream || !state.term) return null;
+    const streamNum = state.stream.id === 'advanced' ? 'advanced' : 'general';
+    return `${state.subject.id}-${state.grade.id}-${streamNum}-${state.term.id}`;
 }
-
-function saveProgress() {
-    const progress = {};
-    Object.keys(DB.lessons).forEach(key => {
-        progress[key] = DB.lessons[key].filter(l => l.completed).map(l => l.id);
-    });
-    localStorage.setItem('edu-progress', JSON.stringify(progress));
-}
-
 // ==================== ROUTER ====================
 function showHome() {
-    state = { term: null, stream: null, grade: null, subject: null, contentType: null, lessonId: null };
+    state = { term: null, stream: null, grade: null, subject: null, unit: null, lesson: null };
     updateBreadcrumbs();
     renderHome();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function selectTerm(id) {
     state.term = DB.terms.find(t => t.id === id);
+    state.stream = null; state.grade = null; state.subject = null;
+    state.unit = null; state.lesson = null;
     updateBreadcrumbs();
     renderStreams();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function selectStream(id) {
     state.stream = DB.streams.find(s => s.id === id);
+    state.grade = null; state.subject = null;
+    state.unit = null; state.lesson = null;
     updateBreadcrumbs();
     renderGrades();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function selectGrade(id) {
     state.grade = DB.grades.find(g => g.id === id);
+    state.subject = null;
+    state.unit = null; state.lesson = null;
     updateBreadcrumbs();
     renderSubjects();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function selectSubject(id) {
     state.subject = DB.subjects.find(s => s.id === id);
+    state.unit = null; state.lesson = null;
     updateBreadcrumbs();
-    renderContentTypes();
+    renderUnits();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function selectContentType(id) {
-    state.contentType = DB.contentTypes.find(c => c.id === id);
+function selectUnit(unitId) {
+    const key = getCurriculumKey();
+    const curriculum = DB.curriculum[key];
+    if (!curriculum) return;
+    state.unit = curriculum.units.find(u => u.id === unitId);
+    state.lesson = null;
     updateBreadcrumbs();
-    renderContent();
+    renderLessons();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function openLesson(lessonId) {
-    state.lessonId = lessonId;
+function selectLesson(lessonId) {
+    state.lesson = state.unit.lessons.find(l => l.id === lessonId);
     updateBreadcrumbs();
-    renderLesson(lessonId);
+    renderLessonDetails();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function openExam() {
+    if (state.lesson && state.lesson.examUrl) {
+        window.open(state.lesson.examUrl, '_blank');
+    }
 }
 
 function updateBreadcrumbs() {
     const bc = document.getElementById('breadcrumbs');
     bc.classList.remove('hidden');
     
-    document.getElementById('bc-terms').classList.toggle('hidden', !state.term);
-    const termBtn = document.getElementById('bc-term-btn');
-    termBtn.classList.toggle('hidden', !state.term);
-    if (state.term) termBtn.textContent = state.term.icon + ' ' + state.term.name;
+    const setBC = (sepId, btnId, val, hidden) => {
+        document.getElementById(sepId).classList.toggle('hidden', hidden);
+        const b = document.getElementById(btnId);
+        b.classList.toggle('hidden', hidden);
+        if (!hidden) b.textContent = val;
+    };
     
-    document.getElementById('bc-stream').classList.toggle('hidden', !state.stream);
-    const streamBtn = document.getElementById('bc-stream-btn');
-    streamBtn.classList.toggle('hidden', !state.stream);
-    if (state.stream) streamBtn.textContent = state.stream.name;
-    
-    document.getElementById('bc-grade').classList.toggle('hidden', !state.grade);
-    const gradeBtn = document.getElementById('bc-grade-btn');
-    gradeBtn.classList.toggle('hidden', !state.grade);
-    if (state.grade) gradeBtn.textContent = state.grade.name;
-    
-    document.getElementById('bc-content').classList.toggle('hidden', !state.subject);
-    const contentBtn = document.getElementById('bc-content-btn');
-    contentBtn.classList.toggle('hidden', !state.subject);
-    if (state.subject) contentBtn.textContent = state.subject.name;
+    setBC('bc-term-sep', 'bc-term-btn', state.term ? `${state.term.icon} ${state.term.name}` : '', !state.term);
+    setBC('bc-stream-sep', 'bc-stream-btn', state.stream ? state.stream.name : '', !state.stream);
+    setBC('bc-grade-sep', 'bc-grade-btn', state.grade ? state.grade.name : '', !state.grade);
+    setBC('bc-subject-sep', 'bc-subject-btn', state.subject ? `${state.subject.icon} ${state.subject.name}` : '', !state.subject);
+    setBC('bc-unit-sep', 'bc-unit-btn', state.unit ? state.unit.name : '', !state.unit);
+    setBC('bc-lesson-sep', 'bc-lesson-btn', state.lesson ? state.lesson.title : '', !state.lesson);
 }
 
 // ==================== RENDERERS ====================
 function renderHome() {
-    const totalLessons = Object.values(DB.lessons).flat().length;
-    const completed = Object.values(DB.lessons).flat().filter(l => l.completed).length;
-    const progress = totalLessons > 0 ? Math.round((completed/totalLessons)*100) : 0;
-
     const app = document.getElementById('app');
     app.innerHTML = `
-        <!-- Hero -->
         <div class="gradient-primary rounded-3xl p-8 md:p-12 text-white mb-8 fade-in">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                <div class="text-center md:text-right">
-                    <h1 class="text-3xl md:text-5xl font-bold mb-3">🎓 أهلاً بك في منصتك التعليمية</h1>
-                    <p class="text-lg opacity-90 mb-4">رحلة تعلم تفاعلية من الصف التاسع للثاني عشر</p>
-                    <div class="flex flex-wrap gap-3 justify-center md:justify-start">
-                        <span class="bg-white/20 px-4 py-2 rounded-full text-sm">✅ 3 ترمات دراسية</span>
-                        <span class="bg-white/20 px-4 py-2 rounded-full text-sm">📚 4 مواد</span>
-                        <span class="bg-white/20 px-4 py-2 rounded-full text-sm">🎯 تفاعلي 100%</span>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="relative inline-block">
-                        <svg class="w-32 h-32 -rotate-90">
-                            <circle cx="64" cy="64" r="56" stroke="rgba(255,255,255,0.2)" stroke-width="8" fill="none"/>
-                            <circle cx="64" cy="64" r="56" stroke="white" stroke-width="8" fill="none" 
-                                    stroke-dasharray="351" stroke-dashoffset="${351 - (351*progress/100)}" 
-                                    stroke-linecap="round" class="progress-ring"/>
-                        </svg>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <div>
-                                <div class="text-3xl font-bold">${progress}%</div>
-                                <div class="text-xs">منجز</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="text-center md:text-right">
+                <h1 class="text-3xl md:text-5xl font-bold mb-3">🎓 أهلاً بك في منصتك التعليمية</h1>
+                <p class="text-lg opacity-90 mb-4">رحلة تعلم تفاعلية من الصف التاسع للثاني عشر</p>
             </div>
         </div>
 
-        <!-- Stats -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 fade-in">
-            <div class="bg-white rounded-xl p-5 shadow-md">
-                <div class="text-3xl mb-2">📘</div>
-                <div class="font-bold text-2xl">3</div>
-                <div class="text-sm text-gray-500">ترمات دراسية</div>
-            </div>
-            <div class="bg-white rounded-xl p-5 shadow-md">
-                <div class="text-3xl mb-2">🎓</div>
-                <div class="font-bold text-2xl">4</div>
-                <div class="text-sm text-gray-500">صفوف دراسية</div>
-            </div>
-            <div class="bg-white rounded-xl p-5 shadow-md">
-                <div class="text-3xl mb-2">⚛️</div>
-                <div class="font-bold text-2xl">4</div>
-                <div class="text-sm text-gray-500">مواد علمية</div>
-            </div>
-            <div class="bg-white rounded-xl p-5 shadow-md">
-                <div class="text-3xl mb-2">✅</div>
-                <div class="font-bold text-2xl">${completed}/${totalLessons}</div>
-                <div class="text-sm text-gray-500">درس منجز</div>
-            </div>
-        </div>
-
-        <!-- Terms Selection -->
         <h2 class="text-2xl font-bold mb-4 text-gray-800">📅 اختر الترم الدراسي</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5 fade-in">
             ${DB.terms.map(t => `
@@ -329,7 +359,6 @@ function renderGrades() {
                     class="card-hover bg-white rounded-2xl p-6 shadow-md text-center border-2 border-transparent hover:border-blue-500">
                     <div class="text-5xl mb-3">${g.icon}</div>
                     <h3 class="font-bold text-lg">${g.name}</h3>
-                    <p class="text-xs text-gray-400 mt-2">اضغط للاستمرار</p>
                 </button>
             `).join('')}
         </div>
@@ -341,146 +370,128 @@ function renderSubjects() {
     app.innerHTML = `
         <div class="gradient-warm rounded-3xl p-8 text-white mb-8 fade-in">
             <h1 class="text-3xl md:text-4xl font-bold mb-2">${state.grade.icon} ${state.grade.name}</h1>
-            <p class="opacity-90">${state.term.name} - ${state.stream.name}</p>
+            <p class="opacity-90">${state.term.name} • ${state.stream.name}</p>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-5 fade-in">
-            ${DB.subjects.map(s => `
-                <button onclick="selectSubject('${s.id}')" 
-                    class="card-hover bg-white rounded-2xl p-6 shadow-md text-center border-2 border-transparent hover:border-purple-500">
-                    <div class="text-5xl mb-3">${s.icon}</div>
-                    <h3 class="font-bold text-lg">${s.name}</h3>
-                    <p class="text-xs text-gray-400 mt-2">اضغط للدخول</p>
-                </button>
-            `).join('')}
+            ${DB.subjects.map(s => {
+                const key = `${s.id}-${state.grade.id}-${state.stream.id}-${state.term.id}`;
+                const hasContent = DB.curriculum[key] ? true : false;
+                return `
+                    <button onclick="selectSubject('${s.id}')" 
+                        class="card-hover bg-white rounded-2xl p-6 shadow-md text-center border-2 border-transparent hover:border-purple-500">
+                        <div class="text-5xl mb-3">${s.icon}</div>
+                        <h3 class="font-bold text-lg">${s.name}</h3>
+                        <p class="text-xs text-gray-500 mt-2">
+                            ${hasContent ? '✅ متاح' : '🚧 قريباً'}
+                        </p>
+                    </button>
+                `;
+            }).join('')}
         </div>
     `;
 }
 
-function renderContentTypes() {
+function renderUnits() {
+    const key = getCurriculumKey();
+    const curriculum = DB.curriculum[key];
     const app = document.getElementById('app');
+    
+    if (!curriculum) {
+        app.innerHTML = `
+            <div class="bg-gradient-to-br from-gray-500 to-gray-700 rounded-3xl p-8 text-white mb-8 fade-in">
+                <h1 class="text-3xl font-bold mb-2">${state.subject.icon} ${state.subject.name}</h1>
+                <p class="opacity-90">${state.term.name} • ${state.stream.name} • ${state.grade.name}</p>
+            </div>
+            <div class="bg-yellow-50 border-2 border-yellow-200 rounded-2xl p-8 text-center fade-in">
+                <div class="text-5xl mb-3">🚧</div>
+                <p class="text-gray-600">المحتوى قيد التحضير وسيتم إضافته قريباً</p>
+            </div>
+        `;
+        return;
+    }
+    
     app.innerHTML = `
         <div class="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-3xl p-8 text-white mb-8 fade-in">
             <h1 class="text-3xl md:text-4xl font-bold mb-2">${state.subject.icon} ${state.subject.name}</h1>
             <p class="opacity-90">${state.term.name} • ${state.stream.name} • ${state.grade.name}</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 fade-in">
-            ${DB.contentTypes.map(c => `
-                <button onclick="selectContentType('${c.id}')" 
-                    class="card-hover bg-white rounded-2xl p-8 shadow-md text-center border-2 border-transparent hover:border-indigo-500">
-                    <div class="text-6xl mb-3">${c.name.split(' ')[0]}</div>
-                    <h3 class="font-bold text-xl mb-2">${c.name.split(' ')[1]}</h3>
-                    <p class="text-gray-500 text-sm">${c.desc}</p>
+        
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">📚 اختر الوحدة</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 fade-in">
+            ${curriculum.units.map(u => `
+                <button onclick="selectUnit(${u.id})" 
+                    class="card-hover bg-white rounded-2xl p-6 shadow-md text-right border-2 border-transparent hover:border-indigo-500">
+                    <div class="flex items-center gap-4 mb-3">
+                        <div class="bg-gradient-to-br ${u.color} w-16 h-16 rounded-xl flex items-center justify-center text-3xl">
+                            ${u.icon}
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-xl">${u.name}</h3>
+                            <p class="text-sm text-gray-500 mt-1">📖 ${u.lessons.length} دروس</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between text-indigo-600 font-semibold text-sm">
+                        <span>استعرض الدروس</span>
+                        <span>←</span>
+                    </div>
                 </button>
             `).join('')}
         </div>
     `;
 }
 
-function renderContent() {
-    const key = `${state.subject.id}-g${state.grade.id}-${state.stream.id.substring(0,3)}-t${state.term.id}`;
-    const lessons = DB.lessons[key] || [];
-    const completed = lessons.filter(l => l.completed).length;
-
-    const app = document.getElementById('app');
-    
-    if (state.contentType.id === 'lessons') {
-        app.innerHTML = `
-            <div class="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-3xl p-8 text-white mb-8 fade-in">
-                <div class="flex justify-between items-center flex-wrap gap-4">
-                    <div>
-                        <h1 class="text-3xl md:text-4xl font-bold mb-2">📖 الشرح التفاعلي</h1>
-                        <p class="opacity-90">${lessons.length} درس متاح</p>
-                    </div>
-                    <div class="bg-white/20 px-5 py-3 rounded-xl">
-                        <div class="text-sm">التقدم</div>
-                        <div class="text-2xl font-bold">${completed}/${lessons.length}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="space-y-4 fade-in">
-                ${lessons.length === 0 ? `
-                    <div class="bg-yellow-50 border-2 border-yellow-200 rounded-2xl p-8 text-center">
-                        <div class="text-5xl mb-3">🚧</div>
-                        <p class="text-gray-600">لا توجد دروس متاحة حالياً. سيتم إضافة المحتوى قريباً.</p>
-                    </div>
-                ` : lessons.map((l, idx) => `
-                    <button onclick="openLesson('${l.id}')" 
-                        class="card-hover w-full bg-white rounded-2xl p-5 shadow-md flex items-center gap-4 text-right border-2 ${l.completed ? 'border-green-400' : 'border-transparent hover:border-indigo-500'}">
-                        <div class="bg-indigo-100 text-indigo-600 rounded-xl w-14 h-14 flex items-center justify-center text-2xl font-bold flex-shrink-0">
-                            ${l.completed ? '✅' : idx + 1}
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 flex-wrap">
-                                <span class="text-2xl">${l.icon}</span>
-                                <h3 class="font-bold text-lg">${l.title}</h3>
-                                ${l.completed ? '<span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">مكتمل ✅</span>' : ''}
-                            </div>
-                            <p class="text-sm text-gray-500 mt-1">⏱️ ${l.duration}</p>
-                        </div>
-                        <div class="text-indigo-600 text-2xl">←</div>
-                    </button>
-                `).join('')}
-            </div>
-        `;
-    } else if (state.contentType.id === 'exams') {
-        app.innerHTML = `
-            <div class="bg-gradient-to-br from-rose-500 to-pink-600 rounded-3xl p-8 text-white mb-8 fade-in">
-                <h1 class="text-3xl md:text-4xl font-bold mb-2">📝 الامتحانات</h1>
-                <p class="opacity-90">اختبر معلوماتك وامتحان تفاعلي</p>
-            </div>
-            <div class="bg-yellow-50 border-2 border-yellow-200 rounded-2xl p-8 text-center fade-in">
-                <div class="text-5xl mb-3">🎯</div>
-                <p class="text-gray-600 mb-4">الامتحانات التفاعلية متاحة لكل درس</p>
-                <button onclick="selectContentType('lessons')" class="bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-indigo-700 transition">
-                    اذهب للشرح أولاً 📖
-                </button>
-            </div>
-        `;
-    } else {
-        app.innerHTML = `
-            <div class="bg-gradient-to-br from-amber-500 to-orange-600 rounded-3xl p-8 text-white mb-8 fade-in">
-                <h1 class="text-3xl md:text-4xl font-bold mb-2">📄 الملخصات PDF</h1>
-                <p class="opacity-90">ملفات قابلة للتحميل والطباعة</p>
-            </div>
-            <div class="bg-blue-50 border-2 border-blue-200 rounded-2xl p-8 text-center fade-in">
-                <div class="text-5xl mb-3">📥</div>
-                <p class="text-gray-600">الملفات قيد التحضير وسيتم رفعها قريباً</p>
-            </div>
-        `;
-    }
-}
-
-function renderLesson(id) {
-    const lessons = DB.lessons[`${state.subject.id}-g${state.grade.id}-${state.stream.id.substring(0,3)}-t${state.term.id}`] || [];
-    const lesson = lessons.find(l => l.id === id);
-    
+function renderLessons() {
     const app = document.getElementById('app');
     app.innerHTML = `
-        <div class="bg-gradient-to-br from-violet-600 to-indigo-700 rounded-3xl p-8 text-white mb-8 fade-in">
+        <div class="gradient-violet rounded-3xl p-8 text-white mb-8 fade-in">
+            <h1 class="text-3xl md:text-4xl font-bold mb-2">${state.unit.icon} ${state.unit.name}</h1>
+            <p class="opacity-90">${state.subject.name} • ${state.grade.name}</p>
+        </div>
+        
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">📖 الدروس</h2>
+        <div class="space-y-4 fade-in">
+            ${state.unit.lessons.map((l, idx) => `
+                <button onclick="selectLesson(${l.id})" 
+                    class="card-hover w-full bg-white rounded-2xl p-5 shadow-md flex items-center gap-4 text-right border-2 border-transparent hover:border-violet-500">
+                    <div class="bg-violet-100 text-violet-600 rounded-xl w-14 h-14 flex items-center justify-center text-2xl font-bold flex-shrink-0">
+                        ${l.icon}
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-lg">${l.title}</h3>
+                        <p class="text-sm text-gray-500 mt-1">⏱️ ${l.duration}</p>
+                    </div>
+                    <div class="text-violet-600 text-2xl">←</div>
+                </button>
+            `).join('')}
+        </div>
+    `;
+}
+
+function renderLessonDetails() {
+    const app = document.getElementById('app');
+    app.innerHTML = `
+        <div class="gradient-teal rounded-3xl p-8 text-white mb-8 fade-in">
             <div class="flex items-center gap-4 mb-4">
-                <button onclick="selectContentType('lessons')" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition">→ رجوع</button>
+                <button onclick="selectUnit(${state.unit.id})" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition">
+                    → رجوع للوحدة
+                </button>
             </div>
             <div class="flex items-center gap-4 flex-wrap">
-                <span class="text-6xl">${lesson.icon}</span>
+                <span class="text-6xl">${state.lesson.icon}</span>
                 <div>
-                    <h1 class="text-3xl md:text-4xl font-bold mb-2">${lesson.title}</h1>
-                    <p class="opacity-90">⏱️ ${lesson.duration}</p>
+                    <h1 class="text-3xl md:text-4xl font-bold mb-2">${state.lesson.title}</h1>
+                    <p class="opacity-90">⏱️ ${state.lesson.duration}</p>
                 </div>
             </div>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-6 fade-in">
-            <!-- Main Content -->
-            <div class="md:col-span-2 space-y-6">
-                <div class="bg-white rounded-2xl p-6 shadow-md">
-                    <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
-                        <span class="text-2xl">📚</span>
-                        مقدمة الدرس
-                    </h2>
-                    <p class="text-gray-700 leading-relaxed mb-4">
-                        مرحباً بك في درس <strong>${lesson.title}</strong>! في هذا الدرس التفاعلي، 
-                        سنتعرف على المفاهيم الأساسية والأمثلة التطبيقية والتمارين المحلولة.
-                    </p>
+        <div class="grid md:grid-cols-2 gap-6 fade-in">
+            <!-- محتوى الدرس -->
+            <div class="bg-white rounded-2xl p-6 shadow-md">
+                <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                    <span class="text-2xl">📚</span> محتوى الدرس
+                </h2>
+                <div class="space-y-3">
                     <div class="bg-indigo-50 border-r-4 border-indigo-500 p-4 rounded-lg">
                         <strong class="text-indigo-700">🎯 أهداف الدرس:</strong>
                         <ul class="mt-2 space-y-1 text-sm text-gray-700">
@@ -489,85 +500,49 @@ function renderLesson(id) {
                             <li>✅ تطبيق المعرفة في مواقف جديدة</li>
                         </ul>
                     </div>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-md">
-                    <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
-                        <span class="text-2xl">💡</span>
-                        المحتوى التفاعلي
-                    </h2>
-                    <div class="space-y-3">
-                        <details class="bg-gray-50 rounded-lg p-4">
-                            <summary class="font-semibold cursor-pointer">📖 الشرح النظري</summary>
-                            <p class="mt-3 text-gray-700 text-sm">هنا يظهر محتوى الشرح النظري... يمكن إضافة PDF viewer أو نص تفاعلي</p>
-                        </details>
-                        <details class="bg-gray-50 rounded-lg p-4">
-                            <summary class="font-semibold cursor-pointer">🎬 فيديو توضيحي</summary>
-                            <p class="mt-3 text-gray-700 text-sm">يمكن تضمين فيديو من يوتيوب هنا</p>
-                        </details>
-                        <details class="bg-gray-50 rounded-lg p-4">
-                            <summary class="font-semibold cursor-pointer">🧪 تجربة تفاعلية</summary>
-                            <p class="mt-3 text-gray-700 text-sm">محاكاة أو تجربة تفاعلية</p>
-                        </details>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-md">
-                    <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
-                        <span class="text-2xl">✍️</span>
-                        أمثلة محلول
-                    </h2>
-                    <div class="bg-green-50 border-r-4 border-green-500 p-4 rounded-lg mb-3">
-                        <strong class="text-green-700">مثال 1:</strong>
-                        <p class="text-gray-700 mt-1 text-sm">نص المثال هنا...</p>
-                    </div>
+                    
                     <div class="bg-blue-50 border-r-4 border-blue-500 p-4 rounded-lg">
-                        <strong class="text-blue-700">الحل:</strong>
-                        <p class="text-gray-700 mt-1 text-sm">خطوات الحل...</p>
+                        <strong class="text-blue-700">📖 الشرح:</strong>
+                        <p class="text-gray-700 mt-2 text-sm">
+                            في هذا الدرس ستتعلم المفاهيم الأساسية والنظريات المهمة مع أمثلة تطبيقية محلولة.
+                        </p>
                     </div>
                 </div>
             </div>
 
-            <!-- Sidebar -->
-            <div class="space-y-6">
-                <div class="bg-white rounded-2xl p-6 shadow-md sticky top-4">
-                    <h3 class="font-bold mb-4 flex items-center gap-2">
-                        <span>📋</span> محتوى الدرس
-                    </h3>
-                    <div class="space-y-2 text-sm">
-                        <a href="#" class="block p-2 rounded hover:bg-indigo-50 text-indigo-700">1️⃣ المقدمة</a>
-                        <a href="#" class="block p-2 rounded hover:bg-indigo-50 text-gray-700">2️⃣ التعريفات</a>
-                        <a href="#" class="block p-2 rounded hover:bg-indigo-50 text-gray-700">3️⃣ القوانين</a>
-                        <a href="#" class="block p-2 rounded hover:bg-indigo-50 text-gray-700">4️⃣ الأمثلة</a>
-                        <a href="#" class="block p-2 rounded hover:bg-indigo-50 text-gray-700">5️⃣ التمارين</a>
-                    </div>
-                    
-                    <button onclick="markComplete('${id}')" id="complete-btn"
-                        class="mt-6 w-full ${lesson.completed ? 'bg-green-500' : 'bg-indigo-600 hover:bg-indigo-700'} text-white py-3 rounded-xl font-bold transition">
-                        ${lesson.completed ? '✅ تم إكمال الدرس' : '⭕ وضع علامة مكتمل'}
+            <!-- الاختبار -->
+            <div class="bg-white rounded-2xl p-6 shadow-md border-2 border-emerald-200">
+                <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                    <span class="text-2xl">📝</span> الاختبار
+                </h2>
+                <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl p-6 text-center">
+                    <div class="text-5xl mb-3">🎯</div>
+                    <h3 class="font-bold text-xl mb-2">${state.lesson.examTitle}</h3>
+                    <p class="text-gray-600 text-sm mb-4">
+                        اختبر معلوماتك بعد دراسة الدرس
+                    </p>
+                    <button onclick="openExam()" 
+                        class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-8 py-3 rounded-xl font-bold text-lg transition transform hover:scale-105 shadow-lg">
+                        ابدأ الاختبار الآن ↗
                     </button>
-
-                    <button class="mt-3 w-full bg-gray-200 hover:bg-gray-300 text-gray-700 py-3 rounded-xl font-bold transition">
-                        📝 ابدأ الامتحان
-                    </button>
+                    <p class="text-xs text-gray-500 mt-3">
+                        سيفتح في نافذة جديدة
+                    </p>
                 </div>
             </div>
         </div>
-    `;
-}
 
-function markComplete(id) {
-    const lessons = DB.lessons[`${state.subject.id}-g${state.grade.id}-${state.stream.id.substring(0,3)}-t${state.term.id}`] || [];
-    const lesson = lessons.find(l => l.id === id);
-    if (lesson) {
-        lesson.completed = !lesson.completed;
-        saveProgress();
-        renderLesson(id);
-    }
+        <div class="mt-6 bg-blue-50 border-r-4 border-blue-500 p-4 rounded-lg">
+            <strong class="text-blue-700">💡 نصيحة:</strong>
+            <p class="text-sm text-gray-700 mt-1">
+                راجع الدرس جيداً قبل البدء في الاختبار للحصول على أفضل نتيجة!
+            </p>
+        </div>
+    `;
 }
 
 // Initialize
 showHome();
 </script>
 </body>
-</html>
+</html>    
