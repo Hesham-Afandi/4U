@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📚 المنصة التعليمية - مكتبة المناهج</title>
+    <title>📚 Educational Platform - Curriculum Library</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Cairo', sans-serif; }
+        body { font-family: 'Inter', sans-serif; }
         .gradient-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
         .gradient-secondary { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
         .gradient-success { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
@@ -20,7 +20,7 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .formula { font-family: 'Times New Roman', serif; font-style: italic; direction: ltr; display: inline-block; }
         table.comparison { width: 100%; border-collapse: collapse; margin: 1rem 0; }
-        table.comparison th, table.comparison td { border: 1px solid #e5e7eb; padding: 0.75rem; text-align: right; }
+        table.comparison th, table.comparison td { border: 1px solid #e5e7eb; padding: 0.75rem; text-align: left; }
         table.comparison th { background: #f3f4f6; font-weight: bold; }
     </style>
 </head>
@@ -32,13 +32,13 @@
         <div class="flex items-center gap-3">
             <span class="text-3xl">📚</span>
             <div>
-                <h1 class="font-bold text-lg">المنصة التعليمية</h1>
-                <p class="text-xs opacity-80">منهج متكامل • تفاعلي • احترافي</p>
+                <h1 class="font-bold text-lg">Educational Platform</h1>
+                <p class="text-xs opacity-80">Complete Curriculum • Interactive • Professional</p>
             </div>
         </div>
         <div class="flex items-center gap-4 text-sm">
-            <span class="hidden md:block">مرحباً بك 👋</span>
-            <button onclick="showHome()" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition">🏠 الرئيسية</button>
+            <span class="hidden md:block">Welcome 👋</span>
+            <button onclick="showHome()" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition">🏠 Home</button>
         </div>
     </div>
 </div>
@@ -46,7 +46,7 @@
 <!-- Breadcrumbs -->
 <div id="breadcrumbs" class="max-w-7xl mx-auto px-6 py-4 hidden">
     <div class="flex items-center gap-2 text-sm text-gray-600 flex-wrap">
-        <button onclick="showHome()" class="hover:text-indigo-600">🏠 الرئيسية</button>
+        <button onclick="showHome()" class="hover:text-indigo-600">🏠 Home</button>
         <span id="bc-term-sep" class="hidden">›</span>
         <button id="bc-term-btn" class="hidden hover:text-indigo-600"></button>
         <span id="bc-stream-sep" class="hidden">›</span>
@@ -71,8 +71,8 @@
 <footer class="bg-gray-900 text-white py-8 mt-16">
     <div class="max-w-7xl mx-auto px-6 text-center">
         <p class="text-2xl mb-2">📚✨</p>
-        <p class="font-bold">المنصة التعليمية المتكاملة</p>
-        <p class="text-sm opacity-70 mt-1">جميع الحقوق محفوظة © 2026</p>
+        <p class="font-bold">Complete Educational Platform</p>
+        <p class="text-sm opacity-70 mt-1">All Rights Reserved © 2026</p>
     </div>
 </footer>
 
@@ -80,29 +80,29 @@
 // ==================== DATABASE ====================
 const DB = {
     terms: [
-        { id: 1, name: 'الترم الأول', icon: '📘' },
-        { id: 2, name: 'الترم الثاني', icon: '📗' },
-        { id: 3, name: 'الترم الثالث', icon: '' }
+        { id: 1, name: 'Term 1', icon: '📘' },
+        { id: 2, name: 'Term 2', icon: '📗' },
+        { id: 3, name: 'Term 3', icon: '📕' }
     ],
     streams: [
-        { id: 'advanced', name: 'متقدم', icon: '🚀', desc: 'منهج متقدم ومكثف' },
-        { id: 'general', name: 'عام', icon: '📚', desc: 'منهج أساسي وشامل' }
+        { id: 'advanced', name: 'Advanced', icon: '🚀', desc: 'Advanced and intensive curriculum' },
+        { id: 'general', name: 'General', icon: '📚', desc: 'Basic and comprehensive curriculum' }
     ],
     programs: [
-        { id: 'inspire', name: 'INSPIRE', icon: '🌟', desc: 'برنامج الإلهام والتميز' },
-        { id: 'bridge', name: 'BRIDGE', icon: '🌉', desc: 'برنامج الجسر التأهيلي' }
+        { id: 'inspire', name: 'INSPIRE', icon: '🌟', desc: 'Inspiration and Excellence Program' },
+        { id: 'bridge', name: 'BRIDGE', icon: '🌉', desc: 'Preparatory Bridge Program' }
     ],
     grades: [
-        { id: 9, name: 'الصف التاسع', icon: '🎒' },
-        { id: 10, name: 'الصف العاشر', icon: '📐' },
-        { id: 11, name: 'الصف الحادي عشر', icon: '⚡' },
-        { id: 12, name: 'الصف الثاني عشر', icon: '🎓' }
+        { id: 9, name: 'Grade 9', icon: '🎒' },
+        { id: 10, name: 'Grade 10', icon: '📐' },
+        { id: 11, name: 'Grade 11', icon: '⚡' },
+        { id: 12, name: 'Grade 12', icon: '🎓' }
     ],
     subjects: [
-        { id: 'physics', name: 'الفيزياء', icon: '⚛️' },
-        { id: 'math', name: 'الرياضيات', icon: '📐' },
-        { id: 'chemistry', name: 'الكيمياء', icon: '🧪' },
-        { id: 'biology', name: 'الأحياء', icon: '🧬' }
+        { id: 'physics', name: 'Physics', icon: '⚛️' },
+        { id: 'math', name: 'Mathematics', icon: '📐' },
+        { id: 'chemistry', name: 'Chemistry', icon: '🧪' },
+        { id: 'biology', name: 'Biology', icon: '🧬' }
     ],
     
     curriculum: {
@@ -110,30 +110,32 @@ const DB = {
             units: [
                 {
                     id: 1,
-                    name: 'الوحدة الأولى: ولادة نظرية الكم',
+                    name: 'Unit 1: The Birth of Quantum Theory',
                     icon: '💡',
                     color: 'from-violet-500 to-purple-600',
-                    description: 'كيف حطمت التناقضات المستحيلة النظرية الكلاسيكية وكشفت الطبيعة الجسيمية للضوء',
+                    description: 'How impossible anomalies shattered classical wave theory and revealed the particle nature of light',
                     lessons: [
                         {
                             id: 1,
-                            title: 'الدرس الأول: الأزمة الأولى - طاقة لانهائية',
+                            title: 'Lesson 1: The First Crisis - Infinite Energy',
                             icon: '🔥',
-                            duration: '45 دقيقة',
+                            duration: '45 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/Particle-model-of-Wave/',
+                            lessonTitle: '📖 Lesson Explanation',
                             examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
-                            examTitle: 'اختبار: الأزمة الأولى ونظرية بلانك',
+                            examTitle: '📝 Take the Quiz',
                             content: {
-                                intro: 'بحلول عام 1900، تنبأت النظرية الكلاسيكية للموجات الكهرومغناطيسية بأن الجسم الساخن سيشع كمية لا نهائية من الطاقة عالية التردد. هذا لم يتطابق مع الواقع.',
+                                intro: 'By 1900, classical electromagnetic wave theory predicted that a hot object would radiate an infinite amount of high-frequency energy. This did not match reality.',
                                 sections: [
-                                    { title: 'التنبؤ الكلاسيكي', type: 'text', content: 'تنبأت نظرية الموجات الكهرومغناطيسية بأن الطاقة ستصبح لا نهائية عند الترددات العالية - وهذا مستحيل فيزيائياً.' },
-                                    { title: 'الملاحظة التجريبية', type: 'text', content: 'أظهرت التجارب الفعلية أن الطاقة تصل إلى ذروة ثم تنخفض بشكل حاد - وهذا يتعارض مع التنبؤ النظري.' },
+                                    { title: 'Classical Prediction', type: 'text', content: 'Electromagnetic wave theory predicted that energy would become infinite at high frequencies - which is physically impossible.' },
+                                    { title: 'Experimental Observation', type: 'text', content: 'Actual experiments showed that energy reaches a peak and then drops off sharply - contradicting the theoretical prediction.' },
                                     { 
-                                        title: 'مقارنة: التنبؤ مقابل الواقع', type: 'table',
-                                        headers: ['التنبؤ الرياضي', 'الواقع المشاهد'],
+                                        title: 'Comparison: Prediction vs Reality', type: 'table',
+                                        headers: ['Mathematical Prediction', 'Observed Reality'],
                                         rows: [
-                                            ['طاقة لا نهائية عند الترددات العالية (مستحيل)', 'طاقة تصل للذروة ثم تنخفض'],
-                                            ['الطاقة تزداد باستمرار مع التردد', 'الطاقة تصل للقمة ثم تنخفض'],
-                                            ['لا يوجد حد أقصى للتردد', 'يوجد تردد ذروة محدد']
+                                            ['Infinite energy at high frequencies (impossible)', 'Energy peaks then decreases'],
+                                            ['Energy continuously increases with frequency', 'Energy reaches a peak then drops'],
+                                            ['No maximum frequency limit', 'Specific peak frequency exists']
                                         ]
                                     }
                                 ]
@@ -141,24 +143,26 @@ const DB = {
                         },
                         {
                             id: 2,
-                            title: 'الدرس الثاني: حل بلانك - الطاقة مكممة',
-                            icon: '️',
-                            duration: '60 دقيقة',
+                            title: 'Lesson 2: Planck\'s Solution - Energy is Quantized',
+                            icon: '⚛️',
+                            duration: '60 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/Particle-model-of-Wave/',
+                            lessonTitle: '📖 Lesson Explanation',
                             examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
-                            examTitle: 'اختبار: تكميم الطاقة لبلانك',
+                            examTitle: '📝 Take the Quiz',
                             content: {
-                                intro: 'لحل هذا التناقض، اقترح ماكس بلانك حلاً جذرياً: الذرات المهتزة لا يمكنها إشعاع الطاقة بشكل مستمر. الطاقة توجد فقط في حزم محددة لا تقبل التجزئة.',
+                                intro: 'To solve this anomaly, Max Planck proposed a radical solution: vibrating atoms cannot emit energy continuously. Energy only exists in specific, indivisible bundles.',
                                 sections: [
-                                    { title: 'المعادلة الأساسية', type: 'formula', content: 'E = nhf' },
-                                    { title: 'ثابت بلانك', type: 'text', content: 'h = 6.63 × 10⁻³⁴ J·Hz⁻¹' },
+                                    { title: 'The Fundamental Equation', type: 'formula', content: 'E = nhf' },
+                                    { title: 'Planck\'s Constant', type: 'text', content: 'h = 6.63 × 10⁻³⁴ J·Hz⁻¹' },
                                     { 
-                                        title: 'المقارنة: النظرية الكلاسيكية مقابل بلانك', type: 'table',
-                                        headers: ['النظرية الكلاسيكية', 'نظرية بلانك'],
+                                        title: 'Comparison: Classical vs Planck', type: 'table',
+                                        headers: ['Classical Theory', 'Planck\'s Theory'],
                                         rows: [
-                                            ['الطاقة مستمرة', 'الطاقة مكممة (حزم)'],
-                                            ['قيم كسرية مسموحة', 'قيم صحيحة فقط (n = 1, 2, 3...)'],
-                                            ['مثل الصعود على منحدر ناعم', 'مثل صعود الدرج بخطوات محددة'],
-                                            ['E مستمرة', 'E = nhf حيث n عدد صحيح']
+                                            ['Energy is continuous', 'Energy is quantized (packets)'],
+                                            ['Fractional values allowed', 'Only integer values (n = 1, 2, 3...)'],
+                                            ['Like sliding up a smooth ramp', 'Like climbing stairs in discrete steps'],
+                                            ['E is continuous', 'E = nhf where n is an integer']
                                         ]
                                     }
                                 ]
@@ -166,22 +170,24 @@ const DB = {
                         },
                         {
                             id: 3,
-                            title: 'الدرس الثالث: الأزمة الثانية - التأثير الكهروضوئي',
+                            title: 'Lesson 3: The Second Crisis - Photoelectric Effect',
                             icon: '💡',
-                            duration: '55 دقيقة',
+                            duration: '55 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/Particle-model-of-Wave/',
+                            lessonTitle: '📖 Lesson Explanation',
                             examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
-                            examTitle: 'اختبار: التأثير الكهروضوئي',
+                            examTitle: '📝 Take the Quiz',
                             content: {
-                                intro: 'تسليط الضوء على صفيحة معدنية كان يجب نظرياً أن يسخنها ويطرد الإلكترونات ببطء. بدلاً من ذلك، أظهرت التجارب سلوكاً محيراً وانتقائياً لا تستطيع الفيزياء الكلاسيكية تفسيره.',
+                                intro: 'Shining light on a metal plate should theoretically heat it up and slowly eject electrons. Instead, experiments showed a baffling, selective behavior that classical physics could not explain.',
                                 sections: [
-                                    { title: 'التجربة', type: 'text', content: 'ضوء عالي التردد (فوق بنفسجي): إلكترونات تنبعث فوراً - يسري تيار. ضوء منخفض التردد (أحمر مرئي): لا تنبعث إلكترونات مهما كانت شدة الضوء.' },
+                                    { title: 'The Experiment', type: 'text', content: 'High-frequency light (ultraviolet): Electrons eject instantly - current flows. Low-frequency light (visible red): No electrons eject, regardless of light intensity.' },
                                     { 
-                                        title: 'جدول المقارنة: التنبؤ الموجي مقابل الواقع الكمي', type: 'table',
-                                        headers: ['نظرية الموجات (التنبؤ)', 'الواقع الكمي (الملاحظة)'],
+                                        title: 'Wave Theory vs Quantum Reality', type: 'table',
+                                        headers: ['Wave Theory (Prediction)', 'Quantum Reality (Observation)'],
                                         rows: [
-                                            ['الضوء شديد (ساطع) بأي تردد سيطلق إلكترونات', 'الشدة تغير عدد الإلكترونات فقط، ولكن فقط إذا كان الضوء فوق تردد العتبة f₀'],
-                                            ['الضوء الأشد يعطي إلكترونات بطاقة حركية أكبر', 'السطوع لا يؤثر. فقط الضوء ذو التردد الأعلى يزيد الطاقة الحركية'],
-                                            ['الضوء الخافت يحتاج وقتاً "للتراكم"', 'الإلكترونات تنبعث فوراً حتى في الضوء الخافت جداً']
+                                            ['Bright light of ANY frequency will eject electrons', 'Intensity only changes number of electrons, but only if above threshold frequency f₀'],
+                                            ['Brighter light gives electrons more kinetic energy', 'Brightness has no effect. Only higher frequency increases kinetic energy'],
+                                            ['Dim light needs time to "build up"', 'Electrons eject INSTANTANEOUSLY even in very dim light']
                                         ]
                                     }
                                 ]
@@ -189,81 +195,91 @@ const DB = {
                         },
                         {
                             id: 4,
-                            title: 'الدرس الرابع: حل آينشتاين - الضوء جسيم',
+                            title: 'Lesson 4: Einstein\'s Solution - Light is a Particle',
                             icon: '🔆',
-                            duration: '65 دقيقة',
+                            duration: '65 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/Particle-model-of-Wave/',
+                            lessonTitle: '📖 Lesson Explanation',
                             examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
-                            examTitle: 'اختبار: الفوتونات وآينشتاين',
+                            examTitle: '📝 Take the Quiz',
                             content: {
-                                intro: 'في 1905، اقترح ألبرت آينشتاين أن الطاقة المكممة لبلانك لم تكن مجرد خدعة رياضية للذرات. الضوء نفسه ينتقل في حزم منفصلة عديمة الكتلة تسمى الفوتونات.',
+                                intro: 'In 1905, Albert Einstein proposed that Planck\'s quantized energy wasn\'t just a mathematical trick for atoms. Light itself travels in discrete, massless bundles called photons.',
                                 sections: [
-                                    { title: 'المفاهيم الأساسية', type: 'bullets', content: ['التأثير واحد لواحد: فوتون واحد يتفاعل مع إلكترون واحد بالضبط', 'الطاقة E = hf تنتقل كلها في لحظة واحدة', 'لا يمكن تجميع الطاقة: لا يمكن للإلكترون أن "يوفر" من عدة فوتونات ضعيفة', 'إذا كان الفوتون الواحد لا يملك الطاقة الكافية، يبقى الإلكترون محبوساً'] },
-                                    { title: 'بوابات القرار الكهروضوئي', type: 'bullets', content: ['فحص الطاقة: هل f ≥ f₀؟ (هل التردد يتجاوز عتبة المعدن؟)', 'نعم → الإلكترون يتحرر! (طاقة حركية = hf - hf₀)', 'لا → طاقة الفوتون تمتص كحرارة فقط، يبقى الإلكترون مقيداً'] }
+                                    { title: 'Key Concepts', type: 'bullets', content: ['One-to-one interaction: One photon interacts with exactly one electron', 'Energy E = hf is transferred all at once, instantly', 'No energy pooling: Electrons cannot "save up" from multiple weak photons', 'If a single photon lacks sufficient energy, the electron remains trapped'] },
+                                    { title: 'Photoelectric Decision Gates', type: 'bullets', content: ['Energy check: Is f ≥ f₀? (Does frequency exceed the metal\'s threshold?)', 'YES → Electron breaks free! (Kinetic energy = hf - hf₀)', 'NO → Photon energy absorbed as heat only, electron remains bound'] }
                                 ]
                             }
                         },
                         {
                             id: 5,
-                            title: 'الدرس الخامس: حساب الطاقة الحركية',
-                            icon: '',
-                            duration: '50 دقيقة',
+                            title: 'Lesson 5: Calculating Kinetic Energy',
+                            icon: '⚡',
+                            duration: '50 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/Particle-model-of-Wave/',
+                            lessonTitle: '📖 Lesson Explanation',
                             examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
-                            examTitle: 'اختبار: معادلة آينشتاين الكهروضوئية',
+                            examTitle: '📝 Take the Quiz',
                             content: {
-                                intro: 'طاقة الإلكترون المنبعث هي ببساطة طاقة الفوتون الساقط مطروحاً منها "الرسوم" المطلوبة للهروب من المعدن.',
+                                intro: 'The energy of an ejected electron is simply the energy of the incoming photon minus the "toll" required to escape the metal.',
                                 sections: [
-                                    { title: 'المعادلة الأساسية', type: 'formula', content: 'KE_max = hf - hf₀' },
-                                    { title: 'المكونات', type: 'bullets', content: ['KE_max: الطاقة الحركية القصوى للإلكترون', 'hf: الطاقة الساقطة (تعتمد كلياً على تردد/لون الضوء)', 'hf₀ = W: دالة الشغل (الحد الأدنى من الطاقة لتحرير الإلكترون)', 'دالة الشغل قيمة ثابتة فريدة لكل معدن'] },
-                                    { title: 'خصائص الرسم البياني (KE vs f)', type: 'bullets', content: ['الخطوط المتوازية = ميل متطابق لجميع المعادن', 'الميل = ثابت بلانك h (قانون عالمي للطبيعة)', 'المقطع من محور السينات = تردد العتبة f₀', 'المعادلة: KE = hf - W على شكل y = mx + b'] }
+                                    { title: 'The Fundamental Equation', type: 'formula', content: 'KE_max = hf - hf₀' },
+                                    { title: 'Components', type: 'bullets', content: ['KE_max: Maximum kinetic energy of the electron', 'hf: Incident energy (depends entirely on frequency/color of light)', 'hf₀ = W: Work function (minimum energy to free the electron)', 'Work function is a fixed value unique to each metal'] },
+                                    { title: 'Graph Properties (KE vs f)', type: 'bullets', content: ['Parallel lines = identical slope for all metals', 'Slope = Planck\'s constant h (universal law of nature)', 'X-intercept = threshold frequency f₀', 'Equation: KE = hf - W in the form y = mx + b'] }
                                 ]
                             }
                         },
                         {
                             id: 6,
-                            title: 'الدرس السادس: الأدوات - إلكترون فولت والصيغة المختصرة',
+                            title: 'Lesson 6: Tools - Electron Volt & Shortcut Formula',
                             icon: '🛠️',
-                            duration: '40 دقيقة',
+                            duration: '40 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/Particle-model-of-Wave/',
+                            lessonTitle: '📖 Lesson Explanation',
                             examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
-                            examTitle: 'اختبار: التحويل بين eV و J',
+                            examTitle: '📝 Take the Quiz',
                             content: {
-                                intro: 'الجول كبير جداً للأنظمة الذرية. يستخدم الفيزيائيون الإلكترون فولت (eV) - طاقة إلكترون واحد مسرّع عبر فولت واحد.',
+                                intro: 'Joules are too large for atomic systems. Physicists use the electron volt (eV) - the energy of one electron accelerated across one volt.',
                                 sections: [
-                                    { title: 'التحويل الأساسي', type: 'formula', content: '1 eV = 1.602 × 10⁻¹⁹ J' },
-                                    { title: 'الصيغة المختصرة السحرية', type: 'formula', content: 'E (eV) = 1240 / λ (nm)' },
-                                    { title: 'كيف تعمل الصيغة المختصرة', type: 'text', content: 'بما أن h (ثابت بلانك) و c (سرعة الضوء) كلاهما ثوابت، يمكن دمجهما في رقم واحد مفيد جداً: hc = 1240 eV·nm. إذا عرفت الطول الموجي λ بالنانومتر، ببساطة اقسم 1240 عليه لتجد طاقة الفوتون بـ eV فوراً!' }
+                                    { title: 'Basic Conversion', type: 'formula', content: '1 eV = 1.602 × 10⁻¹⁹ J' },
+                                    { title: 'The Magic Shortcut Formula', type: 'formula', content: 'E (eV) = 1240 / λ (nm)' },
+                                    { title: 'How the Shortcut Works', type: 'text', content: 'Since h (Planck\'s constant) and c (speed of light) are both constants, they can be combined into one useful number: hc = 1240 eV·nm. If you know the wavelength λ in nanometers, simply divide 1240 by it to instantly find the photon\'s energy in eV!' }
                                 ]
                             }
                         },
                         {
                             id: 7,
-                            title: 'الدرس السابع: تأثير كومبتون وزخم الفوتون',
-                            icon: '',
-                            duration: '55 دقيقة',
+                            title: 'Lesson 7: Compton Effect & Photon Momentum',
+                            icon: '🎱',
+                            duration: '55 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/Particle-model-of-Wave/',
+                            lessonTitle: '📖 Lesson Explanation',
                             examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
-                            examTitle: 'اختبار: تأثير كومبتون',
+                            examTitle: '📝 Take the Quiz',
                             content: {
-                                intro: 'إذا كان الضوء جسماً مادياً، يجب أن يكون له زخم. في 1922، أثبت آرثر كومبتون أن فوتونات الأشعة السينية يمكنها الاصطدام بالإلكترونات فعلياً، ناقلةً كلا من الطاقة والزخم.',
+                                intro: 'If light is a physical particle, it must have momentum. In 1922, Arthur Compton proved that X-ray photons can physically crash into electrons, transferring both energy and momentum.',
                                 sections: [
-                                    { title: 'اكتشاف كومبتون', type: 'text', content: 'الفوتون المشتت له طول موجي (λ\') noticeably أطول من عندما وصل. بما أن الطول الموجي يتناسب عكسياً مع الطاقة، هذا الانزياح يعمل كدليل لا يُدحض على أن الفوتون فقد طاقة للإلكترون أثناء الاصطدام.' },
-                                    { title: 'كرات البلياردو على المستوى الذري', type: 'text', content: 'اكتشف كومبتون أن اصطدامات الفوتون-الإلكترون تخضع لنفس قوانين حفظ الزخم تماماً كالتصادمات المرنة في العالم العياني.' },
-                                    { title: 'زخم بدون كتلة', type: 'bullets', content: ['الفيزياء الكلاسيكية: p = mv (الزخم = كتلة × سرعة)', 'الفوتون عديم الكتلة، لكن له زخم مخزن في طوله الموجي', 'المعادلة: p = h/λ', 'طول موجي قصير = زخم كبير (أشعة سينية)', 'طول موجي طويل = زخم صغير (ضوء مرئي)'] },
-                                    { title: 'حدود الرصد', type: 'text', content: 'لأن h صغير جداً، الانزياح القابل للقياس في الزخم يُلاحظ فقط مع الموجات الكهرومغناطيسية القصيرة جداً، مثل الأشعة السينية (أطوال موجية أقل من 10⁻² nm).' }
+                                    { title: 'Compton\'s Discovery', type: 'text', content: 'The scattered photon has a noticeably longer wavelength (λ\') than when it arrived. Since wavelength is inversely proportional to energy, this shift acts as irrefutable proof that the photon lost energy to the electron during the collision.' },
+                                    { title: 'Billiard Balls at the Atomic Scale', type: 'text', content: 'Compton discovered that photon-electron collisions obey the exact same laws of conservation of momentum as elastic collisions in the macro world.' },
+                                    { title: 'Momentum Without Mass', type: 'bullets', content: ['Classical physics: p = mv (momentum = mass × velocity)', 'Photon is massless, but has momentum stored in its wavelength', 'Equation: p = h/λ', 'Short wavelength = high momentum (X-rays)', 'Long wavelength = low momentum (visible light)'] },
+                                    { title: 'Limits of Observation', type: 'text', content: 'Because h is incredibly small, a measurable shift in momentum is only noticeable with extremely short electromagnetic waves, like X-rays (wavelengths less than 10⁻² nm).' }
                                 ]
                             }
                         },
                         {
                             id: 8,
-                            title: 'الدرس الثامن: الازدواجية الموجية-الجسيمية',
+                            title: 'Lesson 8: Wave-Particle Duality',
                             icon: '🌊',
-                            duration: '45 دقيقة',
+                            duration: '45 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/Particle-model-of-Wave/',
+                            lessonTitle: '📖 Lesson Explanation',
                             examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
-                            examTitle: 'اختبار: ازدواجية موجة-جسيم',
+                            examTitle: '📝 Take the Quiz',
                             content: {
-                                intro: 'الضوء ينتقل عبر الفضاء كموجة مستمرة، لكن يتفاعل مع المادة كجسيم منفصل. العالمان الكلاسيكي والكمي مرتبطان بشكل دائم.',
+                                intro: 'Light travels through space like a continuous wave, but interacts with matter like a discrete particle. The classical and quantum worlds are permanently bridged.',
                                 sections: [
-                                    { title: 'الواقع الجديد', type: 'table', headers: ['الموجة', 'الجسيم'], rows: [['الطول الموجي (λ)', 'الفوتونات'], ['التردد (f)', 'حزم الطاقة (E = hf)'], ['المجالات المستمرة', 'الزخم (p = h/λ)']] },
-                                    { title: 'الثابت الذي يربط نصفي الواقع', type: 'formula', content: 'h = 6.63 × 10⁻³⁴ J·Hz⁻¹' },
-                                    { title: 'الخلاصة', type: 'bullets', content: ['الضوء يظهر سلوكاً موجياً في الانتشار والتداخل', 'الضوء يظهر سلوكاً جسيمياً في الامتصاص والانبعاث', 'كلا الوصفين ضروريان لفهم كامل للضوء', 'هذا هو جوهر ميكانيكا الكم'] }
+                                    { title: 'The New Reality', type: 'table', headers: ['The Wave', 'The Particle'], rows: [['Wavelength (λ)', 'Photons'], ['Frequency (f)', 'Energy Packets (E = hf)'], ['Continuous Fields', 'Momentum (p = h/λ)']] },
+                                    { title: 'The Constant That Bridges Two Halves of Reality', type: 'formula', content: 'h = 6.63 × 10⁻³⁴ J·Hz⁻¹' },
+                                    { title: 'Summary', type: 'bullets', content: ['Light shows wave behavior in propagation and interference', 'Light shows particle behavior in absorption and emission', 'Both descriptions are necessary for complete understanding', 'This is the essence of quantum mechanics'] }
                                 ]
                             }
                         }
@@ -271,13 +287,13 @@ const DB = {
                 },
                 {
                     id: 2,
-                    name: 'الوحدة الثانية: الفيزياء النووية',
+                    name: 'Unit 2: Nuclear Physics',
                     icon: '☢️',
                     color: 'from-rose-500 to-red-600',
-                    description: 'النشاط الإشعاعي والانشطار والاندماج النووي',
+                    description: 'Radioactivity, fission, and nuclear fusion',
                     lessons: [
-                        { id: 1, title: 'الدرس الأول: النشاط الإشعاعي', icon: '☢️', duration: '50 دقيقة', examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/', examTitle: 'اختبار النشاط الإشعاعي' },
-                        { id: 2, title: 'الدرس الثاني: الانشطار والاندماج', icon: '💥', duration: '65 دقيقة', examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/', examTitle: 'اختبار الانشطار والاندماج' }
+                        { id: 1, title: 'Lesson 1: Radioactivity', icon: '☢️', duration: '50 minutes', lessonUrl: 'https://hesham-afandi.github.io/Particle-model-of-Wave/', lessonTitle: '📖 Lesson Explanation', examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/', examTitle: '📝 Take the Quiz' },
+                        { id: 2, title: 'Lesson 2: Fission and Fusion', icon: '💥', duration: '65 minutes', lessonUrl: 'https://hesham-afandi.github.io/Particle-model-of-Wave/', lessonTitle: '📖 Lesson Explanation', examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/', examTitle: '📝 Take the Quiz' }
                     ]
                 }
             ]
@@ -286,19 +302,19 @@ const DB = {
             units: [
                 {
                     id: 1,
-                    name: 'الوحدة الأولى: الميكانيكا الأساسية',
+                    name: 'Unit 1: Basic Mechanics',
                     icon: '⚙️',
                     color: 'from-blue-500 to-cyan-600',
-                    description: 'مراجعة وتأسيس في الميكانيكا',
+                    description: 'Review and foundation in mechanics',
                     lessons: [
-                        { id: 1, title: 'الدرس الأول: الحركة في خط مستقيم', icon: '', duration: '50 دقيقة', examUrl: 'https://hesham-afandi.github.io/12Adv-Bridge-Phy-En-T3/', examTitle: 'اختبار الحركة' }
+                        { id: 1, title: 'Lesson 1: Motion in a Straight Line', icon: '🏃', duration: '50 minutes', lessonUrl: 'https://hesham-afandi.github.io/Particle-model-of-Wave/', lessonTitle: '📖 Lesson Explanation', examUrl: 'https://hesham-afandi.github.io/12Adv-Bridge-Phy-En-T3/', examTitle: '📝 Take the Quiz' }
                     ]
                 }
             ]
         },
         'physics-12-advanced-3': {
             units: [
-                { id: 1, name: 'الوحدة الأولى: محتوى عام للمتقدم', icon: '📘', color: 'from-indigo-500 to-blue-600', lessons: [{ id: 1, title: 'الدرس الأول', icon: '', duration: '45 دقيقة', examUrl: '#', examTitle: 'اختبار' }] }
+                { id: 1, name: 'Unit 1: General Advanced Content', icon: '📘', color: 'from-indigo-500 to-blue-600', lessons: [{ id: 1, title: 'Lesson 1', icon: '📖', duration: '45 minutes', lessonUrl: '#', lessonTitle: '📖 Lesson Explanation', examUrl: '#', examTitle: '📝 Take the Quiz' }] }
             ]
         }
     }
@@ -392,7 +408,15 @@ function openExam() {
     if (state.lesson && state.lesson.examUrl && state.lesson.examUrl !== '#') {
         window.open(state.lesson.examUrl, '_blank');
     } else {
-        alert('الاختبار قيد التحضير! 🚧');
+        alert('Quiz is under preparation! 🚧');
+    }
+}
+
+function openLesson() {
+    if (state.lesson && state.lesson.lessonUrl && state.lesson.lessonUrl !== '#') {
+        window.open(state.lesson.lessonUrl, '_blank');
+    } else {
+        alert('Lesson explanation is under preparation! 🚧');
     }
 }
 
@@ -425,26 +449,26 @@ function updateBreadcrumbs() {
 function renderHome() {
     document.getElementById('app').innerHTML = `
         <div class="gradient-primary rounded-3xl p-8 md:p-12 text-white mb-8 fade-in">
-            <div class="text-center md:text-right">
-                <h1 class="text-3xl md:text-5xl font-bold mb-3">🎓 أهلاً بك في منصتك التعليمية</h1>
-                <p class="text-lg opacity-90 mb-4">رحلة تعلم تفاعلية من الصف التاسع للثاني عشر</p>
+            <div class="text-center md:text-left">
+                <h1 class="text-3xl md:text-5xl font-bold mb-3">🎓 Welcome to Your Educational Platform</h1>
+                <p class="text-lg opacity-90 mb-4">Interactive learning journey from Grade 9 to Grade 12</p>
                 <div class="flex flex-wrap gap-3 justify-center md:justify-start">
-                    <span class="bg-white/20 px-4 py-2 rounded-full text-sm">✅ 3 ترمات دراسية</span>
-                    <span class="bg-white/20 px-4 py-2 rounded-full text-sm"> 4 مواد علمية</span>
+                    <span class="bg-white/20 px-4 py-2 rounded-full text-sm">✅ 3 Academic Terms</span>
+                    <span class="bg-white/20 px-4 py-2 rounded-full text-sm">📚 4 Science Subjects</span>
                     <span class="bg-white/20 px-4 py-2 rounded-full text-sm">🎯 INSPIRE & BRIDGE</span>
                 </div>
             </div>
         </div>
-        <h2 class="text-2xl font-bold mb-4 text-gray-800"> اختر الترم الدراسي</h2>
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">📅 Select Academic Term</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5 fade-in">
             ${DB.terms.map(t => `
-                <button onclick="selectTerm(${t.id})" class="card-hover bg-white rounded-2xl p-6 shadow-md text-right border-2 border-transparent hover:border-indigo-500">
+                <button onclick="selectTerm(${t.id})" class="card-hover bg-white rounded-2xl p-6 shadow-md text-left border-2 border-transparent hover:border-indigo-500">
                     <div class="text-5xl mb-3">${t.icon}</div>
                     <h3 class="font-bold text-xl mb-1">${t.name}</h3>
-                    <p class="text-sm text-gray-500 mb-3">اضغط لاستعراض المحتوى</p>
+                    <p class="text-sm text-gray-500 mb-3">Click to browse content</p>
                     <div class="flex items-center justify-between">
-                        <span class="text-indigo-600 text-sm font-semibold">استعرض الآن ←</span>
-                        <span class="bg-gray-100 text-xs px-2 py-1 rounded">عام + متقدم</span>
+                        <span class="text-indigo-600 text-sm font-semibold">Browse now →</span>
+                        <span class="bg-gray-100 text-xs px-2 py-1 rounded">General + Advanced</span>
                     </div>
                 </button>
             `).join('')}
@@ -456,15 +480,15 @@ function renderStreams() {
     document.getElementById('app').innerHTML = `
         <div class="gradient-secondary rounded-3xl p-8 text-white mb-8 fade-in">
             <h1 class="text-3xl md:text-4xl font-bold mb-2">${state.term.icon} ${state.term.name}</h1>
-            <p class="opacity-90">اختر القسم الدراسي</p>
+            <p class="opacity-90">Select academic stream</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 fade-in">
             ${DB.streams.map(s => `
-                <button onclick="selectStream('${s.id}')" class="card-hover bg-white rounded-2xl p-8 shadow-md text-right border-2 border-transparent hover:border-pink-500">
+                <button onclick="selectStream('${s.id}')" class="card-hover bg-white rounded-2xl p-8 shadow-md text-left border-2 border-transparent hover:border-pink-500">
                     <div class="text-6xl mb-4">${s.icon}</div>
                     <h3 class="font-bold text-2xl mb-2">${s.name}</h3>
                     <p class="text-gray-500 mb-4">${s.desc}</p>
-                    <div class="flex items-center gap-2 text-pink-600 font-semibold"><span>اضغط للدخول</span><span>←</span></div>
+                    <div class="flex items-center gap-2 text-pink-600 font-semibold"><span>Click to enter</span><span>→</span></div>
                 </button>
             `).join('')}
         </div>
@@ -474,16 +498,16 @@ function renderStreams() {
 function renderPrograms() {
     document.getElementById('app').innerHTML = `
         <div class="gradient-warm rounded-3xl p-8 text-white mb-8 fade-in">
-            <h1 class="text-3xl md:text-4xl font-bold mb-2">${state.term.icon} ${state.term.name} - متقدم</h1>
-            <p class="opacity-90">اختر البرنامج الدراسي المتخصص</p>
+            <h1 class="text-3xl md:text-4xl font-bold mb-2">${state.term.icon} ${state.term.name} - Advanced</h1>
+            <p class="opacity-90">Select specialized program</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 fade-in">
             ${DB.programs.map(p => `
-                <button onclick="selectProgram('${p.id}')" class="card-hover bg-white rounded-2xl p-8 shadow-md text-right border-2 border-transparent hover:border-amber-500">
+                <button onclick="selectProgram('${p.id}')" class="card-hover bg-white rounded-2xl p-8 shadow-md text-left border-2 border-transparent hover:border-amber-500">
                     <div class="text-6xl mb-4">${p.icon}</div>
                     <h3 class="font-bold text-2xl mb-2">${p.name}</h3>
                     <p class="text-gray-500 mb-4">${p.desc}</p>
-                    <div class="flex items-center gap-2 text-amber-600 font-semibold"><span>اضغط للاختيار</span><span>←</span></div>
+                    <div class="flex items-center gap-2 text-amber-600 font-semibold"><span>Click to select</span><span>→</span></div>
                 </button>
             `).join('')}
         </div>
@@ -492,13 +516,13 @@ function renderPrograms() {
 
 function renderGrades() {
     const title = state.stream.id === 'advanced' && state.program 
-        ? `${state.term.icon} ${state.term.name} - متقدم - ${state.program.name}`
+        ? `${state.term.icon} ${state.term.name} - Advanced - ${state.program.name}`
         : `${state.term.icon} ${state.term.name} - ${state.stream.name}`;
     
     document.getElementById('app').innerHTML = `
         <div class="gradient-success rounded-3xl p-8 text-white mb-8 fade-in">
             <h1 class="text-3xl md:text-4xl font-bold mb-2">${title}</h1>
-            <p class="opacity-90">اختر الصف الدراسي</p>
+            <p class="opacity-90">Select grade level</p>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-5 fade-in">
             ${DB.grades.map(g => `
@@ -526,7 +550,7 @@ function renderSubjects() {
                     <button onclick="selectSubject('${s.id}')" class="card-hover bg-white rounded-2xl p-6 shadow-md text-center border-2 border-transparent hover:border-purple-500">
                         <div class="text-5xl mb-3">${s.icon}</div>
                         <h3 class="font-bold text-lg">${s.name}</h3>
-                        <p class="text-xs text-gray-500 mt-2">${hasContent ? '✅ متاح' : '🚧 قريباً'}</p>
+                        <p class="text-xs text-gray-500 mt-2">${hasContent ? '✅ Available' : '🚧 Coming Soon'}</p>
                     </button>
                 `;
             }).join('')}
@@ -547,7 +571,7 @@ function renderUnits() {
             </div>
             <div class="bg-yellow-50 border-2 border-yellow-200 rounded-2xl p-8 text-center fade-in">
                 <div class="text-5xl mb-3">🚧</div>
-                <p class="text-gray-600">المحتوى قيد التحضير وسيتم إضافته قريباً</p>
+                <p class="text-gray-600">Content is under preparation and will be added soon</p>
             </div>
         `;
         return;
@@ -558,21 +582,21 @@ function renderUnits() {
             <h1 class="text-3xl md:text-4xl font-bold mb-2">${state.subject.icon} ${state.subject.name}</h1>
             <p class="opacity-90">${state.term.name} • ${state.stream.name}${programInfo} • ${state.grade.name}</p>
         </div>
-        <h2 class="text-2xl font-bold mb-4 text-gray-800">📚 اختر الوحدة</h2>
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">📚 Select Unit</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5 fade-in">
             ${curriculum.units.map(u => {
                 const lessonCount = u.lessons ? u.lessons.length : 0;
                 return `
-                    <button onclick="selectUnit(${u.id})" class="card-hover bg-white rounded-2xl p-6 shadow-md text-right border-2 border-transparent hover:border-indigo-500">
+                    <button onclick="selectUnit(${u.id})" class="card-hover bg-white rounded-2xl p-6 shadow-md text-left border-2 border-transparent hover:border-indigo-500">
                         <div class="flex items-center gap-4 mb-3">
                             <div class="bg-gradient-to-br ${u.color} w-16 h-16 rounded-xl flex items-center justify-center text-3xl shadow-lg">${u.icon}</div>
                             <div class="flex-1">
                                 <h3 class="font-bold text-xl">${u.name}</h3>
                                 ${u.description ? `<p class="text-sm text-gray-500 mt-1">${u.description}</p>` : ''}
-                                <p class="text-xs text-indigo-600 mt-2 font-semibold">📖 ${lessonCount} دروس</p>
+                                <p class="text-xs text-indigo-600 mt-2 font-semibold">📖 ${lessonCount} lessons</p>
                             </div>
                         </div>
-                        <div class="flex items-center justify-between text-indigo-600 font-semibold text-sm"><span>استعرض الدروس</span><span>←</span></div>
+                        <div class="flex items-center justify-between text-indigo-600 font-semibold text-sm"><span>Browse lessons</span><span>→</span></div>
                     </button>
                 `;
             }).join('')}
@@ -588,16 +612,16 @@ function renderLessons() {
             <p class="opacity-90">${state.subject.name} • ${state.grade.name}${programInfo}</p>
             ${state.unit.description ? `<p class="opacity-90 text-sm mt-2">${state.unit.description}</p>` : ''}
         </div>
-        <h2 class="text-2xl font-bold mb-4 text-gray-800">📖 الدروس</h2>
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">📖 Lessons</h2>
         <div class="space-y-4 fade-in">
             ${state.unit.lessons.map((l, idx) => `
-                <button onclick="selectLesson(${l.id})" class="card-hover w-full bg-white rounded-2xl p-5 shadow-md flex items-center gap-4 text-right border-2 border-transparent hover:border-violet-500">
+                <button onclick="selectLesson(${l.id})" class="card-hover w-full bg-white rounded-2xl p-5 shadow-md flex items-center gap-4 text-left border-2 border-transparent hover:border-violet-500">
                     <div class="bg-violet-100 text-violet-600 rounded-xl w-14 h-14 flex items-center justify-center text-2xl font-bold flex-shrink-0">${l.icon}</div>
                     <div class="flex-1">
                         <h3 class="font-bold text-lg">${idx + 1}. ${l.title}</h3>
                         <p class="text-sm text-gray-500 mt-1">⏱️ ${l.duration}</p>
                     </div>
-                    <div class="text-violet-600 text-2xl">←</div>
+                    <div class="text-violet-600 text-2xl">→</div>
                 </button>
             `).join('')}
         </div>
@@ -627,7 +651,7 @@ function renderLessonDetails() {
                     </div>
                 </div>`;
             } else if (s.type === 'bullets') {
-                return `<div class="my-4 bg-blue-50 rounded-xl p-5 border-r-4 border-blue-500">
+                return `<div class="my-4 bg-blue-50 rounded-xl p-5 border-l-4 border-blue-500">
                     <h4 class="font-bold text-lg mb-3 text-blue-800">${s.title}</h4>
                     <ul class="space-y-2">${s.content.map(item => `<li class="flex items-start gap-2"><span class="text-blue-600 mt-1">✅</span><span class="text-gray-700">${item}</span></li>`).join('')}</ul>
                 </div>`;
@@ -640,13 +664,13 @@ function renderLessonDetails() {
     document.getElementById('app').innerHTML = `
         <div class="gradient-teal rounded-3xl p-8 text-white mb-8 fade-in">
             <div class="flex items-center gap-4 mb-4 flex-wrap">
-                <button onclick="selectUnit(${state.unit.id})" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition">→ رجوع للوحدة</button>
+                <button onclick="selectUnit(${state.unit.id})" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition">← Back to Unit</button>
             </div>
             <div class="flex items-center gap-4 flex-wrap">
                 <span class="text-6xl">${state.lesson.icon}</span>
                 <div>
                     <h1 class="text-3xl md:text-4xl font-bold mb-2">${state.lesson.title}</h1>
-                    <p class="opacity-90">️ ${state.lesson.duration} • ${state.subject.name}${programInfo}</p>
+                    <p class="opacity-90">⏱️ ${state.lesson.duration} • ${state.subject.name}${programInfo}</p>
                 </div>
             </div>
         </div>
@@ -654,31 +678,39 @@ function renderLessonDetails() {
             <div class="md:col-span-2 space-y-6">
                 ${c ? `
                     <div class="bg-white rounded-2xl p-6 shadow-md">
-                        <h2 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">📚</span> مقدمة الدرس</h2>
-                        <div class="bg-gradient-to-r from-purple-50 to-indigo-50 border-r-4 border-purple-500 p-4 rounded-lg"><p class="text-gray-700 leading-relaxed">${c.intro}</p></div>
+                        <h2 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">📚</span> Lesson Introduction</h2>
+                        <div class="bg-gradient-to-r from-purple-50 to-indigo-50 border-l-4 border-purple-500 p-4 rounded-lg"><p class="text-gray-700 leading-relaxed">${c.intro}</p></div>
                     </div>
                     <div class="bg-white rounded-2xl p-6 shadow-md">
-                        <h2 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">💡</span> محتوى الدرس</h2>
+                        <h2 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">💡</span> Lesson Content</h2>
                         ${sectionsHTML}
                     </div>
-                ` : `<div class="bg-white rounded-2xl p-6 shadow-md"><h2 class="text-xl font-bold mb-4"><span class="text-2xl">📚</span> محتوى الدرس</h2><p class="text-gray-700">محتوى الدرس قيد التحضير...</p></div>`}
+                ` : `<div class="bg-white rounded-2xl p-6 shadow-md"><h2 class="text-xl font-bold mb-4"><span class="text-2xl">📚</span> Lesson Content</h2><p class="text-gray-700">Lesson content is under preparation...</p></div>`}
             </div>
             <div class="space-y-6">
                 <div class="bg-white rounded-2xl p-6 shadow-md sticky top-24">
-                    <h3 class="font-bold mb-4 flex items-center gap-2"><span>📋</span> معلومات الدرس</h3>
+                    <h3 class="font-bold mb-4 flex items-center gap-2"><span>📋</span> Lesson Information</h3>
                     <div class="space-y-3 text-sm">
-                        <div class="bg-gray-50 p-3 rounded-lg"><span class="text-xs text-gray-500">الوحدة</span><p class="font-semibold">${state.unit.name}</p></div>
-                        <div class="bg-gray-50 p-3 rounded-lg"><span class="text-xs text-gray-500">المدة الزمنية</span><p class="font-semibold">⏱️ ${state.lesson.duration}</p></div>
-                        <div class="bg-gray-50 p-3 rounded-lg"><span class="text-xs text-gray-500">الصف</span><p class="font-semibold">${state.grade.name}</p></div>
+                        <div class="bg-gray-50 p-3 rounded-lg"><span class="text-xs text-gray-500">Unit</span><p class="font-semibold">${state.unit.name}</p></div>
+                        <div class="bg-gray-50 p-3 rounded-lg"><span class="text-xs text-gray-500">Duration</span><p class="font-semibold">⏱️ ${state.lesson.duration}</p></div>
+                        <div class="bg-gray-50 p-3 rounded-lg"><span class="text-xs text-gray-500">Grade</span><p class="font-semibold">${state.grade.name}</p></div>
                     </div>
-                    <button onclick="openExam()" class="mt-6 w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white py-4 rounded-xl font-bold transition transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
-                        <span class="text-2xl">📝</span><span>${state.lesson.examTitle || 'ابدأ الاختبار'}</span><span>↗</span>
+                    
+                    <!-- Lesson Explanation Button -->
+                    <button onclick="openLesson()" class="mt-6 w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white py-4 rounded-xl font-bold transition transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
+                        <span class="text-2xl">📖</span><span>${state.lesson.lessonTitle || 'Lesson Explanation'}</span><span>↗</span>
                     </button>
-                    <p class="text-xs text-gray-500 mt-3 text-center">سيفتح في نافذة جديدة</p>
+                    <p class="text-xs text-gray-500 mt-2 text-center">Opens in new tab</p>
+                    
+                    <!-- Quiz Button -->
+                    <button onclick="openExam()" class="mt-3 w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white py-4 rounded-xl font-bold transition transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
+                        <span class="text-2xl">📝</span><span>${state.lesson.examTitle || 'Take the Quiz'}</span><span>↗</span>
+                    </button>
+                    <p class="text-xs text-gray-500 mt-2 text-center">Opens in new tab</p>
                 </div>
                 <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-6">
-                    <h4 class="font-bold text-amber-700 mb-2 flex items-center gap-2"><span>💡</span> نصيحة</h4>
-                    <p class="text-sm text-gray-700">راجع الدرس جيداً قبل البدء في الاختبار للحصول على أفضل نتيجة!</p>
+                    <h4 class="font-bold text-amber-700 mb-2 flex items-center gap-2"><span>💡</span> Tip</h4>
+                    <p class="text-sm text-gray-700">Review the lesson thoroughly before starting the quiz for the best results!</p>
                 </div>
             </div>
         </div>
