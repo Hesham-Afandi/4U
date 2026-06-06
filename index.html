@@ -213,81 +213,7 @@ const DB = {
                                 ]
                             }
                         },
-                        {
-                            id: 5,
-                            title: 'Lesson 5:  The Nucleus ',
-                            icon: '⚡',
-                            duration: '50 minutes',
-                            lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-ph-T3-U2L1/',
-                            lessonTitle: '📖 Lesson Explanation',
-                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
-                            examTitle: '📝 Take the Quiz',
-                            content: {
-                                intro: 'The energy of an ejected electron is simply the energy of the incoming photon minus the "toll" required to escape the metal.',
-                                sections: [
-                                    { title: 'The Fundamental Equation', type: 'formula', content: 'KE_max = hf - hf₀' },
-                                    { title: 'Components', type: 'bullets', content: ['KE_max: Maximum kinetic energy of the electron', 'hf: Incident energy (depends entirely on frequency/color of light)', 'hf₀ = W: Work function (minimum energy to free the electron)', 'Work function is a fixed value unique to each metal'] },
-                                    { title: 'Graph Properties (KE vs f)', type: 'bullets', content: ['Parallel lines = identical slope for all metals', "Slope = Planck's constant h (universal law of nature)", 'X-intercept = threshold frequency f₀', 'Equation: KE = hf - W in the form y = mx + b'] }
-                                ]
-                            }
-                        },
-                        {
-                            id: 6,
-                            title: 'Lesson 6: Tools - Electron Volt & Shortcut Formula',
-                            icon: '🛠️',
-                            duration: '40 minutes',
-                            lessonUrl: 'https://hesham-afandi.github.io/Particle-model-of-Wave/',
-                            lessonTitle: '📖 Lesson Explanation',
-                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
-                            examTitle: '📝 Take the Quiz',
-                            content: {
-                                intro: 'Joules are too large for atomic systems. Physicists use the electron volt (eV) - the energy of one electron accelerated across one volt.',
-                                sections: [
-                                    { title: 'Basic Conversion', type: 'formula', content: '1 eV = 1.602 × 10⁻¹⁹ J' },
-                                    { title: 'The Magic Shortcut Formula', type: 'formula', content: 'E (eV) = 1240 / λ (nm)' },
-                                    { title: 'How the Shortcut Works', type: 'text', content: "Since h (Planck's constant) and c (speed of light) are both constants, they can be combined into one useful number: hc = 1240 eV·nm. If you know the wavelength λ in nanometers, simply divide 1240 by it to instantly find the photon's energy in eV!" }
-                                ]
-                            }
-                        },
-                        {
-                            id: 7,
-                            title: 'Lesson 7: Compton Effect & Photon Momentum',
-                            icon: '🎱',
-                            duration: '55 minutes',
-                            lessonUrl: 'https://hesham-afandi.github.io/Particle-model-of-Wave/',
-                            lessonTitle: '📖 Lesson Explanation',
-                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
-                            examTitle: '📝 Take the Quiz',
-                            content: {
-                                intro: "If light is a physical particle, it must have momentum. In 1922, Arthur Compton proved that X-ray photons can physically crash into electrons, transferring both energy and momentum.",
-                                sections: [
-                                    { title: "Compton's Discovery", type: 'text', content: "The scattered photon has a noticeably longer wavelength (λ') than when it arrived. Since wavelength is inversely proportional to energy, this shift acts as irrefutable proof that the photon lost energy to the electron during the collision." },
-                                    { title: 'Billiard Balls at the Atomic Scale', type: 'text', content: 'Compton discovered that photon-electron collisions obey the exact same laws of conservation of momentum as elastic collisions in the macro world.' },
-                                    { title: 'Momentum Without Mass', type: 'bullets', content: ['Classical physics: p = mv (momentum = mass × velocity)', 'Photon is massless, but has momentum stored in its wavelength', 'Equation: p = h/λ', 'Short wavelength = high momentum (X-rays)', 'Long wavelength = low momentum (visible light)'] },
-                                    { title: 'Limits of Observation', type: 'text', content: 'Because h is incredibly small, a measurable shift in momentum is only noticeable with extremely short electromagnetic waves, like X-rays (wavelengths less than 10⁻² nm).' }
-                                ]
-                            }
-                        },
-                        {
-                            id: 8,
-                            title: 'Lesson 8: Wave-Particle Duality',
-                            icon: '🌊',
-                            duration: '45 minutes',
-                            lessonUrl: 'https://hesham-afandi.github.io/Particle-model-of-Wave/',
-                            lessonTitle: '📖 Lesson Explanation',
-                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
-                            examTitle: '📝 Take the Quiz',
-                            content: {
-                                intro: 'Light travels through space like a continuous wave, but interacts with matter like a discrete particle. The classical and quantum worlds are permanently bridged.',
-                                sections: [
-                                    { title: 'The New Reality', type: 'table', headers: ['The Wave', 'The Particle'], rows: [['Wavelength (λ)', 'Photons'], ['Frequency (f)', 'Energy Packets (E = hf)'], ['Continuous Fields', 'Momentum (p = h/λ)']] },
-                                    { title: 'The Constant That Bridges Two Halves of Reality', type: 'formula', content: 'h = 6.63 × 10⁻³⁴ J·Hz⁻¹' },
-                                    { title: 'Summary', type: 'bullets', content: ['Light shows wave behavior in propagation and interference', 'Light shows particle behavior in absorption and emission', 'Both descriptions are necessary for complete understanding', 'This is the essence of quantum mechanics'] }
-                                ]
-                            }
-                        }
-                    ]
-                },
+                       
                 {
                     id: 2,
                     name: 'Unit 2: Nuclear Physics',
@@ -295,7 +221,7 @@ const DB = {
                     color: 'from-rose-500 to-red-600',
                     description: 'Radioactivity, fission, and nuclear fusion',
                     lessons: [
-                        { id: 1, title: 'Lesson 1: Radioactivity', icon: '☢️', duration: '50 minutes', lessonUrl: 'https://hesham-afandi.github.io/Particle-model-of-Wave/', lessonTitle: '📖 Lesson Explanation', examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/', examTitle: '📝 Take the Quiz' },
+                        { id: 1, title: 'Lesson 1: The Nucleus', icon: '☢️', duration: '50 minutes', lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-ph-T3-U2L1/', lessonTitle: '📖 Lesson Explanation', examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/', examTitle: '📝 Take the Quiz' },
                         { id: 2, title: 'Lesson 2: Fission and Fusion', icon: '💥', duration: '65 minutes', lessonUrl: 'https://hesham-afandi.github.io/Particle-model-of-Wave/', lessonTitle: '📖 Lesson Explanation', examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/', examTitle: '📝 Take the Quiz' }
                     ]
                 }
