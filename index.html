@@ -173,7 +173,7 @@ const DB = {
                         },
                         {
                             id: 3,
-                            title: 'Lesson 3: Bohr’s Model of the Atom',
+                            title: 'Lesson 3: Bohr's Model of the Atom',
                             icon: '💡',
                             duration: '55 minutes',
                             lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-ph-T3-U1L3/',
@@ -363,14 +363,7 @@ const DB = {
                             }
                         },
                         {
-                    id: 6,
-                    name: 'Unit 1: Integration',
-                    icon: 'Σ',
-                    color: 'from-blue-500 to-indigo-600',
-                    description: 'The architectural blueprints of calculus - automating massive repetitive additions',
-                    lessons: [
-                        {
-                            id: 1,
+                            id: 6,
                             title: 'Lesson 6: Integration by Substitution',
                             icon: 'Σ',
                             duration: '50 minutes',
@@ -390,8 +383,7 @@ const DB = {
                                     { title: 'Key Insight', type: 'text', content: 'The dummy variable i acts purely as a placeholder to generate the sequence, drastically reducing the notation required.' }
                                 ]
                             }
-                        },
-                        {
+                        }
                     ]
                 },
                 {
@@ -504,6 +496,29 @@ const DB = {
                                     { title: 'Example: Exact Match', type: 'text', content: '∫(sec²x / tan x) dx - Notice the top is the exact derivative of the bottom. The structure instantly collapses to: ln|tan x| + C' }
                                 ]
                             }
+                        },
+                        {
+                            id: 6,
+                            title: 'Lesson 6: Applications of Integration',
+                            icon: '🎯',
+                            duration: '65 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-math-T3-U2L6/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Math-En-T3/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'Integration is not just abstract mathematics - it has powerful real-world applications in physics, engineering, and economics.',
+                                sections: [
+                                    { title: 'Area Between Curves', type: 'text', content: 'The definite integral can calculate the exact area enclosed between two curves by integrating the difference of their functions.' },
+                                    { title: 'Volume of Revolution', type: 'text', content: 'By rotating a curve around an axis, we can use integration to find the volume of the resulting 3D solid using the disk or shell method.' },
+                                    { title: 'Physical Applications', type: 'bullets', content: [
+                                        'Work done by a variable force',
+                                        'Center of mass and centroid calculations',
+                                        'Fluid pressure and force on surfaces',
+                                        'Arc length of curves'
+                                    ]}
+                                ]
+                            }
                         }
                     ]
                 },
@@ -600,33 +615,6 @@ const DB = {
                                         'The Result: ...equals the exact height of the original curve at that boundary point'
                                     ]},
                                     { title: 'Key Insight', type: 'text', content: 'Differentiating an integral simply returns the original function. Every continuous function has a readily available antiderivative.' }
-                                ]
-                            }
-                        },
-                        {
-                            id: 5,
-                            title: 'Lesson 5: The Chain Rule Engine & Applications',
-                            icon: '⚙️',
-                            duration: '65 minutes',
-                            lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-math-T3-U3L5/',
-                            lessonTitle: '📖 Lesson Explanation',
-                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Math-En-T3/',
-                            examTitle: '📝 Take the Quiz',
-                            content: {
-                                intro: 'Advanced mechanics for differentiating integrals with variable upper bounds.',
-                                sections: [
-                                    { title: 'Example: d/dx ∫₀ˣ² cos(t) dt', type: 'bullets', content: [
-                                        'Step 1 - Unlock the Shell: Differentiate the integral, replacing t with upper bound → cos(x²)',
-                                        'Step 2 - Extract the Engine: Multiply by the derivative of the inner boundary → 2x',
-                                        'Step 3 - Final Output: 2x·cos(x²)'
-                                    ]},
-                                    { title: 'The Calculus Coin Matrix', type: 'table', headers: ['', 'FTC Part 1', 'FTC Part 2'], rows: [
-                                        ['The Goal', 'Calculate a specific, static number', 'Derive a dynamic new function'],
-                                        ['The Input', 'Definite, fixed boundaries [a,b]', 'A variable upper boundary [a,x]'],
-                                        ['Core Operation', 'Evaluate the Antiderivative', 'Differentiate the Integral'],
-                                        ['Formula', '∫ₐᵇf(x)dx = F(b)-F(a)', 'd/dx ∫ₐˣf(t)dt = f(x)']
-                                    ]},
-                                    { title: 'Mutual Destruction, Mutual Creation', type: 'text', content: 'Take the derivative, then integrate the result → Returns exactly to f(x). Take the integral, then differentiate the result → Returns exactly to f(x). The two parts are two sides of a single coin.' }
                                 ]
                             }
                         }
