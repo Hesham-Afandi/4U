@@ -28,6 +28,7 @@
 </head>
 <body class="bg-gray-50 min-h-screen">
 
+<!-- Top Bar -->
 <div class="gradient-primary text-white py-3 px-6 shadow-lg sticky top-0 z-50">
     <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-3">
         <div class="flex items-center gap-3">
@@ -44,6 +45,7 @@
     </div>
 </div>
 
+<!-- Breadcrumbs -->
 <div id="breadcrumbs" class="max-w-7xl mx-auto px-6 py-4 hidden">
     <div class="flex items-center gap-2 text-sm text-gray-600 flex-wrap">
         <button onclick="showHome()" class="hover:text-indigo-600">🏠 الرئيسية</button>
@@ -64,8 +66,10 @@
     </div>
 </div>
 
+<!-- Main Container -->
 <div id="app" class="max-w-7xl mx-auto px-4 md:px-6 pb-12"></div>
 
+<!-- Footer -->
 <footer class="bg-gray-900 text-white py-8 mt-16">
     <div class="max-w-7xl mx-auto px-6 text-center">
         <p class="text-2xl mb-2">📚✨</p>
@@ -75,6 +79,7 @@
 </footer>
 
 <script>
+// ==================== DATABASE ====================
 const DB = {
     terms: [
         { id: 1, name: 'الترم الأول', icon: '📘' },
@@ -114,7 +119,10 @@ const DB = {
                     description: 'How impossible anomalies shattered classical wave theory and revealed the particle nature of light',
                     lessons: [
                         {
-                            id: 1, title: 'Lesson 1: Particle Model of Wave', icon: '🔥', duration: '45 minutes',
+                            id: 1,
+                            title: 'Lesson 1: Particle Model of Wave',
+                            icon: '🔥',
+                            duration: '45 minutes',
                             lessonUrl: 'https://hesham-afandi.github.io/Particle-model-ofWave/',
                             lessonTitle: '📖 Lesson Explanation',
                             examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
@@ -124,7 +132,8 @@ const DB = {
                                 sections: [
                                     { title: 'Classical Prediction', type: 'text', content: 'Electromagnetic wave theory predicted that energy would become infinite at high frequencies - which is physically impossible.' },
                                     { title: 'Experimental Observation', type: 'text', content: 'Actual experiments showed that energy reaches a peak and then drops off sharply - contradicting the theoretical prediction.' },
-                                    { title: 'Comparison: Prediction vs Reality', type: 'table',
+                                    { 
+                                        title: 'Comparison: Prediction vs Reality', type: 'table',
                                         headers: ['Mathematical Prediction', 'Observed Reality'],
                                         rows: [
                                             ['Infinite energy at high frequencies (impossible)', 'Energy peaks then decreases'],
@@ -136,7 +145,10 @@ const DB = {
                             }
                         },
                         {
-                            id: 2, title: 'Lesson 2: Matter Waves', icon: '⚛️', duration: '60 minutes',
+                            id: 2,
+                            title: "Lesson 2: Matter Waves",
+                            icon: '⚛️',
+                            duration: '60 minutes',
                             lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-ph-T3-U1L2/',
                             lessonTitle: '📖 Lesson Explanation',
                             examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
@@ -146,7 +158,8 @@ const DB = {
                                 sections: [
                                     { title: 'The Fundamental Equation', type: 'formula', content: 'E = nhf' },
                                     { title: "Planck's Constant", type: 'text', content: 'h = 6.63 × 10⁻³⁴ J·Hz⁻¹' },
-                                    { title: "Comparison: Classical vs Planck", type: 'table',
+                                    { 
+                                        title: "Comparison: Classical vs Planck", type: 'table',
                                         headers: ['Classical Theory', "Planck's Theory"],
                                         rows: [
                                             ['Energy is continuous', 'Energy is quantized (packets)'],
@@ -159,7 +172,10 @@ const DB = {
                             }
                         },
                         {
-                            id: 3, title: "Lesson 3: Bohr's Model of the Atom", icon: '💡', duration: '55 minutes',
+                            id: 3,
+                            title: 'Lesson 3: Bohr’s Model of the Atom',
+                            icon: '💡',
+                            duration: '55 minutes',
                             lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-ph-T3-U1L3/',
                             lessonTitle: '📖 Lesson Explanation',
                             examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
@@ -168,7 +184,8 @@ const DB = {
                                 intro: 'Shining light on a metal plate should theoretically heat it up and slowly eject electrons. Instead, experiments showed a baffling, selective behavior that classical physics could not explain.',
                                 sections: [
                                     { title: 'The Experiment', type: 'text', content: 'High-frequency light (ultraviolet): Electrons eject instantly - current flows. Low-frequency light (visible red): No electrons eject, regardless of light intensity.' },
-                                    { title: 'Wave Theory vs Quantum Reality', type: 'table',
+                                    { 
+                                        title: 'Wave Theory vs Quantum Reality', type: 'table',
                                         headers: ['Wave Theory (Prediction)', 'Quantum Reality (Observation)'],
                                         rows: [
                                             ['Bright light of ANY frequency will eject electrons', 'Intensity only changes number of electrons, but only if above threshold frequency f₀'],
@@ -180,7 +197,10 @@ const DB = {
                             }
                         },
                         {
-                            id: 4, title: 'Lesson 4: The Quantum Model of the Atom', icon: '🔆', duration: '65 minutes',
+                            id: 4,
+                            title: "Lesson 4: The Quantum Model of the Atom",
+                            icon: '🔆',
+                            duration: '65 minutes',
                             lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-ph-T3-U1L4/',
                             lessonTitle: '📖 Lesson Explanation',
                             examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Phy-En-T3/',
@@ -194,10 +214,10 @@ const DB = {
                             }
                         }
                     ]
-                },
+                },    
                 {
                     id: 2,
-                    name: 'Unit 2: Nuclear and Particle Physics',
+                    name: 'Unit 2: Nuclear and particle Physics',
                     icon: '☢️',
                     color: 'from-rose-500 to-red-600',
                     description: 'Radioactivity, fission, and nuclear fusion',
@@ -212,7 +232,11 @@ const DB = {
             isEnglish: false,
             units: [
                 {
-                    id: 1, name: 'الوحدة الأولى: الميكانيكا الأساسية', icon: '⚙️', color: 'from-blue-500 to-cyan-600', description: 'مراجعة وتأسيس في الميكانيكا',
+                    id: 1,
+                    name: 'الوحدة الأولى: الميكانيكا الأساسية',
+                    icon: '⚙️',
+                    color: 'from-blue-500 to-cyan-600',
+                    description: 'مراجعة وتأسيس في الميكانيكا',
                     lessons: [
                         { id: 1, title: 'الدرس الأول: الحركة في خط مستقيم', icon: '🏃', duration: '50 دقيقة', lessonUrl: '#', lessonTitle: '📖 شرح الدرس', examUrl: '#', examTitle: '📝 ابدأ الاختبار' }
                     ]
@@ -226,18 +250,25 @@ const DB = {
             ]
         },
 
+        // ==================== NEW: MATH - INSPIRE (Grade 12, Term 3) ====================
         'math-12-inspire-3': {
             isEnglish: true,
             units: [
                 {
-                    id: 1, name: 'Unit 1: Sums & Sigma Notation', icon: 'Σ', color: 'from-blue-500 to-indigo-600',
+                    id: 1,
+                    name: 'Unit 1: Integration',
+                    icon: 'Σ',
+                    color: 'from-blue-500 to-indigo-600',
                     description: 'The architectural blueprints of calculus - automating massive repetitive additions',
                     lessons: [
                         {
-                            id: 1, title: 'Lesson 1: Anatomy of Sigma Notation', icon: 'Σ', duration: '50 minutes',
-                            lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-math-T3-U1L1/',
+                            id: 1,
+                            title: 'Lesson 1: Antiderivatives',
+                            icon: 'Σ',
+                            duration: '50 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.1/',
                             lessonTitle: '📖 Lesson Explanation',
-                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Math-En-T3/',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.1-exam/',
                             examTitle: '📝 Take the Quiz',
                             content: {
                                 intro: 'Brute-force addition is no longer possible for thousands of terms. We need a machine to automate summation. Sigma notation is the engine that powers this automation.',
@@ -253,10 +284,13 @@ const DB = {
                             }
                         },
                         {
-                            id: 2, title: "Lesson 2: Gauss's Historical Discovery", icon: '🧠', duration: '55 minutes',
-                            lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-math-T3-U1L2/',
+                            id: 2,
+                            title: 'Lesson 2: Sums and Sigma Notation',
+                            icon: '🧠',
+                            duration: '55 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.2/',
                             lessonTitle: '📖 Lesson Explanation',
-                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Math-En-T3/',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.2-exam/',
                             examTitle: '📝 Take the Quiz',
                             content: {
                                 intro: 'At age 10, Carl Friedrich Gauss was tasked with adding all numbers from 1 to 100. Rather than brute-force counting, he invented a visual shortcut.',
@@ -272,10 +306,13 @@ const DB = {
                             }
                         },
                         {
-                            id: 3, title: 'Lesson 3: Rules of Linearity', icon: '⚖️', duration: '45 minutes',
-                            lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-math-T3-U1L3/',
+                            id: 3,
+                            title: 'Lesson 3: Area',
+                            icon: '⚖️',
+                            duration: '45 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.3/',
                             lessonTitle: '📖 Lesson Explanation',
-                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Math-En-T3/',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.3-exam/',
                             examTitle: '📝 Take the Quiz',
                             content: {
                                 intro: 'We never need to calculate complex expressions directly. We dismantle them until they match our basic Toolkit.',
@@ -285,15 +322,83 @@ const DB = {
                                     { title: 'Core Principle', type: 'text', content: 'Constants (c and d) act as multipliers. They can be safely pulled entirely outside the Sigma engine without altering the mathematics.' }
                                 ]
                             }
+                        },
+                        {
+                            id: 4,
+                            title: 'Lesson 4: The Definite Integral',
+                            icon: 'ƒ',
+                            duration: '50 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.4/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.4-exam/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'We have successfully automated the calculation of distinct geometric data points simultaneously.',
+                                sections: [
+                                    { title: 'Phase 1: Define the Interval', type: 'bullets', content: ['Identify the range of values', 'Determine the number of steps (n)', 'Calculate the interval multiplier'] },
+                                    { title: 'Phase 2: Construct the Blueprint', type: 'text', content: 'Substitute x = (interval·i) into the function and write the complete Sigma blueprint.' },
+                                    { title: 'Phase 3: Execute the Machinery', type: 'text', content: 'Extract constants, apply Gauss formulas, and solve using standard arithmetic.' }
+                                ]
+                            }
+                        },
+                        {
+                            id: 5,
+                            title: 'Lesson 5: The Fundamental Theorem of Calculus',
+                            icon: '🎯',
+                            duration: '60 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.5/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.5-exam/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'How do we prove a formula works for infinite cases without checking them all manually? We use the domino effect.',
+                                sections: [
+                                    { title: 'The Three Phases of Induction', type: 'bullets', content: [
+                                        'Phase 1 - Base Case (n=1): Proving the statement is true for the first specific value',
+                                        'Phase 2 - Inductive Hypothesis (n=k): Assuming the formula works for an arbitrary point k',
+                                        'Phase 3 - Inductive Step (n=k+1): Proving that if k falls, it mathematically forces k+1 to fall'
+                                    ]},
+                                    { title: 'Key Insight', type: 'text', content: 'This guarantees the chain reaction never stops. The formula is mathematically proven for all positive integers!' }
+                                ]
+                            }
+                        },
+                        {
+                            id: 6,
+                            title: 'Lesson 6: Integration by Substitution',
+                            icon: 'Σ',
+                            duration: '50 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.6/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.6-exam/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'Integration by substitution is the reverse of the Chain Rule. It allows us to integrate complex composite functions by identifying a hidden inner function.',
+                                sections: [
+                                    { title: 'The 5-Step Substitution Engine', type: 'bullets', content: [
+                                        'Step 1: Choose the deep/inner expression as u',
+                                        'Step 2: Differentiate to find du/dx and solve for du',
+                                        'Step 3: Substitute all x terms entirely with u and du',
+                                        'Step 4: Integrate the newly simplified integral with respect to u',
+                                        'Step 5: Substitute the original x-expression back in place of u'
+                                    ]},
+                                    { title: 'Key Insight', type: 'text', content: 'If differentiation uses the Chain Rule to multiply by the inner derivative, integration must find and absorb that derivative to rebuild the original function.' }
+                                ]
+                            }
                         }
                     ]
                 },
                 {
-                    id: 2, name: 'Unit 2: Indefinite Integrals', icon: '∫', color: 'from-purple-500 to-pink-600',
+                    id: 2,
+                    name: 'Unit 2: Antiderivatives & Indefinite Integrals',
+                    icon: '∫',
+                    color: 'from-purple-500 to-pink-600',
                     description: 'Reversing the mathematics of change - reconstructing position from acceleration',
                     lessons: [
                         {
-                            id: 1, title: 'Lesson 1: The Cognitive Shift - Reversing Change', icon: '🔄', duration: '50 minutes',
+                            id: 1,
+                            title: 'Lesson 1: The Cognitive Shift - Reversing Change',
+                            icon: '🔄',
+                            duration: '50 minutes',
                             lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-math-T3-U2L1/',
                             lessonTitle: '📖 Lesson Explanation',
                             examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Math-En-T3/',
@@ -310,8 +415,34 @@ const DB = {
                             }
                         },
                         {
-                            id: 2, title: 'Lesson 2: The Power Rule & The Gap at x⁻¹', icon: '⚡', duration: '50 minutes',
+                            id: 2,
+                            title: 'Lesson 2: The Multiverse of +C',
+                            icon: '🌌',
+                            duration: '55 minutes',
                             lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-math-T3-U2L2/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Math-En-T3/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'Acceleration tells you how you are changing, not where you started. The +C represents an infinite "multiverse" of parallel trajectories.',
+                                sections: [
+                                    { title: 'Theorem 1.1', type: 'text', content: 'If F and G are both antiderivatives of f on an interval, then G(x) = F(x) + C for some constant C.' },
+                                    { title: 'The Physical Truth', type: 'text', content: 'The +C represents an infinite multiverse of parallel trajectories (vertical shifts). They all share the exact same rate of change.' },
+                                    { title: 'Anatomy of the Integral', type: 'bullets', content: [
+                                        '∫ The Integral Sign: Historically an elongated \'S\', indicating a continuous sum',
+                                        'f(x) The Integrand: The rate of change we are starting with',
+                                        'dx Variable of Integration: Which variable we are integrating with respect to',
+                                        '+C Constant of Integration: The unknown starting parameter'
+                                    ]}
+                                ]
+                            }
+                        },
+                        {
+                            id: 3,
+                            title: 'Lesson 3: The Power Rule & The Gap at x⁻¹',
+                            icon: '⚡',
+                            duration: '50 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-math-T3-U2L3/',
                             lessonTitle: '📖 Lesson Explanation',
                             examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Math-En-T3/',
                             examTitle: '📝 Take the Quiz',
@@ -325,8 +456,11 @@ const DB = {
                             }
                         },
                         {
-                            id: 3, title: 'Lesson 3: The Dictionary of Reversal', icon: '📖', duration: '55 minutes',
-                            lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-math-T3-U2L3/',
+                            id: 4,
+                            title: 'Lesson 4: The Dictionary of Reversal',
+                            icon: '📖',
+                            duration: '55 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-math-T3-U2L4/',
                             lessonTitle: '📖 Lesson Explanation',
                             examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Math-En-T3/',
                             examTitle: '📝 Take the Quiz',
@@ -345,15 +479,62 @@ const DB = {
                                     ]}
                                 ]
                             }
+                        },
+                        {
+                            id: 5,
+                            title: 'Lesson 5: Linearity & The Reverse Chain Rule',
+                            icon: '🔗',
+                            duration: '60 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-math-T3-U2L5/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Math-En-T3/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'Recognizing structural linearity allows us to dismantle complex integrals into manageable pieces.',
+                                sections: [
+                                    { title: 'Theorem 1.3: Linearity', type: 'formula', content: '∫[a·f(x) + b·g(x)] dx = a∫f(x)dx + b∫g(x)dx' },
+                                    { title: 'Theorem 1.4: Reverse Chain Rule', type: 'formula', content: '∫f\'(x)/f(x) dx = ln|f(x)| + C' },
+                                    { title: 'Example: Exact Match', type: 'text', content: '∫(sec²x / tan x) dx - Notice the top is the exact derivative of the bottom. The structure instantly collapses to: ln|tan x| + C' }
+                                ]
+                            }
+                        },
+                        {
+                            id: 6,
+                            title: 'Lesson 6: Applications of Integration',
+                            icon: '🎯',
+                            duration: '65 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-math-T3-U2L6/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Math-En-T3/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'Integration is not just abstract mathematics - it has powerful real-world applications in physics, engineering, and economics.',
+                                sections: [
+                                    { title: 'Area Between Curves', type: 'text', content: 'The definite integral can calculate the exact area enclosed between two curves by integrating the difference of their functions.' },
+                                    { title: 'Volume of Revolution', type: 'text', content: 'By rotating a curve around an axis, we can use integration to find the volume of the resulting 3D solid using the disk or shell method.' },
+                                    { title: 'Physical Applications', type: 'bullets', content: [
+                                        'Work done by a variable force',
+                                        'Center of mass and centroid calculations',
+                                        'Fluid pressure and force on surfaces',
+                                        'Arc length of curves'
+                                    ]}
+                                ]
+                            }
                         }
                     ]
                 },
                 {
-                    id: 3, name: 'Unit 3: Definite Integrals & Fundamental Theorem', icon: '∫ᵇₐ', color: 'from-emerald-500 to-teal-600',
+                    id: 3,
+                    name: 'Unit 3: Definite Integrals & The Fundamental Theorem',
+                    icon: '∫ᵇₐ',
+                    color: 'from-emerald-500 to-teal-600',
                     description: 'The grand unification of areas - from Riemann sums to exact truth',
                     lessons: [
                         {
-                            id: 1, title: 'Lesson 1: From Riemann Sums to Exactness', icon: '∞', duration: '55 minutes',
+                            id: 1,
+                            title: 'Lesson 1: From Riemann Sums to Exactness',
+                            icon: '∞',
+                            duration: '55 minutes',
                             lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-math-T3-U3L1/',
                             lessonTitle: '📖 Lesson Explanation',
                             examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Math-En-T3/',
@@ -372,7 +553,10 @@ const DB = {
                             }
                         },
                         {
-                            id: 2, title: 'Lesson 2: Signed Area vs Total Area', icon: '📊', duration: '50 minutes',
+                            id: 2,
+                            title: 'Lesson 2: Signed Area vs Total Area',
+                            icon: '📊',
+                            duration: '50 minutes',
                             lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-math-T3-U3L2/',
                             lessonTitle: '📖 Lesson Explanation',
                             examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Math-En-T3/',
@@ -392,7 +576,10 @@ const DB = {
                             }
                         },
                         {
-                            id: 3, title: 'Lesson 3: The Fundamental Theorem of Calculus', icon: '🏆', duration: '65 minutes',
+                            id: 3,
+                            title: 'Lesson 3: The Grand Unification - FTC Part 1',
+                            icon: '🏆',
+                            duration: '65 minutes',
                             lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-math-T3-U3L3/',
                             lessonTitle: '📖 Lesson Explanation',
                             examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Math-En-T3/',
@@ -409,17 +596,43 @@ const DB = {
                                     { title: 'Key Insight', type: 'text', content: 'To evaluate a definite integral, simply find the antiderivative and subtract the start state from the end state. No infinite rectangle limits required.' }
                                 ]
                             }
+                        },
+                        {
+                            id: 4,
+                            title: 'Lesson 4: FTC Part 2 - The Derivative of an Integral',
+                            icon: '🔄',
+                            duration: '60 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-math-T3-U3L4/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Math-En-T3/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'What if the upper limit of an integral is a variable? The definite integral is no longer a static number - it\'s an Area Function.',
+                                sections: [
+                                    { title: 'The Revelation', type: 'formula', content: 'd/dx ∫ₐˣ f(t)dt = f(x)' },
+                                    { title: 'The Components', type: 'bullets', content: [
+                                        'The Outer Operation: The rate of change (derivative) of...',
+                                        'The Accumulator: ...an expanding area function...',
+                                        'The Result: ...equals the exact height of the original curve at that boundary point'
+                                    ]},
+                                    { title: 'Key Insight', type: 'text', content: 'Differentiating an integral simply returns the original function. Every continuous function has a readily available antiderivative.' }
+                                ]
+                            }
                         }
                     ]
                 }
             ]
         },
 
+        // ==================== NEW: MATH - BRIDGE (Grade 12, Term 3) ====================
         'math-12-bridge-3': {
             isEnglish: false,
             units: [
                 {
-                    id: 1, name: 'الوحدة الأولى: المجاميع ورمز سيجما', icon: 'Σ', color: 'from-blue-500 to-indigo-600',
+                    id: 1,
+                    name: 'الوحدة الأولى: المجاميع ورمز سيجما',
+                    icon: 'Σ',
+                    color: 'from-blue-500 to-indigo-600',
                     description: 'الأساس الهندسي للتفاضل والتكامل - أتمتة الجمع المتكرر',
                     lessons: [
                         { id: 1, title: 'الدرس الأول: تشريح رمز سيجما', icon: 'Σ', duration: '50 دقيقة', lessonUrl: 'https://hesham-afandi.github.io/12bridge-math-T3-U1L1/', lessonTitle: '📖 شرح الدرس', examUrl: 'https://hesham-afandi.github.io/12Bridge-Math-Ar-T3/', examTitle: '📝 ابدأ الاختبار' },
@@ -428,7 +641,10 @@ const DB = {
                     ]
                 },
                 {
-                    id: 2, name: 'الوحدة الثانية: التكاملات غير المحددة', icon: '∫', color: 'from-purple-500 to-pink-600',
+                    id: 2,
+                    name: 'الوحدة الثانية: التكاملات غير المحددة',
+                    icon: '∫',
+                    color: 'from-purple-500 to-pink-600',
                     description: 'عكس رياضيات التغير - إعادة بناء الموضع من التسارع',
                     lessons: [
                         { id: 1, title: 'الدرس الأول: التحول المعرفي - عكس التغير', icon: '🔄', duration: '50 دقيقة', lessonUrl: 'https://hesham-afandi.github.io/12bridge-math-T3-U2L1/', lessonTitle: '📖 شرح الدرس', examUrl: 'https://hesham-afandi.github.io/12Bridge-Math-Ar-T3/', examTitle: '📝 ابدأ الاختبار' },
@@ -437,7 +653,10 @@ const DB = {
                     ]
                 },
                 {
-                    id: 3, name: 'الوحدة الثالثة: التكاملات المحددة والنظرية الأساسية', icon: '∫ᵇₐ', color: 'from-emerald-500 to-teal-600',
+                    id: 3,
+                    name: 'الوحدة الثالثة: التكاملات المحددة والنظرية الأساسية',
+                    icon: '∫ᵇₐ',
+                    color: 'from-emerald-500 to-teal-600',
                     description: 'التوحيد الكبير للمساحات - من مجاميع ريمان إلى الحقيقة المطلقة',
                     lessons: [
                         { id: 1, title: 'الدرس الأول: من مجاميع ريمان إلى الدقة المطلقة', icon: '∞', duration: '55 دقيقة', lessonUrl: 'https://hesham-afandi.github.io/12bridge-math-T3-U3L1/', lessonTitle: '📖 شرح الدرس', examUrl: 'https://hesham-afandi.github.io/12Bridge-Math-Ar-T3/', examTitle: '📝 ابدأ الاختبار' },
@@ -450,6 +669,7 @@ const DB = {
     }
 };
 
+// ==================== STATE ====================
 let state = { term: null, stream: null, program: null, grade: null, subject: null, unit: null, lesson: null };
 
 function getCurriculumKey() {
@@ -466,7 +686,9 @@ function getSubjectKey(subjectId) {
 function isCurrentEnglish() {
     return state.program && state.program.isEnglish;
 }
-    function showHome() {
+
+// ==================== ROUTER ====================
+function showHome() {
     state = { term: null, stream: null, program: null, grade: null, subject: null, unit: null, lesson: null };
     updateBreadcrumbs();
     renderHome();
@@ -551,6 +773,7 @@ function openLesson() {
     }
 }
 
+// ==================== BREADCRUMBS ====================
 function updateBreadcrumbs() {
     const bc = document.getElementById('breadcrumbs');
     bc.classList.remove('hidden');
@@ -575,6 +798,7 @@ function updateBreadcrumbs() {
     setBC('bc-lesson-sep', 'bc-lesson-btn', state.lesson ? state.lesson.title : '', !state.lesson, state.lesson ? () => selectLesson(state.lesson.id) : null);
 }
 
+// ==================== RENDERERS ====================
 function renderHome() {
     document.getElementById('app').innerHTML = `
         <div class="gradient-primary rounded-3xl p-8 md:p-12 text-white mb-8 fade-in">
@@ -855,6 +1079,7 @@ function renderLessonDetails() {
     `;
 }
 
+// Initialize
 showHome();
 </script>
 </body>
