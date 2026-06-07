@@ -525,19 +525,19 @@ const DB = {
                 },
                 {
                     id: 3,
-                    name: 'Unit 3: Definite Integrals & The Fundamental Theorem',
+                    name: 'Unit 3:Integration Techniques',
                     icon: '∫ᵇₐ',
                     color: 'from-emerald-500 to-teal-600',
                     description: 'The grand unification of areas - from Riemann sums to exact truth',
                     lessons: [
                         {
                             id: 1,
-                            title: 'Lesson 1: From Riemann Sums to Exactness',
+                            title: 'Lesson 1: Review of Formulas and Techniques',
                             icon: '∞',
                             duration: '55 minutes',
-                            lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-math-T3-U3L1/',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-7.1/',
                             lessonTitle: '📖 Lesson Explanation',
-                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Math-En-T3/',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-7.1-exam/',
                             examTitle: '📝 Take the Quiz',
                             content: {
                                 intro: 'The Greek Σ and the stretched S of the integral both signify a \'Sum\'. The concept remains identical; only the resolution changes.',
@@ -554,12 +554,12 @@ const DB = {
                         },
                         {
                             id: 2,
-                            title: 'Lesson 2: Signed Area vs Total Area',
+                            title: 'Lesson 2: Integration by Parts',
                             icon: '📊',
                             duration: '50 minutes',
-                            lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-math-T3-U3L2/',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-7.2/',
                             lessonTitle: '📖 Lesson Explanation',
-                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Math-En-T3/',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-7.2-exam/',
                             examTitle: '📝 Take the Quiz',
                             content: {
                                 intro: 'Functions above the x-axis yield positive integral values. Functions below yield negative values.',
@@ -577,12 +577,12 @@ const DB = {
                         },
                         {
                             id: 3,
-                            title: 'Lesson 3: The Grand Unification - FTC Part 1',
+                            title: 'Lesson 3: Trigonometric Techniques of Integration',
                             icon: '🏆',
                             duration: '65 minutes',
-                            lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-math-T3-U3L3/',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-7.3/',
                             lessonTitle: '📖 Lesson Explanation',
-                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Math-En-T3/',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-7.3-exam/',
                             examTitle: '📝 Take the Quiz',
                             content: {
                                 intro: 'The breakthrough: bypassing infinite addition by finding the function\'s mathematical origin.',
@@ -599,12 +599,12 @@ const DB = {
                         },
                         {
                             id: 4,
-                            title: 'Lesson 4: FTC Part 2 - The Derivative of an Integral',
+                            title: Integration of Rational Functions Using Partial Fractions',
                             icon: '🔄',
                             duration: '60 minutes',
-                            lessonUrl: 'https://hesham-afandi.github.io/12adv-ins-math-T3-U3L4/',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-7.4/',
                             lessonTitle: '📖 Lesson Explanation',
-                            examUrl: 'https://hesham-afandi.github.io/12Adv-Ins-Math-En-T3/',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-7.4-exam/',
                             examTitle: '📝 Take the Quiz',
                             content: {
                                 intro: 'What if the upper limit of an integral is a variable? The definite integral is no longer a static number - it\'s an Area Function.',
@@ -630,44 +630,373 @@ const DB = {
             units: [
                 {
                     id: 1,
-                    name: 'الوحدة الأولى: المجاميع ورمز سيجما',
+                    name: 'Unit 1: Integration',
                     icon: 'Σ',
                     color: 'from-blue-500 to-indigo-600',
-                    description: 'الأساس الهندسي للتفاضل والتكامل - أتمتة الجمع المتكرر',
+                    description: 'The architectural blueprints of calculus - automating massive repetitive additions',
                     lessons: [
-                        { id: 1, title: 'الدرس الأول: تشريح رمز سيجما', icon: 'Σ', duration: '50 دقيقة', lessonUrl: 'https://hesham-afandi.github.io/12bridge-math-T3-U1L1/', lessonTitle: '📖 شرح الدرس', examUrl: 'https://hesham-afandi.github.io/12Bridge-Math-Ar-T3/', examTitle: '📝 ابدأ الاختبار' },
-                        { id: 2, title: 'الدرس الثاني: اكتشاف غاوس التاريخي', icon: '🧠', duration: '55 دقيقة', lessonUrl: 'https://hesham-afandi.github.io/12bridge-math-T3-U1L2/', lessonTitle: '📖 شرح الدرس', examUrl: 'https://hesham-afandi.github.io/12Bridge-Math-Ar-T3/', examTitle: '📝 ابدأ الاختبار' },
-                        { id: 3, title: 'الدرس الثالث: قواعد الخطية', icon: '⚖️', duration: '45 دقيقة', lessonUrl: 'https://hesham-afandi.github.io/12bridge-math-T3-U1L3/', lessonTitle: '📖 شرح الدرس', examUrl: 'https://hesham-afandi.github.io/12Bridge-Math-Ar-T3/', examTitle: '📝 ابدأ الاختبار' }
+                        {
+                            id: 1,
+                            title: 'Lesson 1: Antiderivatives',
+                            icon: 'Σ',
+                            duration: '50 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.1/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.1-exam/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'Brute-force addition is no longer possible for thousands of terms. We need a machine to automate summation. Sigma notation is the engine that powers this automation.',
+                                sections: [
+                                    { title: 'The Four Components of Sigma', type: 'bullets', content: [
+                                        'The Engine (Σ): Represents the command to add all generated terms together',
+                                        'The Brake (Upper Limit n): The exact point where the machine stops generating new terms',
+                                        'The Ignition (Starting Index i=1): Tells the machine exactly where the sequence begins',
+                                        'The Fuel (Formula): The mathematical expression into which each value of i is substituted'
+                                    ]},
+                                    { title: 'Key Insight', type: 'text', content: 'The dummy variable i acts purely as a placeholder to generate the sequence, drastically reducing the notation required.' }
+                                ]
+                            }
+                        },
+                        {
+                            id: 2,
+                            title: 'Lesson 2: Sums and Sigma Notation',
+                            icon: '🧠',
+                            duration: '55 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.2/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.2-exam/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'At age 10, Carl Friedrich Gauss was tasked with adding all numbers from 1 to 100. Rather than brute-force counting, he invented a visual shortcut.',
+                                sections: [
+                                    { title: 'The Gauss Formula', type: 'formula', content: 'Σi = n(n+1)/2' },
+                                    { title: 'The Summation Toolkit', type: 'table', headers: ['Rule Name', 'Mathematical Blueprint'], rows: [
+                                        ['Sum of a Constant', 'ΣC = Cn'],
+                                        ['Sum of First n Integers', 'Σi = n(n+1)/2'],
+                                        ['Sum of Squares', 'Σi² = n(n+1)(2n+1)/6'],
+                                        ['Sum of Cubes', 'Σi³ = [n(n+1)/2]²']
+                                    ]}
+                                ]
+                            }
+                        },
+                        {
+                            id: 3,
+                            title: 'Lesson 3: Area',
+                            icon: '⚖️',
+                            duration: '45 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.3/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.3-exam/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'We never need to calculate complex expressions directly. We dismantle them until they match our basic Toolkit.',
+                                sections: [
+                                    { title: 'The Splitting Rule', type: 'formula', content: 'Σ(aᵢ + bᵢ) = Σaᵢ + Σbᵢ' },
+                                    { title: 'The Extraction Rule', type: 'formula', content: 'Σ(c·aᵢ) = c·Σaᵢ' },
+                                    { title: 'Core Principle', type: 'text', content: 'Constants (c and d) act as multipliers. They can be safely pulled entirely outside the Sigma engine without altering the mathematics.' }
+                                ]
+                            }
+                        },
+                        {
+                            id: 4,
+                            title: 'Lesson 4: The Definite Integral',
+                            icon: 'ƒ',
+                            duration: '50 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.4/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.4-exam/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'We have successfully automated the calculation of distinct geometric data points simultaneously.',
+                                sections: [
+                                    { title: 'Phase 1: Define the Interval', type: 'bullets', content: ['Identify the range of values', 'Determine the number of steps (n)', 'Calculate the interval multiplier'] },
+                                    { title: 'Phase 2: Construct the Blueprint', type: 'text', content: 'Substitute x = (interval·i) into the function and write the complete Sigma blueprint.' },
+                                    { title: 'Phase 3: Execute the Machinery', type: 'text', content: 'Extract constants, apply Gauss formulas, and solve using standard arithmetic.' }
+                                ]
+                            }
+                        },
+                        {
+                            id: 5,
+                            title: 'Lesson 5: The Fundamental Theorem of Calculus',
+                            icon: '🎯',
+                            duration: '60 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.5/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.5-exam/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'How do we prove a formula works for infinite cases without checking them all manually? We use the domino effect.',
+                                sections: [
+                                    { title: 'The Three Phases of Induction', type: 'bullets', content: [
+                                        'Phase 1 - Base Case (n=1): Proving the statement is true for the first specific value',
+                                        'Phase 2 - Inductive Hypothesis (n=k): Assuming the formula works for an arbitrary point k',
+                                        'Phase 3 - Inductive Step (n=k+1): Proving that if k falls, it mathematically forces k+1 to fall'
+                                    ]},
+                                    { title: 'Key Insight', type: 'text', content: 'This guarantees the chain reaction never stops. The formula is mathematically proven for all positive integers!' }
+                                ]
+                            }
+                        },
+                        {
+                            id: 6,
+                            title: 'Lesson 6: Integration by Substitution',
+                            icon: 'Σ',
+                            duration: '50 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.6/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-5.6-exam/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'Integration by substitution is the reverse of the Chain Rule. It allows us to integrate complex composite functions by identifying a hidden inner function.',
+                                sections: [
+                                    { title: 'The 5-Step Substitution Engine', type: 'bullets', content: [
+                                        'Step 1: Choose the deep/inner expression as u',
+                                        'Step 2: Differentiate to find du/dx and solve for du',
+                                        'Step 3: Substitute all x terms entirely with u and du',
+                                        'Step 4: Integrate the newly simplified integral with respect to u',
+                                        'Step 5: Substitute the original x-expression back in place of u'
+                                    ]},
+                                    { title: 'Key Insight', type: 'text', content: 'If differentiation uses the Chain Rule to multiply by the inner derivative, integration must find and absorb that derivative to rebuild the original function.' }
+                                ]
+                            }
+                        }
                     ]
                 },
                 {
                     id: 2,
-                    name: 'الوحدة الثانية: التكاملات غير المحددة',
+                    name: 'Unit 2: Applications of the Definite Integral',
                     icon: '∫',
                     color: 'from-purple-500 to-pink-600',
-                    description: 'عكس رياضيات التغير - إعادة بناء الموضع من التسارع',
+                    description: 'Reversing the mathematics of change - reconstructing position from acceleration',
                     lessons: [
-                        { id: 1, title: 'الدرس الأول: التحول المعرفي - عكس التغير', icon: '🔄', duration: '50 دقيقة', lessonUrl: 'https://hesham-afandi.github.io/12bridge-math-T3-U2L1/', lessonTitle: '📖 شرح الدرس', examUrl: 'https://hesham-afandi.github.io/12Bridge-Math-Ar-T3/', examTitle: '📝 ابدأ الاختبار' },
-                        { id: 2, title: 'الدرس الثاني: قاعدة القوة والفجوة عند x⁻¹', icon: '⚡', duration: '50 دقيقة', lessonUrl: 'https://hesham-afandi.github.io/12bridge-math-T3-U2L2/', lessonTitle: '📖 شرح الدرس', examUrl: 'https://hesham-afandi.github.io/12Bridge-Math-Ar-T3/', examTitle: '📝 ابدأ الاختبار' },
-                        { id: 3, title: 'الدرس الثالث: قاموس العكس', icon: '📖', duration: '55 دقيقة', lessonUrl: 'https://hesham-afandi.github.io/12bridge-math-T3-U2L3/', lessonTitle: '📖 شرح الدرس', examUrl: 'https://hesham-afandi.github.io/12Bridge-Math-Ar-T3/', examTitle: '📝 ابدأ الاختبار' }
+                        {
+                            id: 1,
+                            title: 'Lesson 1: Area Between Curves',
+                            icon: '🔄',
+                            duration: '50 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-6.1/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-6.1-exam/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'The Space Shuttle returns to Earth as a 100-ton glider. We know its acceleration is -9.8 m/s², but how do we reverse-engineer the math to find its exact position at any given second?',
+                                sections: [
+                                    { title: 'Forward vs Reverse Operations', type: 'table', headers: ['Operation', 'Purpose', 'Mathematical Action'], rows: [
+                                        ['Differentiation (Forward)', 'Extracting rates of change', 'f(x) → f\'(x)'],
+                                        ['Antidifferentiation (Reverse)', 'Reconstructing the original state', 'f\'(x) → F(x)']
+                                    ]},
+                                    { title: 'The Critical Insight', type: 'text', content: 'If we take a function f(x), we must find a new function F(x) such that F\'(x) = f(x). This is the Antiderivative.' }
+                                ]
+                            }
+                        },
+                        {
+                            id: 2,
+                            title: 'Volume: Slicing, Disks and Washers',
+                            icon: '🌌',
+                            duration: '55 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-6.2/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-6.2-exam/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'Acceleration tells you how you are changing, not where you started. The +C represents an infinite "multiverse" of parallel trajectories.',
+                                sections: [
+                                    { title: 'Theorem 1.1', type: 'text', content: 'If F and G are both antiderivatives of f on an interval, then G(x) = F(x) + C for some constant C.' },
+                                    { title: 'The Physical Truth', type: 'text', content: 'The +C represents an infinite multiverse of parallel trajectories (vertical shifts). They all share the exact same rate of change.' },
+                                    { title: 'Anatomy of the Integral', type: 'bullets', content: [
+                                        '∫ The Integral Sign: Historically an elongated \'S\', indicating a continuous sum',
+                                        'f(x) The Integrand: The rate of change we are starting with',
+                                        'dx Variable of Integration: Which variable we are integrating with respect to',
+                                        '+C Constant of Integration: The unknown starting parameter'
+                                    ]}
+                                ]
+                            }
+                        },
+                        {
+                            id: 3,
+                            title: 'Volumes by Cylindrical Shells',
+                            icon: '⚡',
+                            duration: '50 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-6.3/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-6.3-exam/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'To integrate xⁿ, add 1 to the power, then divide by the new power. But there\'s a glaring hole in the number line.',
+                                sections: [
+                                    { title: 'The Power Rule', type: 'formula', content: '∫xⁿ dx = xⁿ⁺¹/(n+1) + C  (for n ≠ -1)' },
+                                    { title: 'The Gap at n = -1', type: 'text', content: 'If n = -1, the formula results in 1/0. The Power Rule shatters.' },
+                                    { title: 'The Bridge: Natural Logarithm', type: 'formula', content: '∫(1/x) dx = ln|x| + C' }
+                                ]
+                            }
+                        },
+                        {
+                            id: 4,
+                            title: 'Lesson 4: Arc Length and Surface Area',
+                            icon: '📖',
+                            duration: '55 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-6.4/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-6.4-exam/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'A comprehensive toolkit of inverse relationships between derivatives and integrals.',
+                                sections: [
+                                    { title: 'Trigonometric Reversals', type: 'table', headers: ['Forward (Derivative)', 'Reverse (Integral)'], rows: [
+                                        ['d/dx(sin x) = cos x', '∫cos x dx = sin x + C'],
+                                        ['d/dx(cos x) = -sin x', '∫sin x dx = -cos x + C'],
+                                        ['d/dx(tan x) = sec²x', '∫sec²x dx = tan x + C']
+                                    ]},
+                                    { title: 'Exponential & Inverse Trig', type: 'table', headers: ['Forward (Derivative)', 'Reverse (Integral)'], rows: [
+                                        ['d/dx(eˣ) = eˣ', '∫eˣ dx = eˣ + C'],
+                                        ['d/dx(sin⁻¹x) = 1/√(1-x²)', '∫1/√(1-x²) dx = sin⁻¹x + C'],
+                                        ['d/dx(tan⁻¹x) = 1/(1+x²)', '∫1/(1+x²) dx = tan⁻¹x + C']
+                                    ]}
+                                ]
+                            }
+                        },
+                        {
+                            id: 5,
+                            title: 'Lesson 5: Projectile Motion',
+                            icon: '🔗',
+                            duration: '60 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-6.5/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-6.5-exam/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'Recognizing structural linearity allows us to dismantle complex integrals into manageable pieces.',
+                                sections: [
+                                    { title: 'Theorem 1.3: Linearity', type: 'formula', content: '∫[a·f(x) + b·g(x)] dx = a∫f(x)dx + b∫g(x)dx' },
+                                    { title: 'Theorem 1.4: Reverse Chain Rule', type: 'formula', content: '∫f\'(x)/f(x) dx = ln|f(x)| + C' },
+                                    { title: 'Example: Exact Match', type: 'text', content: '∫(sec²x / tan x) dx - Notice the top is the exact derivative of the bottom. The structure instantly collapses to: ln|tan x| + C' }
+                                ]
+                            }
+                        },
+                        {
+                            id: 6,
+                            title: 'Lesson 6: Applications of Integration to Physics and Engineering',
+                            icon: '🎯',
+                            duration: '65 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-6.6/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-6.6-exam/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'Integration is not just abstract mathematics - it has powerful real-world applications in physics, engineering, and economics.',
+                                sections: [
+                                    { title: 'Area Between Curves', type: 'text', content: 'The definite integral can calculate the exact area enclosed between two curves by integrating the difference of their functions.' },
+                                    { title: 'Volume of Revolution', type: 'text', content: 'By rotating a curve around an axis, we can use integration to find the volume of the resulting 3D solid using the disk or shell method.' },
+                                    { title: 'Physical Applications', type: 'bullets', content: [
+                                        'Work done by a variable force',
+                                        'Center of mass and centroid calculations',
+                                        'Fluid pressure and force on surfaces',
+                                        'Arc length of curves'
+                                    ]}
+                                ]
+                            }
+                        }
                     ]
                 },
                 {
                     id: 3,
-                    name: 'الوحدة الثالثة: التكاملات المحددة والنظرية الأساسية',
+                    name: 'Unit 3:Integration Techniques',
                     icon: '∫ᵇₐ',
                     color: 'from-emerald-500 to-teal-600',
-                    description: 'التوحيد الكبير للمساحات - من مجاميع ريمان إلى الحقيقة المطلقة',
+                    description: 'The grand unification of areas - from Riemann sums to exact truth',
                     lessons: [
-                        { id: 1, title: 'الدرس الأول: من مجاميع ريمان إلى الدقة المطلقة', icon: '∞', duration: '55 دقيقة', lessonUrl: 'https://hesham-afandi.github.io/12bridge-math-T3-U3L1/', lessonTitle: '📖 شرح الدرس', examUrl: 'https://hesham-afandi.github.io/12Bridge-Math-Ar-T3/', examTitle: '📝 ابدأ الاختبار' },
-                        { id: 2, title: 'الدرس الثاني: المساحة الموقعة مقابل المساحة الكلية', icon: '📊', duration: '50 دقيقة', lessonUrl: 'https://hesham-afandi.github.io/12bridge-math-T3-U3L2/', lessonTitle: '📖 شرح الدرس', examUrl: 'https://hesham-afandi.github.io/12Bridge-Math-Ar-T3/', examTitle: '📝 ابدأ الاختبار' },
-                        { id: 3, title: 'الدرس الثالث: النظرية الأساسية للتفاضل والتكامل', icon: '🏆', duration: '65 دقيقة', lessonUrl: 'https://hesham-afandi.github.io/12bridge-math-T3-U3L3/', lessonTitle: '📖 شرح الدرس', examUrl: 'https://hesham-afandi.github.io/12Bridge-Math-Ar-T3/', examTitle: '📝 ابدأ الاختبار' }
+                        {
+                            id: 1,
+                            title: 'Lesson 1: Review of Formulas and Techniques',
+                            icon: '∞',
+                            duration: '55 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-7.1/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-7.1-exam/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'The Greek Σ and the stretched S of the integral both signify a \'Sum\'. The concept remains identical; only the resolution changes.',
+                                sections: [
+                                    { title: 'The Limit as n → ∞', type: 'formula', content: 'lim(n→∞) Σf(cᵢ)Δx = ∫ₐᵇ f(x)dx' },
+                                    { title: 'The Transformation', type: 'bullets', content: [
+                                        'The discrete step Δx shrinks into the continuous, infinitely small differential dx',
+                                        'The finite partition\'s geometric error drops to exactly zero',
+                                        'The approximation becomes absolute truth'
+                                    ]},
+                                    { title: 'The Rosetta Stone of Calculus', type: 'text', content: 'The Definite Integral is simply the ultimate shorthand for an infinite Riemann construction.' }
+                                ]
+                            }
+                        },
+                        {
+                            id: 2,
+                            title: 'Lesson 2: Integration by Parts',
+                            icon: '📊',
+                            duration: '50 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-7.2/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-7.2-exam/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'Functions above the x-axis yield positive integral values. Functions below yield negative values.',
+                                sections: [
+                                    { title: 'Signed Area (Net Position)', type: 'text', content: '∫₀³π sin(t) dt = +2 + (-1) = +1 (Final Position)' },
+                                    { title: 'Total Area (Total Distance)', type: 'text', content: '∫₀³π |sin(t)| dt = +2 + |+1| = 3 units (Total Distance)' },
+                                    { title: 'Algebraic Rules Cheat Sheet', type: 'table', headers: ['Rule', 'Formula', 'Translation'], rows: [
+                                        ['Reversing Limits', '∫ᵇₐf(x)dx = -∫ᵃᵇf(x)dx', 'Integrating backwards flips the sign'],
+                                        ['Zero Width', '∫ᵃᵃf(x)dx = 0', 'A line has no thickness'],
+                                        ['Constant Multiple', '∫c·f(x)dx = c·∫f(x)dx', 'Scalars can be factored out'],
+                                        ['Sum of Functions', '∫[f(x)+g(x)]dx = ∫f(x)dx + ∫g(x)dx', 'Combined areas']
+                                    ]}
+                                ]
+                            }
+                        },
+                        {
+                            id: 3,
+                            title: 'Lesson 3: Trigonometric Techniques of Integration',
+                            icon: '🏆',
+                            duration: '65 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-7.3/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-7.3-exam/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'The breakthrough: bypassing infinite addition by finding the function\'s mathematical origin.',
+                                sections: [
+                                    { title: 'The Evaluation Theorem', type: 'formula', content: '∫ₐᵇ f(x)dx = F(b) - F(a)' },
+                                    { title: 'The Components', type: 'bullets', content: [
+                                        'F(b) - The End State: The value of the antiderivative at the upper bound',
+                                        'F(a) - The Start State: The value of the antiderivative at the lower bound',
+                                        'The Accumulator: Calculates the total net area under the curve between bounds a and b'
+                                    ]},
+                                    { title: 'Key Insight', type: 'text', content: 'To evaluate a definite integral, simply find the antiderivative and subtract the start state from the end state. No infinite rectangle limits required.' }
+                                ]
+                            }
+                        },
+                        {
+                            id: 4,
+                            title: Integration of Rational Functions Using Partial Fractions',
+                            icon: '🔄',
+                            duration: '60 minutes',
+                            lessonUrl: 'https://hesham-afandi.github.io/12adv-math-T3-7.4/',
+                            lessonTitle: '📖 Lesson Explanation',
+                            examUrl: 'https://hesham-afandi.github.io/12adv-math-T3-7.4-exam/',
+                            examTitle: '📝 Take the Quiz',
+                            content: {
+                                intro: 'What if the upper limit of an integral is a variable? The definite integral is no longer a static number - it\'s an Area Function.',
+                                sections: [
+                                    { title: 'The Revelation', type: 'formula', content: 'd/dx ∫ₐˣ f(t)dt = f(x)' },
+                                    { title: 'The Components', type: 'bullets', content: [
+                                        'The Outer Operation: The rate of change (derivative) of...',
+                                        'The Accumulator: ...an expanding area function...',
+                                        'The Result: ...equals the exact height of the original curve at that boundary point'
+                                    ]},
+                                    { title: 'Key Insight', type: 'text', content: 'Differentiating an integral simply returns the original function. Every continuous function has a readily available antiderivative.' }
+                                ]
+                            }
+                        }
                     ]
                 }
             ]
-        }
-    }
-};
+        },
 
 // ==================== STATE ====================
 let state = { term: null, stream: null, program: null, grade: null, subject: null, unit: null, lesson: null };
