@@ -241,9 +241,309 @@ const DB = {
                     name: 'الوحدة الأولى: الميكانيكا الأساسية',
                     icon: '⚙️',
                     color: 'from-blue-500 to-cyan-600',
-                    description: 'مراجعة وتأسيس في الميكانيكا',
+                    description: 'مراجعة وتأسيس في الميكانيكا - الحركة والقوى',
                     lessons: [
-                        { id: 1, title: 'الدرس الأول: الحركة في خط مستقيم', icon: '🏃', duration: '50 دقيقة', lessonUrl: '#', lessonTitle: '📖 شرح الدرس', examUrl: '#', examTitle: '📝 ابدأ الاختبار' }
+                        {
+                            id: 1,
+                            title: 'الدرس الأول: الحركة في خط مستقيم',
+                            icon: '🏃',
+                            duration: '50 دقيقة',
+                            lessonUrl: 'https://hesham-afandi.github.io/12bridge-ph-T3-U1L1/',
+                            lessonTitle: '📖 شرح الدرس',
+                            examUrl: 'https://hesham-afandi.github.io/12Bridge-Phy-Ar-T3/',
+                            examTitle: '📝 ابدأ الاختبار',
+                            content: {
+                                intro: 'الحركة في خط مستقيم هي الأساس الذي تُبنى عليه كل فروع الميكانيكا. في هذا الدرس سنتعلم كيف نصف حركة الأجسام بدقة.',
+                                sections: [
+                                    { title: 'المفاهيم الأساسية', type: 'bullets', content: [
+                                        'الإزاحة: التغير في الموضع (كمية متجهة)',
+                                        'السرعة: معدل تغير الموضع مع الزمن',
+                                        'التسارع: معدل تغير السرعة مع الزمن',
+                                        'السرعة المتوسطة vs السرعة اللحظية'
+                                    ]},
+                                    { title: 'معادلات الحركة المنتظمة', type: 'formula', content: 'v = v₀ + at ; x = x₀ + v₀t + ½at²' },
+                                    { title: 'المقارنة: الحركة المنتظمة وغير المنتظمة', type: 'table', headers: ['الحركة المنتظمة', 'الحركة غير المنتظمة'], rows: [
+                                        ['التسارع = صفر', 'التسارع ≠ صفر'],
+                                        ['السرعة ثابتة', 'السرعة تتغير'],
+                                        'المنحخط مستقيم', 'المنحنى منحنى']
+                                    ]}
+                                ]
+                            }
+                        },
+                        {
+                            id: 2,
+                            title: 'الدرس الثاني: قوانين نيوتن للحركة',
+                            icon: '⚖️',
+                            duration: '55 دقيقة',
+                            lessonUrl: 'https://hesham-afandi.github.io/12bridge-ph-T3-U1L2/',
+                            lessonTitle: '📖 شرح الدرس',
+                            examUrl: 'https://hesham-afandi.github.io/12Bridge-Phy-Ar-T3/',
+                            examTitle: '📝 ابدأ الاختبار',
+                            content: {
+                                intro: 'قوانين نيوتن الثلاثة هي الأساس الذي تقوم عليه الميكانيكا الكلاسيكية. من خلالها نستطيع فهم العلاقة بين القوة والحركة.',
+                                sections: [
+                                    { title: 'قانون نيوتن الأول (القصور الذاتي)', type: 'text', content: 'الجسم الساكن يبقى ساكناً، والجسم المتحرك يبقى متحركاً بسرعة ثابتة في خط مستقيم ما لم تؤثر عليه قوة خارجية.' },
+                                    { title: 'قانون نيوتن الثاني', type: 'formula', content: 'F = ma' },
+                                    { title: 'قانون نيوتن الثالث (الفعل ورد الفعل)', type: 'text', content: 'لكل فعل رد فعل مساوٍ له في المقدار ومضاد له في الاتجاه.' },
+                                    { title: 'تطبيقات عملية', type: 'bullets', content: [
+                                        'حساب القوة اللازمة لتحريك جسم',
+                                        'تحليل القوى على مستوى مائل',
+                                        'فهم الاحتكاك وتأثيره على الحركة'
+                                    ]}
+                                ]
+                            }
+                        },
+                        {
+                            id: 3,
+                            title: 'الدرس الثالث: الشغل والطاقة',
+                            icon: '💪',
+                            duration: '60 دقيقة',
+                            lessonUrl: 'https://hesham-afandi.github.io/12bridge-ph-T3-U1L3/',
+                            lessonTitle: '📖 شرح الدرس',
+                            examUrl: 'https://hesham-afandi.github.io/12Bridge-Phy-Ar-T3/',
+                            examTitle: '📝 ابدأ الاختبار',
+                            content: {
+                                intro: 'الشغل والطاقة مفهومان مرتبطان ارتباطاً وثيقاً. الشغل هو نقل الطاقة عبر تطبيق قوة على جسم لمسافة معينة.',
+                                sections: [
+                                    { title: 'تعريف الشغل', type: 'formula', content: 'W = F · d · cos(θ)' },
+                                    { title: 'الطاقة الحركية', type: 'formula', content: 'KE = ½mv²' },
+                                    { title: 'الطاقة الكامنة', type: 'formula', content: 'PE = mgh' },
+                                    { title: 'مبرهنة الشغل-الطاقة', type: 'text', content: 'الشغل الكلي المؤثر على جسم يساوي التغير في طاقته الحركية: W_net = ΔKE' },
+                                    { title: 'حفظ الطاقة', type: 'bullets', content: [
+                                        'في النظام المعزول، الطاقة الكلية ثابتة',
+                                        'الطاقة لا تُفنى ولا تُستحدث، بل تتحول من شكل لآخر',
+                                        'الطاقة الميكانيكية = KE + PE = ثابت (في غياب الاحتكاك)'
+                                    ]}
+                                ]
+                            }
+                        },
+                        {
+                            id: 4,
+                            title: 'الدرس الرابع: الزخم والتصادمات',
+                            icon: '🎯',
+                            duration: '55 دقيقة',
+                            lessonUrl: 'https://hesham-afandi.github.io/12bridge-ph-T3-U1L4/',
+                            lessonTitle: '📖 شرح الدرس',
+                            examUrl: 'https://hesham-afandi.github.io/12Bridge-Phy-Ar-T3/',
+                            examTitle: '📝 ابدأ الاختبار',
+                            content: {
+                                intro: 'الزخم هو كمية فيزيائية تصف حركة الجسم وتعتمد على كتلته وسرعته. وهو مفهوم أساسي في فهم التصادمات.',
+                                sections: [
+                                    { title: 'تعريف الزخم', type: 'formula', content: 'p = mv' },
+                                    { title: 'قانون حفظ الزخم', type: 'text', content: 'في النظام المعزول، الزخم الكلي قبل التصادم = الزخم الكلي بعد التصادم' },
+                                    { title: 'أنواع التصادمات', type: 'table', headers: ['التصادم المرن', 'التصادم غير المرن'], rows: [
+                                        ['الطاقة الحركية محفوظة', 'الطاقة الحركية غير محفوظة'],
+                                        ['الزخم محفوظ', 'الزخم محفوظ'],
+                                        ['لا يوجد فقدان للطاقة', 'يوجد فقدان للطاقة (حرارة، صوت)']
+                                    ]},
+                                    { title: 'الدفع', type: 'formula', content: 'J = F·Δt = Δp' }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    id: 2,
+                    name: 'الوحدة الثانية: الديناميكا الحرارية',
+                    icon: '🔥',
+                    color: 'from-orange-500 to-red-600',
+                    description: 'دراسة الحرارة والطاقة الحرارية وتحولاتها',
+                    lessons: [
+                        {
+                            id: 1,
+                            title: 'الدرس الأول: درجة الحرارة والحرارة',
+                            icon: '🌡️',
+                            duration: '50 دقيقة',
+                            lessonUrl: 'https://hesham-afandi.github.io/12bridge-ph-T3-U2L1/',
+                            lessonTitle: '📖 شرح الدرس',
+                            examUrl: 'https://hesham-afandi.github.io/12Bridge-Phy-Ar-T3/',
+                            examTitle: '📝 ابدأ الاختبار',
+                            content: {
+                                intro: 'درجة الحرارة والحرارة مفهومان مختلفان لكنهما مرتبطان. درجة الحرارة مقياس لمتوسط الطاقة الحركية للجزيئات، بينما الحرارة هي انتقال الطاقة بين الأجسام.',
+                                sections: [
+                                    { title: 'مقاييس درجة الحرارة', type: 'bullets', content: [
+                                        'مقياس سيليزي (°C): الماء يتجمد عند 0° ويغلي عند 100°',
+                                        'مقياس فهرنهايت (°F): الماء يتجمد عند 32° ويغلي عند 212°',
+                                        'مقياس كلفن (K): المقياس المطلق، يبدأ من الصفر المطلق'
+                                    ]},
+                                    { title: 'التحويل بين المقاييس', type: 'formula', content: 'K = °C + 273.15' },
+                                    { title: 'الحرارة النوعية', type: 'formula', content: 'Q = mcΔT' },
+                                    { title: 'طرق انتقال الحرارة', type: 'bullets', content: [
+                                        'التوصيل: انتقال الحرارة عبر التماس المباشر',
+                                        'الحمل: انتقال الحرارة عبر حركة السوائل والغازات',
+                                        'الإشعاع: انتقال الحرارة عبر الموجات الكهرومغناطيسية'
+                                    ]}
+                                ]
+                            }
+                        },
+                        {
+                            id: 2,
+                            title: 'الدرس الثاني: الغازات المثالية',
+                            icon: '💨',
+                            duration: '55 دقيقة',
+                            lessonUrl: 'https://hesham-afandi.github.io/12bridge-ph-T3-U2L2/',
+                            lessonTitle: '📖 شرح الدرس',
+                            examUrl: 'https://hesham-afandi.github.io/12Bridge-Phy-Ar-T3/',
+                            examTitle: '📝 ابدأ الاختبار',
+                            content: {
+                                intro: 'الغاز المثالي هو نموذج نظري يبسط سلوك الغازات الحقيقية. يفترض أن جزيئات الغاز لا تتفاعل فيما بينها وأن حجمها مهمل.',
+                                sections: [
+                                    { title: 'قانون الغاز المثالي', type: 'formula', content: 'PV = nRT' },
+                                    { title: 'قانون بويل', type: 'formula', content: 'P₁V₁ = P₂V₂ (عند ثبوت T)' },
+                                    { title: 'قانون شارل', type: 'formula', content: 'V₁/T₁ = V₂/T₂ (عند ثبوت P)' },
+                                    { title: 'قانون جاي-لوساك', type: 'formula', content: 'P₁/T₁ = P₂/T₂ (عند ثبوت V)' },
+                                    { title: 'ثابت الغازات العام', type: 'text', content: 'R = 8.314 J/(mol·K)' }
+                                ]
+                            }
+                        },
+                        {
+                            id: 3,
+                            title: 'الدرس الثالث: قوانين الديناميكا الحرارية',
+                            icon: '⚡',
+                            duration: '60 دقيقة',
+                            lessonUrl: 'https://hesham-afandi.github.io/12bridge-ph-T3-U2L3/',
+                            lessonTitle: '📖 شرح الدرس',
+                            examUrl: 'https://hesham-afandi.github.io/12Bridge-Phy-Ar-T3/',
+                            examTitle: '📝 ابدأ الاختبار',
+                            content: {
+                                intro: 'قوانين الديناميكا الحرارية الأربعة تحكم سلوك الطاقة الحرارية وتحولاتها في الأنظمة المختلفة.',
+                                sections: [
+                                    { title: 'القانون الصفري', type: 'text', content: 'إذا كان النظام A في حالة اتزان حراري مع B، و B في حالة اتزان حراري مع C، فإن A في حالة اتزان حراري مع C.' },
+                                    { title: 'القانون الأول (حفظ الطاقة)', type: 'formula', content: 'ΔU = Q - W' },
+                                    { title: 'القانون الثاني', type: 'text', content: 'الإنتروبي في النظام المعزول يزداد دائماً مع الزمن. الحرارة تنتقل تلقائياً من الجسم الساخن إلى البارد.' },
+                                    { title: 'القانون الثالث', type: 'text', content: 'لا يمكن الوصول إلى الصفر المطلق (0 كلفن) في عدد محدود من العمليات.' }
+                                ]
+                            }
+                        },
+                        {
+                            id: 4,
+                            title: 'الدرس الرابع: الآلات الحرارية',
+                            icon: '🔧',
+                            duration: '55 دقيقة',
+                            lessonUrl: 'https://hesham-afandi.github.io/12bridge-ph-T3-U2L4/',
+                            lessonTitle: '📖 شرح الدرس',
+                            examUrl: 'https://hesham-afandi.github.io/12Bridge-Phy-Ar-T3/',
+                            examTitle: '📝 ابدأ الاختبار',
+                            content: {
+                                intro: 'الآلات الحرارية تحول الطاقة الحرارية إلى شغل ميكانيكي. من أمثلتها محركات السيارات ومحطات توليد الكهرباء.',
+                                sections: [
+                                    { title: 'كفاءة الآلة الحرارية', type: 'formula', content: 'η = W/Q_H = 1 - Q_C/Q_H' },
+                                    { title: 'كفاءة كارنو (الحد الأقصى)', type: 'formula', content: 'η_Carnot = 1 - T_C/T_H' },
+                                    { title: 'دورة كارنو', type: 'bullets', content: [
+                                        'توسع متساوي الحرارة (امتصاص حرارة)',
+                                        'توسع أدياباتي (انخفاض درجة الحرارة)',
+                                        'انضغاط متساوي الحرارة (طرد حرارة)',
+                                        'انضغاط أدياباتي (ارتفاع درجة الحرارة)'
+                                    ]},
+                                    { title: 'الثلاجات ومضخات الحرارة', type: 'text', content: 'تعمل بعكس الآلة الحرارية: تنقل الحرارة من الجسم البارد إلى الساخن باستخدام شغل خارجي.' }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    id: 3,
+                    name: 'الوحدة الثالثة: الكهرباء والمغناطيسية',
+                    icon: '⚡',
+                    color: 'from-yellow-500 to-orange-600',
+                    description: 'دراسة الشحنات الكهربائية والتيار والمجالات المغناطيسية',
+                    lessons: [
+                        {
+                            id: 1,
+                            title: 'الدرس الأول: الشحنة الكهربائية وقانون كولوم',
+                            icon: '🔋',
+                            duration: '50 دقيقة',
+                            lessonUrl: 'https://hesham-afandi.github.io/12bridge-ph-T3-U3L1/',
+                            lessonTitle: '📖 شرح الدرس',
+                            examUrl: 'https://hesham-afandi.github.io/12Bridge-Phy-Ar-T3/',
+                            examTitle: '📝 ابدأ الاختبار',
+                            content: {
+                                intro: 'الشحنة الكهربائية خاصية أساسية للمادة. هناك نوعان من الشحنات: موجبة وسالبة. الشحنات المتشابهة تتنافر، والمختلفة تتجاذب.',
+                                sections: [
+                                    { title: 'وحدة الشحنة', type: 'text', content: 'الكولوم (C) هو وحدة قياس الشحنة. شحنة الإلكترون = -1.6 × 10⁻¹⁹ C' },
+                                    { title: 'قانون كولوم', type: 'formula', content: 'F = k · |q₁q₂| / r²' },
+                                    { title: 'ثابت كولوم', type: 'text', content: 'k = 8.99 × 10⁹ N·m²/C²' },
+                                    { title: 'المقارنة مع الجاذبية', type: 'table', headers: ['قوة كولوم', 'قوة الجاذبية'], rows: [
+                                        ['تجاذب أو تنافر', 'تجاذب فقط'],
+                                        ['تعتمد على الشحنة', 'تعتمد على الكتلة'],
+                                        ['أقوى بكثير', 'أضعف بكثير']
+                                    ]}
+                                ]
+                            }
+                        },
+                        {
+                            id: 2,
+                            title: 'الدرس الثاني: المجال الكهربائي',
+                            icon: '🌐',
+                            duration: '55 دقيقة',
+                            lessonUrl: 'https://hesham-afandi.github.io/12bridge-ph-T3-U3L2/',
+                            lessonTitle: '📖 شرح الدرس',
+                            examUrl: 'https://hesham-afandi.github.io/12Bridge-Phy-Ar-T3/',
+                            examTitle: '📝 ابدأ الاختبار',
+                            content: {
+                                intro: 'المجال الكهربائي هو المنطقة المحيطة بالشحنة الكهربائية التي تؤثر فيها بقوة على الشحنات الأخرى. هو مفهوم أساسي لفهم القوى الكهربائية.',
+                                sections: [
+                                    { title: 'تعريف المجال الكهربائي', type: 'formula', content: 'E = F/q = kQ/r²' },
+                                    { title: 'وحدة المجال الكهربائي', type: 'text', content: 'نيوتن/كولوم (N/C) أو فولت/متر (V/m)' },
+                                    { title: 'خطوط المجال الكهربائي', type: 'bullets', content: [
+                                        'تخرج من الشحنات الموجبة وتدخل إلى السالبة',
+                                        'لا تتقاطع أبداً',
+                                        'كثافتها تدل على شدة المجال',
+                                        'اتجاهها يدل على اتجاه القوة على شحنة موجبة'
+                                    ]},
+                                    { title: 'المجال بين لوحين متوازيين', type: 'formula', content: 'E = V/d' }
+                                ]
+                            }
+                        },
+                        {
+                            id: 3,
+                            title: 'الدرس الثالث: التيار الكهربائي والمقاومة',
+                            icon: '💡',
+                            duration: '60 دقيقة',
+                            lessonUrl: 'https://hesham-afandi.github.io/12bridge-ph-T3-U3L3/',
+                            lessonTitle: '📖 شرح الدرس',
+                            examUrl: 'https://hesham-afandi.github.io/12Bridge-Phy-Ar-T3/',
+                            examTitle: '📝 ابدأ الاختبار',
+                            content: {
+                                intro: 'التيار الكهربائي هو تدفق الشحنات الكهربائية عبر موصل. المقاومة تعيق هذا التدفق وتحول الطاقة الكهربائية إلى حرارة.',
+                                sections: [
+                                    { title: 'تعريف التيار', type: 'formula', content: 'I = Q/t' },
+                                    { title: 'وحدة التيار', type: 'text', content: 'الأمبير (A) = كولوم/ثانية' },
+                                    { title: 'قانون أوم', type: 'formula', content: 'V = IR' },
+                                    { title: 'القدرة الكهربائية', type: 'formula', content: 'P = VI = I²R = V²/R' },
+                                    { title: 'توصيل المقاومات', type: 'table', headers: ['على التوالي', 'على التوازي'], rows: [
+                                        ['R_total = R₁ + R₂ + ...', '1/R_total = 1/R₁ + 1/R₂ + ...'],
+                                        ['التيار ثابت', 'الجهد ثابت'],
+                                        ['الجهد يتوزع', 'التيار يتوزع']
+                                    ]}
+                                ]
+                            }
+                        },
+                        {
+                            id: 4,
+                            title: 'الدرس الرابع: المغناطيسية والحث الكهرومغناطيسي',
+                            icon: '🧲',
+                            duration: '65 دقيقة',
+                            lessonUrl: 'https://hesham-afandi.github.io/12bridge-ph-T3-U3L4/',
+                            lessonTitle: '📖 شرح الدرس',
+                            examUrl: 'https://hesham-afandi.github.io/12Bridge-Phy-Ar-T3/',
+                            examTitle: '📝 ابدأ الاختبار',
+                            content: {
+                                intro: 'المغناطيسية والكهرباء وجهان لعملة واحدة. التيار الكهربائي يولد مجالاً مغناطيسياً، والمجال المغناطيسي المتغير يولد تياراً كهربائياً.',
+                                sections: [
+                                    { title: 'قاعدة اليد اليمنى', type: 'text', content: 'تحديد اتجاه المجال المغناطيسي حول سلك يحمل تياراً' },
+                                    { title: 'قوة لورنتز', type: 'formula', content: 'F = qv × B' },
+                                    { title: 'قانون فاراداي للحث', type: 'formula', content: 'EMF = -dΦ/dt' },
+                                    { title: 'قانون لينز', type: 'text', content: 'اتجاه التيار المستحث يعاكس التغير في التدفق المغناطيسي المسبب له' },
+                                    { title: 'التطبيقات العملية', type: 'bullets', content: [
+                                        'المولدات الكهربائية',
+                                        'المحركات الكهربائية',
+                                        'المحولات',
+                                        'الشحن اللاسلكي'
+                                    ]}
+                                ]
+                            }
+                        }
                     ]
                 }
             ]
