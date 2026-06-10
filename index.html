@@ -1425,9 +1425,11 @@ sections: [
 // ==================== STATE ====================
 let state = { term: null, stream: null, program: null, grade: null, subject: null, unit: null, lesson: null };
 function getCurriculumKey() {
-if (!state.subject || !state.grade || !state.program || !state.term) return null;
-const key = state.stream.id === 'advanced' ? state.program.id : 'general';
-return `${state.subject.id}-${state.grade.id}-${key}-${state.term.id}`;
+    if (!state.subject || !state.grade || !state.term) return null;
+    if (!state.stream) return null;
+    
+    const key = state.stream.id === 'advanced' ? state.program.id : 'general';
+    return `${state.subject.id}-${state.grade.id}-${key}-${state.term.id}`;
 }
 function getSubjectKey(subjectId) {
 const key = state.stream.id === 'advanced' ? (state.program ? state.program.id : 'advanced') : 'general';
