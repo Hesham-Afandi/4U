@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Favicon -->
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="apple-touch-icon" href="logo.png">
@@ -31,11 +30,9 @@ table.comparison th { background: #f3f4f6; font-weight: bold; }
 </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
-<!-- Top Bar -->
 <div class="gradient-primary text-white py-3 px-6 shadow-lg sticky top-0 z-50">
 <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-3">
 <div class="flex items-center gap-3">
-<!-- اللوجو هنا -->
 <img src="logo.png" alt="4U Logo" class="h-12 w-auto drop-shadow-lg">
 <div>
 <h1 class="font-bold text-lg">منصة 4U التعليمية</h1>
@@ -48,7 +45,6 @@ table.comparison th { background: #f3f4f6; font-weight: bold; }
 </div>
 </div>
 </div>
-<!-- Breadcrumbs -->
 <div id="breadcrumbs" class="max-w-7xl mx-auto px-6 py-4 hidden">
 <div class="flex items-center gap-2 text-sm text-gray-600 flex-wrap">
 <button onclick="showHome()" class="hover:text-indigo-600">🎓 الرئيسية</button>
@@ -68,9 +64,7 @@ table.comparison th { background: #f3f4f6; font-weight: bold; }
 <button id="bc-lesson-btn" class="hidden hover:text-indigo-600"></button>
 </div>
 </div>
-<!-- Main Container -->
 <div id="app" class="max-w-7xl mx-auto px-4 md:px-6 pb-12"></div>
-<!-- Footer -->
 <footer class="bg-gray-900 text-white py-8 mt-16">
 <div class="max-w-7xl mx-auto px-6 text-center">
 <img src="logo.png" alt="4U Logo" class="h-16 w-auto mx-auto mb-4 drop-shadow-lg">
@@ -79,7 +73,6 @@ table.comparison th { background: #f3f4f6; font-weight: bold; }
 </div>
 </footer>
 <script>
-// ==================== DATABASE ====================
 const DB = {
 terms: [
 { id: 1, name: 'الترم الأول', icon: '📘' },
@@ -548,7 +541,6 @@ sections: [
 }
 ]
 },
-// ==================== MODIFIED: PHYSICS - GENERAL (Grade 12, Term 3) ====================
 'physics-12-general-3': {
 isEnglish: false,
 units: [
@@ -1420,7 +1412,6 @@ sections: [
 }
 ]
 },
-// ==================== NEW: MATH - GENERAL (Grade 12, Term 3) ====================
 'math-12-general-3': {
 isEnglish: false,
 units: [
@@ -1974,8 +1965,9 @@ sections: [
 }
 }
 ]
+}
+]
 },
-// ==================== NEW: MATH - BRIDGE (Grade 10, Term 3) ====================
 'math-10-bridge-3': {
 isEnglish: false,
 units: [
@@ -2529,30 +2521,37 @@ sections: [
 }
 }
 ]
-},
-// ==================== STATE ====================
+}
+]
+}
+}
+};
+
 let state = { term: null, stream: null, program: null, grade: null, subject: null, unit: null, lesson: null };
+
 function getCurriculumKey() {
     if (!state.subject || !state.grade || !state.term) return null;
     if (!state.stream) return null;
-    
     const key = state.stream.id === 'advanced' ? state.program.id : 'general';
     return `${state.subject.id}-${state.grade.id}-${key}-${state.term.id}`;
 }
+
 function getSubjectKey(subjectId) {
 const key = state.stream.id === 'advanced' ? (state.program ? state.program.id : 'advanced') : 'general';
 return `${subjectId}-${state.grade.id}-${key}-${state.term.id}`;
 }
+
 function isCurrentEnglish() {
 return state.program && state.program.isEnglish;
 }
-// ==================== ROUTER ====================
+
 function showHome() {
 state = { term: null, stream: null, program: null, grade: null, subject: null, unit: null, lesson: null };
 updateBreadcrumbs();
 renderHome();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 function selectTerm(id) {
 state.term = DB.terms.find(t => t.id === id);
 state.stream = null; state.program = null; state.grade = null; state.subject = null;
@@ -2561,6 +2560,7 @@ updateBreadcrumbs();
 renderStreams();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 function selectStream(id) {
 state.stream = DB.streams.find(s => s.id === id);
 state.program = null; state.grade = null; state.subject = null;
@@ -2569,6 +2569,7 @@ updateBreadcrumbs();
 if (state.stream.id === 'advanced') { renderPrograms(); } else { renderGrades(); }
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 function selectProgram(id) {
 state.program = DB.programs.find(p => p.id === id);
 state.grade = null; state.subject = null;
@@ -2577,6 +2578,7 @@ updateBreadcrumbs();
 renderGrades();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 function selectGrade(id) {
 state.grade = DB.grades.find(g => g.id === id);
 state.subject = null;
@@ -2585,6 +2587,7 @@ updateBreadcrumbs();
 renderSubjects();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 function selectSubject(id) {
 state.subject = DB.subjects.find(s => s.id === id);
 state.unit = null; state.lesson = null;
@@ -2592,6 +2595,7 @@ updateBreadcrumbs();
 renderUnits();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 function selectUnit(unitId) {
 const key = getCurriculumKey();
 const curriculum = DB.curriculum[key];
@@ -2602,12 +2606,14 @@ updateBreadcrumbs();
 renderLessons();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 function selectLesson(lessonId) {
 state.lesson = state.unit.lessons.find(l => l.id === lessonId);
 updateBreadcrumbs();
 renderLessonDetails();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 function openExam() {
 if (state.lesson && state.lesson.examUrl && state.lesson.examUrl !== '#') {
 window.open(state.lesson.examUrl, '_blank');
@@ -2615,6 +2621,7 @@ window.open(state.lesson.examUrl, '_blank');
 alert('الاختبار قيد التحضير! 🚧');
 }
 }
+
 function openLesson() {
 if (state.lesson && state.lesson.lessonUrl && state.lesson.lessonUrl !== '#') {
 window.open(state.lesson.lessonUrl, '_blank');
@@ -2622,7 +2629,7 @@ window.open(state.lesson.lessonUrl, '_blank');
 alert('شرح الدرس قيد التحضير! 🚧');
 }
 }
-// ==================== BREADCRUMBS ====================
+
 function updateBreadcrumbs() {
 const bc = document.getElementById('breadcrumbs');
 bc.classList.remove('hidden');
@@ -2644,7 +2651,7 @@ setBC('bc-subject-sep', 'bc-subject-btn', state.subject ? `${state.subject.icon}
 setBC('bc-unit-sep', 'bc-unit-btn', state.unit ? state.unit.name : '', !state.unit, state.unit ? () => selectUnit(state.unit.id) : null);
 setBC('bc-lesson-sep', 'bc-lesson-btn', state.lesson ? state.lesson.title : '', !state.lesson, state.lesson ? () => selectLesson(state.lesson.id) : null);
 }
-// ==================== RENDERERS ====================
+
 function renderHome() {
 document.getElementById('app').innerHTML = `
 <div class="gradient-primary rounded-3xl p-8 md:p-12 text-white mb-8 fade-in">
@@ -2674,6 +2681,7 @@ ${DB.terms.map(t => `
 </div>
 `;
 }
+
 function renderStreams() {
 document.getElementById('app').innerHTML = `
 <div class="gradient-secondary rounded-3xl p-8 text-white mb-8 fade-in">
@@ -2692,6 +2700,7 @@ ${DB.streams.map(s => `
 </div>
 `;
 }
+
 function renderPrograms() {
 document.getElementById('app').innerHTML = `
 <div class="gradient-warm rounded-3xl p-8 text-white mb-8 fade-in">
@@ -2711,6 +2720,7 @@ ${p.isEnglish ? '<div class="absolute top-3 left-3 bg-blue-500 text-white text-x
 </div>
 `;
 }
+
 function renderGrades() {
 const title = state.stream.id === 'advanced' && state.program
 ? `${state.term.icon} ${state.term.name} - متقدم - ${state.program.name}`
@@ -2730,6 +2740,7 @@ ${DB.grades.map(g => `
 </div>
 `;
 }
+
 function renderSubjects() {
 const programInfo = state.program ? ` • ${state.program.name}` : '';
 document.getElementById('app').innerHTML = `
@@ -2752,6 +2763,7 @@ return `
 </div>
 `;
 }
+
 function renderUnits() {
 const key = getCurriculumKey();
 const curriculum = DB.curriculum[key];
@@ -2798,6 +2810,7 @@ ${u.description ? `<p class="text-sm text-gray-500 mt-1">${u.description}</p>` :
 </div>
 `;
 }
+
 function renderLessons() {
 const programInfo = state.program ? ` • ${state.program.name}` : '';
 const isEnglish = isCurrentEnglish();
@@ -2824,6 +2837,7 @@ ${state.unit.lessons.map((l, idx) => `
 </div>
 `;
 }
+
 function renderLessonDetails() {
 const c = state.lesson.content;
 const programInfo = state.program ? ` • ${state.program.name}` : '';
@@ -2909,7 +2923,7 @@ ${sectionsHTML}
 </div>
 `;
 }
-// Initialize
+
 showHome();
 </script>
 </body>
