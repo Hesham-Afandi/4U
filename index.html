@@ -150,17 +150,23 @@ themeToggleBtn.addEventListener('click', () => {
 
 // === SEARCH LOGIC ===
 const searchInputs = [document.getElementById('searchInput'), document.getElementById('mobileSearchInput')];
-let originalHTML = ''; // To store original content for resetting highlights
 
 function performSearch(query) {
     const term = query.toLowerCase().trim();
-    const app = document.getElementById('app');
     
-    // If we are in a deep view (lesson details), go home first to search globally
-    if (state.lesson && term !== '') {
+    // إذا كان الحقل فارغاً وأنت في الصفحة الرئيسية، أظهر كل شيء
+    if (term === '' && !state.lesson && !state.unit) {
+        document.querySelectorAll('#app button, #app a').forEach(el => {
+            el.style.display = '';
+        });
+        return;
+    }
+
+    // إذا كنت داخل درس أو وحدة، ارجع للرئيسية أولاً ثم ابحث
+    if (state.lesson || state.unit) {
         showHome();
-        // Wait for render then search
-        setTimeout(() => filterCurriculum(term), 100);
+        // ننتظر قليلاً حتى يتم رسم الصفحة الرئيسية ثم نطبق البحث
+        setTimeout(() => filterCurriculum(term), 50);
         return;
     }
     
@@ -168,28 +174,51 @@ function performSearch(query) {
 }
 
 function filterCurriculum(term) {
-    // Simple filtering by hiding non-matching cards/buttons
-    const allButtons = document.querySelectorAll('#app button, #app a');
+    // نبحث فقط في البطاقات الرئيسية (الترمات) والأزرار الموجودة في الشبكة
+    const allButtons = document.querySelectorAll('#app .grid button, #app .space-y-4 button');
     let visibleCount = 0;
     
     allButtons.forEach(el => {
+        // نتأكد أن الزر يحتوي على نص يمكن البحث فيه
         const text = el.textContent.toLowerCase();
+        
         if (term === '' || text.includes(term)) {
             el.style.display = '';
             el.style.opacity = '1';
             visibleCount++;
         } else {
-            // Don't hide main navigation or layout elements, only content cards
-            if(el.closest('.grid') || el.closest('.space-y-4')) {
-                el.style.display = 'none';
-            }
+            el.style.display = 'none';
         }
     });
+
+    // إظهار رسالة "لا توجد نتائج" إذا لم يتم العثور على شيء
+    const appDiv = document.getElementById('app');
+    let noResultsMsg = document.getElementById('custom-no-results');
+    
+    if (visibleCount === 0 && term !== '') {
+        if (!noResultsMsg) {
+            noResultsMsg = document.createElement('div');
+            noResultsMsg.id = 'custom-no-results';
+            noResultsMsg.className = 'text-center py-12 fade-in';
+            noResultsMsg.innerHTML = `
+                <div class="text-6xl mb-4">🔍</div>
+                <h3 class="text-xl font-bold text-gray-700 dark:text-gray-300 mb-2">لا توجد نتائج مطابقة</h3>
+                <p class="text-gray-500 dark:text-gray-400">جرب البحث بكلمات مختلفة مثل "فيزياء"، "مثلثات"، أو "SAT"</p>
+            `;
+            appDiv.appendChild(noResultsMsg);
+        }
+    } else {
+        if (noResultsMsg) noResultsMsg.remove();
+    }
 }
 
+// تفعيل البحث عند الكتابة
 searchInputs.forEach(input => {
     input.addEventListener('input', (e) => {
-        searchInputs.forEach(i => { if(i !== e.target) i.value = e.target.value; });
+        // مزامنة حقل البحث في الجوال مع الكمبيوتر والعكس
+        searchInputs.forEach(i => { 
+            if(i !== e.target) i.value = e.target.value; 
+        });
         performSearch(e.target.value);
     });
 });
