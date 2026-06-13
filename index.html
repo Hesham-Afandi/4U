@@ -8,9 +8,15 @@
 <link rel="apple-touch-icon" href="logo.png">
 <title> 4U- مكتبة المناهج</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+        darkMode: 'class',
+        theme: { extend: { fontFamily: { cairo: ['Cairo', 'sans-serif'] } } }
+    }
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-body { font-family: 'Cairo', sans-serif; }
+body { font-family: 'Cairo', sans-serif; transition: background-color 0.3s, color 0.3s; }
 .en-content { font-family: 'Inter', sans-serif; direction: ltr; text-align: left; }
 .gradient-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
 .gradient-secondary { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
@@ -27,52 +33,168 @@ table.comparison { width: 100%; border-collapse: collapse; margin: 1rem 0; }
 table.comparison th, table.comparison td { border: 1px solid #e5e7eb; padding: 0.75rem; }
 table.comparison th { background: #f3f4f6; font-weight: bold; }
 .en-content table.comparison th, .en-content table.comparison td { text-align: left; }
+/* Search Highlight */
+mark { background-color: #fbbf24; color: #000; padding: 0 2px; border-radius: 2px; }
+.dark mark { background-color: #d97706; color: #fff; }
 </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-gray-50 min-h-screen dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Top Bar -->
 <div class="gradient-primary text-white py-3 px-6 shadow-lg sticky top-0 z-50">
 <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-3">
-<div class="flex items-center gap-3">
+<div class="flex items-center gap-3 cursor-pointer" onclick="showHome()">
 <img src="logo.png" alt="4U Logo" class="h-12 w-auto drop-shadow-lg">
 <div>
 <h1 class="font-bold text-lg">منصة 4U التعليمية</h1>
 <p class="text-xs opacity-80">منهج متكامل • تفاعلي • احترافي</p>
 </div>
 </div>
-<div class="flex items-center gap-4 text-sm">
-<span class="hidden md:block">مرحباً بك 👋</span>
+
+<!-- Search Bar (Desktop) -->
+<div class="hidden md:flex flex-1 max-w-md mx-4 relative">
+    <input type="text" id="searchInput" placeholder="ابحث عن درس، وحدة أو موضوع..." 
+        class="w-full bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg py-2 px-4 pr-10 text-white placeholder-white/70 focus:outline-none focus:bg-white/30 focus:border-white transition">
+    <svg class="w-5 h-5 absolute right-3 top-2.5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+</div>
+
+<div class="flex items-center gap-2 text-sm">
+<!-- Dafter Khana Link -->
+<a href="https://hesham-afandi.github.io/DafterKhana/" target="_blank" title="مكتبة دفتر خانة" 
+   class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg transition font-medium">
+    <span>📓</span>
+    <span class="hidden sm:inline">دفتر خانة</span>
+</a>
+
+<!-- Dark Mode Toggle -->
+<button id="themeToggle" class="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition" title="تبديل الوضع">
+    <!-- Sun Icon -->
+    <svg id="sunIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+    <!-- Moon Icon -->
+    <svg id="moonIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+</button>
+
+<span class="hidden md:block ml-2">مرحباً بك 👋</span>
 <button onclick="showHome()" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition">🎓 الرئيسية</button>
 </div>
 </div>
+<!-- Mobile Search Bar -->
+<div class="md:hidden px-4 pb-3 w-full">
+    <input type="text" id="mobileSearchInput" placeholder="ابحث عن درس..." 
+        class="w-full bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg py-2 px-4 text-white placeholder-white/70 focus:outline-none focus:bg-white/30 transition text-sm">
 </div>
+</div>
+
 <div id="breadcrumbs" class="max-w-7xl mx-auto px-6 py-4 hidden">
-<div class="flex items-center gap-2 text-sm text-gray-600 flex-wrap">
-<button onclick="showHome()" class="hover:text-indigo-600">🎓 الرئيسية</button>
+<div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 flex-wrap">
+<button onclick="showHome()" class="hover:text-indigo-600 dark:hover:text-indigo-400">🎓 الرئيسية</button>
 <span id="bc-term-sep" class="hidden">›</span>
-<button id="bc-term-btn" class="hidden hover:text-indigo-600"></button>
+<button id="bc-term-btn" class="hidden hover:text-indigo-600 dark:hover:text-indigo-400"></button>
 <span id="bc-stream-sep" class="hidden">›</span>
-<button id="bc-stream-btn" class="hidden hover:text-indigo-600"></button>
+<button id="bc-stream-btn" class="hidden hover:text-indigo-600 dark:hover:text-indigo-400"></button>
 <span id="bc-program-sep" class="hidden">›</span>
-<button id="bc-program-btn" class="hidden hover:text-indigo-600"></button>
+<button id="bc-program-btn" class="hidden hover:text-indigo-600 dark:hover:text-indigo-400"></button>
 <span id="bc-grade-sep" class="hidden">›</span>
-<button id="bc-grade-btn" class="hidden hover:text-indigo-600"></button>
+<button id="bc-grade-btn" class="hidden hover:text-indigo-600 dark:hover:text-indigo-400"></button>
 <span id="bc-subject-sep" class="hidden">›</span>
-<button id="bc-subject-btn" class="hidden hover:text-indigo-600"></button>
+<button id="bc-subject-btn" class="hidden hover:text-indigo-600 dark:hover:text-indigo-400"></button>
 <span id="bc-unit-sep" class="hidden">›</span>
-<button id="bc-unit-btn" class="hidden hover:text-indigo-600"></button>
+<button id="bc-unit-btn" class="hidden hover:text-indigo-600 dark:hover:text-indigo-400"></button>
 <span id="bc-lesson-sep" class="hidden">›</span>
-<button id="bc-lesson-btn" class="hidden hover:text-indigo-600"></button>
+<button id="bc-lesson-btn" class="hidden hover:text-indigo-600 dark:hover:text-indigo-400"></button>
 </div>
 </div>
+
 <div id="app" class="max-w-7xl mx-auto px-4 md:px-6 pb-12"></div>
+
 <footer class="bg-gray-900 text-white py-8 mt-16">
 <div class="max-w-7xl mx-auto px-6 text-center">
 <img src="logo.png" alt="4U Logo" class="h-16 w-auto mx-auto mb-4 drop-shadow-lg">
 <p class="font-bold text-xl">المنصة التعليمية المتكاملة 4U</p>
 <p class="text-sm opacity-70 mt-1">Mr. Mohammed Hesham | mohammedhesham872@gmail.com | +971555642674</p>
+<div class="mt-4 flex justify-center gap-4 text-sm opacity-60">
+    <a href="https://hesham-afandi.github.io/DafterKhana/" target="_blank" class="hover:text-white transition">📓 دفتر خانة</a>
+</div>
 </div>
 </footer>
+
 <script>
+// === DARK MODE LOGIC ===
+const themeToggleBtn = document.getElementById('themeToggle');
+const sunIcon = document.getElementById('sunIcon');
+const moonIcon = document.getElementById('moonIcon');
+const htmlElement = document.documentElement;
+
+function applyTheme(isDark) {
+    if (isDark) {
+        htmlElement.classList.add('dark');
+        sunIcon.classList.remove('hidden');
+        moonIcon.classList.add('hidden');
+    } else {
+        htmlElement.classList.remove('dark');
+        sunIcon.classList.add('hidden');
+        moonIcon.classList.remove('hidden');
+    }
+}
+
+const savedTheme = localStorage.getItem('theme');
+const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+let isDarkMode = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
+applyTheme(isDarkMode);
+
+themeToggleBtn.addEventListener('click', () => {
+    isDarkMode = !isDarkMode;
+    applyTheme(isDarkMode);
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+});
+
+// === SEARCH LOGIC ===
+const searchInputs = [document.getElementById('searchInput'), document.getElementById('mobileSearchInput')];
+let originalHTML = ''; // To store original content for resetting highlights
+
+function performSearch(query) {
+    const term = query.toLowerCase().trim();
+    const app = document.getElementById('app');
+    
+    // If we are in a deep view (lesson details), go home first to search globally
+    if (state.lesson && term !== '') {
+        showHome();
+        // Wait for render then search
+        setTimeout(() => filterCurriculum(term), 100);
+        return;
+    }
+    
+    filterCurriculum(term);
+}
+
+function filterCurriculum(term) {
+    // Simple filtering by hiding non-matching cards/buttons
+    const allButtons = document.querySelectorAll('#app button, #app a');
+    let visibleCount = 0;
+    
+    allButtons.forEach(el => {
+        const text = el.textContent.toLowerCase();
+        if (term === '' || text.includes(term)) {
+            el.style.display = '';
+            el.style.opacity = '1';
+            visibleCount++;
+        } else {
+            // Don't hide main navigation or layout elements, only content cards
+            if(el.closest('.grid') || el.closest('.space-y-4')) {
+                el.style.display = 'none';
+            }
+        }
+    });
+}
+
+searchInputs.forEach(input => {
+    input.addEventListener('input', (e) => {
+        searchInputs.forEach(i => { if(i !== e.target) i.value = e.target.value; });
+        performSearch(e.target.value);
+    });
+});
+
+// ==================== DATABASE ====================
 const DB = {
 terms: [
 { id: 1, name: 'الترم الأول', icon: '📘' },
@@ -2524,16 +2646,15 @@ sections: [
 }
 ]
 }
-}
 };
 
 let state = { term: null, stream: null, program: null, grade: null, subject: null, unit: null, lesson: null };
 
 function getCurriculumKey() {
-    if (!state.subject || !state.grade || !state.term) return null;
-    if (!state.stream) return null;
-    const key = state.stream.id === 'advanced' ? state.program.id : 'general';
-    return `${state.subject.id}-${state.grade.id}-${key}-${state.term.id}`;
+if (!state.subject || !state.grade || !state.term) return null;
+if (!state.stream) return null;
+const key = state.stream.id === 'advanced' ? state.program.id : 'general';
+return `${state.subject.id}-${state.grade.id}-${key}-${state.term.id}`;
 }
 
 function getSubjectKey(subjectId) {
@@ -2665,16 +2786,16 @@ document.getElementById('app').innerHTML = `
 </div>
 </div>
 </div>
-<h2 class="text-2xl font-bold mb-4 text-gray-800">📅 اختر الترم الدراسي</h2>
+<h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">📅 اختر الترم الدراسي</h2>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-5 fade-in">
 ${DB.terms.map(t => `
-<button onclick="selectTerm(${t.id})" class="card-hover bg-white rounded-2xl p-6 shadow-md text-right border-2 border-transparent hover:border-indigo-500">
+<button onclick="selectTerm(${t.id})" class="card-hover bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md text-right border-2 border-transparent hover:border-indigo-500 dark:hover:border-indigo-400">
 <div class="text-5xl mb-3">${t.icon}</div>
-<h3 class="font-bold text-xl mb-1">${t.name}</h3>
-<p class="text-sm text-gray-500 mb-3">اضغط لاستعراض المحتوى</p>
+<h3 class="font-bold text-xl mb-1 dark:text-white">${t.name}</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400 mb-3">اضغط لاستعراض المحتوى</p>
 <div class="flex items-center justify-between">
-<span class="text-indigo-600 text-sm font-semibold">استعرض الآن ←</span>
-<span class="bg-gray-100 text-xs px-2 py-1 rounded">عام + متقدم</span>
+<span class="text-indigo-600 dark:text-indigo-400 text-sm font-semibold">استعرض الآن ←</span>
+<span class="bg-gray-100 dark:bg-gray-700 text-xs px-2 py-1 rounded">عام + متقدم</span>
 </div>
 </button>
 `).join('')}
@@ -2690,11 +2811,11 @@ document.getElementById('app').innerHTML = `
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 fade-in">
 ${DB.streams.map(s => `
-<button onclick="selectStream('${s.id}')" class="card-hover bg-white rounded-2xl p-8 shadow-md text-right border-2 border-transparent hover:border-pink-500">
+<button onclick="selectStream('${s.id}')" class="card-hover bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-md text-right border-2 border-transparent hover:border-pink-500 dark:hover:border-pink-400">
 <div class="text-6xl mb-4">${s.icon}</div>
-<h3 class="font-bold text-2xl mb-2">${s.name}</h3>
-<p class="text-gray-500 mb-4">${s.desc}</p>
-<div class="flex items-center gap-2 text-pink-600 font-semibold"><span>اضغط للدخول</span><span>←</span></div>
+<h3 class="font-bold text-2xl mb-2 dark:text-white">${s.name}</h3>
+<p class="text-gray-500 dark:text-gray-400 mb-4">${s.desc}</p>
+<div class="flex items-center gap-2 text-pink-600 dark:text-pink-400 font-semibold"><span>اضغط للدخول</span><span>←</span></div>
 </button>
 `).join('')}
 </div>
@@ -2709,12 +2830,12 @@ document.getElementById('app').innerHTML = `
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 fade-in">
 ${DB.programs.map(p => `
-<button onclick="selectProgram('${p.id}')" class="card-hover bg-white rounded-2xl p-8 shadow-md text-right border-2 border-transparent hover:border-amber-500 relative overflow-hidden">
+<button onclick="selectProgram('${p.id}')" class="card-hover bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-md text-right border-2 border-transparent hover:border-amber-500 dark:hover:border-amber-400 relative overflow-hidden">
 ${p.isEnglish ? '<div class="absolute top-3 left-3 bg-blue-500 text-white text-xs px-3 py-1 rounded-full font-bold">🇬🇧 English</div>' : ''}
 <div class="text-6xl mb-4">${p.icon}</div>
-<h3 class="font-bold text-2xl mb-2">${p.name}</h3>
-<p class="text-gray-500 mb-4">${p.desc}</p>
-<div class="flex items-center gap-2 text-amber-600 font-semibold"><span>اضغط للاختيار</span><span>←</span></div>
+<h3 class="font-bold text-2xl mb-2 dark:text-white">${p.name}</h3>
+<p class="text-gray-500 dark:text-gray-400 mb-4">${p.desc}</p>
+<div class="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-semibold"><span>اضغط للاختيار</span><span>←</span></div>
 </button>
 `).join('')}
 </div>
@@ -2732,9 +2853,9 @@ document.getElementById('app').innerHTML = `
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-5 fade-in">
 ${DB.grades.map(g => `
-<button onclick="selectGrade(${g.id})" class="card-hover bg-white rounded-2xl p-6 shadow-md text-center border-2 border-transparent hover:border-blue-500">
+<button onclick="selectGrade(${g.id})" class="card-hover bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md text-center border-2 border-transparent hover:border-blue-500 dark:hover:border-blue-400">
 <div class="text-5xl mb-3">${g.icon}</div>
-<h3 class="font-bold text-lg">${g.name}</h3>
+<h3 class="font-bold text-lg dark:text-white">${g.name}</h3>
 </button>
 `).join('')}
 </div>
@@ -2753,10 +2874,10 @@ ${DB.subjects.map(s => {
 const key = getSubjectKey(s.id);
 const hasContent = DB.curriculum[key] ? true : false;
 return `
-<button onclick="selectSubject('${s.id}')" class="card-hover bg-white rounded-2xl p-6 shadow-md text-center border-2 border-transparent hover:border-purple-500">
+<button onclick="selectSubject('${s.id}')" class="card-hover bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md text-center border-2 border-transparent hover:border-purple-500 dark:hover:border-purple-400">
 <div class="text-5xl mb-3">${s.icon}</div>
-<h3 class="font-bold text-lg">${s.name}</h3>
-<p class="text-xs text-gray-500 mt-2">${hasContent ? '✅ متاح' : '🚧 قريباً'}</p>
+<h3 class="font-bold text-lg dark:text-white">${s.name}</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400 mt-2">${hasContent ? '✅ متاح' : '🚧 قريباً'}</p>
 </button>
 `;
 }).join('')}
@@ -2789,21 +2910,21 @@ document.getElementById('app').innerHTML = `
 <p class="opacity-90">${state.term.name} • ${state.stream.name}${programInfo} • ${state.grade.name}</p>
 ${isEnglish ? '<div class="mt-3 inline-block bg-blue-500 text-white text-sm px-3 py-1 rounded-full">🇬🇧 Content in English</div>' : ''}
 </div>
-<h2 class="text-2xl font-bold mb-4 text-gray-800">📚 اختر الوحدة</h2>
+<h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">📚 اختر الوحدة</h2>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 fade-in">
 ${curriculum.units.map(u => {
 const lessonCount = u.lessons ? u.lessons.length : 0;
 return `
-<button onclick="selectUnit(${u.id})" class="card-hover bg-white rounded-2xl p-6 shadow-md text-right border-2 border-transparent hover:border-indigo-500 ${contentClass}">
+<button onclick="selectUnit(${u.id})" class="card-hover bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md text-right border-2 border-transparent hover:border-indigo-500 dark:hover:border-indigo-400 ${contentClass}">
 <div class="flex items-center gap-4 mb-3">
 <div class="bg-gradient-to-br ${u.color} w-16 h-16 rounded-xl flex items-center justify-center text-3xl shadow-lg">${u.icon}</div>
 <div class="flex-1">
-<h3 class="font-bold text-xl">${u.name}</h3>
-${u.description ? `<p class="text-sm text-gray-500 mt-1">${u.description}</p>` : ''}
-<p class="text-xs text-indigo-600 mt-2 font-semibold">📖 ${lessonCount} ${isEnglish ? 'lessons' : 'دروس'}</p>
+<h3 class="font-bold text-xl dark:text-white">${u.name}</h3>
+${u.description ? `<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">${u.description}</p>` : ''}
+<p class="text-xs text-indigo-600 dark:text-indigo-400 mt-2 font-semibold">📖 ${lessonCount} ${isEnglish ? 'lessons' : 'دروس'}</p>
 </div>
 </div>
-<div class="flex items-center justify-between text-indigo-600 font-semibold text-sm"><span>${isEnglish ? 'Browse lessons' : 'استعرض الدروس'}</span><span>${isEnglish ? '→' : '←'}</span></div>
+<div class="flex items-center justify-between text-indigo-600 dark:text-indigo-400 font-semibold text-sm"><span>${isEnglish ? 'Browse lessons' : 'استعرض الدروس'}</span><span>${isEnglish ? '→' : '←'}</span></div>
 </button>
 `;
 }).join('')}
@@ -2822,16 +2943,16 @@ document.getElementById('app').innerHTML = `
 ${state.unit.description ? `<p class="opacity-90 text-sm mt-2 ${contentClass}">${state.unit.description}</p>` : ''}
 ${isEnglish ? '<div class="mt-3 inline-block bg-blue-500 text-white text-sm px-3 py-1 rounded-full">🇬🇧 English Content</div>' : ''}
 </div>
-<h2 class="text-2xl font-bold mb-4 text-gray-800">${isEnglish ? '📖 Lessons' : '📖 الدروس'}</h2>
+<h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">${isEnglish ? '📖 Lessons' : '📖 الدروس'}</h2>
 <div class="space-y-4 fade-in">
 ${state.unit.lessons.map((l, idx) => `
-<button onclick="selectLesson(${l.id})" class="card-hover w-full bg-white rounded-2xl p-5 shadow-md flex items-center gap-4 text-right border-2 border-transparent hover:border-violet-500 ${contentClass}">
-<div class="bg-violet-100 text-violet-600 rounded-xl w-14 h-14 flex items-center justify-center text-2xl font-bold flex-shrink-0">${l.icon}</div>
+<button onclick="selectLesson(${l.id})" class="card-hover w-full bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-md flex items-center gap-4 text-right border-2 border-transparent hover:border-violet-500 dark:hover:border-violet-400 ${contentClass}">
+<div class="bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 rounded-xl w-14 h-14 flex items-center justify-center text-2xl font-bold flex-shrink-0">${l.icon}</div>
 <div class="flex-1">
-<h3 class="font-bold text-lg">${idx + 1}. ${l.title}</h3>
-<p class="text-sm text-gray-500 mt-1">⏱️ ${l.duration}</p>
+<h3 class="font-bold text-lg dark:text-white">${idx + 1}. ${l.title}</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">⏱️ ${l.duration}</p>
 </div>
-<div class="text-violet-600 text-2xl">${isEnglish ? '→' : '←'}</div>
+<div class="text-violet-600 dark:text-violet-400 text-2xl">${isEnglish ? '→' : '←'}</div>
 </button>
 `).join('')}
 </div>
@@ -2847,27 +2968,27 @@ let sectionsHTML = '';
 if (c && c.sections) {
 sectionsHTML = c.sections.map(s => {
 if (s.type === 'formula') {
-return `<div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-6 my-4 border-2 border-indigo-200 text-center">
-<div class="text-xs text-indigo-600 mb-2 font-semibold">${s.title}</div>
-<div class="formula text-3xl font-bold text-indigo-800">${s.content}</div>
+return `<div class="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-xl p-6 my-4 border-2 border-indigo-200 dark:border-indigo-800 text-center">
+<div class="text-xs text-indigo-600 dark:text-indigo-400 mb-2 font-semibold">${s.title}</div>
+<div class="formula text-3xl font-bold text-indigo-800 dark:text-indigo-300">${s.content}</div>
 </div>`;
 } else if (s.type === 'table') {
 return `<div class="my-4">
-<h4 class="font-bold text-lg mb-3 text-gray-800">${s.title}</h4>
+<h4 class="font-bold text-lg mb-3 text-gray-800 dark:text-white">${s.title}</h4>
 <div class="overflow-x-auto">
-<table class="comparison">
-<thead><tr>${s.headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
-<tbody>${s.rows.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('')}</tbody>
+<table class="comparison dark:border-gray-700">
+<thead><tr>${s.headers.map(h => `<th class="dark:bg-gray-700 dark:text-white dark:border-gray-600">${h}</th>`).join('')}</tr></thead>
+<tbody>${s.rows.map(row => `<tr>${row.map(cell => `<td class="dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700">${cell}</td>`).join('')}</tr>`).join('')}</tbody>
 </table>
 </div>
 </div>`;
 } else if (s.type === 'bullets') {
-return `<div class="my-4 bg-blue-50 rounded-xl p-5 border-l-4 border-blue-500">
-<h4 class="font-bold text-lg mb-3 text-blue-800">${s.title}</h4>
-<ul class="space-y-2">${s.content.map(item => `<li class="flex items-start gap-2"><span class="text-blue-600 mt-1">✅</span><span class="text-gray-700">${item}</span></li>`).join('')}</ul>
+return `<div class="my-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl p-5 border-l-4 border-blue-500 dark:border-blue-400">
+<h4 class="font-bold text-lg mb-3 text-blue-800 dark:text-blue-300">${s.title}</h4>
+<ul class="space-y-2">${s.content.map(item => `<li class="flex items-start gap-2"><span class="text-blue-600 dark:text-blue-400 mt-1">✅</span><span class="text-gray-700 dark:text-gray-300">${item}</span></li>`).join('')}</ul>
 </div>`;
 } else {
-return `<div class="my-4"><h4 class="font-bold text-lg mb-2 text-gray-800">${s.title}</h4><p class="text-gray-700 leading-relaxed">${s.content}</p></div>`;
+return `<div class="my-4"><h4 class="font-bold text-lg mb-2 text-gray-800 dark:text-white">${s.title}</h4><p class="text-gray-700 dark:text-gray-300 leading-relaxed">${s.content}</p></div>`;
 }
 }).join('');
 }
@@ -2888,36 +3009,36 @@ ${isEnglish ? '<div class="mt-2 inline-block bg-blue-500 text-white text-xs px-3
 <div class="grid md:grid-cols-3 gap-6 fade-in">
 <div class="md:col-span-2 space-y-6 ${contentClass}">
 ${c ? `
-<div class="bg-white rounded-2xl p-6 shadow-md">
-<h2 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">📚</span> ${isEnglish ? 'Lesson Introduction' : 'مقدمة الدرس'}</h2>
-<div class="bg-gradient-to-r from-purple-50 to-indigo-50 ${isEnglish ? 'border-l-4' : 'border-r-4'} border-purple-500 p-4 rounded-lg"><p class="text-gray-700 leading-relaxed">${c.intro}</p></div>
+<div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md">
+<h2 class="text-xl font-bold mb-4 flex items-center gap-2 dark:text-white"><span class="text-2xl">📚</span> ${isEnglish ? 'Lesson Introduction' : 'مقدمة الدرس'}</h2>
+<div class="bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 ${isEnglish ? 'border-l-4' : 'border-r-4'} border-purple-500 dark:border-purple-400 p-4 rounded-lg"><p class="text-gray-700 dark:text-gray-300 leading-relaxed">${c.intro}</p></div>
 </div>
-<div class="bg-white rounded-2xl p-6 shadow-md">
-<h2 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">💡</span> ${isEnglish ? 'Lesson Content' : 'محتوى الدرس'}</h2>
+<div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md">
+<h2 class="text-xl font-bold mb-4 flex items-center gap-2 dark:text-white"><span class="text-2xl">💡</span> ${isEnglish ? 'Lesson Content' : 'محتوى الدرس'}</h2>
 ${sectionsHTML}
 </div>
-` : `<div class="bg-white rounded-2xl p-6 shadow-md"><h2 class="text-xl font-bold mb-4"><span class="text-2xl">📚</span> ${isEnglish ? 'Lesson Content' : 'محتوى الدرس'}</h2><p class="text-gray-700">${isEnglish ? 'Lesson content is under preparation...' : 'محتوى الدرس قيد التحضير...'}</p></div>`}
+` : `<div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md"><h2 class="text-xl font-bold mb-4 dark:text-white"><span class="text-2xl">📚</span> ${isEnglish ? 'Lesson Content' : 'محتوى الدرس'}</h2><p class="text-gray-700 dark:text-gray-300">${isEnglish ? 'Lesson content is under preparation...' : 'محتوى الدرس قيد التحضير...'}</p></div>`}
 </div>
 <div class="space-y-6">
-<div class="bg-white rounded-2xl p-6 shadow-md sticky top-24">
-<h3 class="font-bold mb-4 flex items-center gap-2"><span>📋</span> ${isEnglish ? 'Lesson Information' : 'معلومات الدرس'}</h3>
+<div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md sticky top-24">
+<h3 class="font-bold mb-4 flex items-center gap-2 dark:text-white"><span>📋</span> ${isEnglish ? 'Lesson Information' : 'معلومات الدرس'}</h3>
 <div class="space-y-3 text-sm">
-<div class="bg-gray-50 p-3 rounded-lg"><span class="text-xs text-gray-500">${isEnglish ? 'Unit' : 'الوحدة'}</span><p class="font-semibold ${contentClass}">${state.unit.name}</p></div>
-<div class="bg-gray-50 p-3 rounded-lg"><span class="text-xs text-gray-500">${isEnglish ? 'Duration' : 'المدة الزمنية'}</span><p class="font-semibold">⏱️ ${state.lesson.duration}</p></div>
-<div class="bg-gray-50 p-3 rounded-lg"><span class="text-xs text-gray-500">${isEnglish ? 'Grade' : 'الصف'}</span><p class="font-semibold">${state.grade.name}</p></div>
+<div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg"><span class="text-xs text-gray-500 dark:text-gray-400">${isEnglish ? 'Unit' : 'الوحدة'}</span><p class="font-semibold dark:text-white ${contentClass}">${state.unit.name}</p></div>
+<div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg"><span class="text-xs text-gray-500 dark:text-gray-400">${isEnglish ? 'Duration' : 'المدة الزمنية'}</span><p class="font-semibold dark:text-white">⏱️ ${state.lesson.duration}</p></div>
+<div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg"><span class="text-xs text-gray-500 dark:text-gray-400">${isEnglish ? 'Grade' : 'الصف'}</span><p class="font-semibold dark:text-white">${state.grade.name}</p></div>
 </div>
 <button onclick="openLesson()" class="mt-6 w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white py-4 rounded-xl font-bold transition transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
 <span class="text-2xl">📖</span><span>${state.lesson.lessonTitle || (isEnglish ? 'Lesson Explanation' : 'شرح الدرس')}</span><span>↗</span>
 </button>
-<p class="text-xs text-gray-500 mt-2 text-center">${isEnglish ? 'Opens in new tab' : 'سيفتح في نافذة جديدة'}</p>
+<p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">${isEnglish ? 'Opens in new tab' : 'سيفتح في نافذة جديدة'}</p>
 <button onclick="openExam()" class="mt-3 w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white py-4 rounded-xl font-bold transition transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
 <span class="text-2xl">📝</span><span>${state.lesson.examTitle || (isEnglish ? 'Take the Quiz' : 'ابدأ الاختبار')}</span><span>↗</span>
 </button>
-<p class="text-xs text-gray-500 mt-2 text-center">${isEnglish ? 'Opens in new tab' : 'سيفتح في نافذة جديدة'}</p>
+<p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">${isEnglish ? 'Opens in new tab' : 'سيفتح في نافذة جديدة'}</p>
 </div>
-<div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-6">
-<h4 class="font-bold text-amber-700 mb-2 flex items-center gap-2"><span>💡</span> ${isEnglish ? 'Tip' : 'نصيحة'}</h4>
-<p class="text-sm text-gray-700">${isEnglish ? 'Review the lesson thoroughly before starting the quiz for the best results!' : 'راجع الدرس جيداً قبل البدء في الاختبار للحصول على أفضل نتيجة!'}</p>
+<div class="bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-200 dark:border-amber-800 rounded-2xl p-6">
+<h4 class="font-bold text-amber-700 dark:text-amber-400 mb-2 flex items-center gap-2"><span>💡</span> ${isEnglish ? 'Tip' : 'نصيحة'}</h4>
+<p class="text-sm text-gray-700 dark:text-gray-300">${isEnglish ? 'Review the lesson thoroughly before starting the quiz for the best results!' : 'راجع الدرس جيداً قبل البدء في الاختبار للحصول على أفضل نتيجة!'}</p>
 </div>
 </div>
 </div>
