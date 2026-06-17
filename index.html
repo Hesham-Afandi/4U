@@ -1567,6 +1567,45 @@ sections: [
             isEnglish: false,
             units: [
                 {
+                   id: 1,
+            name: 'الوحدة الأولى: المتجهات',
+            icon: '➡️',
+            color: 'from-red-500 to-orange-600',
+            description: 'دراسة الكميات المتجهة والقياسية، العمليات على المتجهات، الضرب النقطي والضرب المتجهي، والمتجهات في الفضاء ثلاثي الأبعاد.',
+            lessons: [
+                {
+                    id: 1, title: '7-1 مقدمة في المتجهات', icon: '➡️', duration: '50 دقيقة',
+                    lessonUrl: 'https://hesham-afandi.github.io/11Adv-Bri-Ar-math-T3-1.1/',
+                    examUrl: 'https://hesham-afandi.github.io/11Adv-Bri-Ar-math-T3-1.1-exam/',
+                    lessonTitle: '📖 شرح الدرس', examTitle: '📝 ابدأ الاختبار',
+                    content: {
+                        intro: 'المتجهات هي كميات لها مقدار واتجاه معاً، تُستخدم في الفيزياء والهندسة لوصف القوة، السرعة، والعجلة.',
+                        sections: [
+                            { title: '📋 الملخص والقوانين الأساسية', type: 'bullets', content: [
+                                'الكمية القياسية (Scalar): لها مقدار فقط (الكتلة، الزمن، درجة الحرارة)',
+                                'الكمية المتجهة (Vector): لها مقدار واتجاه (القوة، السرعة، الإزاحة)',
+                                'يُرمز للمتجه بسهم فوق الرمز: AB⃗ أو بحرف غامق: v',
+                                'المتجه الصفري: مقداره صفر واتجاهه غير محدد',
+                                'متجه الوحدة: متجه مقداره 1 فقط، يُستخدم لتحديد الاتجاه'
+                            ]},
+                            { title: 'طول المتجه', type: 'formula', content: '|AB⃗| = المسافة من A إلى B' },
+                            { title: 'جمع المتجهات', type: 'bullets', content: [
+                                'طريقة الرأس للذيل (المثلث)',
+                                'طريقة متوازي الأضلاع',
+                                'الجمع تبديلي: u + v = v + u',
+                                'الجمع تجميعي: (u + v) + w = u + (v + w)'
+                            ]},
+                            { title: 'الضرب القياسي لمتجه', type: 'formula', content: '|k·v| = |k|·|v| , الاتجاه يعتمد على إشارة k' },
+                            { title: 'خصائص المتجهات', type: 'table', headers: ['الخاصية', 'الصيغة'], rows: [
+                                ['التبديل', 'u + v = v + u'],
+                                ['التجميع', '(u + v) + w = u + (v + w)'],
+                                ['العنصر المحايد', 'v + 0 = v'],
+                                ['النظير الجمعي', 'v + (-v) = 0'],
+                                ['التوزيع', 'k(u + v) = ku + kv']
+                            ]}
+                        ]
+                    }
+                },
                     id: 2,
                     name: 'الوحدة 2: الإحداثيات القطبية والأعداد المركبة',
                     icon: '🧭',
@@ -1917,6 +1956,38 @@ sections: [
             isEnglish: true,
             units: [
                 {
+                    id: 1, title: '7-1 Introduction to Vectors', icon: '➡️', duration: '50 min',
+                    lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.1/',
+                    examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.1-exam/',
+                    lessonTitle: '📖 Lesson Explanation', examTitle: '📝 Take the Quiz',
+                    content: {
+                        intro: 'Vectors are quantities with both magnitude and direction, used in physics and engineering to describe force, velocity, and acceleration.',
+                        sections: [
+                            { title: '📋 Summary & Key Formulas', type: 'bullets', content: [
+                                'Scalar quantity: has only magnitude (mass, time, temperature)',
+                                'Vector quantity: has magnitude and direction (force, velocity, displacement)',
+                                'Vector notation: arrow above symbol AB⃗ or bold letter v',
+                                'Zero vector: magnitude zero, direction undefined',
+                                'Unit vector: vector with magnitude 1 only, used to specify direction'
+                            ]},
+                            { title: 'Vector Magnitude', type: 'formula', content: '|AB⃗| = Distance from A to B' },
+                            { title: 'Vector Addition', type: 'bullets', content: [
+                                'Head-to-Tail Method (Triangle Rule)',
+                                'Parallelogram Method',
+                                'Commutative: u + v = v + u',
+                                'Associative: (u + v) + w = u + (v + w)'
+                            ]},
+                            { title: 'Scalar Multiplication', type: 'formula', content: '|k·v| = |k|·|v| , direction depends on sign of k' },
+                            { title: 'Vector Properties', type: 'table', headers: ['Property', 'Formula'], rows: [
+                                ['Commutative', 'u + v = v + u'],
+                                ['Associative', '(u + v) + w = u + (v + w)'],
+                                ['Identity', 'v + 0 = v'],
+                                ['Additive Inverse', 'v + (-v) = 0'],
+                                ['Distributive', 'k(u + v) = ku + kv']
+                            ]}
+                        ]
+                    }
+                },
                     id: 2,
                     name: 'Unit 2: Polar Coordinates & Complex Numbers',
                     icon: '🧭',
