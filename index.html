@@ -1956,279 +1956,189 @@ sections: [
 
 // ==================== 11 ADVANCED INSPIRE - MATH - ENGLISH - TERM 3 ====================
 'math-11-inspire-3': {
-isEnglish: true,
-units: [
-{
-id: 1,
-name: 'Unit 1: Vectors',
-icon: '➡️',
-color: 'from-red-500 to-orange-600',
-description: 'Study of vector and scalar quantities, vector operations, dot product and cross product, and vectors in three-dimensional space.',
-lessons: [
-{
-    id: 1,
-    name: 'Unit 1: Vectors',
-    icon: '➡️',
-    color: 'from-red-500 to-orange-600',
-    description: 'Study of vector and scalar quantities, vector operations, dot product and cross product, and vectors in three-dimensional space.',
-    lessons: [
+    isEnglish: true,
+    units: [
         {
-            id: 1, title: '7-1 Introduction to Vectors', icon: '➡️', duration: '50 min',
-            lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.1/',
-            examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.1-exam/',
-            lessonTitle: '📖 Lesson Explanation', examTitle: '📝 Take the Quiz',
-            content: {
-                intro: 'Vectors are quantities with both magnitude and direction, used in physics and engineering to describe force, velocity, and acceleration.',
-                sections: [
-                    { title: '📋 Summary & Key Concepts', type: 'bullets', content: [
-                        'Scalar quantity: has only magnitude (mass, time, temperature)',
-                        'Vector quantity: has magnitude and direction (force, velocity, displacement)',
-                        'Vector notation: arrow above symbol AB⃗ or bold letter v',
-                        'Zero vector: magnitude zero, direction undefined',
-                        'Unit vector: vector with magnitude 1 only, used to specify direction'
-                    ]},
-                    { title: 'Vector Magnitude', type: 'formula', content: '|v| = √(v₁² + v₂²)' },
-                    { title: 'Vector Operations', type: 'bullets', content: [
-                        'Vector Addition: u + v = <u₁+v₁, u₂+v₂>',
-                        'Scalar Multiplication: k·v = <kv₁, kv₂>',
-                        'Commutative: u + v = v + u',
-                        'Associative: (u + v) + w = u + (v + w)'
-                    ]},
-                    { title: 'Vector Properties', type: 'table', headers: ['Property', 'Formula'], rows: [
-                        ['Commutative', 'u + v = v + u'],
-                        ['Associative', '(u + v) + w = u + (v + w)'],
-                        ['Identity', 'v + 0 = v'],
-                        ['Additive Inverse', 'v + (-v) = 0'],
-                        ['Distributive', 'k(u + v) = ku + kv']
-                    ]}
-                ]
-            }
+            id: 1,
+            name: 'Unit 1: Vectors',
+            icon: '➡️',
+            color: 'from-red-500 to-orange-600',
+            description: 'Study of vector and scalar quantities, vector operations, dot product and cross product, and vectors in three-dimensional space.',
+            lessons: [
+                {
+                    id: 1, title: '7-1 Introduction to Vectors', icon: '➡️', duration: '50 min',
+                    lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.1/',
+                    examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.1-exam/',
+                    lessonTitle: '📖 Lesson Explanation', examTitle: '📝 Take the Quiz',
+                    content: {
+                        intro: 'Vectors are quantities with both magnitude and direction, used in physics and engineering to describe force, velocity, and acceleration.',
+                        sections: [
+                            { title: '📋 Summary & Key Concepts', type: 'bullets', content: [
+                                'Scalar quantity: has only magnitude (mass, time, temperature)',
+                                'Vector quantity: has magnitude and direction (force, velocity, displacement)',
+                                'Vector notation: arrow above symbol AB⃗ or bold letter v',
+                                'Zero vector: magnitude zero, direction undefined',
+                                'Unit vector: vector with magnitude 1 only, used to specify direction'
+                            ]},
+                            { title: 'Vector Magnitude', type: 'formula', content: '|v| = √(v₁² + v₂²)' },
+                            { title: 'Vector Operations', type: 'bullets', content: [
+                                'Vector Addition: u + v = <u₁+v₁, u₂+v₂>',
+                                'Scalar Multiplication: k·v = <kv₁, kv₂>',
+                                'Commutative: u + v = v + u',
+                                'Associative: (u + v) + w = u + (v + w)'
+                            ]},
+                            { title: 'Vector Properties', type: 'table', headers: ['Property', 'Formula'], rows: [
+                                ['Commutative', 'u + v = v + u'],
+                                ['Associative', '(u + v) + w = u + (v + w)'],
+                                ['Identity', 'v + 0 = v'],
+                                ['Additive Inverse', 'v + (-v) = 0'],
+                                ['Distributive', 'k(u + v) = ku + kv']
+                            ]}
+                        ]
+                    }
+                },
+                {
+                    id: 2, title: '7-2 Vectors in the Coordinate Plane', icon: '📐', duration: '55 min',
+                    lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.2/',
+                    examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.2-exam/',
+                    lessonTitle: '📖 Lesson Explanation', examTitle: '📝 Take the Quiz',
+                    content: {
+                        intro: 'Vectors can be represented in component form using coordinates, allowing precise calculations of magnitude and direction.',
+                        sections: [
+                            { title: '📋 Summary & Key Formulas', type: 'bullets', content: [
+                                'Component form: v = <v₁, v₂> = v₁i + v₂j',
+                                'Magnitude: |v| = √(v₁² + v₂²)',
+                                'Direction angle: θ = tan⁻¹(v₂/v₁)',
+                                'Unit vector: û = v/|v|',
+                                'Position vector: from point A to B: AB⃗ = <B₁-A₁, B₂-A₂>'
+                            ]},
+                            { title: 'Component Form', type: 'formula', content: 'v = <v₁, v₂> = v₁i + v₂j' },
+                            { title: 'Magnitude Formula', type: 'formula', content: '|v| = √(v₁² + v₂²)' },
+                            { title: 'Direction Angle', type: 'formula', content: 'θ = tan⁻¹(v₂/v₁)' },
+                            { title: 'Coordinate Operations', type: 'table', headers: ['Operation', 'Formula'], rows: [
+                                ['Addition', '<u₁+v₁, u₂+v₂>'],
+                                ['Subtraction', '<u₁-v₁, u₂-v₂>'],
+                                ['Scalar Multiplication', '<kv₁, kv₂>'],
+                                ['Magnitude', '√(v₁² + v₂²)'],
+                                ['Direction', 'tan⁻¹(v₂/v₁)']
+                            ]}
+                        ]
+                    }
+                },
+                {
+                    id: 3, title: '7-3 Dot Product and Projections', icon: '·', duration: '55 min',
+                    lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.3/',
+                    examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.3-exam/',
+                    lessonTitle: '📖 Lesson Explanation', examTitle: '📝 Take the Quiz',
+                    content: {
+                        intro: 'The dot product is a scalar operation that measures how much two vectors point in the same direction, essential for finding angles and projections.',
+                        sections: [
+                            { title: '📋 Summary & Key Formulas', type: 'bullets', content: [
+                                'Dot product (algebraic): u·v = u₁v₁ + u₂v₂',
+                                'Dot product (geometric): u·v = |u||v|cos θ',
+                                'Result is a scalar (number), not a vector',
+                                'If u·v = 0, vectors are orthogonal (perpendicular)',
+                                'Projection of u onto v: proj_v u = (u·v/|v|²)v'
+                            ]},
+                            { title: 'Dot Product (Algebraic)', type: 'formula', content: 'u·v = u₁v₁ + u₂v₂' },
+                            { title: 'Dot Product (Geometric)', type: 'formula', content: 'u·v = |u||v|cos θ' },
+                            { title: 'Finding Angle', type: 'formula', content: 'cos θ = (u·v)/(|u||v|)' },
+                            { title: 'Dot Product Properties', type: 'table', headers: ['Property', 'Formula'], rows: [
+                                ['Commutative', 'u·v = v·u'],
+                                ['Distributive', 'u·(v+w) = u·v + u·w'],
+                                ['Self dot product', 'u·u = |u|²'],
+                                ['Orthogonal condition', 'u·v = 0 ⟺ u ⊥ v'],
+                                ['Parallel condition', '|u·v| = |u||v| ⟺ u ∥ v']
+                            ]}
+                        ]
+                    }
+                },
+                {
+                    id: 4, title: '7-4 Vectors in Three-Dimensional Space', icon: '🧊', duration: '55 min',
+                    lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.4/',
+                    examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.4-exam/',
+                    lessonTitle: '📖 Lesson Explanation', examTitle: '📝 Take the Quiz',
+                    content: {
+                        intro: 'Vectors extend to three-dimensional space with three components, requiring additional formulas for magnitude and direction angles.',
+                        sections: [
+                            { title: '📋 Summary & Key Formulas', type: 'bullets', content: [
+                                '3D vector: v = <v₁, v₂, v₃> = v₁i + v₂j + v₃k',
+                                'Magnitude: |v| = √(v₁² + v₂² + v₃²)',
+                                'Direction cosines: cos α = v₁/|v|, cos β = v₂/|v|, cos γ = v₃/|v|',
+                                'Direction cosine identity: cos²α + cos²β + cos²γ = 1',
+                                'Distance formula: d = √((x₂-x₁)² + (y₂-y₁)² + (z₂-z₁)²)'
+                            ]},
+                            { title: '3D Vector Form', type: 'formula', content: 'v = <v₁, v₂, v₃> = v₁i + v₂j + v₃k' },
+                            { title: 'Magnitude in 3D', type: 'formula', content: '|v| = √(v₁² + v₂² + v₃²)' },
+                            { title: 'Direction Cosines', type: 'formula', content: 'cos α = v₁/|v|, cos β = v₂/|v|, cos γ = v₃/|v|' },
+                            { title: 'Direction Cosine Identity', type: 'formula', content: 'cos²α + cos²β + cos²γ = 1' }
+                        ]
+                    }
+                },
+                {
+                    id: 5, title: '7-5 Dot Product and Cross Product in Space', icon: '×', duration: '60 min',
+                    lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.5/',
+                    examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.5-exam/',
+                    lessonTitle: '📖 Lesson Explanation', examTitle: '📝 Take the Quiz',
+                    content: {
+                        intro: 'In 3D space, the cross product creates a vector perpendicular to two input vectors, essential for calculating areas, volumes, and torques.',
+                        sections: [
+                            { title: '📋 Summary & Key Formulas', type: 'bullets', content: [
+                                'Cross product result: u × v is a vector perpendicular to both u and v',
+                                'Direction: determined by right-hand rule',
+                                'Magnitude: |u × v| = |u||v|sin θ = area of parallelogram',
+                                'Volume of parallelepiped: V = |u · (v × w)|',
+                                'Cross product is anti-commutative: u × v = -(v × u)'
+                            ]},
+                            { title: 'Cross Product Formula', type: 'formula', content: 'u × v = |i  j  k| / |u₁ u₂ u₃| / |v₁ v₂ v₃|' },
+                            { title: 'Cross Product Components', type: 'formula', content: 'u × v = <u₂v₃-u₃v₂, u₃v₁-u₁v₃, u₁v₂-u₂v₁>' },
+                            { title: 'Magnitude', type: 'formula', content: '|u × v| = |u||v|sin θ' },
+                            { title: 'Geometric Applications', type: 'table', headers: ['Application', 'Formula'], rows: [
+                                ['Parallelogram area', '|u × v|'],
+                                ['Triangle area', '½|u × v|'],
+                                ['Parallelepiped volume', '|u · (v × w)|'],
+                                ['Torque', 'τ = r × F']
+                            ]}
+                        ]
+                    }
+                },
+                {
+                    id: 6, title: '7-6 Properties of Dot Product and Cross Product', icon: '📏', duration: '55 min',
+                    lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.6/',
+                    examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.6-exam/',
+                    lessonTitle: '📖 Lesson Explanation', examTitle: '📝 Take the Quiz',
+                    content: {
+                        intro: 'Understanding the algebraic properties of dot and cross products is essential for simplifying vector expressions and solving geometric problems.',
+                        sections: [
+                            { title: '📋 Summary & Key Properties', type: 'bullets', content: [
+                                'Dot product: commutative, distributive, not cancellable',
+                                'Cross product: anti-commutative, distributive, not associative',
+                                'Lagrange identity: |u × v|² = |u|²|v|² - (u·v)²',
+                                'Orthogonal condition: u·v = 0',
+                                'Parallel condition: u × v = 0'
+                            ]},
+                            { title: 'Lagrange Identity', type: 'formula', content: '|u × v|² = |u|²|v|² - (u·v)²' },
+                            { title: 'Vector Triple Product', type: 'formula', content: 'u × (v × w) = (u·w)v - (u·v)w' },
+                            { title: 'Dot Product Properties', type: 'table', headers: ['Property', 'Formula'], rows: [
+                                ['Commutative', 'u·v = v·u'],
+                                ['Distributive', 'u·(v+w) = u·v + u·w'],
+                                ['Scalar multiplication', '(ku)·v = k(u·v) = u·(kv)'],
+                                ['Self dot product', 'u·u = |u|² ≥ 0'],
+                                ['Zero vector', '0·u = 0']
+                            ]},
+                            { title: 'Cross Product Properties', type: 'table', headers: ['Property', 'Formula'], rows: [
+                                ['Anti-commutative', 'u × v = -(v × u)'],
+                                ['Distributive', 'u × (v+w) = u×v + u×w'],
+                                ['Scalar multiplication', '(ku) × v = k(u × v) = u × (kv)'],
+                                ['Self cross product', 'u × u = 0'],
+                                ['Not associative', 'u × (v × w) ≠ (u × v) × w']
+                            ]}
+                        ]
+                    }
+                }
+            ]
         },
         {
-            id: 2, title: '7-2 Vectors in the Coordinate Plane', icon: '📐', duration: '55 min',
-            lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.2/',
-            examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.2-exam/',
-            lessonTitle: '📖 Lesson Explanation', examTitle: '📝 Take the Quiz',
-            content: {
-                intro: 'Vectors can be represented in component form using coordinates, allowing precise calculations of magnitude and direction.',
-                sections: [
-                    { title: '📋 Summary & Key Formulas', type: 'bullets', content: [
-                        'Component form: v = <v₁, v₂> = v₁i + v₂j',
-                        'Magnitude: |v| = √(v₁² + v₂²)',
-                        'Direction angle: θ = tan⁻¹(v₂/v₁)',
-                        'Unit vector: û = v/|v|',
-                        'Position vector: from point A to B: AB⃗ = <B₁-A₁, B₂-A₂>'
-                    ]},
-                    { title: 'Component Form', type: 'formula', content: 'v = <v₁, v₂> = v₁i + v₂j' },
-                    { title: 'Magnitude Formula', type: 'formula', content: '|v| = √(v₁² + v₂²)' },
-                    { title: 'Direction Angle', type: 'formula', content: 'θ = tan⁻¹(v₂/v₁)' },
-                    { title: 'Coordinate Operations', type: 'table', headers: ['Operation', 'Formula'], rows: [
-                        ['Addition', '<u₁+v₁, u₂+v₂>'],
-                        ['Subtraction', '<u₁-v₁, u₂-v₂>'],
-                        ['Scalar Multiplication', '<kv₁, kv₂>'],
-                        ['Magnitude', '√(v₁² + v₂²)'],
-                        ['Direction', 'tan⁻¹(v₂/v₁)']
-                    ]}
-                ]
-            }
-        },
-        {
-            id: 3, title: '7-3 Dot Product and Projections', icon: '·', duration: '55 min',
-            lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.3/',
-            examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.3-exam/',
-            lessonTitle: '📖 Lesson Explanation', examTitle: '📝 Take the Quiz',
-            content: {
-                intro: 'The dot product is a scalar operation that measures how much two vectors point in the same direction, essential for finding angles and projections.',
-                sections: [
-                    { title: '📋 Summary & Key Formulas', type: 'bullets', content: [
-                        'Dot product (algebraic): u·v = u₁v₁ + u₂v₂',
-                        'Dot product (geometric): u·v = |u||v|cos θ',
-                        'Result is a scalar (number), not a vector',
-                        'If u·v = 0, vectors are orthogonal (perpendicular)',
-                        'Projection of u onto v: proj_v u = (u·v/|v|²)v'
-                    ]},
-                    { title: 'Dot Product (Algebraic)', type: 'formula', content: 'u·v = u₁v₁ + u₂v₂' },
-                    { title: 'Dot Product (Geometric)', type: 'formula', content: 'u·v = |u||v|cos θ' },
-                    { title: 'Finding Angle', type: 'formula', content: 'cos θ = (u·v)/(|u||v|)' },
-                    { title: 'Dot Product Properties', type: 'table', headers: ['Property', 'Formula'], rows: [
-                        ['Commutative', 'u·v = v·u'],
-                        ['Distributive', 'u·(v+w) = u·v + u·w'],
-                        ['Self dot product', 'u·u = |u|²'],
-                        ['Orthogonal condition', 'u·v = 0 ⟺ u ⊥ v'],
-                        ['Parallel condition', '|u·v| = |u||v| ⟺ u ∥ v']
-                    ]}
-                ]
-            }
-        },
-        {
-            id: 4, title: '7-4 Vectors in Three-Dimensional Space', icon: '🧊', duration: '55 min',
-            lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.4/',
-            examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.4-exam/',
-            lessonTitle: '📖 Lesson Explanation', examTitle: '📝 Take the Quiz',
-            content: {
-                intro: 'Vectors extend to three-dimensional space with three components, requiring additional formulas for magnitude and direction angles.',
-                sections: [
-                    { title: '📋 Summary & Key Formulas', type: 'bullets', content: [
-                        '3D vector: v = <v₁, v₂, v₃> = v₁i + v₂j + v₃k',
-                        'Magnitude: |v| = √(v₁² + v₂² + v₃²)',
-                        'Direction cosines: cos α = v₁/|v|, cos β = v₂/|v|, cos γ = v₃/|v|',
-                        'Direction cosine identity: cos²α + cos²β + cos²γ = 1',
-                        'Distance formula: d = √((x₂-x₁)² + (y₂-y₁)² + (z₂-z₁)²)'
-                    ]},
-                    { title: '3D Vector Form', type: 'formula', content: 'v = <v₁, v₂, v₃> = v₁i + v₂j + v₃k' },
-                    { title: 'Magnitude in 3D', type: 'formula', content: '|v| = √(v₁² + v₂² + v₃²)' },
-                    { title: 'Direction Cosines', type: 'formula', content: 'cos α = v₁/|v|, cos β = v₂/|v|, cos γ = v₃/|v|' },
-                    { title: 'Direction Cosine Identity', type: 'formula', content: 'cos²α + cos²β + cos²γ = 1' }
-                ]
-            }
-        },
-        {
-            id: 5, title: '7-5 Dot Product and Cross Product in Space', icon: '×', duration: '60 min',
-            lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.5/',
-            examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.5-exam/',
-            lessonTitle: '📖 Lesson Explanation', examTitle: '📝 Take the Quiz',
-            content: {
-                intro: 'In 3D space, the cross product creates a vector perpendicular to two input vectors, essential for calculating areas, volumes, and torques.',
-                sections: [
-                    { title: '📋 Summary & Key Formulas', type: 'bullets', content: [
-                        'Cross product result: u × v is a vector perpendicular to both u and v',
-                        'Direction: determined by right-hand rule',
-                        'Magnitude: |u × v| = |u||v|sin θ = area of parallelogram',
-                        'Volume of parallelepiped: V = |u · (v × w)|',
-                        'Cross product is anti-commutative: u × v = -(v × u)'
-                    ]},
-                    { title: 'Cross Product Formula', type: 'formula', content: 'u × v = |i  j  k| / |u₁ u₂ u₃| / |v₁ v₂ v₃|' },
-                    { title: 'Cross Product Components', type: 'formula', content: 'u × v = <u₂v₃-u₃v₂, u₃v₁-u₁v₃, u₁v₂-u₂v₁>' },
-                    { title: 'Magnitude', type: 'formula', content: '|u × v| = |u||v|sin θ' },
-                    { title: 'Geometric Applications', type: 'table', headers: ['Application', 'Formula'], rows: [
-                        ['Parallelogram area', '|u × v|'],
-                        ['Triangle area', '½|u × v|'],
-                        ['Parallelepiped volume', '|u · (v × w)|'],
-                        ['Torque', 'τ = r × F']
-                    ]}
-                ]
-            }
-        },
-        {
-            id: 6, title: '7-6 Properties of Dot Product and Cross Product', icon: '📏', duration: '55 min',
-            lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.6/',
-            examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-1.6-exam/',
-            lessonTitle: '📖 Lesson Explanation', examTitle: '📝 Take the Quiz',
-            content: {
-                intro: 'Understanding the algebraic properties of dot and cross products is essential for simplifying vector expressions and solving geometric problems.',
-                sections: [
-                    { title: '📋 Summary & Key Properties', type: 'bullets', content: [
-                        'Dot product: commutative, distributive, not cancellable',
-                        'Cross product: anti-commutative, distributive, not associative',
-                        'Lagrange identity: |u × v|² = |u|²|v|² - (u·v)²',
-                        'Orthogonal condition: u·v = 0',
-                        'Parallel condition: u × v = 0'
-                    ]},
-                    { title: 'Lagrange Identity', type: 'formula', content: '|u × v|² = |u|²|v|² - (u·v)²' },
-                    { title: 'Vector Triple Product', type: 'formula', content: 'u × (v × w) = (u·w)v - (u·v)w' },
-                    { title: 'Dot Product Properties', type: 'table', headers: ['Property', 'Formula'], rows: [
-                        ['Commutative', 'u·v = v·u'],
-                        ['Distributive', 'u·(v+w) = u·v + u·w'],
-                        ['Scalar multiplication', '(ku)·v = k(u·v) = u·(kv)'],
-                        ['Self dot product', 'u·u = |u|² ≥ 0'],
-                        ['Zero vector', '0·u = 0']
-                    ]},
-                    { title: 'Cross Product Properties', type: 'table', headers: ['Property', 'Formula'], rows: [
-                        ['Anti-commutative', 'u × v = -(v × u)'],
-                        ['Distributive', 'u × (v+w) = u×v + u×w'],
-                        ['Scalar multiplication', '(ku) × v = k(u × v) = u × (kv)'],
-                        ['Self cross product', 'u × u = 0'],
-                        ['Not associative', 'u × (v × w) ≠ (u × v) × w']
-                    ]}
-                ]
-            }
-        }
-    ]
-},
-{
-id: 2,
-name: 'Unit 2: Polar Coordinates & Complex Numbers',
-icon: '🧭',
-color: 'from-blue-500 to-cyan-600',
-description: 'Polar coordinate system, graphing polar equations, converting between forms, conics in polar form, and De Moivre\'s Theorem.',
-lessons: [
-{
-id: 1, title: '8-1 Polar Coordinates', icon: '📍', duration: '50 min',
-lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-2.1/', examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-2.1-exam/',
-content: {
-intro: 'The polar coordinate system is an alternative to Cartesian coordinates.',
-sections: [
-{ title: '📋 Summary & Key Formulas', type: 'bullets', content: [
-'A polar point is defined by (r, θ) where r is distance from pole and θ is angle from polar axis',
-'Polar to Rectangular: x = r cos θ, y = r sin θ',
-'Rectangular to Polar: r² = x² + y², tan θ = y/x',
-'When r is negative: move |r| in the opposite direction of θ'
-]}
-]
-}
-},
-{
-id: 2, title: '8-2 Graphs of Polar Equations', icon: '📈', duration: '55 min',
-lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-2.2/', examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-2.2-exam/',
-content: {
-intro: 'Polar equations produce distinctive geometric shapes.',
-sections: [
-{ title: '📋 Summary & Key Formulas', type: 'bullets', content: [
-'Circles: r = a cos θ (center on horizontal axis), r = a sin θ (center on vertical axis)',
-'Limaçons: r = a ± b cos/sin θ → a/b < 1 inner loop, a/b = 1 cardioid, a/b > 2 convex',
-'Roses: r = a cos(nθ) → n odd: n petals, n even: 2n petals',
-'Lemniscate: r² = a² cos(2θ) or r² = a² sin(2θ) figure-8 shape'
-]}
-]
-}
-},
-{
-id: 3, title: '8-3 Polar & Rectangular Forms', icon: '🔄', duration: '50 min',
-lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-2.3/', examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-2.3-exam/',
-content: {
-intro: 'Any equation can be converted between polar and rectangular systems.',
-sections: [
-{ title: '📋 Summary & Key Formulas', type: 'bullets', content: [
-'Fundamental relations: x = r cos θ, y = r sin θ, r² = x² + y², tan θ = y/x',
-'Rectangular → Polar: substitute x and y in terms of r and θ, then simplify',
-'Polar → Rectangular: multiply by r if needed to use r² and r cos θ and r sin θ'
-]}
-]
-}
-},
-{
-id: 4, title: '8-4 Polar Forms of Conic Sections', icon: '∞', duration: '55 min',
-lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-2.4/', examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-2.4-exam/',
-content: {
-intro: 'All conic sections can be represented by a single polar formula.',
-sections: [
-{ title: '📋 Summary & Key Formulas', type: 'bullets', content: [
-'Standard form: r = ed / (1 ± e cos/sin θ) where e is eccentricity and d is directrix distance',
-'Classification: e = 0 circle, 0 < e < 1 ellipse, e = 1 parabola, e > 1 hyperbola',
-'cos in denominator → vertical directrix, sin in denominator → horizontal directrix'
-]}
-]
-}
-},
-{
-id: 5, title: '8-5 Complex Numbers & De Moivre\'s Theorem', icon: '🔢', duration: '60 min',
-lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-2.5/', examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-math-T3-2.5-exam/',
-content: {
-intro: 'De Moivre\'s Theorem connects complex numbers with trigonometric functions.',
-sections: [
-{ title: '📋 Summary & Key Formulas', type: 'bullets', content: [
-'Polar form: z = r(cos θ + i sin θ) = r cis θ',
-'Modulus: r = √(a² + b²), Argument: θ = tan⁻¹(b/a) considering quadrant',
-'Multiplication: r₁r₂ cis(θ₁ + θ₂), Division: (r₁/r₂) cis(θ₁ - θ₂)',
-'De Moivre\'s Theorem: [r cis θ]ⁿ = rⁿ cis(nθ)',
-'nth Roots: wₖ = ⁿ√r · cis((θ + 2πk)/n) where k = 0,1,...,n-1'
-]}
-]
-}
-}
-]
-},
-{
             id: 2,
             name: 'Unit 2: Polar Coordinates & Complex Numbers',
             icon: '🧭',
@@ -2484,7 +2394,7 @@ sections: [
                             { title: 'Important Tips', type: 'bullets', content: [
                                 'Use ANS button to avoid rewriting',
                                 'a₀ is the initial value before any period',
-                                'After n periods we need aₙ not aₙ₋₁',
+                                'After n periods we need aₙ not a₋₁',
                                 'Check interest rate unit (annual/monthly)'
                             ]}
                         ]
@@ -2497,7 +2407,7 @@ sections: [
                         intro: 'The Binomial Theorem allows expansion of (a+b)ⁿ for any exponent n using combinations or Pascal\'s Triangle to find coefficients.',
                         sections: [
                             { title: '📋 Summary & Key Formulas', type: 'bullets', content: [
-                                '(a+b)ⁿ = Σ(k=0 to n) C(n,k) · aⁿ⁻ᵏ · bᵏ',
+                                '(a+b)ⁿ = Σ(k=0 to n) C(n,k) · aⁿ⁻ᵏ · b',
                                 'Number of terms = n + 1, sum of exponents in each term = n',
                                 'Term coefficient: C(n,k) = n! / [k!(n-k)!]',
                                 'Pascal\'s Triangle gives coefficients without computing combinations',
@@ -2554,7 +2464,7 @@ sections: [
                             { title: '📋 Summary & Key Formulas', type: 'bullets', content: [
                                 'Maclaurin series: f(x) = Σ f⁽ⁿ⁾(0)/n! · xⁿ',
                                 'eˣ = Σ xⁿ/n! = 1 + x + x²/2! + x³/3! + ... (all x values)',
-                                'sin x = Σ (-1)ⁿx²ⁿ⁺¹/(2n+1)! = x - x³/3! + x⁵/5! - ... (odd alternating powers)',
+                                'sin x = Σ (-1)ⁿx²⁺¹/(2n+1)! = x - x³/3! + x⁵/5! - ... (odd alternating powers)',
                                 'cos x = Σ (-1)ⁿx²ⁿ/(2n)! = 1 - x²/2! + x⁴/4! - ... (even alternating powers)',
                                 'Geometric series: 1/(1-x) = Σ xⁿ for |x| < 1',
                                 'Fraction trick: factor out constant from denominator to get 1/(1-u) form'
@@ -2565,10 +2475,13 @@ sections: [
                                 ['cos x', 'Σ (-1)ⁿx²ⁿ/(2n)!', 'All x values'],
                                 ['1/(1-x)', 'Σ xⁿ', '|x| < 1']
                             ]},
-                          { title: 'General Maclaurin Formula', type: 'formula', content: 'f(x) = Σ(n=0 to ∞) f⁽ⁿ⁾(0)/n! · xⁿ' }
-]
-}
-]
+                            { title: 'General Maclaurin Formula', type: 'formula', content: 'f(x) = Σ(n=0 to ∞) f⁽ⁿ⁾(0)/n! · xⁿ' }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
 },
 'math-12-general-3': {
 isEnglish: false,
