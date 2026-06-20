@@ -1,9 +1,17 @@
-const CACHE_NAME = '4u-education-v1';
+const CACHE_NAME = '4u-cache-v1';
+const urlsToCache = [
+  './',
+  './index.html',
+  './logo.png',
+  './favicon.ico',
+  './icons/icon-192x192.png',
+  './icons/icon-512x512.png'
+];
 
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(['/']))
+      .then(cache => cache.addAll(urlsToCache))
   );
 });
 
