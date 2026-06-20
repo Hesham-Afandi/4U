@@ -453,91 +453,140 @@ curriculum: {
         // Unit 3: Rotational Motion
         // ═══════════════════════════════════════════════════════════════
         {
-            id: 3,
-            name: 'Unit 3: Rotational Motion',
+           {
+    id: 3,
+    name: 'Unit 3: Rotational Motion',
+    icon: '🌀',
+    color: 'from-purple-500 to-pink-600',
+    description: 'Study of rotational kinetic energy, moment of inertia, rolling without slipping, rotational work, and angular momentum.',
+    lessons: [
+        {
+            id: 6,
+            title: 'Part 1: Rotational Kinetic Energy & Moment of Inertia',
             icon: '🌀',
-            color: 'from-purple-500 to-pink-600',
-            description: 'Study of rotational kinetic energy, moment of inertia, rolling without slipping, rotational work, and angular momentum.',
-            lessons: [
-                {
-                    id: 6,
-                    title: 'Part 1: Rotational KE & Moment of Inertia',
-                    icon: '🌀',
-                    duration: '60 min',
-                    lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-phy-T3-3.1/',
-                    examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-phy-T3-3.1-exam/',
-                    lessonTitle: '📖 Lesson Explanation',
-                    examTitle: '📝 Take the Quiz',
-                    content: {
-                        intro: 'When a rigid body rotates about an axis, it gains rotational kinetic energy that depends on the moment of inertia (the rotational analog of mass) and angular velocity.',
-                        sections: [
-                            { title: '📋 Fundamental Concepts', type: 'bullets', content: [
-                                'Moment of inertia (I): resistance to change in rotational motion',
-                                'Depends on: mass of body and its distribution around axis',
-                                'Rotational kinetic energy: analog of linear kinetic energy',
-                                'Torque (τ): analog of force in rotational motion',
-                                'Rolling without slipping: combined rotational + translational motion'
-                            ]},
-                            { title: 'Moment of Inertia', type: 'formula', content: 'I = Σ mᵢrᵢ²' },
-                            { title: 'Moment of Inertia for Common Shapes', type: 'table', headers: ['Shape', 'Moment of Inertia'], rows: [
-                                ['Disk/Solid cylinder', 'I = ½MR²'],
-                                ['Ring/Hollow tube', 'I = MR²'],
-                                ['Solid sphere', 'I = (2/5)MR²'],
-                                ['Rod (center)', 'I = (1/12)ML²'],
-                                ['Rod (end)', 'I = (1/3)ML²']
-                            ]},
-                            { title: 'Rotational Kinetic Energy', type: 'formula', content: 'KE_rot = ½Iω²' },
-                            { title: 'Torque', type: 'formula', content: 'τ = r × F × sin(θ) = Iα' },
-                            { title: 'Rolling Without Slipping', type: 'bullets', content: [
-                                'Condition: v = rω (linear velocity = radius × angular velocity)',
-                                'Total KE = Linear KE + Rotational KE',
-                                'KE_total = ½mv² + ½Iω²',
-                                'For cylinder: KE = ½mv² + ¼mv² = ¾mv²'
-                            ]}
-                        ]
-                    }
-                },
-                {
-                    id: 7,
-                    title: 'Part 2: Rotational Work & Angular Momentum',
-                    icon: '⚡',
-                    duration: '60 min',
-                    lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-phy-T3-3.2/',
-                    examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-phy-T3-3.2-exam/',
-                    lessonTitle: '📖 Lesson Explanation',
-                    examTitle: '📝 Take the Quiz',
-                    content: {
-                        intro: 'The concepts of work, energy, and momentum extend to rotational motion, replacing linear quantities with their angular analogs.',
-                        sections: [
-                            { title: '📋 Work & Energy in Rotation', type: 'bullets', content: [
-                                'Rotational work: torque × angular displacement',
-                                'Rotational power: torque × angular velocity',
-                                'Work-Energy theorem (rotational): W = ΔKE_rot',
-                                'These concepts are analogs of their linear motion counterparts'
-                            ]},
-                            { title: 'Rotational Work', type: 'formula', content: 'W = τ × θ' },
-                            { title: 'Rotational Power', type: 'formula', content: 'P = τ × ω' },
-                            { title: 'Rotational Work-Energy Theorem', type: 'formula', content: 'W = ½Iω₂² - ½Iω₁²' },
-                            { title: 'Angular Momentum', type: 'formula', content: 'L = I × ω' },
-                            { title: 'Conservation of Angular Momentum', type: 'formula', content: 'I₁ω₁ = I₂ω₂   (when no external torque)' },
-                            { title: 'Comparison: Linear vs Rotational', type: 'table', headers: ['Linear', 'Rotational'], rows: [
-                                ['F = ma', 'τ = Iα'],
-                                ['p = mv', 'L = Iω'],
-                                ['KE = ½mv²', 'KE = ½Iω²'],
-                                ['W = Fd', 'W = τθ'],
-                                ['P = Fv', 'P = τω'],
-                                ['Conservation of p', 'Conservation of L']
-                            ]},
-                            { title: 'Angular Momentum Conservation Applications', type: 'bullets', content: [
-                                'Ice skater: pulls arms in to increase ω',
-                                'Diver: tucks body to increase rotation speed',
-                                'Neutron star: contracts and spins at tremendous speed',
-                                'Bicycle wheel: hard to stop due to large L'
-                            ]}
-                        ]
-                    }
-                }
-            ]
+            duration: '60 minutes',
+            lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-phy-T3-3.1/',
+            examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-phy-T3-3.1-exam/',
+            lessonTitle: '📖 Lesson Explanation',
+            examTitle: '📝 Take the Quiz',
+            content: {
+                intro: 'When a rigid body rotates about an axis, it gains rotational kinetic energy that depends on the moment of inertia (the rotational analog of mass) and angular velocity.',
+                sections: [
+                    { title: '📋 Fundamental Concepts', type: 'bullets', content: [
+                        'Moment of inertia (I): resistance of body to change in rotational motion',
+                        'Depends on: mass of body and its distribution around axis of rotation',
+                        'Rotational kinetic energy: analog of linear kinetic energy',
+                        'Torque (τ): analog of force in rotational motion',
+                        'Rolling without slipping: combined rotational + translational motion'
+                    ]},
+                    { title: 'Moment of Inertia', type: 'formula', content: 'I = Σ mᵢrᵢ²' },
+                    { title: 'Moment of Inertia for Common Shapes', type: 'table', headers: ['Shape', 'Moment of Inertia'], rows: [
+                        ['Disk/Solid cylinder', 'I = ½MR²'],
+                        ['Ring/Hollow tube', 'I = MR²'],
+                        ['Solid sphere', 'I = (2/5)MR²'],
+                        ['Rod (center)', 'I = (1/12)ML²'],
+                        ['Rod (end)', 'I = (1/3)ML²']
+                    ]},
+                    { title: 'Rotational Kinetic Energy', type: 'formula', content: 'KE_rot = ½Iω²' },
+                    { title: 'Torque', type: 'formula', content: 'τ = r × F × sin(θ) = Iα' },
+                    { title: 'Rolling Without Slipping', type: 'bullets', content: [
+                        'Condition: v = rω (linear velocity = radius × angular velocity)',
+                        'Total KE = Linear KE + Rotational KE',
+                        'KE_total = ½mv² + ½Iω²',
+                        'For cylinder: KE = ½mv² + ¼mv² = ¾mv²'
+                    ]}
+                ]
+            }
+        },
+        {
+            id: 7,
+            title: 'Part 2: Rotational Work',
+            icon: '⚡',
+            duration: '60 minutes',
+            lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-phy-T3-3.2/',
+            examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-phy-T3-3.2-exam/',
+            lessonTitle: '📖 Lesson Explanation',
+            examTitle: '📝 Take the Quiz',
+            content: {
+                intro: 'The concepts of work and energy extend to rotational motion, replacing linear quantities with their angular analogs.',
+                sections: [
+                    { title: '📋 Work and Energy in Rotation', type: 'bullets', content: [
+                        'Rotational work: torque × angular displacement',
+                        'Rotational power: torque × angular velocity',
+                        'Rotational work-energy theorem: W = ΔKE_rot',
+                        'These concepts are analogs of their counterparts in linear motion'
+                    ]},
+                    { title: 'Rotational Work', type: 'formula', content: 'W = τ × θ' },
+                    { title: 'Rotational Power', type: 'formula', content: 'P = τ × ω' },
+                    { title: 'Rotational Work-Energy Theorem', type: 'formula', content: 'W = ½Iω₂² - ½Iω₁²' },
+                    { title: 'Comparison: Linear vs Rotational', type: 'table', headers: ['Linear', 'Rotational'], rows: [
+                        ['F = ma', 'τ = Iα'],
+                        ['W = Fd', 'W = τθ'],
+                        ['P = Fv', 'P = τω'],
+                        ['KE = ½mv²', 'KE = ½Iω²']
+                    ]}
+                ]
+            }
+        },
+        {
+            id: 8,
+            title: 'Part 3: Angular Momentum',
+            icon: '🔄',
+            duration: '65 minutes',
+            lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-phy-T3-3.3/',
+            examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-phy-T3-3.3-exam/',
+            lessonTitle: '📖 Lesson Explanation',
+            examTitle: '📝 Take the Quiz',
+            content: {
+                intro: 'Angular momentum is the rotational analog of linear momentum in rotational motion, and obeys a similar conservation law when no external torques are present.',
+                sections: [
+                    { title: '📋 Definition of Angular Momentum', type: 'bullets', content: [
+                        'Angular momentum (L): a vector physical quantity describing rotational motion',
+                        'Depends on: moment of inertia (I) and angular velocity (ω)',
+                        'Its unit: kg·m²/s or J·s',
+                        'Analog of linear momentum (p = mv) in rotational motion',
+                        'Angular momentum is a conserved quantity in an isolated system'
+                    ]},
+                    { title: 'Angular Momentum Formula', type: 'formula', content: 'L = I × ω' },
+                    { title: 'Relationship Between L and p', type: 'table', headers: ['Linear', 'Rotational'], rows: [
+                        ['p = mv', 'L = Iω'],
+                        ['F = Δp/Δt', 'τ = ΔL/Δt'],
+                        ['W = Fd = ΔKE', 'W = τθ = ΔKE_rot'],
+                        ['Conservation of p (when F_net = 0)', 'Conservation of L (when τ_net = 0)']
+                    ]},
+                    { title: 'Conservation of Angular Momentum Law', type: 'formula', content: 'I₁ω₁ = I₂ω₂   (when no external torque is present)' },
+                    { title: '📋 Applications of Angular Momentum Conservation', type: 'bullets', content: [
+                        'Ice skater: pulls arms in to increase ω (because I decreases)',
+                        'Diver: tucks body to increase rotational speed',
+                        'Neutron star: contracts and spins at tremendous speed',
+                        'Bicycle wheel: hard to stop due to large L',
+                        'Helicopters: need tail rotor to prevent body rotation'
+                    ]},
+                    { title: 'Example 1: Ice Skater', type: 'text', content: 'A skater rotates with angular velocity 2 rad/s and moment of inertia 4 kg·m². If he pulls his arms in so his moment of inertia becomes 2 kg·m², what is his new angular velocity?' },
+                    { title: 'Solution', type: 'bullets', content: [
+                        'Applying conservation law: I₁ω₁ = I₂ω₂',
+                        '4 × 2 = 2 × ω₂',
+                        'ω₂ = 8/2 = 4 rad/s',
+                        'Result: Angular velocity doubled when moment of inertia was halved'
+                    ]},
+                    { title: 'Example 2: Neutron Star', type: 'text', content: 'A star rotates with angular velocity 10⁻⁶ rad/s and radius 10⁶ m. If it contracts to become a neutron star with radius 10⁴ m, what is its new angular velocity? (Assume mass is constant)' },
+                    { title: 'Solution', type: 'bullets', content: [
+                        'Moment of inertia for sphere: I = (2/5)MR²',
+                        'Applying conservation: I₁ω₁ = I₂ω₂',
+                        '(2/5)M(10⁶)² × 10⁻⁶ = (2/5)M(10⁴)² × ω₂',
+                        '10¹² × 10⁻⁶ = 10⁸ × ω₂',
+                        'ω₂ = 10⁶/10⁸ = 10⁻² rad/s',
+                        'Result: Angular velocity increased 10,000 times!'
+                    ]},
+                    { title: '📋 Summary of Key Concepts', type: 'bullets', content: [
+                        'L = Iω (angular momentum)',
+                        'τ = ΔL/Δt (torque = rate of change of L)',
+                        'I₁ω₁ = I₂ω₂ (conservation law)',
+                        'When I decreases, ω increases (inversely)',
+                        'Conservation applies only when τ_net = 0'
+                    ]}
+                ]
+            }
         }
     ]
 },
@@ -739,92 +788,140 @@ curriculum: {
         // ═══════════════════════════════════════════════════════════════
         // الوحدة الثالثة: الدوران المحوري
         // ═══════════════════════════════════════════════════════════════
+     {
+    id: 3,
+    name: 'الوحدة الثالثة: الدوران المحوري',
+    icon: '🌀',
+    color: 'from-purple-500 to-pink-600',
+    description: 'دراسة الطاقة الحركية الدورانية، عزم القصور الذاتي، التدحرج دون انزلاق، الشغل الدوراني، وكمية الحركة الزاوية.',
+    lessons: [
         {
-            id: 3,
-            name: 'الوحدة الثالثة: الدوران المحوري',
+            id: 6,
+            title: 'الجزء الأول: الطاقة الحركية للدوران وعزم القصور الذاتي',
             icon: '🌀',
-            color: 'from-purple-500 to-pink-600',
-            description: 'دراسة الطاقة الحركية الدورانية، عزم القصور الذاتي، التدحرج دون انزلاق، الشغل الدوراني، وكمية الحركة الزاوية.',
-            lessons: [
-                {
-                    id: 6,
-                    title: 'الجزء الأول: الطاقة الحركية للدوران وعزم القصور الذاتي',
-                    icon: '🌀',
-                    duration: '60 دقيقة',
-                    lessonUrl: 'https://hesham-afandi.github.io/11Adv-Bri-Ar-phy-T3-3.1/',
-                    examUrl: 'https://hesham-afandi.github.io/11Adv-Bri-Ar-phy-T3-3.1-exam/',
-                    lessonTitle: '📖 شرح الدرس',
-                    examTitle: '📝 ابدأ الاختبار',
-                    content: {
-                        intro: 'عند دوران جسم صلب حول محور، يكتسب طاقة حركية دورانية تعتمد على عزم القصور الذاتي (نظير الكتلة في الحركة الدورانية) والسرعة الزاوية.',
-                        sections: [
-                            { title: '📋 المفاهيم الأساسية', type: 'bullets', content: [
-                                'عزم القصور الذاتي (I): مقاومة الجسم للتغير في حركته الدورانية',
-                                'يعتمد على: كتلة الجسم وتوزيعها حول محور الدوران',
-                                'الطاقة الحركية الدورانية: نظير الطاقة الحركية الخطية',
-                                'عزم القوة (τ): نظير القوة في الحركة الدورانية',
-                                'التدحرج دون انزلاق: حركة دورانية + انتقالية معاً'
-                            ]},
-                            { title: 'عزم القصور الذاتي', type: 'formula', content: 'I = Σ mᵢrᵢ²' },
-                            { title: 'عزم القصور الذاتي لأشكال شائعة', type: 'table', headers: ['الشكل', 'عزم القصور الذاتي'], rows: [
-                                ['قرص/أسطوانة مصمتة', 'I = ½MR²'],
-                                ['حلقة/أنبوبة', 'I = MR²'],
-                                ['كرة مصمتة', 'I = (2/5)MR²'],
-                                ['قضيب من المنتصف', 'I = (1/12)ML²'],
-                                ['قضيب من الطرف', 'I = (1/3)ML²']
-                            ]},
-                            { title: 'الطاقة الحركية الدورانية', type: 'formula', content: 'KE_rot = ½Iω²' },
-                            { title: 'عزم القوة (Torque)', type: 'formula', content: 'τ = r × F × sin(θ) = Iα' },
-                            { title: 'التدحرج دون انزلاق', type: 'bullets', content: [
-                                'الشرط: v = rω (السرعة الخطية = نصف القطر × السرعة الزاوية)',
-                                'الطاقة الكلية = KE خطية + KE دورانية',
-                                'KE_total = ½mv² + ½Iω²',
-                                'للأسطوانة: KE = ½mv² + ¼mv² = ¾mv²'
-                            ]}
-                        ]
-                    }
-                },
-                {
-                    id: 7,
-                    title: 'الجزء الثاني: الشغل الدوراني وكمية الحركة الزاوية',
-                    icon: '⚡',
-                    duration: '60 دقيقة',
-                    lessonUrl: 'https://hesham-afandi.github.io/11Adv-Bri-Ar-phy-T3-3.2/',
-                    examUrl: 'https://hesham-afandi.github.io/11Adv-Bri-Ar-phy-T3-3.2-exam/',
-                    lessonTitle: '📖 شرح الدرس',
-                    examTitle: '📝 ابدأ الاختبار',
-                    content: {
-                        intro: 'يمتد مفهوم الشغل والطاقة وكمية الحركة إلى الحركة الدورانية، مع استبدال الكميات الخطية بنظائرها الزاوية.',
-                        sections: [
-                            { title: '📋 الشغل والطاقة في الدوران', type: 'bullets', content: [
-                                'الشغل الدوراني: عزم القوة × الإزاحة الزاوية',
-                                'القدرة الدورانية: عزم القوة × السرعة الزاوية',
-                                'مبرهنة الشغل-الطاقة الدورانية: W = ΔKE_rot',
-                                'هذه المفاهيم نظيرة لنظيراتها في الحركة الخطية'
-                            ]},
-                            { title: 'الشغل الدوراني', type: 'formula', content: 'W = τ × θ' },
-                            { title: 'القدرة الدورانية', type: 'formula', content: 'P = τ × ω' },
-                            { title: 'مبرهنة الشغل-الطاقة الدورانية', type: 'formula', content: 'W = ½Iω₂² - ½Iω₁²' },
-                            { title: 'كمية الحركة الزاوية', type: 'formula', content: 'L = I × ω' },
-                            { title: 'قانون حفظ كمية الحركة الزاوية', type: 'formula', content: 'I₁ω₁ = I₂ω₂   (عند عدم وجود عزم قوة خارجي)' },
-                            { title: 'المقارنة: خطي مقابل دوراني', type: 'table', headers: ['الخطي', 'الدوراني'], rows: [
-                                ['F = ma', 'τ = Iα'],
-                                ['p = mv', 'L = Iω'],
-                                ['KE = ½mv²', 'KE = ½Iω²'],
-                                ['W = Fd', 'W = τθ'],
-                                ['P = Fv', 'P = τω'],
-                                ['حفظ p', 'حفظ L']
-                            ]},
-                            { title: 'تطبيقات حفظ كمية الحركة الزاوية', type: 'bullets', content: [
-                                'متزلج على الجليد: يضم ذراعيه فيزيد ω',
-                                'غواص: يجمع جسمه فيزيد سرعة دورانه',
-                                'نجم نيوتروني: ينكمش فيدور بسرعة هائلة',
-                                'عجلة دراجة: يصعب إيقافها بسبب L الكبير'
-                            ]}
-                        ]
-                    }
-                }
-            ]
+            duration: '60 دقيقة',
+            lessonUrl: 'https://hesham-afandi.github.io/11Adv-Bri-Ar-phy-T3-3.1/',
+            examUrl: 'https://hesham-afandi.github.io/11Adv-Bri-Ar-phy-T3-3.1-exam/',
+            lessonTitle: '📖 شرح الدرس',
+            examTitle: '📝 ابدأ الاختبار',
+            content: {
+                intro: 'عند دوران جسم صلب حول محور، يكتسب طاقة حركية دورانية تعتمد على عزم القصور الذاتي (نظير الكتلة في الحركة الدورانية) والسرعة الزاوية.',
+                sections: [
+                    { title: '📋 المفاهيم الأساسية', type: 'bullets', content: [
+                        'عزم القصور الذاتي (I): مقاومة الجسم للتغير في حركته الدورانية',
+                        'يعتمد على: كتلة الجسم وتوزيعها حول محور الدوران',
+                        'الطاقة الحركية الدورانية: نظير الطاقة الحركية الخطية',
+                        'عزم القوة (τ): نظير القوة في الحركة الدورانية',
+                        'التدحرج دون انزلاق: حركة دورانية + انتقالية معاً'
+                    ]},
+                    { title: 'عزم القصور الذاتي', type: 'formula', content: 'I = Σ mᵢrᵢ²' },
+                    { title: 'عزم القصور الذاتي لأشكال شائعة', type: 'table', headers: ['الشكل', 'عزم القصور الذاتي'], rows: [
+                        ['قرص/أسطوانة مصمتة', 'I = ½MR²'],
+                        ['حلقة/أنبوبة', 'I = MR²'],
+                        ['كرة مصمتة', 'I = (2/5)MR²'],
+                        ['قضيب من المنتصف', 'I = (1/12)ML²'],
+                        ['قضيب من الطرف', 'I = (1/3)ML²']
+                    ]},
+                    { title: 'الطاقة الحركية الدورانية', type: 'formula', content: 'KE_rot = ½Iω²' },
+                    { title: 'عزم القوة (Torque)', type: 'formula', content: 'τ = r × F × sin(θ) = Iα' },
+                    { title: 'التدحرج دون انزلاق', type: 'bullets', content: [
+                        'الشرط: v = rω (السرعة الخطية = نصف القطر × السرعة الزاوية)',
+                        'الطاقة الكلية = KE خطية + KE دورانية',
+                        'KE_total = ½mv² + ½Iω²',
+                        'للأسطوانة: KE = ½mv² + ¼mv² = ¾mv²'
+                    ]}
+                ]
+            }
+        },
+        {
+            id: 7,
+            title: 'الجزء الثاني: الشغل الدوراني',
+            icon: '⚡',
+            duration: '60 دقيقة',
+            lessonUrl: 'https://hesham-afandi.github.io/11Adv-Bri-Ar-phy-T3-3.2/',
+            examUrl: 'https://hesham-afandi.github.io/11Adv-Bri-Ar-phy-T3-3.2-exam/',
+            lessonTitle: '📖 شرح الدرس',
+            examTitle: '📝 ابدأ الاختبار',
+            content: {
+                intro: 'يمتد مفهوم الشغل والطاقة إلى الحركة الدورانية، مع استبدال الكميات الخطية بنظائرها الزاوية.',
+                sections: [
+                    { title: '📋 الشغل والطاقة في الدوران', type: 'bullets', content: [
+                        'الشغل الدوراني: عزم القوة × الإزاحة الزاوية',
+                        'القدرة الدورانية: عزم القوة × السرعة الزاوية',
+                        'مبرهنة الشغل-الطاقة الدورانية: W = ΔKE_rot',
+                        'هذه المفاهيم نظيرة لنظيراتها في الحركة الخطية'
+                    ]},
+                    { title: 'الشغل الدوراني', type: 'formula', content: 'W = τ × θ' },
+                    { title: 'القدرة الدورانية', type: 'formula', content: 'P = τ × ω' },
+                    { title: 'مبرهنة الشغل-الطاقة الدورانية', type: 'formula', content: 'W = ½Iω₂² - ½Iω₁²' },
+                    { title: 'المقارنة: خطي مقابل دوراني', type: 'table', headers: ['الخطي', 'الدوراني'], rows: [
+                        ['F = ma', 'τ = Iα'],
+                        ['W = Fd', 'W = τθ'],
+                        ['P = Fv', 'P = τω'],
+                        ['KE = ½mv²', 'KE = ½Iω²']
+                    ]}
+                ]
+            }
+        },
+        {
+            id: 8,
+            title: 'الجزء الثالث: كمية الحركة الزاوية',
+            icon: '🔄',
+            duration: '65 دقيقة',
+            lessonUrl: 'https://hesham-afandi.github.io/11Adv-Bri-Ar-phy-T3-3.3/',
+            examUrl: 'https://hesham-afandi.github.io/11Adv-Bri-Ar-phy-T3-3.3-exam/',
+            lessonTitle: '📖 شرح الدرس',
+            examTitle: '📝 ابدأ الاختبار',
+            content: {
+                intro: 'كمية الحركة الزاوية هي نظير كمية الحركة الخطية في الحركة الدورانية، وتخضع لقانون حفظ مشابه عندما لا توجد عزوم قوى خارجية.',
+                sections: [
+                    { title: '📋 تعريف كمية الحركة الزاوية', type: 'bullets', content: [
+                        'كمية الحركة الزاوية (L): كمية فيزيائية متجهة تصف الحركة الدورانية',
+                        'تعتمد على: عزم القصور الذاتي (I) والسرعة الزاوية (ω)',
+                        'وحدتها: kg·m²/s أو J·s',
+                        'نظير كمية الحركة الخطية (p = mv) في الحركة الدورانية',
+                        'كمية الحركة الزاوية كمية محفوظة في النظام المعزول'
+                    ]},
+                    { title: 'صيغة كمية الحركة الزاوية', type: 'formula', content: 'L = I × ω' },
+                    { title: 'العلاقة بين L و p', type: 'table', headers: ['الخطية', 'الدورانية'], rows: [
+                        ['p = mv', 'L = Iω'],
+                        ['F = Δp/Δt', 'τ = ΔL/Δt'],
+                        ['W = Fd = ΔKE', 'W = τθ = ΔKE_rot'],
+                        ['حفظ p (عند F_net = 0)', 'حفظ L (عند τ_net = 0)']
+                    ]},
+                    { title: 'قانون حفظ كمية الحركة الزاوية', type: 'formula', content: 'I₁ω₁ = I₂ω₂   (عند عدم وجود عزم قوة خارجي)' },
+                    { title: '📋 تطبيقات حفظ كمية الحركة الزاوية', type: 'bullets', content: [
+                        'متزلج على الجليد: يضم ذراعيه فيزيد ω (لأن I يقل)',
+                        'غواص: يجمع جسمه فيزيد سرعة دورانه',
+                        'نجم نيوتروني: ينكمش فيدور بسرعة هائلة',
+                        'عجلة دراجة: يصعب إيقافها بسبب L الكبير',
+                        'المروحيات: تحتاج مروحة ذيلية لمنع دوران الجسم'
+                    ]},
+                    { title: 'مثال 1: متزلج على الجليد', type: 'text', content: 'متزلج يدور بسرعة زاوية 2 rad/s وعزم قصوره الذاتي 4 kg·m². إذا ضم ذراعيه فأصبح عزم قصوره الذاتي 2 kg·m²، فما سرعته الزاوية الجديدة؟' },
+                    { title: 'الحل', type: 'bullets', content: [
+                        'بتطبيق قانون الحفظ: I₁ω₁ = I₂ω₂',
+                        '4 × 2 = 2 × ω₂',
+                        'ω₂ = 8/2 = 4 rad/s',
+                        'النتيجة: تضاعفت السرعة الزاوية عند تقليل عزم القصور الذاتي للنصف'
+                    ]},
+                    { title: 'مثال 2: نجم نيوتروني', type: 'text', content: 'نجم يدور بسرعة زاوية 10⁻⁶ rad/s ونصف قطره 10⁶ m. إذا انكمش ليصبح نجماً نيوترونياً بنصف قطر 10⁴ m، فما سرعته الزاوية الجديدة؟ (افترض أن الكتلة ثابتة)' },
+                    { title: 'الحل', type: 'bullets', content: [
+                        'عزم القصور الذاتي للكرة: I = (2/5)MR²',
+                        'بتطبيق الحفظ: I₁ω₁ = I₂ω₂',
+                        '(2/5)M(10⁶)² × 10⁻⁶ = (2/5)M(10⁴)² × ω₂',
+                        '10¹² × 10⁻⁶ = 10⁸ × ω₂',
+                        'ω₂ = 10⁶/10⁸ = 10⁻² rad/s',
+                        'النتيجة: زادت السرعة الزاوية 10,000 مرة!'
+                    ]},
+                    { title: '📋 ملخص المفاهيم الرئيسية', type: 'bullets', content: [
+                        'L = Iω (كمية الحركة الزاوية)',
+                        'τ = ΔL/Δt (عزم القوة = معدل تغير L)',
+                        'I₁ω₁ = I₂ω₂ (قانون الحفظ)',
+                        'عند تقليل I تزداد ω (عكسياً)',
+                        'الحفظ يطبق عند τ_net = 0 فقط'
+                    ]}
+                ]
+            }
         }
     ]
 },
