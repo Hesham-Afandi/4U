@@ -4707,8 +4707,12 @@ class="bg-teal-600 hover:bg-teal-700 text-white px-6 py-2 rounded-lg font-bold t
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js')
-      .then(reg => console.log('✅ تم تسجيل Service Worker'))
-      .catch(err => console.log('❌ فشل التسجيل:', err));
+      .then(reg => {
+        console.log('✅ Service Worker registered:', reg.scope);
+      })
+      .catch(err => {
+        console.log('❌ Service Worker registration failed:', err);
+      });
   });
 }
 
@@ -4718,9 +4722,9 @@ const installButton = document.getElementById('installButton');
 const installBar = document.getElementById('installBar');
 
 window.addEventListener('beforeinstallprompt', (e) => {
+  console.log('📥 beforeinstallprompt event fired');
   e.preventDefault();
   deferredPrompt = e;
-  console.log(' حدث التثبيت متوفر');
   installButton.classList.remove('hidden');
   installBar.classList.remove('hidden');
 });
@@ -4730,7 +4734,7 @@ function installApp() {
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then((choiceResult) => {
       if (choiceResult.outcome === 'accepted') {
-        console.log('✅ تم تثبيت التطبيق');
+        console.log('✅ User accepted the install prompt');
       }
       deferredPrompt = null;
       installButton.classList.add('hidden');
@@ -4740,6 +4744,7 @@ function installApp() {
 }
 
 window.addEventListener('appinstalled', () => {
+  console.log('🎉 PWA was installed');
   installButton.classList.add('hidden');
   installBar.classList.add('hidden');
   deferredPrompt = null;
