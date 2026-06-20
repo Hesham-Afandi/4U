@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+ <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0d9488">
+<link rel="apple-touch-icon" href="/icons/icon-192x192.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/png" href="logo.png">
@@ -4737,6 +4740,75 @@ ${sectionsHTML}
 }
 
 showHome();
+    <!-- زر التثبيت العائم -->
+<div id="installButton" class="hidden fixed bottom-6 left-6 z-50">
+  <button onclick="installApp()" 
+          class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition transform hover:scale-110">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+    </svg>
+  </button>
+</div>
+
+<!-- شريط التثبيت السفلي -->
+<div id="installBar" class="hidden fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50">
+  <div class="max-w-4xl mx-auto flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+      </svg>
+      <span class="text-sm">تثبيت</span>
+    </div>
+    <button onclick="installApp()" 
+            class="bg-teal-600 hover:bg-teal-700 text-white px-6 py-2 rounded-lg font-bold transition">
+      تثبيت
+    </button>
+  </div>
+</div>
+
+<script>
+// تسجيل Service Worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('تم تسجيل Service Worker'))
+      .catch(err => console.log('فشل التسجيل:', err));
+  });
+}
+
+// إدارة التثبيت
+let deferredPrompt;
+const installButton = document.getElementById('installButton');
+const installBar = document.getElementById('installBar');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // إظهار الزر العائم والشريط السفلي
+  installButton.classList.remove('hidden');
+  installBar.classList.remove('hidden');
+});
+
+function installApp() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('تم تثبيت التطبيق');
+      }
+      deferredPrompt = null;
+      installButton.classList.add('hidden');
+      installBar.classList.add('hidden');
+    });
+  }
+}
+
+// إخفاء الأزرار بعد التثبيت
+window.addEventListener('appinstalled', () => {
+  installButton.classList.add('hidden');
+  installBar.classList.add('hidden');
+  deferredPrompt = null;
+});
 </script>
 </body>
 </html>
