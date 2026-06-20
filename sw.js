@@ -1,4 +1,4 @@
-const CACHE_NAME = '4u-v1';
+const CACHE_NAME = '4u-education-v1';
 
 self.addEventListener('install', event => {
   event.waitUntil(
