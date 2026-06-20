@@ -251,7 +251,294 @@ subjects: [
 { id: 'biology', name: 'الأحياء', icon: '🧬' }
 ],
 curriculum: {
-'physics-11-bridge-3': {
+'physics-11-inspire-3': {
+    isEnglish: true,
+    units: [
+        // ═══════════════════════════════════════════════════════════════
+        // Unit 1: Momentum, Impulse & Collisions
+        // ═══════════════════════════════════════════════════════════════
+        {
+            id: 1,
+            name: 'Unit 1: Momentum, Impulse & Collisions',
+            icon: '💥',
+            color: 'from-red-500 to-orange-600',
+            description: 'Study of linear momentum, impulse, conservation of momentum, and types of collisions (elastic and inelastic).',
+            lessons: [
+                {
+                    id: 1,
+                    title: 'Part 1: Impulse and Momentum',
+                    icon: '💥',
+                    duration: '55 min',
+                    lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-Phy-T3-1.1/',
+                    examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-Phy-T3-1.1-exam/',
+                    lessonTitle: '📖 Lesson Explanation',
+                    examTitle: '📝 Take the Quiz',
+                    content: {
+                        intro: 'Momentum is a physical quantity that describes the motion of objects, defined as the product of mass and velocity. Impulse is the change in momentum resulting from a force applied over a period of time.',
+                        sections: [
+                            { title: '📋 Summary & Key Laws', type: 'bullets', content: [
+                                'Momentum (p): A vector quantity = mass × velocity',
+                                'Unit of momentum: kg·m/s or N·s',
+                                'Impulse (J): Force × time = change in momentum',
+                                'Unit of impulse: N·s or kg·m/s',
+                                'Momentum is a vector: has magnitude and direction (same as velocity)'
+                            ]},
+                            { title: 'Momentum Formula', type: 'formula', content: 'p = m × v' },
+                            { title: 'Impulse-Momentum Theorem', type: 'formula', content: 'J = F × Δt = Δp = p₂ - p₁' },
+                            { title: 'Alternative Impulse Formulas', type: 'formula', content: 'J = m·v₂ - m·v₁ = m(v₂ - v₁)' },
+                            { title: 'Momentum vs Impulse Comparison', type: 'table', headers: ['Momentum (p)', 'Impulse (J)'], rows: [
+                                ['p = m × v', 'J = F × Δt'],
+                                ['Instantaneous state', 'Change over time period'],
+                                ['Describes state of object', 'Describes effect of force'],
+                                ['Unit: kg·m/s', 'Unit: N·s']
+                            ]}
+                        ]
+                    }
+                },
+                {
+                    id: 2,
+                    title: 'Part 2: Conservation of Momentum',
+                    icon: '⚖️',
+                    duration: '55 min',
+                    lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-Phy-T3-1.2/',
+                    examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-Phy-T3-1.2-exam/',
+                    lessonTitle: '📖 Lesson Explanation',
+                    examTitle: '📝 Take the Quiz',
+                    content: {
+                        intro: 'The law of conservation of momentum states that the total momentum of a closed and isolated system remains constant before and after a collision, provided no external forces act on the system.',
+                        sections: [
+                            { title: '📋 Conservation of Momentum Law', type: 'bullets', content: [
+                                'Closed system: no mass enters or leaves',
+                                'Isolated system: no net external forces',
+                                'Total momentum before collision = Total momentum after collision',
+                                'The law applies to each axis independently',
+                                'This law is fundamental in analyzing collisions and explosions'
+                            ]},
+                            { title: 'Conservation of Momentum (Two Bodies)', type: 'formula', content: 'm₁v₁ + m₂v₂ = m₁v₁\' + m₂v₂\'' },
+                            { title: 'Explosion Case (Initial Rest)', type: 'formula', content: '0 = m₁v₁\' + m₂v₂\' → m₁v₁\' = -m₂v₂\'' },
+                            { title: 'Sticking Together After Collision', type: 'formula', content: 'm₁v₁ + m₂v₂ = (m₁ + m₂)v\'' },
+                            { title: 'Conservation Systems', type: 'table', headers: ['Type', 'Condition', 'Equation'], rows: [
+                                ['Collision', 'Closed & isolated system', 'Σp before = Σp after'],
+                                ['Explosion', 'Object splits into parts', '0 = m₁v₁ + m₂v₂'],
+                                ['Sticking', 'Two objects stick together', 'Σmv = (Σm)v\'']
+                            ]}
+                        ]
+                    }
+                },
+                {
+                    id: 3,
+                    title: 'Part 3: Elastic and Inelastic Collisions',
+                    icon: '🎱',
+                    duration: '60 min',
+                    lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-Phy-T3-1.3/',
+                    examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-Phy-T3-1.3-exam/',
+                    lessonTitle: '📖 Lesson Explanation',
+                    examTitle: '📝 Take the Quiz',
+                    content: {
+                        intro: 'Collisions are divided into two main types: elastic (conserves both momentum and kinetic energy) and inelastic (conserves only momentum with loss of some kinetic energy).',
+                        sections: [
+                            { title: '📋 Types of Collisions', type: 'bullets', content: [
+                                'Perfectly elastic collision: conserves momentum AND kinetic energy',
+                                'Inelastic collision: conserves momentum only (loses kinetic energy)',
+                                'Perfectly inelastic collision: objects stick together',
+                                'Most real-world collisions are inelastic',
+                                'Collisions between molecules and subatomic particles are often elastic'
+                            ]},
+                            { title: 'Conservation of Kinetic Energy (Elastic Only)', type: 'formula', content: '½m₁v₁² + ½m₂v₂² = ½m₁v₁\'² + ½m₂v₂\'²' },
+                            { title: 'Conservation of Momentum (All Collisions)', type: 'formula', content: 'm₁v₁ + m₂v₂ = m₁v₁\' + m₂v₂\'' },
+                            { title: 'Sticking Velocity (Perfectly Inelastic)', type: 'formula', content: 'v\' = (m₁v₁ + m₂v₂) / (m₁ + m₂)' },
+                            { title: 'Collision Types Comparison', type: 'table', headers: ['Elastic', 'Inelastic'], rows: [
+                                ['Conserves momentum ✓', 'Conserves momentum ✓'],
+                                ['Conserves KE ✓', 'Does NOT conserve KE ✗'],
+                                ['No sticking', 'May stick together'],
+                                ['Ideal (rare)', 'Realistic (common)']
+                            ]}
+                        ]
+                    }
+                }
+            ]
+        },
+
+        // ═══════════════════════════════════════════════════════════════
+        // Unit 2: Circular Motion
+        // ═══════════════════════════════════════════════════════════════
+        {
+            id: 2,
+            name: 'Unit 2: Circular Motion',
+            icon: '🔄',
+            color: 'from-blue-500 to-cyan-600',
+            description: 'Study of angular displacement, velocity, acceleration, frequency, period, centripetal force and acceleration, and circular vs linear motion.',
+            lessons: [
+                {
+                    id: 4,
+                    title: 'Part 1: Angular Velocity, Acceleration & Frequency',
+                    icon: '🔄',
+                    duration: '60 min',
+                    lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-Phy-T3-2.1/',
+                    examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-Phy-T3-2.1-exam/',
+                    lessonTitle: '📖 Lesson Explanation',
+                    examTitle: '📝 Take the Quiz',
+                    content: {
+                        intro: 'In circular motion, we use angular quantities to describe motion instead of linear quantities. These quantities are related to their linear counterparts through the radius of the path.',
+                        sections: [
+                            { title: '📋 Angular Terms & Quantities', type: 'bullets', content: [
+                                'Angular displacement (θ): angle swept in radians',
+                                'Angular velocity (ω): rate of change of angle (rad/s)',
+                                'Angular acceleration (α): rate of change of angular velocity (rad/s²)',
+                                'Period (T): time for one complete revolution (s)',
+                                'Frequency (f): number of revolutions per second (Hz)'
+                            ]},
+                            { title: 'Angular Displacement', type: 'formula', content: 'θ = s / r   (in radians)' },
+                            { title: 'Angular Velocity', type: 'formula', content: 'ω = Δθ / Δt = 2π / T = 2πf' },
+                            { title: 'Period-Frequency Relationship', type: 'formula', content: 'f = 1 / T   and   T = 1 / f' },
+                            { title: 'Angular Acceleration', type: 'formula', content: 'α = Δω / Δt' },
+                            { title: 'Linear-Angular Relationship', type: 'table', headers: ['Linear Quantity', 'Angular Quantity', 'Relationship'], rows: [
+                                ['Displacement s', 'Angular displacement θ', 's = rθ'],
+                                ['Velocity v', 'Angular velocity ω', 'v = rω'],
+                                ['Acceleration a', 'Angular acceleration α', 'a = rα'],
+                                ['Mass (kg)', 'Moment of inertia (kg·m²)', '-']
+                            ]},
+                            { title: 'Unit Conversions', type: 'bullets', content: [
+                                '1 revolution = 2π radians = 360°',
+                                'Speed in rpm: ω (rad/s) = rpm × 2π/60',
+                                'Frequency f = ω/2π = revolutions/second'
+                            ]}
+                        ]
+                    }
+                },
+                {
+                    id: 5,
+                    title: 'Part 2: Centripetal Force & Acceleration',
+                    icon: '⭕',
+                    duration: '60 min',
+                    lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-Phy-T3-2.2/',
+                    examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-Phy-T3-2.2-exam/',
+                    lessonTitle: '📖 Lesson Explanation',
+                    examTitle: '📝 Take the Quiz',
+                    content: {
+                        intro: 'In uniform circular motion, the direction of velocity changes continuously, producing a centripetal acceleration directed toward the center, caused by a centripetal force.',
+                        sections: [
+                            { title: '📋 Centripetal Acceleration & Force', type: 'bullets', content: [
+                                'Centripetal acceleration: always directed toward the center',
+                                'Cause: change in velocity direction (even if magnitude is constant)',
+                                'Centripetal force: net force toward the center',
+                                'Not a new force but resultant of existing forces',
+                                'In curves: friction or tension provides the centripetal force'
+                            ]},
+                            { title: 'Centripetal Acceleration', type: 'formula', content: 'a_c = v² / r = ω²r' },
+                            { title: 'Centripetal Force', type: 'formula', content: 'F_c = mv² / r = mω²r' },
+                            { title: 'Alternative Centripetal Force Formulas', type: 'formula', content: 'F_c = mvω = m(2π/T)²r' },
+                            { title: 'Centripetal Force Applications', type: 'table', headers: ['Application', 'Source of Centripetal Force'], rows: [
+                                ['Car on a curve', 'Friction force'],
+                                ['Satellite', 'Gravitational force'],
+                                ['Ball on a string', 'Tension in the string'],
+                                ['Electron in atom', 'Coulomb electric force']
+                            ]},
+                            { title: 'Non-Uniform Circular Motion', type: 'bullets', content: [
+                                'Acceleration has two components: centripetal (a_c) and tangential (a_t)',
+                                'a_c = v²/r (change in direction)',
+                                'a_t = rα (change in magnitude)',
+                                'Total acceleration: a = √(a_c² + a_t²)'
+                            ]}
+                        ]
+                    }
+                }
+            ]
+        },
+
+        // ═══════════════════════════════════════════════════════════════
+        // Unit 3: Rotational Motion
+        // ═══════════════════════════════════════════════════════════════
+        {
+            id: 3,
+            name: 'Unit 3: Rotational Motion',
+            icon: '🌀',
+            color: 'from-purple-500 to-pink-600',
+            description: 'Study of rotational kinetic energy, moment of inertia, rolling without slipping, rotational work, and angular momentum.',
+            lessons: [
+                {
+                    id: 6,
+                    title: 'Part 1: Rotational KE & Moment of Inertia',
+                    icon: '🌀',
+                    duration: '60 min',
+                    lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-Phy-T3-3.1/',
+                    examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-Phy-T3-3.1-exam/',
+                    lessonTitle: '📖 Lesson Explanation',
+                    examTitle: '📝 Take the Quiz',
+                    content: {
+                        intro: 'When a rigid body rotates about an axis, it gains rotational kinetic energy that depends on the moment of inertia (the rotational analog of mass) and angular velocity.',
+                        sections: [
+                            { title: '📋 Fundamental Concepts', type: 'bullets', content: [
+                                'Moment of inertia (I): resistance to change in rotational motion',
+                                'Depends on: mass of body and its distribution around axis',
+                                'Rotational kinetic energy: analog of linear kinetic energy',
+                                'Torque (τ): analog of force in rotational motion',
+                                'Rolling without slipping: combined rotational + translational motion'
+                            ]},
+                            { title: 'Moment of Inertia', type: 'formula', content: 'I = Σ mᵢrᵢ²' },
+                            { title: 'Moment of Inertia for Common Shapes', type: 'table', headers: ['Shape', 'Moment of Inertia'], rows: [
+                                ['Disk/Solid cylinder', 'I = ½MR²'],
+                                ['Ring/Hollow tube', 'I = MR²'],
+                                ['Solid sphere', 'I = (2/5)MR²'],
+                                ['Rod (center)', 'I = (1/12)ML²'],
+                                ['Rod (end)', 'I = (1/3)ML²']
+                            ]},
+                            { title: 'Rotational Kinetic Energy', type: 'formula', content: 'KE_rot = ½Iω²' },
+                            { title: 'Torque', type: 'formula', content: 'τ = r × F × sin(θ) = Iα' },
+                            { title: 'Rolling Without Slipping', type: 'bullets', content: [
+                                'Condition: v = rω (linear velocity = radius × angular velocity)',
+                                'Total KE = Linear KE + Rotational KE',
+                                'KE_total = ½mv² + ½Iω²',
+                                'For cylinder: KE = ½mv² + ¼mv² = ¾mv²'
+                            ]}
+                        ]
+                    }
+                },
+                {
+                    id: 7,
+                    title: 'Part 2: Rotational Work & Angular Momentum',
+                    icon: '⚡',
+                    duration: '60 min',
+                    lessonUrl: 'https://hesham-afandi.github.io/11Adv-Ins-Phy-T3-3.2/',
+                    examUrl: 'https://hesham-afandi.github.io/11Adv-Ins-Phy-T3-3.2-exam/',
+                    lessonTitle: '📖 Lesson Explanation',
+                    examTitle: '📝 Take the Quiz',
+                    content: {
+                        intro: 'The concepts of work, energy, and momentum extend to rotational motion, replacing linear quantities with their angular analogs.',
+                        sections: [
+                            { title: '📋 Work & Energy in Rotation', type: 'bullets', content: [
+                                'Rotational work: torque × angular displacement',
+                                'Rotational power: torque × angular velocity',
+                                'Work-Energy theorem (rotational): W = ΔKE_rot',
+                                'These concepts are analogs of their linear motion counterparts'
+                            ]},
+                            { title: 'Rotational Work', type: 'formula', content: 'W = τ × θ' },
+                            { title: 'Rotational Power', type: 'formula', content: 'P = τ × ω' },
+                            { title: 'Rotational Work-Energy Theorem', type: 'formula', content: 'W = ½Iω₂² - ½Iω₁²' },
+                            { title: 'Angular Momentum', type: 'formula', content: 'L = I × ω' },
+                            { title: 'Conservation of Angular Momentum', type: 'formula', content: 'I₁ω₁ = I₂ω₂   (when no external torque)' },
+                            { title: 'Comparison: Linear vs Rotational', type: 'table', headers: ['Linear', 'Rotational'], rows: [
+                                ['F = ma', 'τ = Iα'],
+                                ['p = mv', 'L = Iω'],
+                                ['KE = ½mv²', 'KE = ½Iω²'],
+                                ['W = Fd', 'W = τθ'],
+                                ['P = Fv', 'P = τω'],
+                                ['Conservation of p', 'Conservation of L']
+                            ]},
+                            { title: 'Angular Momentum Conservation Applications', type: 'bullets', content: [
+                                'Ice skater: pulls arms in to increase ω',
+                                'Diver: tucks body to increase rotation speed',
+                                'Neutron star: contracts and spins at tremendous speed',
+                                'Bicycle wheel: hard to stop due to large L'
+                            ]}
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+},
+    'physics-11-bridge-3': {
     isEnglish: false,
     units: [
         // ═══════════════════════════════════════════════════════════════
