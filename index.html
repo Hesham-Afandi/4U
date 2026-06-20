@@ -4711,33 +4711,30 @@ navigator.serviceWorker.register('./sw.js')
 .catch(err => console.log('فشل التسجيل:', err));
 });
 }
+
 // إدارة التثبيت
 let deferredPrompt;
 const installButton = document.getElementById('installButton');
 const installBar = document.getElementById('installBar');
+
 window.addEventListener('beforeinstallprompt', (e) => {
 e.preventDefault();
 deferredPrompt = e;
+console.log('✅ حدث التثبيت متوفر');
 installButton.classList.remove('hidden');
 installBar.classList.remove('hidden');
 });
-function installApp() {
-if (deferredPrompt) {
-deferredPrompt.prompt();
-deferredPrompt.userChoice.then((choiceResult) => {
-if (choiceResult.outcome === 'accepted') {
-console.log('تم تثبيت التطبيق');
+
+// لو event ماحصلش، أظهر الزر يدوي للتجربة (اختياري)
+window.addEventListener('load', () => {
+setTimeout(() => {
+if (!deferredPrompt) {
+console.log('⚠️ حدث beforeinstallprompt ماحصلش - تأكد من:');
+console.log('- HTTPS أو localhost');
+console.log('- Service Worker مسجل صح');
+console.log('- المتصفح يدعم PWA');
 }
-deferredPrompt = null;
-installButton.classList.add('hidden');
-installBar.classList.add('hidden');
-});
-}
-}
-window.addEventListener('appinstalled', () => {
-installButton.classList.add('hidden');
-installBar.classList.add('hidden');
-deferredPrompt = null;
+}, 3000);
 });
 </script>
 </body>
