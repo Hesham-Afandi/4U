@@ -3,9 +3,7 @@ const urlsToCache = [
   './',
   './index.html',
   './logo.png',
-  './favicon.ico',
-  './icons/icon-192x192.png',
-  './icons/icon-512x512.png'
+  './favicon.ico'
 ];
 
 self.addEventListener('install', event => {
