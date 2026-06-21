@@ -4705,50 +4705,63 @@ showHome();
 <script>
 // تسجيل Service Worker
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js')
-      .then(reg => {
-        console.log('✅ Service Worker registered:', reg.scope);
-      })
-      .catch(err => {
-        console.log('❌ Service Worker registration failed:', err);
-      });
-  });
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log('✅ تم تسجيل Service Worker'))
+            .catch(err => console.log('❌ فشل التسجيل:', err));
+    });
 }
 
 // إدارة التثبيت
 let deferredPrompt;
 const installButton = document.getElementById('installButton');
-const installBar = document.getElementById('installBar');
 
 window.addEventListener('beforeinstallprompt', (e) => {
-  console.log('📥 beforeinstallprompt event fired');
-  e.preventDefault();
-  deferredPrompt = e;
-  installButton.classList.remove('hidden');
-  installBar.classList.remove('hidden');
+    e.preventDefault();
+    deferredPrompt = e;
+    console.log('📥 حدث التثبيت متوفر');
+    
+    // إظهار الزر العائم مع تأثير ظهور
+    installButton.classList.remove('hidden');
+    installButton.style.animation = 'fadeInUp 0.5s ease-out';
 });
+
+// إضافة أنيميشن الظهور
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+`;
+document.head.appendChild(style);
 
 function installApp() {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('✅ User accepted the install prompt');
-      }
-      deferredPrompt = null;
-      installButton.classList.add('hidden');
-      installBar.classList.add('hidden');
-    });
-  }
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('✅ تم تثبيت التطبيق');
+            }
+            deferredPrompt = null;
+            installButton.classList.add('hidden');
+        });
+    }
 }
 
+// إخفاء الزر بعد التثبيت
 window.addEventListener('appinstalled', () => {
-  console.log('🎉 PWA was installed');
-  installButton.classList.add('hidden');
-  installBar.classList.add('hidden');
-  deferredPrompt = null;
+    installButton.classList.add('hidden');
+    deferredPrompt = null;
+    console.log('🎉 تم تثبيت التطبيق بنجاح');
 });
+</script>
 </script>
 </body>
 </html>
