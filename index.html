@@ -215,6 +215,404 @@ subjects: [
 { id: 'biology', name: 'الأحياء', icon: '🧬' }
 ],
 curriculum: {
+    'physics-9-inspire-3': {
+    isEnglish: true,
+    units: [
+        // ═══════════════════════════════════════════════════════════
+        // UNIT 1: VIBRATIONS & WAVES
+        // ═══════════════════════════════════════════════════════════
+        {
+            id: 1,
+            name: 'Unit 1: Vibrations & Waves',
+            icon: '🌊',
+            color: 'from-blue-500 to-cyan-600',
+            description: 'Study of periodic motion, wave properties, and wave behaviors including reflection, refraction, diffraction, and interference.',
+            lessons: [
+                // ───────────────────────────────────────────────────
+                // LESSON 1.1: Periodic Motion
+                // ───────────────────────────────────────────────────
+                {
+                    id: 1,
+                    title: 'Lesson 1: Periodic Motion',
+                    icon: '🔄',
+                    duration: '50 minutes',
+                    lessonUrl: 'https://hesham-afandi.github.io/9Adv-Ins-Phy-T3-1.1/',
+                    examUrl: 'https://hesham-afandi.github.io/9Adv-Ins-Phy-T3-1.1-exam/',
+                    lessonTitle: '📖 Lesson Explanation',
+                    examTitle: '📝 Take the Quiz',
+                    content: {
+                        intro: 'Periodic motion is any motion that repeats itself at regular time intervals. The simplest form is Simple Harmonic Motion (SHM), where the restoring force is directly proportional to the displacement.',
+                        sections: [
+                            { title: '📋 Key Concepts of Periodic Motion', type: 'bullets', content: [
+                                'Period (T): The time required for one complete cycle (unit: seconds)',
+                                'Frequency (f): The number of cycles per unit time (unit: Hertz, Hz)',
+                                'Amplitude (A): The maximum displacement from the equilibrium position',
+                                'Cycle: One complete vibration or oscillation',
+                                'Equilibrium Position: The resting position where net force = 0'
+                            ]},
+                            { title: 'Period-Frequency Relationship', type: 'formula', content: 'T = 1/f   and   f = 1/T' },
+                            { title: 'Simple Harmonic Motion (SHM)', type: 'bullets', content: [
+                                'Restoring force is proportional to displacement: F = -kx',
+                                'The negative sign indicates force opposes displacement',
+                                'Examples: mass on a spring, simple pendulum (small angles)',
+                                'Motion is sinusoidal: x(t) = A·cos(2πft)'
+                            ]},
+                            { title: 'Simple Pendulum Period', type: 'formula', content: 'T = 2π√(L/g)' },
+                            { title: 'Mass-Spring System Period', type: 'formula', content: 'T = 2π√(m/k)' },
+                            { title: 'Energy in SHM', type: 'bullets', content: [
+                                'At equilibrium: Maximum kinetic energy, zero potential energy',
+                                'At maximum displacement: Maximum potential energy, zero kinetic energy',
+                                'Total mechanical energy is conserved (if no friction)',
+                                'E_total = ½kA² (constant throughout motion)'
+                            ]},
+                            { title: 'Key Variables Comparison', type: 'table', headers: ['Quantity', 'Symbol', 'Unit', 'Description'], rows: [
+                                ['Period', 'T', 'seconds (s)', 'Time for one complete cycle'],
+                                ['Frequency', 'f', 'Hertz (Hz)', 'Cycles per second'],
+                                ['Amplitude', 'A', 'meters (m)', 'Maximum displacement'],
+                                ['Spring Constant', 'k', 'N/m', 'Stiffness of the spring']
+                            ]}
+                        ]
+                    }
+                },
+                // ───────────────────────────────────────────────────
+                // LESSON 1.2: Wave Properties
+                // ───────────────────────────────────────────────────
+                {
+                    id: 2,
+                    title: 'Lesson 2: Wave Properties',
+                    icon: '🌊',
+                    duration: '55 minutes',
+                    lessonUrl: 'https://hesham-afandi.github.io/9Adv-Ins-Phy-T3-1.2/',
+                    examUrl: 'https://hesham-afandi.github.io/9Adv-Ins-Phy-T3-1.2-exam/',
+                    lessonTitle: '📖 Lesson Explanation',
+                    examTitle: '📝 Take the Quiz',
+                    content: {
+                        intro: 'A wave is a disturbance that transfers energy through matter or space without transferring matter itself. Waves are characterized by their wavelength, frequency, amplitude, and speed.',
+                        sections: [
+                            { title: '📋 Types of Mechanical Waves', type: 'bullets', content: [
+                                'Transverse Waves: Particle motion is perpendicular to wave direction (e.g., waves on a string)',
+                                'Longitudinal Waves: Particle motion is parallel to wave direction (e.g., sound waves)',
+                                'Surface Waves: Combination of both (e.g., water waves)',
+                                'Mechanical waves require a medium to propagate'
+                            ]},
+                            { title: 'The Universal Wave Equation', type: 'formula', content: 'v = f × λ' },
+                            { title: 'Wave Properties Definitions', type: 'table', headers: ['Property', 'Symbol', 'Definition', 'Unit'], rows: [
+                                ['Wavelength', 'λ', 'Distance between consecutive identical points', 'meters (m)'],
+                                ['Frequency', 'f', 'Number of cycles per second', 'Hertz (Hz)'],
+                                ['Period', 'T', 'Time for one complete wave cycle', 'seconds (s)'],
+                                ['Amplitude', 'A', 'Maximum displacement from equilibrium', 'meters (m)'],
+                                ['Wave Speed', 'v', 'Speed at which the wave propagates', 'm/s']
+                            ]},
+                            { title: 'Transverse vs Longitudinal Waves', type: 'table', headers: ['Feature', 'Transverse', 'Longitudinal'], rows: [
+                                ['Particle Motion', 'Perpendicular to wave', 'Parallel to wave'],
+                                ['Example', 'String waves, light', 'Sound waves'],
+                                ['Features', 'Crests and troughs', 'Compressions and rarefactions'],
+                                ['Medium Required', 'Some need medium', 'Always need medium']
+                            ]},
+                            { title: 'Relationship Between Period and Frequency', type: 'formula', content: 'f = 1/T   and   T = 1/f' },
+                            { title: 'Wave Speed in Different Media', type: 'bullets', content: [
+                                'Sound in air (20°C): v ≈ 343 m/s',
+                                'Sound in water: v ≈ 1480 m/s',
+                                'Sound in steel: v ≈ 5960 m/s',
+                                'Wave speed depends on medium properties (density, elasticity)'
+                            ]}
+                        ]
+                    }
+                },
+                // ───────────────────────────────────────────────────
+                // LESSON 1.3: Wave Behavior
+                // ───────────────────────────────────────────────────
+                {
+                    id: 3,
+                    title: 'Lesson 3: Wave Behavior',
+                    icon: '🔄',
+                    duration: '55 minutes',
+                    lessonUrl: 'https://hesham-afandi.github.io/9Adv-Ins-Phy-T3-1.3/',
+                    examUrl: 'https://hesham-afandi.github.io/9Adv-Ins-Phy-T3-1.3-exam/',
+                    lessonTitle: '📖 Lesson Explanation',
+                    examTitle: '📝 Take the Quiz',
+                    content: {
+                        intro: 'When waves encounter boundaries, obstacles, or other waves, they exhibit characteristic behaviors: reflection, refraction, diffraction, and interference.',
+                        sections: [
+                            { title: '📋 Four Key Wave Behaviors', type: 'bullets', content: [
+                                'Reflection: Wave bounces off a boundary',
+                                'Refraction: Wave bends when entering a new medium',
+                                'Diffraction: Wave spreads around obstacles or through openings',
+                                'Interference: Two waves combine when they overlap'
+                            ]},
+                            { title: 'Law of Reflection', type: 'formula', content: 'θᵢ = θᵣ   (angle of incidence = angle of reflection)' },
+                            { title: 'Snell\'s Law (Refraction)', type: 'formula', content: 'n₁·sin(θ₁) = n₂·sin(θ₂)' },
+                            { title: 'Index of Refraction', type: 'formula', content: 'n = c/v   (where c = speed of light in vacuum, v = speed in medium)' },
+                            { title: 'Types of Interference', type: 'table', headers: ['Type', 'Condition', 'Result'], rows: [
+                                ['Constructive', 'Waves in phase (crest meets crest)', 'Amplitude increases (louder/brighter)'],
+                                ['Destructive', 'Waves out of phase (crest meets trough)', 'Amplitude decreases (softer/dimmer)'],
+                                ['Complete Destructive', 'Equal amplitude, opposite phase', 'Complete cancellation']
+                            ]},
+                            { title: 'Standing Waves', type: 'bullets', content: [
+                                'Formed by interference of two identical waves traveling in opposite directions',
+                                'Nodes: Points of zero displacement (no motion)',
+                                'Antinodes: Points of maximum displacement',
+                                'Harmonics: Specific frequencies that produce standing waves'
+                            ]},
+                            { title: 'Harmonic Frequencies', type: 'formula', content: 'fₙ = n·f₁   (where n = 1, 2, 3, ... and f₁ is fundamental frequency)' },
+                            { title: 'Diffraction Conditions', type: 'bullets', content: [
+                                'Maximum diffraction occurs when opening size ≈ wavelength',
+                                'Small openings cause more spreading',
+                                'Large openings cause less spreading',
+                                'Longer wavelengths diffract more than shorter ones'
+                            ]}
+                        ]
+                    }
+                }
+            ]
+        },
+        // ═══════════════════════════════════════════════════════════
+        // UNIT 2: SOUND
+        // ═══════════════════════════════════════════════════════════
+        {
+            id: 2,
+            name: 'Unit 2: Sound',
+            icon: '🔊',
+            color: 'from-orange-500 to-red-600',
+            description: 'Study of sound waves, their properties, the Doppler effect, and the physics of music including harmonics and resonance.',
+            lessons: [
+                // ───────────────────────────────────────────────────
+                // LESSON 2.1: Sound Properties & Doppler Effect
+                // ───────────────────────────────────────────────────
+                {
+                    id: 1,
+                    title: 'Lesson 1: Sound Properties & Doppler Effect',
+                    icon: '🔊',
+                    duration: '55 minutes',
+                    lessonUrl: 'https://hesham-afandi.github.io/9Adv-Ins-Phy-T3-2.1/',
+                    examUrl: 'https://hesham-afandi.github.io/9Adv-Ins-Phy-T3-2.1-exam/',
+                    lessonTitle: '📖 Lesson Explanation',
+                    examTitle: '📝 Take the Quiz',
+                    content: {
+                        intro: 'Sound is a longitudinal mechanical wave that propagates through a medium via compressions and rarefactions. Its characteristics include pitch, loudness, and quality (timbre).',
+                        sections: [
+                            { title: '📋 Characteristics of Sound', type: 'bullets', content: [
+                                'Pitch: Determined by frequency (higher frequency = higher pitch)',
+                                'Loudness: Determined by amplitude (greater amplitude = louder sound)',
+                                'Quality (Timbre): Determined by waveform shape (different instruments)',
+                                'Speed of sound depends on medium and temperature'
+                            ]},
+                            { title: 'Speed of Sound in Air (Temperature Dependent)', type: 'formula', content: 'v = 331 + 0.6·T   (where T is temperature in °C)' },
+                            { title: 'Human Hearing Range', type: 'bullets', content: [
+                                'Audible range: 20 Hz to 20,000 Hz',
+                                'Infrasound: Below 20 Hz (elephants, earthquakes)',
+                                'Ultrasound: Above 20,000 Hz (bats, medical imaging)',
+                                'Most sensitive range: 2,000 - 5,000 Hz'
+                            ]},
+                            { title: 'The Doppler Effect', type: 'bullets', content: [
+                                'Apparent change in frequency when source or observer moves',
+                                'Source approaching: Higher frequency (higher pitch)',
+                                'Source receding: Lower frequency (lower pitch)',
+                                'Applications: Police radar, medical ultrasound, astronomy'
+                            ]},
+                            { title: 'Doppler Effect Formula (Moving Source)', type: 'formula', content: 'f\' = f × v/(v ± vₛ)' },
+                            { title: 'Doppler Sign Convention', type: 'table', headers: ['Situation', 'Formula', 'Observed Frequency'], rows: [
+                                ['Source approaching', 'f\' = f × v/(v - vₛ)', 'Higher (f\' > f)'],
+                                ['Source receding', 'f\' = f × v/(v + vₛ)', 'Lower (f\' < f)'],
+                                ['Observer approaching', 'f\' = f × (v + vₒ)/v', 'Higher (f\' > f)'],
+                                ['Observer receding', 'f\' = f × (v - vₒ)/v', 'Lower (f\' < f)']
+                            ]},
+                            { title: 'Decibel Scale (Loudness)', type: 'formula', content: 'β = 10·log₁₀(I/I₀)   (where I₀ = 10⁻¹² W/m² is threshold of hearing)' },
+                            { title: 'Common Sound Levels', type: 'table', headers: ['Sound', 'Intensity Level (dB)'], rows: [
+                                ['Threshold of hearing', '0 dB'],
+                                ['Normal conversation', '60 dB'],
+                                ['Heavy traffic', '85 dB'],
+                                ['Rock concert', '120 dB'],
+                                ['Threshold of pain', '130 dB']
+                            ]}
+                        ]
+                    }
+                },
+                // ───────────────────────────────────────────────────
+                // LESSON 2.2: Music & Physics
+                // ───────────────────────────────────────────────────
+                {
+                    id: 2,
+                    title: 'Lesson 2: Music & Physics',
+                    icon: '🎵',
+                    duration: '55 minutes',
+                    lessonUrl: 'https://hesham-afandi.github.io/9Adv-Ins-Phy-T3-2.2/',
+                    examUrl: 'https://hesham-afandi.github.io/9Adv-Ins-Phy-T3-2.2-exam/',
+                    lessonTitle: '📖 Lesson Explanation',
+                    examTitle: '📝 Take the Quiz',
+                    content: {
+                        intro: 'Musical instruments produce sound through vibrating systems that create standing waves. The physics of music involves harmonics, resonance, and the relationship between string/air column properties and pitch.',
+                        sections: [
+                            { title: '📋 Musical Sound Production', type: 'bullets', content: [
+                                'All musical instruments produce sound through vibrations',
+                                'Standing waves form in strings, air columns, and membranes',
+                                'Fundamental frequency: Lowest frequency (first harmonic)',
+                                'Overtones/Harmonics: Higher frequencies that are integer multiples of fundamental'
+                            ]},
+                            { title: 'Harmonic Series', type: 'formula', content: 'fₙ = n·f₁   (n = 1, 2, 3, ...)' },
+                            { title: 'Strings Fixed at Both Ends', type: 'bullets', content: [
+                                'All harmonics present: f₁, 2f₁, 3f₁, 4f₁, ...',
+                                'Nodes at both fixed ends, antinodes in between',
+                                'Wavelength of nth harmonic: λₙ = 2L/n',
+                                'Fundamental wavelength: λ₁ = 2L'
+                            ]},
+                            { title: 'String Frequency Formula', type: 'formula', content: 'f₁ = (1/2L)·√(T/μ)' },
+                            { title: 'Factors Affecting String Pitch', type: 'table', headers: ['Factor', 'Effect on Pitch', 'Example'], rows: [
+                                ['Length (L)', 'Shorter string = Higher pitch', 'Fretting a guitar'],
+                                ['Tension (T)', 'Higher tension = Higher pitch', 'Tuning pegs'],
+                                ['Linear density (μ)', 'Thinner string = Higher pitch', 'Different guitar strings']
+                            ]},
+                            { title: 'Air Columns - Open Pipe (Both Ends Open)', type: 'bullets', content: [
+                                'Antinodes at both open ends',
+                                'All harmonics present: f₁, 2f₁, 3f₁, ...',
+                                'Fundamental wavelength: λ₁ = 2L',
+                                'Example: Flute, organ pipe (open)'
+                            ]},
+                            { title: 'Air Columns - Closed Pipe (One End Closed)', type: 'bullets', content: [
+                                'Node at closed end, antinode at open end',
+                                'Only odd harmonics: f₁, 3f₁, 5f₁, ...',
+                                'Fundamental wavelength: λ₁ = 4L',
+                                'Example: Clarinet, organ pipe (closed)'
+                            ]},
+                            { title: 'Open vs Closed Pipe Comparison', type: 'table', headers: ['Property', 'Open Pipe', 'Closed Pipe'], rows: [
+                                ['Harmonics', 'All (n = 1, 2, 3, ...)', 'Odd only (n = 1, 3, 5, ...)'],
+                                ['Fundamental λ', 'λ₁ = 2L', 'λ₁ = 4L'],
+                                ['Fundamental f', 'f₁ = v/2L', 'f₁ = v/4L'],
+                                ['Example', 'Flute', 'Clarinet']
+                            ]},
+                            { title: 'Resonance', type: 'bullets', content: [
+                                'Occurs when driving frequency matches natural frequency',
+                                'Amplitude increases dramatically at resonance',
+                                'Applications: Musical instruments, radio tuning, microwave ovens',
+                                'Can cause structural damage (Tacoma Narrows Bridge)'
+                            ]}
+                        ]
+                    }
+                }
+            ]
+        },
+        // ═══════════════════════════════════════════════════════════
+        // UNIT 3: LIGHT
+        // ═══════════════════════════════════════════════════════════
+        {
+            id: 3,
+            name: 'Unit 3: Light',
+            icon: '💡',
+            color: 'from-yellow-500 to-amber-600',
+            description: 'Study of illumination, the wave nature of light, electromagnetic spectrum, interference, diffraction, and polarization.',
+            lessons: [
+                // ───────────────────────────────────────────────────
+                // LESSON 3.1: Illumination
+                // ───────────────────────────────────────────────────
+                {
+                    id: 1,
+                    title: 'Lesson 1: Illumination',
+                    icon: '💡',
+                    duration: '50 minutes',
+                    lessonUrl: 'https://hesham-afandi.github.io/9Adv-Ins-Phy-T3-3.1/',
+                    examUrl: 'https://hesham-afandi.github.io/9Adv-Ins-Phy-T3-3.1-exam/',
+                    lessonTitle: '📖 Lesson Explanation',
+                    examTitle: '📝 Take the Quiz',
+                    content: {
+                        intro: 'Illumination describes how light sources transfer luminous energy to surfaces. The key quantities are luminous flux (total light output), luminous intensity (directional output), and illuminance (light received by a surface).',
+                        sections: [
+                            { title: '📋 Photometric Quantities', type: 'bullets', content: [
+                                'Luminous Flux (Φ): Total light emitted by source (unit: lumens, lm)',
+                                'Luminous Intensity (I): Light emitted in a specific direction (unit: candela, cd)',
+                                'Illuminance (E): Light received per unit area (unit: lux, lx = lm/m²)',
+                                'Luminous Efficiency: Ratio of luminous flux to power consumed (lm/W)'
+                            ]},
+                            { title: 'Relationship Between Flux and Intensity', type: 'formula', content: 'Φ = 4π·I   (for isotropic source)' },
+                            { title: 'The Inverse Square Law of Illumination', type: 'formula', content: 'E = I/d²   or   E = Φ/(4πd²)' },
+                            { title: 'Inverse Square Law Meaning', type: 'bullets', content: [
+                                'Illuminance decreases with the square of distance',
+                                'Double the distance → 1/4 the illuminance',
+                                'Triple the distance → 1/9 the illuminance',
+                                'Applies to point sources in uniform medium'
+                            ]},
+                            { title: 'Illumination at an Angle', type: 'formula', content: 'E = (I/d²)·cos(θ)   (θ = angle from normal)' },
+                            { title: 'Common Illuminance Values', type: 'table', headers: ['Situation', 'Illuminance (lux)'], rows: [
+                                ['Moonless night', '0.001 lux'],
+                                ['Full moonlight', '0.25 lux'],
+                                ['Living room', '50 - 100 lux'],
+                                ['Office workspace', '300 - 500 lux'],
+                                ['Direct sunlight', '100,000 lux']
+                            ]},
+                            { title: 'Luminous Efficiency Examples', type: 'table', headers: ['Light Source', 'Efficiency (lm/W)'], rows: [
+                                ['Incandescent bulb', '10 - 17 lm/W'],
+                                ['Fluorescent lamp', '50 - 100 lm/W'],
+                                ['LED bulb', '80 - 150 lm/W'],
+                                ['Low-pressure sodium', '100 - 200 lm/W']
+                            ]}
+                        ]
+                    }
+                },
+                // ───────────────────────────────────────────────────
+                // LESSON 3.2: Wave Nature of Light
+                // ───────────────────────────────────────────────────
+                {
+                    id: 2,
+                    title: 'Lesson 2: Wave Nature of Light',
+                    icon: '🌈',
+                    duration: '60 minutes',
+                    lessonUrl: 'https://hesham-afandi.github.io/9Adv-Ins-Phy-T3-3.2/',
+                    examUrl: 'https://hesham-afandi.github.io/9Adv-Ins-Phy-T3-3.2-exam/',
+                    lessonTitle: '📖 Lesson Explanation',
+                    examTitle: '📝 Take the Quiz',
+                    content: {
+                        intro: 'Light exhibits wave properties including interference, diffraction, and polarization. These phenomena provide strong evidence for the wave model of light and are explained by the electromagnetic theory.',
+                        sections: [
+                            { title: '📋 The Electromagnetic Spectrum', type: 'bullets', content: [
+                                'Light is an electromagnetic wave (transverse wave)',
+                                'Speed of light in vacuum: c = 3 × 10⁸ m/s',
+                                'Visible spectrum: 400 nm (violet) to 700 nm (red)',
+                                'EM spectrum includes: radio, microwave, infrared, visible, UV, X-ray, gamma'
+                            ]},
+                            { title: 'Wave Equation for Light', type: 'formula', content: 'c = λ·f' },
+                            { title: 'Young\'s Double-Slit Experiment', type: 'bullets', content: [
+                                'Demonstrates interference of light waves',
+                                'Two coherent sources produce alternating bright and dark fringes',
+                                'Bright fringes: Constructive interference (path difference = nλ)',
+                                'Dark fringes: Destructive interference (path difference = (n+½)λ)'
+                            ]},
+                            { title: 'Double-Slit Interference Formulas', type: 'formula', content: 'd·sin(θ) = n·λ   (bright fringes)' },
+                            { title: 'Fringe Spacing Formula', type: 'formula', content: 'Δy = λ·L/d   (where L = distance to screen, d = slit separation)' },
+                            { title: 'Single-Slit Diffraction', type: 'bullets', content: [
+                                'Light spreads when passing through a narrow slit',
+                                'Central maximum is widest and brightest',
+                                'Secondary maxima are dimmer and narrower',
+                                'Diffraction pattern depends on wavelength and slit width'
+                            ]},
+                            { title: 'Diffraction Minimum Condition', type: 'formula', content: 'a·sin(θ) = n·λ   (n = 1, 2, 3, ... for minima)' },
+                            { title: 'Diffraction Grating', type: 'formula', content: 'd·sin(θ) = n·λ   (d = spacing between slits)' },
+                            { title: 'Polarization', type: 'bullets', content: [
+                                'Only transverse waves can be polarized',
+                                'Unpolarized light: Vibrations in all planes perpendicular to direction',
+                                'Polarized light: Vibrations in only one plane',
+                                'Polarization proves light is a transverse wave'
+                            ]},
+                            { title: 'Malus\'s Law (Polarization)', type: 'formula', content: 'I = I₀·cos²(θ)   (θ = angle between polarizer axes)' },
+                            { title: 'Visible Spectrum Colors', type: 'table', headers: ['Color', 'Wavelength (nm)', 'Frequency (THz)'], rows: [
+                                ['Red', '620 - 700', '430 - 480'],
+                                ['Orange', '590 - 620', '480 - 510'],
+                                ['Yellow', '570 - 590', '510 - 530'],
+                                ['Green', '495 - 570', '530 - 605'],
+                                ['Blue', '450 - 495', '605 - 670'],
+                                ['Violet', '400 - 450', '670 - 750']
+                            ]},
+                            { title: 'Wave-Particle Duality', type: 'bullets', content: [
+                                'Light exhibits both wave and particle properties',
+                                'Wave behavior: Interference, diffraction, polarization',
+                                'Particle behavior: Photoelectric effect, Compton scattering',
+                                'Photons: Discrete packets of light energy (E = hf)'
+                            ]}
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+},
 'physics-11-inspire-3': {
 isEnglish: true,
 units: [
