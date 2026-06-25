@@ -1,164 +1,50 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>4U- مكتبة المناهج</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <style>
-        body { 
-            font-family: 'Cairo', sans-serif;
-            overflow-x: hidden;
-        }
-        
-        /* ═══════════════════════════════════════════════════ */
-        /* LOADER STYLES */
-        /* ═══════════════════════════════════════════════════ */
-        #page-loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
-        }
-        
-        #page-loader.hidden-loader {
-            opacity: 0;
-            visibility: hidden;
-        }
-        
-        /* Logo Animation */
-        .loader-logo {
-            font-size: 6rem;
-            font-weight: 900;
-            color: white;
-            text-shadow: 0 0 30px rgba(255,255,255,0.5);
-            animation: logoPulse 2s ease-in-out infinite;
-            margin-bottom: 2rem;
-        }
-        
-        @keyframes logoPulse {
-            0%, 100% { 
-                transform: scale(1);
-                text-shadow: 0 0 30px rgba(255,255,255,0.5);
-            }
-            50% { 
-                transform: scale(1.1);
-                text-shadow: 0 0 50px rgba(255,255,255,0.8);
-            }
-        }
-        
-        /* Spinner Ring */
-        .loader-spinner {
-            width: 80px;
-            height: 80px;
-            border: 6px solid rgba(255,255,255,0.2);
-            border-top: 6px solid white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 1.5rem;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* Loading Text */
-        .loader-text {
-            color: white;
-            font-size: 1.25rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            animation: textFade 1.5s ease-in-out infinite;
-        }
-        
-        @keyframes textFade {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-        
-        /* Progress Bar */
-        .loader-progress {
-            width: 200px;
-            height: 4px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 2px;
-            margin-top: 1.5rem;
-            overflow: hidden;
-        }
-        
-        .loader-progress-bar {
-            height: 100%;
-            background: white;
-            width: 0%;
-            animation: progressFill 2s ease-in-out forwards;
-        }
-        
-        @keyframes progressFill {
-            0% { width: 0%; }
-            100% { width: 100%; }
-        }
-        
-        /* Floating Particles */
-        .particle {
-            position: absolute;
-            background: rgba(255,255,255,0.3);
-            border-radius: 50%;
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0) translateX(0); }
-            50% { transform: translateY(-20px) translateX(10px); }
-        }
-        
-        /* Main Content Fade In */
-        #main-content {
-            opacity: 0;
-            transition: opacity 0.8s ease;
-        }
-        
-        #main-content.visible {
-            opacity: 1;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d9488">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="logo.png">
+<title>4U- مكتبة المناهج</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+darkMode: 'class',
+theme: { extend: { fontFamily: { cairo: ['Cairo', 'sans-serif'] } } }
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body { font-family: 'Cairo', sans-serif; transition: background-color 0.3s, color 0.3s; }
+.en-content { font-family: 'Inter', sans-serif; direction: ltr; text-align: left; }
+.gradient-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.gradient-secondary { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+.gradient-success { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+.gradient-warm { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+.gradient-violet { background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%); }
+.gradient-teal { background: linear-gradient(135deg, #2dd4bf 0%, #0891b2 100%); }
+.card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.card-hover:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+.fade-in { animation: fadeIn 0.4s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.formula { font-family: 'Times New Roman', serif; font-style: italic; direction: ltr; display: inline-block; }
+table.comparison { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+table.comparison th, table.comparison td { border: 1px solid #e5e7eb; padding: 0.75rem; }
+table.comparison th { background: #f3f4f6; font-weight: bold; }
+.en-content table.comparison th, .en-content table.comparison td { text-align: left; }
+mark { background-color: #fbbf24; color: #000; padding: 0 2px; border-radius: 2px; }
+.dark mark { background-color: #d97706; color: #fff; }
+</style>
 </head>
-<body class="bg-gray-50 min-h-screen">
-
-    <!-- ═══════════════════════════════════════════════════ -->
-    <!-- LOADER -->
-    <!-- ═══════════════════════════════════════════════════ -->
-    <div id="page-loader">
-        <!-- Floating Particles -->
-        <div class="particle" style="width: 10px; height: 10px; top: 20%; left: 10%; animation-delay: 0s;"></div>
-        <div class="particle" style="width: 15px; height: 15px; top: 60%; left: 80%; animation-delay: 0.5s;"></div>
-        <div class="particle" style="width: 8px; height: 8px; top: 30%; left: 70%; animation-delay: 1s;"></div>
-        <div class="particle" style="width: 12px; height: 12px; top: 70%; left: 20%; animation-delay: 1.5s;"></div>
-        <div class="particle" style="width: 10px; height: 10px; top: 40%; left: 90%; animation-delay: 0.8s;"></div>
-        
-        <!-- Logo -->
-        <div class="loader-logo">4U</div>
-        
-        <!-- Spinner -->
-        <div class="loader-spinner"></div>
-        
-        <!-- Loading Text -->
-        <div class="loader-text">جاري تحميل المنصة...</div>
-        
-        <!-- Progress Bar -->
-        <div class="loader-progress">
-            <div class="loader-progress-bar"></div>
-        </div>
-    </div>
+<body class="bg-gray-50 min-h-screen dark:bg-gray-900 dark:text-gray-100">
+<!-- Top Bar -->
+<div class="gradient-primary text-white py-3 px-6 shadow-lg sticky top-0 z-50">
+<div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-3">
+<div class="flex items-center gap-3 cursor-pointer" onclick="showHome()">
+<img src="logo.png" alt="4U Logo" class="h-12 w-auto drop-shadow-lg">
+<div>
 <h1 class="font-bold text-lg">منصة 4U التعليمية</h1>
 <p class="text-xs opacity-80">منهج متكامل • تفاعلي • احترافي</p>
 </div>
