@@ -480,6 +480,451 @@ subjects: [
 ],
 
 curriculum: {
+    'physics-10-bridge-3': {
+                    isEnglish: false,
+                    units: [
+                        {
+                            id: 1,
+                            name: 'الوحدة الخامسة: الانكسار والعدسات',
+                            icon: '🔍',
+                            color: 'from-blue-500 to-cyan-600',
+                            description: 'دراسة انكسار الضوء، العدسات المحدبة والمقعرة، وتطبيقات العدسات في الحياة العملية',
+                            lessons: [
+                                {
+                                    id: 1,
+                                    title: 'الدرس 1: انكسار الضوء',
+                                    icon: '💡',
+                                    duration: '50 دقيقة',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-1.1/',
+                                    lessonTitle: '📖 شرح الدرس',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-1.1-exam/',
+                                    examTitle: '📝 ابدأ الاختبار',
+                                    content: {
+                                        intro: 'ينكسر الضوء عندما ينتقل من وسط شفاف إلى آخر بسبب تغير سرعته. هذا الدرس يشرح قوانين الانكسار ومعامل الانكسار.',
+                                        sections: [
+                                            { title: '📋 قانون سنيل للانكسار', type: 'formula', content: 'n₁·sin(θ₁) = n₂·sin(θ₂)' },
+                                            { title: 'معامل الانكسار', type: 'formula', content: 'n = c/v' },
+                                            { title: 'المفاهيم الأساسية', type: 'bullets', content: [
+                                                'الانكسار: انحراف الضوء عند انتقاله بين وسطين مختلفين',
+                                                'الشعاع الساقط: الشعاع القادم من المصدر',
+                                                'الشعاع المنكسر: الشعاع بعد الانكسار',
+                                                'الزاوية الحرجة: الزاوية التي عندها يحدث الانعكاس الكلي'
+                                            ]},
+                                            { title: 'تطبيقات عملية', type: 'bullets', content: [
+                                                'ظهور القلم منكسراً في الماء',
+                                                'تكون قوس قزح',
+                                                'عمل العدسات والمنشور'
+                                            ]}
+                                        ]
+                                    }
+                                },
+                                {
+                                    id: 2,
+                                    title: 'الدرس 2: العدسات المحدبة والمقعرة',
+                                    icon: '🔍',
+                                    duration: '55 دقيقة',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-1.2/',
+                                    lessonTitle: '📖 شرح الدرس',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-1.2-exam/',
+                                    examTitle: '📝 ابدأ الاختبار',
+                                    content: {
+                                        intro: 'العدسات أدوات بصرية تكسر الضوء لتكوين صور. هناك نوعان رئيسيان: العدسات المحدبة (المجمعة) والعدسات المقعرة (المفرقة).',
+                                        sections: [
+                                            { title: 'معادلة العدسة الرقيقة', type: 'formula', content: '1/f = 1/dₒ + 1/dᵢ' },
+                                            { title: 'التكبير', type: 'formula', content: 'M = hᵢ/hₒ = -dᵢ/dₒ' },
+                                            { title: 'العدسة المحدبة (المجمعة)', type: 'bullets', content: [
+                                                'أكثر سماكة في الوسط',
+                                                'تجمع الأشعة الضوئية',
+                                                'البعد البؤري موجب (+)',
+                                                'تستخدم في: النظارات الطبية، العدسات المكبرة'
+                                            ]},
+                                            { title: 'العدسة المقعرة (المفرقة)', type: 'bullets', content: [
+                                                'أقل سماكة في الوسط',
+                                                'تفرق الأشعة الضوئية',
+                                                'البعد البؤري سالب (-)',
+                                                'تستخدم في: تصحيح قصر النظر'
+                                            ]}
+                                        ]
+                                    }
+                                },
+                                {
+                                    id: 3,
+                                    title: 'الدرس 3: تطبيقات العدسات',
+                                    icon: '🔬',
+                                    duration: '50 دقيقة',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-1.3/',
+                                    lessonTitle: '📖 شرح الدرس',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-1.3-exam/',
+                                    examTitle: '📝 ابدأ الاختبار',
+                                    content: {
+                                        intro: 'العدسات لها تطبيقات عديدة في حياتنا اليومية، من النظارات الطبية إلى التلسكوبات والمجاهر.',
+                                        sections: [
+                                            { title: 'العين البشرية', type: 'bullets', content: [
+                                                'العين تحتوي على عدسة محدبة طبيعية',
+                                                'الشباشة: nơi hình ảnh được tạo thành',
+                                                'قصر النظر: الصورة تتكون أمام الشباشة',
+                                                'بعد النظر: الصورة تتكون خلف الشباشة'
+                                            ]},
+                                            { title: 'العدسات المكبرة', type: 'formula', content: 'M = 25cm/f + 1' },
+                                            { title: 'المجهر المركب', type: 'bullets', content: [
+                                                'يتكون من عدستين: شيئية وعينية',
+                                                'التكبير الكلي = تكبير العدسة الشيئية × تكبير العدسة العينية',
+                                                'يستخدم لرؤية الأجسام الدقيقة جداً'
+                                            ]},
+                                            { title: 'التلسكوب', type: 'bullets', content: [
+                                                'يستخدم لرؤية الأجسام البعيدة',
+                                                'يعتمد على عدستين أو مرآة',
+                                                'التلسكوبات الفلكية تدرس الكون'
+                                            ]}
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            id: 2,
+                            name: 'الوحدة السادسة: التداخل والحيود',
+                            icon: '🌈',
+                            color: 'from-purple-500 to-pink-600',
+                            description: 'دراسة خصائص الموجات الضوئية: التداخل والحيود وتطبيقاتهما',
+                            lessons: [
+                                {
+                                    id: 1,
+                                    title: 'الدرس 1: التداخل',
+                                    icon: '〰️',
+                                    duration: '50 دقيقة',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-2.1/',
+                                    lessonTitle: '📖 شرح الدرس',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-2.1-exam/',
+                                    examTitle: '📝 ابدأ الاختبار',
+                                    content: {
+                                        intro: 'التداخل ظاهرة موجية تحدث عندما تلتقي موجتان ضوئيتان في نفس النقطة، مما ينتج مناطق مضيئة وأخرى مظلمة.',
+                                        sections: [
+                                            { title: 'شروط التداخل', type: 'bullets', content: [
+                                                'الموجات يجب أن تكون متسقة (coherent)',
+                                                'نفس التردد',
+                                                'فرق الطور ثابت',
+                                                'نفس السعة تقريباً'
+                                            ]},
+                                            { title: 'التداخل البناء', type: 'formula', content: 'd·sin(θ) = m·λ (m = 0, 1, 2, ...)' },
+                                            { title: 'التداخل الهدام', type: 'formula', content: 'd·sin(θ) = (m + ½)·λ' },
+                                            { title: 'تجربة شقي يونغ', type: 'bullets', content: [
+                                                'أثبتت الطبيعة الموجية للضوء',
+                                                'تنتج أهداب مضيئة ومظلمة',
+                                                'المسافة بين الأهداب تعتمد على الطول الموجي'
+                                            ]}
+                                        ]
+                                    }
+                                },
+                                {
+                                    id: 2,
+                                    title: 'الدرس 2: الحيود',
+                                    icon: '🌀',
+                                    duration: '55 دقيقة',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-2.2/',
+                                    lessonTitle: '📖 شرح الدرس',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-2.2-exam/',
+                                    examTitle: '📝 ابدأ الاختبار',
+                                    content: {
+                                        intro: 'الحيود هو انحناء الموجات حول الحواجز أو عند مرورها من فتحات ضيقة. هذه الظاهرة تثبت الطبيعة الموجية للضوء.',
+                                        sections: [
+                                            { title: 'حيود الشق المفرد', type: 'formula', content: 'a·sin(θ) = m·λ' },
+                                            { title: 'شبكة الحيود', type: 'formula', content: 'd·sin(θ) = m·λ' },
+                                            { title: 'الحيود البناء', type: 'bullets', content: [
+                                                'يحدث عندما يكون فرق المسار = عدد صحيح من الأطوال الموجية',
+                                                'ينتج مناطق مضيئة',
+                                                'm = 0, ±1, ±2, ...'
+                                            ]},
+                                            { title: 'تطبيقات الحيود', type: 'bullets', content: [
+                                                'الأقراص المضغوطة (CD/DVD)',
+                                                'مطياف الحيود لتحليل الضوء',
+                                                'دراسة البنية البلورية للمواد',
+                                                'ألوان أجنحة الفراشات'
+                                            ]}
+                                        ]
+                                    }
+                                },
+                                {                                id: 3,
+                                title: 'الدرس 3: السرعة المتجهة النسبية',
+                                icon: '🚗',
+                                duration: '50 دقيقة',
+                                lessonUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-3.1/',
+                                lessonTitle: '📖 شرح الدرس',
+                                examUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-3.1-exam/',
+                                examTitle: '📝 ابدأ الاختبار',
+                                content: {
+                                    intro: 'السرعة المتجهة النسبية تصف كيفية قياس سرعة جسم بالنسبة لجسم آخر متحرك. هذا المفهوم أساسي لفهم الحركة النسبية في حياتنا اليومية.',
+                                    sections: [
+                                        { title: 'مفهوم السرعة النسبية', type: 'bullets', content: [
+                                            'السرعة النسبية هي سرعة جسم بالنسبة لجسم آخر متحرك',
+                                            'تعتمد على الإطار المرجعي للمراقب',
+                                            'تُحسب بجمع أو طرح السرعات المتجهية',
+                                            'تختلف باختلاف اتجاه الحركة'
+                                        ]},
+                                        { title: 'الحركة في نفس الاتجاه', type: 'bullets', content: [
+                                            'عندما يتحرك جسمان في نفس الاتجاه',
+                                            'السرعة النسبية = الفرق بين السرعتين',
+                                            'v_rel = |v₁ - v₂|',
+                                            'مثال: سيارتان تسيران بسرعة 80 و 60 كم/س → السرعة النسبية = 20 كم/س'
+                                        ]},
+                                        { title: 'الحركة في اتجاهين متعاكسين', type: 'bullets', content: [
+                                            'عندما يتحرك جسمان في اتجاهين متعاكسين',
+                                            'السرعة النسبية = مجموع السرعتين',
+                                            'v_rel = v₁ + v₂',
+                                            'مثال: سيارتان تتحركان بسرعة 60 كم/س في اتجاهين متعاكسين → السرعة النسبية = 120 كم/س'
+                                        ]},
+                                        { title: 'الحركة بزاوية', type: 'bullets', content: [
+                                            'عندما يتحرك جسمان بزاوية بينهما',
+                                            'تُستخدم متجهات السرعة',
+                                            'تُحل باستخدام تحليل المتجهات',
+                                            'v_rel = √(v₁² + v₂² - 2v₁v₂cos θ)'
+                                        ]},
+                                        { title: 'تطبيقات عملية', type: 'bullets', content: [
+                                            'حركة الطائرات بالنسبة للأرض',
+                                            'حركة السفن بالنسبة للتيارات المائية',
+                                            'حركة الأقمار الصناعية',
+                                            'حسابات الملاحة الجوية والبحرية'
+                                        ]}
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                'physics-10-inspire-3': {
+                    isEnglish: true,
+                    units: [
+                        {
+                            id: 1,
+                            name: 'Unit 5: Refraction and Lenses',
+                            icon: '🔍',
+                            color: 'from-blue-500 to-cyan-600',
+                            description: 'Study of light refraction, convex and concave lenses, and practical applications of lenses',
+                            lessons: [
+                                {
+                                    id: 1,
+                                    title: 'Lesson 1: Refraction of Light',
+                                    icon: '💡',
+                                    duration: '50 minutes',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-1.1/',
+                                    lessonTitle: '📖 Lesson Explanation',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-1.1-exam/',
+                                    examTitle: '📝 Take the Quiz',
+                                    content: {
+                                        intro: 'Light refracts when it passes from one transparent medium to another due to the change in its speed. This lesson explains the laws of refraction and refractive index.',
+                                        sections: [
+                                            { title: "📋 Snell's Law of Refraction", type: 'formula', content: 'n₁·sin(θ₁) = n₂·sin(θ₂)' },
+                                            { title: 'Refractive Index', type: 'formula', content: 'n = c/v' },
+                                            { title: 'Key Concepts', type: 'bullets', content: [
+                                                'Refraction: Bending of light when passing between two different media',
+                                                'Incident ray: The ray coming from the source',
+                                                'Refracted ray: The ray after refraction',
+                                                'Critical angle: The angle at which total internal reflection occurs'
+                                            ]},
+                                            { title: 'Practical Applications', type: 'bullets', content: [
+                                                'A pencil appearing bent in water',
+                                                'Formation of rainbows',
+                                                'Operation of lenses and prisms'
+                                            ]}
+                                        ]
+                                    }
+                                },
+                                {
+                                    id: 2,
+                                    title: 'Lesson 2: Convex and Concave Lenses',
+                                    icon: '🔍',
+                                    duration: '55 minutes',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-1.2/',
+                                    lessonTitle: '📖 Lesson Explanation',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-1.2-exam/',
+                                    examTitle: '📝 Take the Quiz',
+                                    content: {
+                                        intro: 'Lenses are optical devices that refract light to form images. There are two main types: convex (converging) lenses and concave (diverging) lenses.',
+                                        sections: [
+                                            { title: 'Thin Lens Equation', type: 'formula', content: '1/f = 1/dₒ + 1/dᵢ' },
+                                            { title: 'Magnification', type: 'formula', content: 'M = hᵢ/hₒ = -dᵢ/dₒ' },
+                                            { title: 'Convex Lens (Converging)', type: 'bullets', content: [
+                                                'Thicker in the middle',
+                                                'Converges light rays',
+                                                'Focal length is positive (+)',
+                                                'Used in: eyeglasses, magnifying glasses'
+                                            ]},
+                                            { title: 'Concave Lens (Diverging)', type: 'bullets', content: [
+                                                'Thinner in the middle',
+                                                'Diverges light rays',
+                                                'Focal length is negative (-)',
+                                                'Used in: correcting nearsightedness'
+                                            ]}
+                                        ]
+                                    }
+                                },
+                                {
+                                    id: 3,
+                                    title: 'Lesson 3: Applications of Lenses',
+                                    icon: '🔬',
+                                    duration: '50 minutes',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-1.3/',
+                                    lessonTitle: '📖 Lesson Explanation',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-1.3-exam/',
+                                    examTitle: '📝 Take the Quiz',
+                                    content: {
+                                        intro: 'Lenses have numerous applications in our daily lives, from eyeglasses to telescopes and microscopes.',
+                                        sections: [
+                                            { title: 'The Human Eye', type: 'bullets', content: [
+                                                'The eye contains a natural convex lens',
+                                                'Retina: where the image is formed',
+                                                'Nearsightedness: image forms in front of retina',
+                                                'Farsightedness: image forms behind retina'
+                                            ]},
+                                            { title: 'Magnifying Glass', type: 'formula', content: 'M = 25cm/f + 1' },
+                                            { title: 'Compound Microscope', type: 'bullets', content: [
+                                                'Consists of two lenses: objective and eyepiece',
+                                                'Total magnification = objective magnification × eyepiece magnification',
+                                                'Used to view very small objects'
+                                            ]},
+                                            { title: 'Telescope', type: 'bullets', content: [
+                                                'Used to view distant objects',
+                                                'Uses two lenses or a mirror',
+                                                'Astronomical telescopes study the universe'
+                                            ]}
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            id: 2,
+                            name: 'Unit 6: Interference and Diffraction',
+                            icon: '🌈',
+                            color: 'from-purple-500 to-pink-600',
+                            description: 'Study of light wave properties: interference and diffraction and their applications',
+                            lessons: [
+                                {
+                                    id: 1,
+                                    title: 'Lesson 1: Interference',
+                                    icon: '〰️',
+                                    duration: '50 minutes',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-2.1/',
+                                    lessonTitle: '📖 Lesson Explanation',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-2.1-exam/',
+                                    examTitle: '📝 Take the Quiz',
+                                    content: {
+                                        intro: 'Interference is a wave phenomenon that occurs when two light waves meet at the same point, producing bright and dark regions.',
+                                        sections: [
+                                            { title: 'Conditions for Interference', type: 'bullets', content: [
+                                                'Waves must be coherent',
+                                                'Same frequency',
+                                                'Constant phase difference',
+                                                'Approximately equal amplitudes'
+                                            ]},
+                                            { title: 'Constructive Interference', type: 'formula', content: 'd·sin(θ) = m·λ (m = 0, 1, 2, ...)' },
+                                            { title: 'Destructive Interference', type: 'formula', content: 'd·sin(θ) = (m + ½)·λ' },
+                                            { title: "Young's Double-Slit Experiment", type: 'bullets', content: [
+                                                'Proved the wave nature of light',
+                                                'Produces bright and dark fringes',
+                                                'Fringe spacing depends on wavelength'
+                                            ]}
+                                        ]
+                                    }
+                                },
+                                {
+                                    id: 2,
+                                    title: 'Lesson 2: Diffraction',
+                                    icon: '🌀',
+                                    duration: '55 minutes',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-2.2/',
+                                    lessonTitle: '📖 Lesson Explanation',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-2.2-exam/',
+                                    examTitle: '📝 Take the Quiz',
+                                    content: {
+                                        intro: 'Diffraction is the bending of waves around obstacles or when passing through narrow openings. This phenomenon proves the wave nature of light.',
+                                        sections: [
+                                            { title: 'Single-Slit Diffraction', type: 'formula', content: 'a·sin(θ) = m·λ' },
+                                            { title: 'Diffraction Grating', type: 'formula', content: 'd·sin(θ) = m·λ' },
+                                            { title: 'Constructive Diffraction', type: 'bullets', content: [
+                                                'Occurs when path difference = integer number of wavelengths',
+                                                'Produces bright regions',
+                                                'm = 0, ±1, ±2, ...'
+                                            ]},
+                                            { title: 'Applications of Diffraction', type: 'bullets', content: [
+                                                'Compact discs (CD/DVD)',
+                                                'Diffraction spectrometer for light analysis',
+                                                'Studying crystal structure of materials',
+                                                'Colors of butterfly wings'
+                                            ]}
+                                        ]
+                                    }
+                                },
+                                                              {
+                                    id: 3,
+                                    title: 'Lesson 3: Relative Velocity Vector',
+                                    icon: '🚗',
+                                    duration: '50 minutes',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-3.1/',
+                                    lessonTitle: '📖 Lesson Explanation',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-3.1-exam/',
+                                    examTitle: '📝 Take the Quiz',
+                                    content: {
+                                        intro: 'Relative velocity describes how the velocity of one object is measured with respect to another moving object. This concept is fundamental for understanding relative motion in our daily lives and is essential in navigation, aviation, and physics.',
+                                        sections: [
+                                            { title: '📋 Concept of Relative Velocity', type: 'bullets', content: [
+                                                'Relative velocity is the velocity of an object as observed from a specific frame of reference',
+                                                'It depends on the observer\'s frame of reference',
+                                                'It is calculated by vector addition or subtraction of velocities',
+                                                'The formula: v_AB = v_A - v_B (velocity of A relative to B)',
+                                                'It varies depending on the direction of motion of both objects'
+                                            ]},
+                                            { title: 'General Relative Velocity Formula', type: 'formula', content: 'v_AB = v_A - v_B' },
+                                            { title: 'Motion in the Same Direction', type: 'bullets', content: [
+                                                'When two objects move in the same direction',
+                                                'Relative velocity = Difference between velocities',
+                                                'v_rel = |v₁ - v₂|',
+                                                'Example: Two cars moving at 80 km/h and 60 km/h in the same direction → v_rel = 20 km/h',
+                                                'The slower car appears to move backward relative to the faster one'
+                                            ]},
+                                            { title: 'Motion in Opposite Directions', type: 'bullets', content: [
+                                                'When two objects move in opposite directions',
+                                                'Relative velocity = Sum of velocities',
+                                                'v_rel = v₁ + v₂',
+                                                'Example: Two cars moving at 60 km/h toward each other → v_rel = 120 km/h',
+                                                'This is why head-on collisions are the most dangerous'
+                                            ]},
+                                            { title: 'Motion at an Angle (2D Vectors)', type: 'bullets', content: [
+                                                'When two objects move at an angle to each other',
+                                                'Velocity vectors must be used for calculation',
+                                                'Resolved using vector components (x and y directions)',
+                                                'The resultant is found using the law of cosines'
+                                            ]},
+                                            { title: 'Vector Formula for Relative Velocity', type: 'formula', content: 'v_rel = √(v₁² + v₂² - 2·v₁·v₂·cos θ)' },
+                                            { title: 'Component Method (Most Reliable)', type: 'table', headers: ['Step', 'Procedure', 'Formula'], rows: [
+                                                ['1. Resolve Components', 'Break each velocity into x and y components', 'v_x = v·cos θ, v_y = v·sin θ'],
+                                                ['2. Subtract Components', 'Find relative components', 'v_rel_x = v₁ₓ - v₂ₓ, v_rel_y = v₁ᵧ - v₂ᵧ'],
+                                                ['3. Find Magnitude', 'Use Pythagorean theorem', '|v_rel| = √(v_rel_x² + v_rel_y²)'],
+                                                ['4. Find Direction', 'Use inverse tangent', 'θ = tan⁻¹(v_rel_y / v_rel_x)']
+                                            ]},
+                                            { title: '🔑 Key Properties', type: 'bullets', content: [
+                                                'v_AB = -v_BA (equal in magnitude, opposite in direction)',
+                                                'Relative velocity is a vector quantity (has magnitude and direction)',
+                                                'The choice of reference frame affects the measured velocity',
+                                                'An object at rest relative to observer has v_rel = 0'
+                                            ]},
+                                            { title: 'Practical Applications', type: 'bullets', content: [
+                                                '✈️ Aircraft navigation: Airspeed vs Ground Speed',
+                                                '🚢 Ships and boats: Velocity relative to water currents',
+                                                '🛰️ Satellites: Relative motion with respect to Earth',
+                                                '🚗 Traffic: Overtaking and passing maneuvers',
+                                                '🏊 Crossing rivers: Boat velocity relative to water flow'
+                                            ]},
+                                            { title: 'Example: River Crossing Problem', type: 'text', content: 'A boat crosses a river 200 m wide at 4 m/s perpendicular to the current, while the river flows at 3 m/s. The boat\'s velocity relative to the ground is the vector sum of its velocity relative to water and the water\'s velocity relative to the ground.' },
+                                            { title: 'River Crossing Formulas', type: 'table', headers: ['Quantity', 'Formula', 'Calculation'], rows: [
+                                                ['Time to cross', 't = width / v_boat', 't = 200 / 4 = 50 s'],
+                                                ['Downstream drift', 'd = v_river × t', 'd = 3 × 50 = 150 m'],
+                                                ['Resultant velocity', 'v = √(v_boat² + v_river²)', 'v = √(16 + 9) = 5 m/s'],
+                                                ['Direction angle', 'θ = tan⁻¹(v_river/v_boat)', 'θ = tan⁻¹(3/4) ≈ 36.9°']
+                                            ]}
+                                        ]
+                                    }
+                                },
     'physics-9-inspire-3': {
     isEnglish: true,
     units: [
