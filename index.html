@@ -36,9 +36,184 @@ table.comparison th { background: #f3f4f6; font-weight: bold; }
 .en-content table.comparison th, .en-content table.comparison td { text-align: left; }
 mark { background-color: #fbbf24; color: #000; padding: 0 2px; border-radius: 2px; }
 .dark mark { background-color: #d97706; color: #fff; }
+
+/* ═══════════════════════════════════════════════════ */
+/* LOADER STYLES */
+/* ═══════════════════════════════════════════════════ */
+#page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+#page-loader::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('loader.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(8px) brightness(0.4);
+    transform: scale(1.1);
+    z-index: -1;
+}
+
+#page-loader::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, 
+        rgba(102, 126, 234, 0.3) 0%, 
+        rgba(118, 75, 162, 0.3) 100%);
+    z-index: -1;
+}
+
+.loader-spinner {
+    width: 80px;
+    height: 80px;
+    border: 5px solid rgba(255, 255, 255, 0.2);
+    border-top: 5px solid #ffffff;
+    border-right: 5px solid #fbbf24;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader-text {
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    animation: textPulse 2s ease-in-out infinite;
+}
+
+@keyframes textPulse {
+    0%, 100% { 
+        opacity: 0.7;
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+.loader-dots {
+    display: inline-flex;
+    gap: 4px;
+    margin-right: 8px;
+}
+
+.loader-dots span {
+    width: 8px;
+    height: 8px;
+    background: #fbbf24;
+    border-radius: 50%;
+    animation: dotBounce 1.4s ease-in-out infinite;
+}
+
+.loader-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loader-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dotBounce {
+    0%, 80%, 100% { 
+        transform: scale(0.6);
+        opacity: 0.5;
+    }
+    40% { 
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.loader-progress {
+    width: 240px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    margin-top: 2rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.loader-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #fbbf24, #f59e0b);
+    width: 0%;
+    animation: progressFill 2.5s ease-in-out forwards;
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(251, 191, 36, 0.8);
+}
+
+@keyframes progressFill {
+    0% { width: 0%; }
+    50% { width: 70%; }
+    100% { width: 100%; }
+}
+
+#page-loader.hidden-loader {
+    opacity: 0;
+    visibility: hidden;
+}
+
+#main-content {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+#main-content.visible {
+    opacity: 1;
+}
 </style>
 </head>
 <body class="bg-gray-50 min-h-screen dark:bg-gray-900 dark:text-gray-100">
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- LOADER -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div id="page-loader">
+    <div class="loader-spinner"></div>
+    <div class="loader-text">
+        جاري تحميل المنصة
+        <span class="loader-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </span>
+    </div>
+    <div class="loader-progress">
+        <div class="loader-progress-bar"></div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- MAIN CONTENT (يظهر بعد اختفاء الـ Loader) -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div id="main-content">
+
 <!-- Top Bar -->
 <div class="gradient-primary text-white py-3 px-6 shadow-lg sticky top-0 z-50">
 <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-3">
@@ -103,7 +278,35 @@ class="w-full bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg py-
 </div>
 </div>
 </footer>
+
+</div> <!-- نهاية main-content -->
+
 <script>
+// ═══════════════════════════════════════════════════
+// LOADER LOGIC
+// ═══════════════════════════════════════════════════
+window.addEventListener('load', () => {
+    const loader = document.getElementById('page-loader');
+    const mainContent = document.getElementById('main-content');
+    
+    setTimeout(() => {
+        loader.classList.add('hidden-loader');
+        mainContent.classList.add('visible');
+        
+        setTimeout(() => {
+            loader.style.display = 'none';
+        }, 800);
+    }, 2500);
+});
+
+document.getElementById('page-loader').addEventListener('click', function() {
+    this.classList.add('hidden-loader');
+    document.getElementById('main-content').classList.add('visible');
+    setTimeout(() => {
+        this.style.display = 'none';
+    }, 800);
+});
+
 // === DARK MODE LOGIC ===
 const themeToggleBtn = document.getElementById('themeToggle');
 const sunIcon = document.getElementById('sunIcon');
