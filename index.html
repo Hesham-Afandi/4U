@@ -307,7 +307,9 @@ document.getElementById('page-loader').addEventListener('click', function() {
     }, 800);
 });
 
-// === DARK MODE LOGIC ===
+// ═══════════════════════════════════════════════════
+// DARK MODE LOGIC
+// ═══════════════════════════════════════════════════
 const themeToggleBtn = document.getElementById('themeToggle');
 const sunIcon = document.getElementById('sunIcon');
 const moonIcon = document.getElementById('moonIcon');
@@ -333,7 +335,9 @@ applyTheme(isDarkMode);
 localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
 });
 
-// === SEARCH LOGIC ===
+// ═══════════════════════════════════════════════════
+// SEARCH LOGIC
+// ═══════════════════════════════════════════════════
 const searchInputs = [document.getElementById('searchInput'), document.getElementById('mobileSearchInput')];
 function performSearch(query) {
 const term = query.toLowerCase().trim();
@@ -390,7 +394,9 @@ performSearch(e.target.value);
 });
 });
 
-// ==================== DATABASE ====================
+// ═══════════════════════════════════════════════════
+// DATABASE
+// ═══════════════════════════════════════════════════
 const DB = {
 terms: [
 { id: 1, name: 'الترم الأول', icon: '📘' },
