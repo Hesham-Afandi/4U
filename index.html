@@ -480,6 +480,414 @@ subjects: [
 ],
 
 curriculum: {
+ 'physics-10-bridge-3': {
+                    isEnglish: false,
+                    units: [
+                        {
+                            id: 1,
+                            name: 'الوحدة الخامسة: الانكسار والعدسات',
+                            icon: '🔍',
+                            color: 'from-blue-500 to-cyan-600',
+                            description: 'دراسة انكسار الضوء، العدسات المحدبة والمقعرة، وتطبيقات العدسات في الحياة العملية',
+                            lessons: [
+                                {
+                                    id: 1,
+                                    title: 'الدرس 1: انكسار الضوء',
+                                    icon: '💡',
+                                    duration: '50 دقيقة',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-5.1/',
+                                    lessonTitle: '📖 شرح الدرس',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-5.1-exam/',
+                                    examTitle: '📝 ابدأ الاختبار',
+                                    content: {
+                                        intro: 'ينكسر الضوء عندما ينتقل من وسط شفاف إلى آخر بسبب تغير سرعته. هذا الدرس يشرح قوانين الانكسار ومعامل الانكسار.',
+                                        sections: [
+                                            { title: '📋 قانون سنيل للانكسار', type: 'formula', content: 'n₁·sin(θ₁) = n₂·sin(θ₂)' },
+                                            { title: 'معامل الانكسار', type: 'formula', content: 'n = c/v' },
+                                            { title: 'المفاهيم الأساسية', type: 'bullets', content: [
+                                                'الانكسار: انحراف الضوء عند انتقاله بين وسطين مختلفين',
+                                                'الشعاع الساقط: الشعاع القادم من المصدر',
+                                                'الشعاع المنكسر: الشعاع بعد الانكسار',
+                                                'الزاوية الحرجة: الزاوية التي عندها يحدث الانعكاس الكلي'
+                                            ]},
+                                            { title: 'تطبيقات عملية', type: 'bullets', content: [
+                                                'ظهور القلم منكسراً في الماء',
+                                                'تكون قوس قزح',
+                                                'عمل العدسات والمنشور'
+                                            ]}
+                                        ]
+                                    }
+                                },
+                                {
+                                    id: 2,
+                                    title: 'الدرس 2: العدسات المحدبة والمقعرة',
+                                    icon: '🔍',
+                                    duration: '55 دقيقة',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-5.2/',
+                                    lessonTitle: '📖 شرح الدرس',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-5.2-exam/',
+                                    examTitle: '📝 ابدأ الاختبار',
+                                    content: {
+                                        intro: 'العدسات أدوات بصرية تكسر الضوء لتكوين صور. هناك نوعان رئيسيان: العدسات المحدبة (المجمعة) والعدسات المقعرة (المفرقة).',
+                                        sections: [
+                                            { title: 'معادلة العدسة الرقيقة', type: 'formula', content: '1/f = 1/dₒ + 1/dᵢ' },
+                                            { title: 'التكبير', type: 'formula', content: 'M = hᵢ/hₒ = -dᵢ/dₒ' },
+                                            { title: 'العدسة المحدبة (المجمعة)', type: 'bullets', content: [
+                                                'أكثر سماكة في الوسط',
+                                                'تجمع الأشعة الضوئية',
+                                                'البعد البؤري موجب (+)',
+                                                'تستخدم في: النظارات الطبية، العدسات المكبرة'
+                                            ]},
+                                            { title: 'العدسة المقعرة (المفرقة)', type: 'bullets', content: [
+                                                'أقل سماكة في الوسط',
+                                                'تفرق الأشعة الضوئية',
+                                                'البعد البؤري سالب (-)',
+                                                'تستخدم في: تصحيح قصر النظر'
+                                            ]}
+                                        ]
+                                    }
+                                },
+                                {
+                                    id: 3,
+                                    title: 'الدرس 3: تطبيقات العدسات',
+                                    icon: '🔬',
+                                    duration: '50 دقيقة',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-5.3/',
+                                    lessonTitle: '📖 شرح الدرس',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-5.3-exam/',
+                                    examTitle: '📝 ابدأ الاختبار',
+                                    content: {
+                                        intro: 'العدسات لها تطبيقات عديدة في حياتنا اليومية، من النظارات الطبية إلى التلسكوبات والمجاهر.',
+                                        sections: [
+                                            { title: 'العين البشرية', type: 'bullets', content: [
+                                                'العين تحتوي على عدسة محدبة طبيعية',
+                                                'الشباشة: nơi hình ảnh được tạo thành',
+                                                'قصر النظر: الصورة تتكون أمام الشباشة',
+                                                'بعد النظر: الصورة تتكون خلف الشباشة'
+                                            ]},
+                                            { title: 'العدسات المكبرة', type: 'formula', content: 'M = 25cm/f + 1' },
+                                            { title: 'المجهر المركب', type: 'bullets', content: [
+                                                'يتكون من عدستين: شيئية وعينية',
+                                                'التكبير الكلي = تكبير العدسة الشيئية × تكبير العدسة العينية',
+                                                'يستخدم لرؤية الأجسام الدقيقة جداً'
+                                            ]},
+                                            { title: 'التلسكوب', type: 'bullets', content: [
+                                                'يستخدم لرؤية الأجسام البعيدة',
+                                                'يعتمد على عدستين أو مرآة',
+                                                'التلسكوبات الفلكية تدرس الكون'
+                                            ]}
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            id: 2,
+                            name: 'الوحدة السادسة: التداخل والحيود',
+                            icon: '🌈',
+                            color: 'from-purple-500 to-pink-600',
+                            description: 'دراسة خصائص الموجات الضوئية: التداخل والحيود وتطبيقاتهما',
+                            lessons: [
+                                {
+                                    id: 1,
+                                    title: 'الدرس 1: التداخل',
+                                    icon: '〰️',
+                                    duration: '50 دقيقة',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-6.1/',
+                                    lessonTitle: '📖 شرح الدرس',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-6.1-exam/',
+                                    examTitle: '📝 ابدأ الاختبار',
+                                    content: {
+                                        intro: 'التداخل ظاهرة موجية تحدث عندما تلتقي موجتان ضوئيتان في نفس النقطة، مما ينتج مناطق مضيئة وأخرى مظلمة.',
+                                        sections: [
+                                            { title: 'شروط التداخل', type: 'bullets', content: [
+                                                'الموجات يجب أن تكون متسقة (coherent)',
+                                                'نفس التردد',
+                                                'فرق الطور ثابت',
+                                                'نفس السعة تقريباً'
+                                            ]},
+                                            { title: 'التداخل البناء', type: 'formula', content: 'd·sin(θ) = m·λ (m = 0, 1, 2, ...)' },
+                                            { title: 'التداخل الهدام', type: 'formula', content: 'd·sin(θ) = (m + ½)·λ' },
+                                            { title: 'تجربة شقي يونغ', type: 'bullets', content: [
+                                                'أثبتت الطبيعة الموجية للضوء',
+                                                'تنتج أهداب مضيئة ومظلمة',
+                                                'المسافة بين الأهداب تعتمد على الطول الموجي'
+                                            ]}
+                                        ]
+                                    }
+                                },
+                                {
+                                    id: 2,
+                                    title: 'الدرس 2: الحيود',
+                                    icon: '🌀',
+                                    duration: '55 دقيقة',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-6.2/',
+                                    lessonTitle: '📖 شرح الدرس',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-6.2-exam/',
+                                    examTitle: '📝 ابدأ الاختبار',
+                                    content: {
+                                        intro: 'الحيود هو انحناء الموجات حول الحواجز أو عند مرورها من فتحات ضيقة. هذه الظاهرة تثبت الطبيعة الموجية للضوء.',
+                                        sections: [
+                                            { title: 'حيود الشق المفرد', type: 'formula', content: 'a·sin(θ) = m·λ' },
+                                            { title: 'شبكة الحيود', type: 'formula', content: 'd·sin(θ) = m·λ' },
+                                            { title: 'الحيود البناء', type: 'bullets', content: [
+                                                'يحدث عندما يكون فرق المسار = عدد صحيح من الأطوال الموجية',
+                                                'ينتج مناطق مضيئة',
+                                                'm = 0, ±1, ±2, ...'
+                                            ]},
+                                            { title: 'تطبيقات الحيود', type: 'bullets', content: [
+                                                'الأقراص المضغوطة (CD/DVD)',
+                                                'مطياف الحيود لتحليل الضوء',
+                                                'دراسة البنية البلورية للمواد',
+                                                'ألوان أجنحة الفراشات'
+                                            ]}
+                                        ]
+                                    }
+                                },
+                                {
+                                    id: 3,
+                                    title: 'الدرس 3: التفرغ اللوني في الفراشات والعجلة',
+                                    icon: '🦋',
+                                    duration: '45 دقيقة',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-6.3/',
+                                    lessonTitle: '📖 شرح الدرس',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Bri-Ar-Phy-T3-6.3-exam/',
+                                    examTitle: '📝 ابدأ الاختبار',
+                                    content: {
+                                        intro: 'الألوان التي نراها في أجنحة الفراشات والعجلات ليست بسبب الأصباغ فقط، بل بسبب التداخل والحيود في البنية المجهرية.',
+                                        sections: [
+                                            { title: 'الألوان البنيوية', type: 'bullets', content: [
+                                                'تنتج عن التداخل في الطبقات الرقيقة',
+                                                'تتغير مع زاوية الرؤية',
+                                                'أكثر لمعاناً من الألوان الصبغية'
+                                            ]},
+                                            { title: 'أجنحة الفراشات', type: 'bullets', content: [
+                                                'تحتوي على حراشف مجهرية',
+                                                'الطبقات المتعددة تسبب التداخل',
+                                                'كل نوع له بنية فريدة'
+                                            ]},
+                                            { title: 'العجلات', type: 'bullets', content: [
+                                                'الطبقات الرقيقة من الزيت على الماء',
+                                                'تنتج ألوان قوس قزح',
+                                                'سمك الطبقة يحدد اللون الظاهر'
+                                            ]},
+                                            { title: 'التطبيقات التكنولوجية', type: 'bullets', content: [
+                                                'الطلاء المضاد للانعكاس',
+                                                'المرايا العاكسة الانتقائية',
+                                                'أجهزة الاستشعار البصرية'
+                                            ]}
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                'physics-10-inspire-3': {
+                    isEnglish: true,
+                    units: [
+                        {
+                            id: 1,
+                            name: 'Unit 5: Refraction and Lenses',
+                            icon: '🔍',
+                            color: 'from-blue-500 to-cyan-600',
+                            description: 'Study of light refraction, convex and concave lenses, and practical applications of lenses',
+                            lessons: [
+                                {
+                                    id: 1,
+                                    title: 'Lesson 1: Refraction of Light',
+                                    icon: '💡',
+                                    duration: '50 minutes',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-5.1/',
+                                    lessonTitle: '📖 Lesson Explanation',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-5.1-exam/',
+                                    examTitle: '📝 Take the Quiz',
+                                    content: {
+                                        intro: 'Light refracts when it passes from one transparent medium to another due to the change in its speed. This lesson explains the laws of refraction and refractive index.',
+                                        sections: [
+                                            { title: "📋 Snell's Law of Refraction", type: 'formula', content: 'n₁·sin(θ₁) = n₂·sin(θ₂)' },
+                                            { title: 'Refractive Index', type: 'formula', content: 'n = c/v' },
+                                            { title: 'Key Concepts', type: 'bullets', content: [
+                                                'Refraction: Bending of light when passing between two different media',
+                                                'Incident ray: The ray coming from the source',
+                                                'Refracted ray: The ray after refraction',
+                                                'Critical angle: The angle at which total internal reflection occurs'
+                                            ]},
+                                            { title: 'Practical Applications', type: 'bullets', content: [
+                                                'A pencil appearing bent in water',
+                                                'Formation of rainbows',
+                                                'Operation of lenses and prisms'
+                                            ]}
+                                        ]
+                                    }
+                                },
+                                {
+                                    id: 2,
+                                    title: 'Lesson 2: Convex and Concave Lenses',
+                                    icon: '🔍',
+                                    duration: '55 minutes',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-5.2/',
+                                    lessonTitle: '📖 Lesson Explanation',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-5.2-exam/',
+                                    examTitle: '📝 Take the Quiz',
+                                    content: {
+                                        intro: 'Lenses are optical devices that refract light to form images. There are two main types: convex (converging) lenses and concave (diverging) lenses.',
+                                        sections: [
+                                            { title: 'Thin Lens Equation', type: 'formula', content: '1/f = 1/dₒ + 1/dᵢ' },
+                                            { title: 'Magnification', type: 'formula', content: 'M = hᵢ/hₒ = -dᵢ/dₒ' },
+                                            { title: 'Convex Lens (Converging)', type: 'bullets', content: [
+                                                'Thicker in the middle',
+                                                'Converges light rays',
+                                                'Focal length is positive (+)',
+                                                'Used in: eyeglasses, magnifying glasses'
+                                            ]},
+                                            { title: 'Concave Lens (Diverging)', type: 'bullets', content: [
+                                                'Thinner in the middle',
+                                                'Diverges light rays',
+                                                'Focal length is negative (-)',
+                                                'Used in: correcting nearsightedness'
+                                            ]}
+                                        ]
+                                    }
+                                },
+                                {
+                                    id: 3,
+                                    title: 'Lesson 3: Applications of Lenses',
+                                    icon: '🔬',
+                                    duration: '50 minutes',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-5.3/',
+                                    lessonTitle: '📖 Lesson Explanation',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-5.3-exam/',
+                                    examTitle: '📝 Take the Quiz',
+                                    content: {
+                                        intro: 'Lenses have numerous applications in our daily lives, from eyeglasses to telescopes and microscopes.',
+                                        sections: [
+                                            { title: 'The Human Eye', type: 'bullets', content: [
+                                                'The eye contains a natural convex lens',
+                                                'Retina: where the image is formed',
+                                                'Nearsightedness: image forms in front of retina',
+                                                'Farsightedness: image forms behind retina'
+                                            ]},
+                                            { title: 'Magnifying Glass', type: 'formula', content: 'M = 25cm/f + 1' },
+                                            { title: 'Compound Microscope', type: 'bullets', content: [
+                                                'Consists of two lenses: objective and eyepiece',
+                                                'Total magnification = objective magnification × eyepiece magnification',
+                                                'Used to view very small objects'
+                                            ]},
+                                            { title: 'Telescope', type: 'bullets', content: [
+                                                'Used to view distant objects',
+                                                'Uses two lenses or a mirror',
+                                                'Astronomical telescopes study the universe'
+                                            ]}
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            id: 2,
+                            name: 'Unit 6: Interference and Diffraction',
+                            icon: '🌈',
+                            color: 'from-purple-500 to-pink-600',
+                            description: 'Study of light wave properties: interference and diffraction and their applications',
+                            lessons: [
+                                {
+                                    id: 1,
+                                    title: 'Lesson 1: Interference',
+                                    icon: '〰️',
+                                    duration: '50 minutes',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-6.1/',
+                                    lessonTitle: '📖 Lesson Explanation',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-6.1-exam/',
+                                    examTitle: '📝 Take the Quiz',
+                                    content: {
+                                        intro: 'Interference is a wave phenomenon that occurs when two light waves meet at the same point, producing bright and dark regions.',
+                                        sections: [
+                                            { title: 'Conditions for Interference', type: 'bullets', content: [
+                                                'Waves must be coherent',
+                                                'Same frequency',
+                                                'Constant phase difference',
+                                                'Approximately equal amplitudes'
+                                            ]},
+                                            { title: 'Constructive Interference', type: 'formula', content: 'd·sin(θ) = m·λ (m = 0, 1, 2, ...)' },
+                                            { title: 'Destructive Interference', type: 'formula', content: 'd·sin(θ) = (m + ½)·λ' },
+                                            { title: "Young's Double-Slit Experiment", type: 'bullets', content: [
+                                                'Proved the wave nature of light',
+                                                'Produces bright and dark fringes',
+                                                'Fringe spacing depends on wavelength'
+                                            ]}
+                                        ]
+                                    }
+                                },
+                                {
+                                    id: 2,
+                                    title: 'Lesson 2: Diffraction',
+                                    icon: '🌀',
+                                    duration: '55 minutes',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-6.2/',
+                                    lessonTitle: '📖 Lesson Explanation',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-6.2-exam/',
+                                    examTitle: '📝 Take the Quiz',
+                                    content: {
+                                        intro: 'Diffraction is the bending of waves around obstacles or when passing through narrow openings. This phenomenon proves the wave nature of light.',
+                                        sections: [
+                                            { title: 'Single-Slit Diffraction', type: 'formula', content: 'a·sin(θ) = m·λ' },
+                                            { title: 'Diffraction Grating', type: 'formula', content: 'd·sin(θ) = m·λ' },
+                                            { title: 'Constructive Diffraction', type: 'bullets', content: [
+                                                'Occurs when path difference = integer number of wavelengths',
+                                                'Produces bright regions',
+                                                'm = 0, ±1, ±2, ...'
+                                            ]},
+                                            { title: 'Applications of Diffraction', type: 'bullets', content: [
+                                                'Compact discs (CD/DVD)',
+                                                'Diffraction spectrometer for light analysis',
+                                                'Studying crystal structure of materials',
+                                                'Colors of butterfly wings'
+                                            ]}
+                                        ]
+                                    }
+                                },
+                                {
+                                    id: 3,
+                                    title: 'Lesson 3: Color Dispersion in Butterflies and Wheels',
+                                    icon: '🦋',
+                                    duration: '45 minutes',
+                                    lessonUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-6.3/',
+                                    lessonTitle: '📖 Lesson Explanation',
+                                    examUrl: 'https://hesham-afandi.github.io/10Adv-Ins-Phy-T3-6.3-exam/',
+                                    examTitle: '📝 Take the Quiz',
+                                    content: {
+                                        intro: 'The colors we see in butterfly wings and wheels are not only due to pigments, but also due to interference and diffraction in microscopic structures.',
+                                        sections: [
+                                            { title: 'Structural Colors', type: 'bullets', content: [
+                                                'Produced by interference in thin layers',
+                                                'Change with viewing angle',
+                                                'More brilliant than pigment colors'
+                                            ]},
+                                            { title: 'Butterfly Wings', type: 'bullets', content: [
+                                                'Contain microscopic scales',
+                                                'Multiple layers cause interference',
+                                                'Each species has unique structure'
+                                            ]},
+                                            { title: 'Wheels', type: 'bullets', content: [
+                                                'Thin layers of oil on water',
+                                                'Produce rainbow colors',
+                                                'Layer thickness determines visible color'
+                                            ]},
+                                            { title: 'Technological Applications', type: 'bullets', content: [
+                                                'Anti-reflective coatings',
+                                                'Selective reflective mirrors',
+                                                'Optical sensors'
+                                            ]}
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
     'physics-9-inspire-3': {
     isEnglish: true,
     units: [
