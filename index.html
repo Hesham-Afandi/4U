@@ -12,7 +12,25 @@
 <script>
 tailwind.config = {
 darkMode: 'class',
-theme: { extend: { fontFamily: { cairo: ['Cairo', 'sans-serif'] } } }
+theme: { extend: { fontFamily: { cairo: ['Cairo', 'sans-serif'] },
+animation: {
+'float': 'float 6s ease-in-out infinite',
+'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+'gradient': 'gradient 15s ease infinite',
+'bounce-slow': 'bounce 3s infinite',
+},
+keyframes: {
+float: {
+'0%, 100%': { transform: 'translateY(0)' },
+'50%': { transform: 'translateY(-20px)' },
+},
+gradient: {
+'0%, 100%': { backgroundPosition: '0% 50%' },
+'50%': { backgroundPosition: '100% 50%' },
+}
+}
+}
+}
 }
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -186,6 +204,43 @@ mark { background-color: #fbbf24; color: #000; padding: 0 2px; border-radius: 2p
 
 #main-content.visible {
     opacity: 1;
+}
+
+/* ═══════════════════════════════════════════════════ */
+/* NEW HOME PAGE STYLES */
+/* ═══════════════════════════════════════════════════ */
+.animated-bg {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    animation: float 10s infinite;
+}
+
+.glow {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
+                0 0 40px rgba(255, 255, 255, 0.3),
+                0 0 60px rgba(255, 255, 255, 0.1);
+}
+
+.term-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.term-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 </style>
 </head>
@@ -423,6 +478,7 @@ subjects: [
 { id: 'chemistry', name: 'الكيمياء', icon: '🧪' },
 { id: 'biology', name: 'الأحياء', icon: '🧬' }
 ],
+
 curriculum: {
     'physics-9-inspire-3': {
     isEnglish: true,
