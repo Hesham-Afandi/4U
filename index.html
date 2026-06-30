@@ -478,6 +478,911 @@ subjects: [
 { id: 'biology', name: 'الأحياء', icon: '🧬' }
 ],
 curriculum: {
+  'math-12-bridge-1': {
+isEnglish: false,
+units: [
+// ═══════════════════════════════════════════════════
+// UNIT 1: TANGENTS & LIMITS (الوحدة الأولى: المماسات والنهايات)
+// ═══════════════════════════════════════════════════
+{
+id: 1,
+name: 'الوحدة الأولى: المماسات والنهايات',
+icon: '📈',
+color: 'from-blue-500 to-indigo-600',
+description: 'دراسة المماسات وطول المنحنى، مفهوم النهايات وحسابها، الاتصال، النهايات التي تتضمن اللانهاية، والتعريف الرسمي للنهاية',
+lessons: [
+{
+id: 1,
+title: 'الدرس 1: المماسات وطول المنحنى',
+icon: '📐',
+duration: '50 دقيقة',
+lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-1.1/',
+examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-1.1-exam/',
+lessonTitle: '📖 شرح الدرس',
+examTitle: '📝 ابدأ الاختبار',
+content: {
+intro: 'المماس هو المستقيم الذي يمس المنحنى في نقطة واحدة فقط. نستخدم النهايات لإيجاد ميل المماس عند أي نقطة على المنحنى.',
+sections: [
+{ title: 'ميل المماس', type: 'formula', content: 'm = lim(h→0) [f(x+h) - f(x)]/h' },
+{ title: 'معادلة المماس', type: 'formula', content: 'y - y₁ = m(x - x₁)' },
+{ title: 'طول القوس', type: 'formula', content: 'L = ∫√(1 + (dy/dx)²) dx' },
+{ title: 'المفاهيم الأساسية', type: 'bullets', content: [
+'المماس يمس المنحنى في نقطة واحدة',
+'ميل المماس = مشتقة الدالة عند النقطة',
+'طول القوس يُحسب باستخدام التكامل'
+]}
+]
+}
+},
+{
+id: 2,
+title: 'الدرس 2: مفهوم النهاية',
+icon: '🎯',
+duration: '50 دقيقة',
+lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-1.2/',
+examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-1.2-exam/',
+lessonTitle: '📖 شرح الدرس',
+examTitle: '📝 ابدأ الاختبار',
+content: {
+intro: 'النهاية تصف سلوك الدالة عندما تقترب x من قيمة معينة، حتى لو لم تكن الدالة معرفة عند هذه القيمة.',
+sections: [
+{ title: 'تعريف النهاية', type: 'formula', content: 'lim(x→a) f(x) = L' },
+{ title: 'النهاية من اليمين', type: 'formula', content: 'lim(x→a⁺) f(x)' },
+{ title: 'النهاية من اليسار', type: 'formula', content: 'lim(x→a⁻) f(x)' },
+{ title: 'شروط وجود النهاية', type: 'bullets', content: [
+'النهاية من اليمين = النهاية من اليسار',
+'النهاية يجب أن تكون قيمة محددة',
+'قد توجد النهاية حتى لو لم تكن الدالة معرفة عند النقطة'
+]}
+]
+}
+},
+{
+id: 3,
+title: 'الدرس 3: حساب النهايات',
+icon: '🔢',
+duration: '55 دقيقة',
+lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-1.3/',
+examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-1.3-exam/',
+lessonTitle: '📖 شرح الدرس',
+examTitle: '📝 ابدأ الاختبار',
+content: {
+intro: 'نتعلم طرق مختلفة لحساب النهايات بما في ذلك التعويض المباشر، التحليل، والضرب في المرافق.',
+sections: [
+{ title: 'التعويض المباشر', type: 'text', content: 'إذا كانت الدالة متصلة، نعوض مباشرة بالقيمة' },
+{ title: 'التحليل', type: 'formula', content: 'lim(x→2) (x²-4)/(x-2) = lim(x→2) (x+2) = 4' },
+{ title: 'الضرب في المرافق', type: 'formula', content: 'lim(x→0) (√(x+1)-1)/x × (√(x+1)+1)/(√(x+1)+1)' },
+{ title: 'خصائص النهايات', type: 'bullets', content: [
+'lim(f ± g) = lim f ± lim g',
+'lim(f × g) = lim f × lim g',
+'lim(f/g) = lim f / lim g (إذا كان lim g ≠ 0)',
+'lim(c × f) = c × lim f'
+]}
+]
+}
+},
+{
+id: 4,
+title: 'الدرس 4: الاتصال ونتائجه',
+icon: '🔗',
+duration: '50 دقيقة',
+lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-1.4/',
+examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-1.4-exam/',
+lessonTitle: '📖 شرح الدرس',
+examTitle: '📝 ابدأ الاختبار',
+content: {
+intro: 'الدالة متصلة عند نقطة إذا كانت النهاية عندها تساوي قيمة الدالة. الاتصال يعني عدم وجود انقطاعات في المنحنى.',
+sections: [
+{ title: 'شروط الاتصال', type: 'formula', content: 'lim(x→a) f(x) = f(a)' },
+{ title: 'أنواع الانقطاع', type: 'bullets', content: [
+'انقطاع قابل للإزالة (ثقب)',
+'انقطاع لا نهائي (خط تقارب رأسي)',
+'انقطاع قفزي (فرق في القيم)'
+]},
+{ title: 'مبرهنة القيمة المتوسطة', type: 'text', content: 'إذا كانت f متصلة على [a,b]، فإنها تأخذ كل قيمة بين f(a) و f(b)' },
+{ title: 'خصائص الدوال المتصلة', type: 'bullets', content: [
+'مجموع دوال متصلة = دالة متصلة',
+'حاصل ضرب دوال متصلة = دالة متصلة',
+'مركب دوال متصلة = دالة متصلة'
+]}
+]
+}
+},
+{
+id: 5,
+title: 'الدرس 5: النهايات التي تتضمن اللانهاية',
+icon: '∞',
+duration: '55 دقيقة',
+lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-1.5/',
+examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-1.5-exam/',
+lessonTitle: '📖 شرح الدرس',
+examTitle: '📝 ابدأ الاختبار',
+content: {
+intro: 'ندرس سلوك الدوال عندما تؤول x إلى اللانهاية أو عندما تؤول الدالة إلى اللانهاية، ونحدد خطوط التقارب.',
+sections: [
+{ title: 'النهاية عند اللانهاية', type: 'formula', content: 'lim(x→∞) f(x) = L' },
+{ title: 'خط التقارب الأفقي', type: 'formula', content: 'y = L إذا كانت lim(x→±∞) f(x) = L' },
+{ title: 'خط التقارب الرأسي', type: 'formula', content: 'x = a إذا كانت lim(x→a) f(x) = ±∞' },
+{ title: 'حساب نهايات اللانهاية', type: 'bullets', content: [
+'اقسم البسط والمقام على أعلى قوة لـ x',
+'استخدم خصائص 1/∞ = 0',
+'حدد الدرجة الأعلى في البسط والمقام'
+]}
+]
+}
+},
+{
+id: 6,
+title: 'الدرس 6: التعريف الرسمي للنهاية',
+icon: '📋',
+duration: '50 دقيقة',
+lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-1.6/',
+examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-1.6-exam/',
+lessonTitle: '📖 شرح الدرس',
+examTitle: '📝 ابدأ الاختبار',
+content: {
+intro: 'التعريف الدقيق (ε-δ) للنهاية يعطي وصفاً رياضياً دقيقاً لمفهوم الاقتراب.',
+sections: [
+{ title: 'تعريف ε-δ', type: 'formula', content: 'lim(x→a) f(x) = L إذا كان لكل ε > 0 يوجد δ > 0 بحيث: إذا 0 < |x-a| < δ فإن |f(x)-L| < ε' },
+{ title: 'المعنى الهندسي', type: 'bullets', content: [
+'ε تمثل المسافة الرأسية المسموح بها من L',
+'δ تمثل المسافة الأفقية المسموح بها من a',
+'يمكن جعل f(x) قريبة من L بقدر نريد بجعل x قريبة من a'
+]},
+{ title: 'إثبات النهايات', type: 'text', content: 'نستخدم التعريف لإثبات صحة النهايات بشكل رياضي دقيق' }
+]
+}
+},
+{
+id: 7,
+title: 'الدرس 7: النهايات وأخطاء فقدان الدالة',
+icon: '⚠️',
+duration: '50 دقيقة',
+lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-1.7/',
+examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-1.7-exam/',
+lessonTitle: '📖 شرح الدرس',
+examTitle: '📝 ابدأ الاختبار',
+content: {
+intro: 'ندرس الحالات الخاصة التي تفقد فيها الدالة تعريفها وكيفية التعامل معها باستخدام النهايات.',
+sections: [
+{ title: 'الصيغ غير المعينة', type: 'bullets', content: [
+'0/0 - الصيغة الأكثر شيوعاً',
+'∞/∞ - تحتاج تبسيط',
+'0 × ∞ - تحتاج إعادة ترتيب',
+'∞ - ∞ - تحتاج توحيد مقامات'
+]},
+{ title: 'قاعدة لوبيتال', type: 'formula', content: 'lim(x→a) f(x)/g(x) = lim(x→a) f\'(x)/g\'(x) (للصيغ 0/0 أو ∞/∞)' },
+{ title: 'التعامل مع الأخطاء', type: 'bullets', content: [
+'التحليل لإزالة العامل المشترك',
+'الضرب في المرافق',
+'استخدام المتطابقات المثلثية',
+'التبسيط الجبري'
+]}
+]
+}
+}
+]
+},
+// ═══════════════════════════════════════════════════
+// UNIT 2: DIFFERENTIATION (الوحدة الثانية: التفاضل)
+// ═══════════════════════════════════════════════════
+{
+id: 2,
+name: 'الوحدة الثانية: التفاضل',
+icon: '∂',
+color: 'from-purple-500 to-pink-600',
+description: 'دراسة المشتقات، قواعد الاشتقاق المختلفة، المشتقات الضمنية، الدوال المثلثية المعكوسة، ودوال القطع الزائد',
+lessons: [
+{
+id: 1,
+title: 'الدرس 1: المماسات والسرعة المتجهة',
+icon: '🚀',
+duration: '55 دقيقة',
+lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-2.1/',
+examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-2.1-exam/',
+lessonTitle: '📖 شرح الدرس',
+examTitle: '📝 ابدأ الاختبار',
+content: {
+intro: 'المشتقة تمثل ميل المماس للمنحنى، وفي الفيزياء تمثل السرعة المتجهة اللحظية.',
+sections: [
+{ title: 'السرعة المتجهة المتوسطة', type: 'formula', content: 'v_avg = Δs/Δt' },
+{ title: 'السرعة المتجهة اللحظية', type: 'formula', content: 'v = lim(Δt→0) Δs/Δt = ds/dt' },
+{ title: 'التسارع', type: 'formula', content: 'a = dv/dt = d²s/dt²' },
+{ title: 'التطبيقات', type: 'bullets', content: [
+'إيجاد السرعة من دالة المسافة',
+'إيجاد التسارع من دالة السرعة',
+'تحليل حركة الأجسام'
+]}
+]
+}
+},
+{
+id: 2,
+title: 'الدرس 2: الاشتقاق',
+icon: 'd/dx',
+duration: '50 دقيقة',
+lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-2.2/',
+examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-2.2-exam/',
+lessonTitle: '📖 شرح الدرس',
+examTitle: '📝 ابدأ الاختبار',
+content: {
+intro: 'الاشتقاق هو عملية إيجاد المشتقة التي تمثل معدل التغير اللحظي للدالة.',
+sections: [
+{ title: 'تعريف المشتقة', type: 'formula', content: "f'(x) = lim(h→0) [f(x+h) - f(x)]/h" },
+{ title: 'الرموز', type: 'bullets', content: [
+"f'(x) - رمز لاغرانج",
+'dy/dx - رمز لايبنتز',
+'Dₓf - رمز المشغل'
+]},
+{ title: 'التفسير الهندسي', type: 'text', content: 'المشتقة = ميل المماس للمنحنى عند النقطة' },
+{ title: 'التفسير الفيزيائي', type: 'text', content: 'المشتقة = معدل التغير اللحظي' }
+]
+}
+},
+{
+id: 3,
+title: 'الدرس 3: حساب المشتقات (قاعدة القوة)',
+icon: 'xⁿ',
+duration: '50 دقيقة',
+lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-2.3/',
+examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-2.3-exam/',
+lessonTitle: '📖 شرح الدرس',
+examTitle: '📝 ابدأ الاختبار',
+content: {
+intro: 'قاعدة القوة هي أبسط وأهم قاعدة في الاشتقاق.',
+sections: [
+{ title: 'قاعدة القوة', type: 'formula', content: 'd/dx(xⁿ) = n·xⁿ⁻¹' },
+{ title: 'مشتقة الثابت', type: 'formula', content: 'd/dx(c) = 0' },
+{ title: 'مشتقة x', type: 'formula', content: 'd/dx(x) = 1' },
+{ title: 'قاعدة المضاعف الثابت', type: 'formula', content: 'd/dx[c·f(x)] = c·f\'(x)' },
+{ title: 'قاعدة المجموع', type: 'formula', content: 'd/dx[f(x) ± g(x)] = f\'(x) ± g\'(x)' },
+{ title: 'أمثلة', type: 'bullets', content: [
+'d/dx(x³) = 3x²',
+'d/dx(5x⁴) = 20x³',
+'d/dx(x² + 3x - 5) = 2x + 3'
+]}
+]
+}
+},
+{
+id: 4,
+title: 'الدرس 4: قواعد الضرب والقسمة',
+icon: '×÷',
+duration: '55 دقيقة',
+lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-2.4/',
+examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-2.4-exam/',
+lessonTitle: '📖 شرح الدرس',
+examTitle: '📝 ابدأ الاختبار',
+content: {
+intro: 'عند اشتقاق حاصل ضرب أو قسمة دالتين، نحتاج قواعد خاصة.',
+sections: [
+{ title: 'قاعدة الضرب', type: 'formula', content: 'd/dx[f·g] = f\'·g + f·g\'' },
+{ title: 'قاعدة القسمة', type: 'formula', content: 'd/dx[f/g] = (f\'·g - f·g\')/g²' },
+{ title: 'تذكر قاعدة الضرب', type: 'text', content: '"الأولى مشتقة الثانية + الثانية مشتقة الأولى"' },
+{ title: 'تذكر قاعدة القسمة', type: 'text', content: '"المقام × مشتقة البسط - البسط × مشتقة المقام، الكل على مقام تربيع"' },
+{ title: 'أمثلة', type: 'bullets', content: [
+'d/dx(x²·sin x) = 2x·sin x + x²·cos x',
+'d/dx(x/cos x) = (cos x + x·sin x)/cos²x'
+]}
+]
+}
+},
+{
+id: 5,
+title: 'الدرس 5: قاعدة السلسلة',
+icon: '⛓️',
+duration: '55 دقيقة',
+lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-2.5/',
+examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-2.5-exam/',
+lessonTitle: '📖 شرح الدرس',
+examTitle: '📝 ابدأ الاختبار',
+content: {
+intro: 'قاعدة السلسلة تُستخدم لاشتقاق الدوال المركبة (دالة داخل دالة).',
+sections: [
+{ title: 'قاعدة السلسلة', type: 'formula', content: 'd/dx[f(g(x))] = f\'(g(x))·g\'(x)' },
+{ title: 'بالرموز', type: 'formula', content: 'dy/dx = dy/du · du/dx' },
+{ title: 'الطريقة', type: 'bullets', content: [
+'حدد الدالة الخارجية والداخلية',
+'اشتق الدالة الخارجية (مع الإبقاء على الداخلية)',
+'اضرب في مشتقة الدالة الداخلية'
+]},
+{ title: 'أمثلة', type: 'bullets', content: [
+'d/dx(sin(x²)) = cos(x²)·2x',
+'d/dx((3x+1)⁵) = 5(3x+1)⁴·3 = 15(3x+1)⁴'
+]}
+]
+}
+},
+{
+id: 6,
+title: 'الدرس 6: مشتقات الدوال المثلثية',
+icon: 'sin/cos',
+duration: '50 دقيقة',
+lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-2.6/',
+examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-2.6-exam/',
+lessonTitle: '📖 شرح الدرس',
+examTitle: '📝 ابدأ الاختبار',
+content: {
+intro: 'مشتقات الدوال المثلثية الأساسية لها صيغ محددة يجب حفظها.',
+sections: [
+{ title: 'المشتقات الأساسية', type: 'bullets', content: [
+'d/dx(sin x) = cos x',
+'d/dx(cos x) = -sin x',
+'d/dx(tan x) = sec²x',
+'d/dx(cot x) = -csc²x',
+'d/dx(sec x) = sec x·tan x',
+'d/dx(csc x) = -csc x·cot x'
+]},
+{ title: 'مع قاعدة السلسلة', type: 'formula', content: 'd/dx(sin u) = cos u · du/dx' },
+{ title: 'ملاحظة', type: 'text', content: 'مشتقات cos و cot و csc تحمل إشارة سالبة' }
+]
+}
+},
+{
+id: 7,
+title: 'الدرس 7: اشتقاق الدوال الأسية واللوغاريتمية',
+icon: 'eˣ/ln x',
+duration: '55 دقيقة',
+lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-2.7/',
+examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-2.7-exam/',
+lessonTitle: '📖 شرح الدرس',
+examTitle: '📝 ابدأ الاختبار',
+content: {
+intro: 'الدوال الأسية واللوغاريتمية لها مشتقات فريدة ومهمة.',
+sections: [
+{ title: 'الدالة الأسية', type: 'formula', content: 'd/dx(eˣ) = eˣ' },
+{ title: 'الدالة الأسية العامة', type: 'formula', content: 'd/dx(aˣ) = aˣ·ln(a)' },
+{ title: 'اللوغاريتم الطبيعي', type: 'formula', content: 'd/dx(ln x) = 1/x' },
+{ title: 'اللوغاريتم العام', type: 'formula', content: 'd/dx(logₐx) = 1/(x·ln a)' },
+{ title: 'مع قاعدة السلسلة', type: 'bullets', content: [
+'d/dx(eᵘ) = eᵘ · du/dx',
+'d/dx(ln u) = (1/u) · du/dx'
+]},
+{ title: 'ملاحظة', type: 'text', content: 'مشتقة eˣ هي eˣ نفسها - الدالة الوحيدة التي تساوي مشتقتها!' }
+]
+}
+},
+{
+id: 8,
+title: 'الدرس 8: الاشتقاق الضمني والدوال المثلثية المعكوسة',
+icon: '↔️',
+duration: '60 دقيقة',
+lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-2.8/',
+examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-2.8-exam/',
+lessonTitle: '📖 شرح الدرس',
+examTitle: '📝 ابدأ الاختبار',
+content: {
+intro: 'الاشتقاق الضمني يُستخدم عندما لا يمكن عزل y، والدوال المثلثية المعكوسة لها مشتقات خاصة.',
+sections: [
+{ title: 'الاشتقاق الضمني', type: 'bullets', content: [
+'اشتق كلا الطرفين بالنسبة لـ x',
+'عند اشتقاق y، اضرب في dy/dx',
+'اجمع حدود dy/dx في طرف',
+'حل لإيجاد dy/dx'
+]},
+{ title: 'مشتقات الدوال المثلثية المعكوسة', type: 'bullets', content: [
+'d/dx(sin⁻¹x) = 1/√(1-x²)',
+'d/dx(cos⁻¹x) = -1/√(1-x²)',
+'d/dx(tan⁻¹x) = 1/(1+x²)',
+'d/dx(cot⁻¹x) = -1/(1+x²)'
+]},
+{ title: 'مثال ضمني', type: 'formula', content: 'x² + y² = 25 → 2x + 2y(dy/dx) = 0 → dy/dx = -x/y' }
+]
+}
+},
+{
+id: 9,
+title: 'الدرس 9: دوال القطع الزائد',
+icon: 'sinh/cosh',
+duration: '50 دقيقة',
+lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-2.9/',
+examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-2.9-exam/',
+lessonTitle: '📖 شرح الدرس',
+examTitle: '📝 ابدأ الاختبار',
+content: {
+intro: 'دوال القطع الزائد (Hyperbolic Functions) تشبه الدوال المثلثية ولكن لها خصائص مختلفة.',
+sections: [
+{ title: 'التعريفات', type: 'bullets', content: [
+'sinh x = (eˣ - e⁻ˣ)/2',
+'cosh x = (eˣ + e⁻ˣ)/2',
+'tanh x = sinh x / cosh x'
+]},
+{ title: 'المشتقات', type: 'bullets', content: [
+'d/dx(sinh x) = cosh x',
+'d/dx(cosh x) = sinh x',
+'d/dx(tanh x) = sech²x'
+]},
+{ title: 'المتطابقات', type: 'bullets', content: [
+'cosh²x - sinh²x = 1',
+'sinh(x±y) = sinh x cosh y ± cosh x sinh y',
+'cosh(x±y) = cosh x cosh y ± sinh x sinh y'
+]}
+]
+}
+},
+{
+id: 10,
+title: 'الدرس 10: نظرية القيمة المتوسطة',
+icon: '📊',
+duration: '55 دقيقة',
+lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-2.10/',
+examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-math-T1-2.10-exam/',
+lessonTitle: '📖 شرح الدرس',
+examTitle: '📝 ابدأ الاختبار',
+content: {
+intro: 'نظرية القيمة المتوسطة تربط بين متوسط معدل التغير ومعدل التغير اللحظي.',
+sections: [
+{ title: 'نظرية رول', type: 'formula', content: 'إذا كانت f متصلة على [a,b]، قابلة للاشتقاق على (a,b)، و f(a)=f(b)، فإن هناك c في (a,b) حيث f\'(c)=0' },
+{ title: 'نظرية القيمة المتوسطة', type: 'formula', content: 'إذا كانت f متصلة على [a,b] وقابلة للاشتقاق على (a,b)، فإن هناك c في (a,b) حيث: f\'(c) = [f(b)-f(a)]/(b-a)' },
+{ title: 'التفسير الهندسي', type: 'text', content: 'يوجد نقطة يكون عندها ميل المماس مساوياً لميل القاطع' },
+{ title: 'التطبيقات', type: 'bullets', content: [
+'إثبات وجود جذور',
+'تحليل سلوك الدوال',
+'إثبات المتباينات'
+]}
+]
+}
+}
+]
+}
+]
+},
+// ═══════════════════════════════════════════════════════════
+// MATH 12 INSPIRE TERM 1 - الصف 12 متقدم انسباير الفصل الأول (English)
+// ═══════════════════════════════════════════════════════════
+'math-12-inspire-1': {
+isEnglish: true,
+units: [
+// ═══════════════════════════════════════════════════
+// UNIT 1: TANGENTS & LIMITS
+// ═══════════════════════════════════════════════════
+{
+id: 1,
+name: 'Unit 1: Tangents & Limits',
+icon: '📈',
+color: 'from-blue-500 to-indigo-600',
+description: 'Study of tangents and arc length, limit concept and calculation, continuity, limits involving infinity, and formal definition of limits',
+lessons: [
+{
+id: 1,
+title: 'Lesson 1: Tangents and Arc Length',
+icon: '📐',
+duration: '50 min',
+lessonUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-1.1/',
+examUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-1.1-exam/',
+lessonTitle: '📖 Lesson Explanation',
+examTitle: '📝 Take the Quiz',
+content: {
+intro: 'A tangent is a line that touches a curve at exactly one point. We use limits to find the slope of the tangent at any point on the curve.',
+sections: [
+{ title: 'Slope of Tangent', type: 'formula', content: 'm = lim(h→0) [f(x+h) - f(x)]/h' },
+{ title: 'Equation of Tangent', type: 'formula', content: 'y - y₁ = m(x - x₁)' },
+{ title: 'Arc Length', type: 'formula', content: 'L = ∫√(1 + (dy/dx)²) dx' },
+{ title: 'Key Concepts', type: 'bullets', content: [
+'Tangent touches curve at one point',
+'Slope of tangent = derivative at that point',
+'Arc length calculated using integration'
+]}
+]
+}
+},
+{
+id: 2,
+title: 'Lesson 2: Limit Concept',
+icon: '🎯',
+duration: '50 min',
+lessonUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-1.2/',
+examUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-1.2-exam/',
+lessonTitle: '📖 Lesson Explanation',
+examTitle: '📝 Take the Quiz',
+content: {
+intro: 'A limit describes the behavior of a function as x approaches a certain value, even if the function is not defined at that value.',
+sections: [
+{ title: 'Limit Definition', type: 'formula', content: 'lim(x→a) f(x) = L' },
+{ title: 'Right-hand Limit', type: 'formula', content: 'lim(x→a⁺) f(x)' },
+{ title: 'Left-hand Limit', type: 'formula', content: 'lim(x→a⁻) f(x)' },
+{ title: 'Conditions for Limit', type: 'bullets', content: [
+'Right-hand limit = Left-hand limit',
+'Limit must be a definite value',
+'Limit may exist even if function undefined at point'
+]}
+]
+}
+},
+{
+id: 3,
+title: 'Lesson 3: Calculating Limits',
+icon: '🔢',
+duration: '55 min',
+lessonUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-1.3/',
+examUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-1.3-exam/',
+lessonTitle: '📖 Lesson Explanation',
+examTitle: '📝 Take the Quiz',
+content: {
+intro: 'We learn different methods to calculate limits including direct substitution, factoring, and multiplying by conjugate.',
+sections: [
+{ title: 'Direct Substitution', type: 'text', content: 'If function is continuous, substitute directly' },
+{ title: 'Factoring', type: 'formula', content: 'lim(x→2) (x²-4)/(x-2) = lim(x→2) (x+2) = 4' },
+{ title: 'Conjugate Method', type: 'formula', content: 'lim(x→0) (√(x+1)-1)/x × (√(x+1)+1)/(√(x+1)+1)' },
+{ title: 'Limit Properties', type: 'bullets', content: [
+'lim(f ± g) = lim f ± lim g',
+'lim(f × g) = lim f × lim g',
+'lim(f/g) = lim f / lim g (if lim g ≠ 0)',
+'lim(c × f) = c × lim f'
+]}
+]
+}
+},
+{
+id: 4,
+title: 'Lesson 4: Continuity and Its Consequences',
+icon: '🔗',
+duration: '50 min',
+lessonUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-1.4/',
+examUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-1.4-exam/',
+lessonTitle: '📖 Lesson Explanation',
+examTitle: '📝 Take the Quiz',
+content: {
+intro: 'A function is continuous at a point if the limit equals the function value. Continuity means no breaks in the curve.',
+sections: [
+{ title: 'Continuity Conditions', type: 'formula', content: 'lim(x→a) f(x) = f(a)' },
+{ title: 'Types of Discontinuity', type: 'bullets', content: [
+'Removable discontinuity (hole)',
+'Infinite discontinuity (vertical asymptote)',
+'Jump discontinuity (gap in values)'
+]},
+{ title: 'Intermediate Value Theorem', type: 'text', content: 'If f is continuous on [a,b], it takes every value between f(a) and f(b)' },
+{ title: 'Properties of Continuous Functions', type: 'bullets', content: [
+'Sum of continuous = continuous',
+'Product of continuous = continuous',
+'Composition of continuous = continuous'
+]}
+]
+}
+},
+{
+id: 5,
+title: 'Lesson 5: Limits Involving Infinity',
+icon: '∞',
+duration: '55 min',
+lessonUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-1.5/',
+examUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-1.5-exam/',
+lessonTitle: '📖 Lesson Explanation',
+examTitle: '📝 Take the Quiz',
+content: {
+intro: 'We study function behavior as x approaches infinity or when function approaches infinity, and determine asymptotes.',
+sections: [
+{ title: 'Limit at Infinity', type: 'formula', content: 'lim(x→∞) f(x) = L' },
+{ title: 'Horizontal Asymptote', type: 'formula', content: 'y = L if lim(x→±∞) f(x) = L' },
+{ title: 'Vertical Asymptote', type: 'formula', content: 'x = a if lim(x→a) f(x) = ±∞' },
+{ title: 'Calculating Infinite Limits', type: 'bullets', content: [
+'Divide numerator and denominator by highest power of x',
+'Use properties: 1/∞ = 0',
+'Determine highest degree in numerator and denominator'
+]}
+]
+}
+},
+{
+id: 6,
+title: 'Lesson 6: Formal Definition of Limit',
+icon: '📋',
+duration: '50 min',
+lessonUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-1.6/',
+examUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-1.6-exam/',
+lessonTitle: '📖 Lesson Explanation',
+examTitle: '📝 Take the Quiz',
+content: {
+intro: 'The precise (ε-δ) definition of limit gives a rigorous mathematical description of the concept of approaching.',
+sections: [
+{ title: 'ε-δ Definition', type: 'formula', content: 'lim(x→a) f(x) = L if for every ε > 0 there exists δ > 0 such that: if 0 < |x-a| < δ then |f(x)-L| < ε' },
+{ title: 'Geometric Meaning', type: 'bullets', content: [
+'ε represents allowed vertical distance from L',
+'δ represents allowed horizontal distance from a',
+'We can make f(x) as close to L as we want by making x close to a'
+]},
+{ title: 'Proving Limits', type: 'text', content: 'We use the definition to prove limits rigorously' }
+]
+}
+},
+{
+id: 7,
+title: 'Lesson 7: Limits and Function Errors',
+icon: '⚠️',
+duration: '50 min',
+lessonUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-1.7/',
+examUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-1.7-exam/',
+lessonTitle: '📖 Lesson Explanation',
+examTitle: '📝 Take the Quiz',
+content: {
+intro: 'We study special cases where function loses definition and how to handle them using limits.',
+sections: [
+{ title: 'Indeterminate Forms', type: 'bullets', content: [
+'0/0 - most common form',
+'∞/∞ - needs simplification',
+'0 × ∞ - needs rearrangement',
+'∞ - ∞ - needs common denominator'
+]},
+{ title: "L'Hôpital's Rule", type: 'formula', content: "lim(x→a) f(x)/g(x) = lim(x→a) f'(x)/g'(x) (for 0/0 or ∞/∞ forms)" },
+{ title: 'Handling Errors', type: 'bullets', content: [
+'Factoring to remove common factor',
+'Multiplying by conjugate',
+'Using trigonometric identities',
+'Algebraic simplification'
+]}
+]
+}
+}
+]
+},
+// ═══════════════════════════════════════════════════
+// UNIT 2: DIFFERENTIATION
+// ═══════════════════════════════════════════════════
+{
+id: 2,
+name: 'Unit 2: Differentiation',
+icon: '∂',
+color: 'from-purple-500 to-pink-600',
+description: 'Study of derivatives, various differentiation rules, implicit differentiation, inverse trigonometric functions, and hyperbolic functions',
+lessons: [
+{
+id: 1,
+title: 'Lesson 1: Tangents and Velocity Vector',
+icon: '🚀',
+duration: '55 min',
+lessonUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-2.1/',
+examUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-2.1-exam/',
+lessonTitle: '📖 Lesson Explanation',
+examTitle: '📝 Take the Quiz',
+content: {
+intro: 'The derivative represents the slope of the tangent to the curve, and in physics represents instantaneous velocity.',
+sections: [
+{ title: 'Average Velocity', type: 'formula', content: 'v_avg = Δs/Δt' },
+{ title: 'Instantaneous Velocity', type: 'formula', content: 'v = lim(Δt→0) Δs/Δt = ds/dt' },
+{ title: 'Acceleration', type: 'formula', content: 'a = dv/dt = d²s/dt²' },
+{ title: 'Applications', type: 'bullets', content: [
+'Find velocity from position function',
+'Find acceleration from velocity function',
+'Analyze object motion'
+]}
+]
+}
+},
+{
+id: 2,
+title: 'Lesson 2: Differentiation',
+icon: 'd/dx',
+duration: '50 min',
+lessonUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-2.2/',
+examUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-2.2-exam/',
+lessonTitle: '📖 Lesson Explanation',
+examTitle: '📝 Take the Quiz',
+content: {
+intro: 'Differentiation is the process of finding the derivative which represents the instantaneous rate of change.',
+sections: [
+{ title: 'Derivative Definition', type: 'formula', content: "f'(x) = lim(h→0) [f(x+h) - f(x)]/h" },
+{ title: 'Notation', type: 'bullets', content: [
+"f'(x) - Lagrange notation",
+'dy/dx - Leibniz notation',
+'Dₓf - Operator notation'
+]},
+{ title: 'Geometric Interpretation', type: 'text', content: 'Derivative = slope of tangent to curve at point' },
+{ title: 'Physical Interpretation', type: 'text', content: 'Derivative = instantaneous rate of change' }
+]
+}
+},
+{
+id: 3,
+title: 'Lesson 3: Calculating Derivatives (Power Rule)',
+icon: 'xⁿ',
+duration: '50 min',
+lessonUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-2.3/',
+examUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-2.3-exam/',
+lessonTitle: '📖 Lesson Explanation',
+examTitle: '📝 Take the Quiz',
+content: {
+intro: 'The power rule is the simplest and most important rule in differentiation.',
+sections: [
+{ title: 'Power Rule', type: 'formula', content: 'd/dx(xⁿ) = n·xⁿ⁻¹' },
+{ title: 'Derivative of Constant', type: 'formula', content: 'd/dx(c) = 0' },
+{ title: 'Derivative of x', type: 'formula', content: 'd/dx(x) = 1' },
+{ title: 'Constant Multiple Rule', type: 'formula', content: 'd/dx[c·f(x)] = c·f\'(x)' },
+{ title: 'Sum Rule', type: 'formula', content: 'd/dx[f(x) ± g(x)] = f\'(x) ± g\'(x)' },
+{ title: 'Examples', type: 'bullets', content: [
+'d/dx(x³) = 3x²',
+'d/dx(5x⁴) = 20x³',
+'d/dx(x² + 3x - 5) = 2x + 3'
+]}
+]
+}
+},
+{
+id: 4,
+title: 'Lesson 4: Product and Quotient Rules',
+icon: '×÷',
+duration: '55 min',
+lessonUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-2.4/',
+examUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-2.4-exam/',
+lessonTitle: '📖 Lesson Explanation',
+examTitle: '📝 Take the Quiz',
+content: {
+intro: 'When differentiating a product or quotient of two functions, we need special rules.',
+sections: [
+{ title: 'Product Rule', type: 'formula', content: 'd/dx[f·g] = f\'·g + f·g\'' },
+{ title: 'Quotient Rule', type: 'formula', content: 'd/dx[f/g] = (f\'·g - f·g\')/g²' },
+{ title: 'Remember Product Rule', type: 'text', content: '"First times derivative of second plus second times derivative of first"' },
+{ title: 'Remember Quotient Rule', type: 'text', content: '"Denominator times derivative of numerator minus numerator times derivative of denominator, all over denominator squared"' },
+{ title: 'Examples', type: 'bullets', content: [
+'d/dx(x²·sin x) = 2x·sin x + x²·cos x',
+'d/dx(x/cos x) = (cos x + x·sin x)/cos²x'
+]}
+]
+}
+},
+{
+id: 5,
+title: 'Lesson 5: Chain Rule',
+icon: '⛓️',
+duration: '55 min',
+lessonUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-2.5/',
+examUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-2.5-exam/',
+lessonTitle: '📖 Lesson Explanation',
+examTitle: '📝 Take the Quiz',
+content: {
+intro: 'The chain rule is used to differentiate composite functions (function inside a function).',
+sections: [
+{ title: 'Chain Rule', type: 'formula', content: 'd/dx[f(g(x))] = f\'(g(x))·g\'(x)' },
+{ title: 'In Notation', type: 'formula', content: 'dy/dx = dy/du · du/dx' },
+{ title: 'Method', type: 'bullets', content: [
+'Identify outer and inner functions',
+'Differentiate outer function (keeping inner)',
+'Multiply by derivative of inner function'
+]},
+{ title: 'Examples', type: 'bullets', content: [
+'d/dx(sin(x²)) = cos(x²)·2x',
+'d/dx((3x+1)⁵) = 5(3x+1)⁴·3 = 15(3x+1)⁴'
+]}
+]
+}
+},
+{
+id: 6,
+title: 'Lesson 6: Derivatives of Trigonometric Functions',
+icon: 'sin/cos',
+duration: '50 min',
+lessonUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-2.6/',
+examUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-2.6-exam/',
+lessonTitle: '📖 Lesson Explanation',
+examTitle: '📝 Take the Quiz',
+content: {
+intro: 'Basic trigonometric functions have specific derivative formulas that must be memorized.',
+sections: [
+{ title: 'Basic Derivatives', type: 'bullets', content: [
+'d/dx(sin x) = cos x',
+'d/dx(cos x) = -sin x',
+'d/dx(tan x) = sec²x',
+'d/dx(cot x) = -csc²x',
+'d/dx(sec x) = sec x·tan x',
+'d/dx(csc x) = -csc x·cot x'
+]},
+{ title: 'With Chain Rule', type: 'formula', content: 'd/dx(sin u) = cos u · du/dx' },
+{ title: 'Note', type: 'text', content: 'Derivatives of cos, cot, and csc have negative signs' }
+]
+}
+},
+{
+id: 7,
+title: 'Lesson 7: Derivatives of Exponential and Logarithmic Functions',
+icon: 'eˣ/ln x',
+duration: '55 min',
+lessonUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-2.7/',
+examUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-2.7-exam/',
+lessonTitle: '📖 Lesson Explanation',
+examTitle: '📝 Take the Quiz',
+content: {
+intro: 'Exponential and logarithmic functions have unique and important derivatives.',
+sections: [
+{ title: 'Exponential Function', type: 'formula', content: 'd/dx(eˣ) = eˣ' },
+{ title: 'General Exponential', type: 'formula', content: 'd/dx(aˣ) = aˣ·ln(a)' },
+{ title: 'Natural Logarithm', type: 'formula', content: 'd/dx(ln x) = 1/x' },
+{ title: 'General Logarithm', type: 'formula', content: 'd/dx(logₐx) = 1/(x·ln a)' },
+{ title: 'With Chain Rule', type: 'bullets', content: [
+'d/dx(eᵘ) = eᵘ · du/dx',
+'d/dx(ln u) = (1/u) · du/dx'
+]},
+{ title: 'Note', type: 'text', content: 'Derivative of eˣ is e itself - the only function equal to its own derivative!' }
+]
+}
+},
+{
+id: 8,
+title: 'Lesson 8: Implicit Differentiation and Inverse Trigonometric Functions',
+icon: '↔️',
+duration: '60 min',
+lessonUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-2.8/',
+examUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-2.8-exam/',
+lessonTitle: '📖 Lesson Explanation',
+examTitle: '📝 Take the Quiz',
+content: {
+intro: 'Implicit differentiation is used when y cannot be isolated, and inverse trigonometric functions have special derivatives.',
+sections: [
+{ title: 'Implicit Differentiation', type: 'bullets', content: [
+'Differentiate both sides with respect to x',
+'When differentiating y, multiply by dy/dx',
+'Collect dy/dx terms on one side',
+'Solve for dy/dx'
+]},
+{ title: 'Derivatives of Inverse Trig Functions', type: 'bullets', content: [
+'d/dx(sin⁻¹x) = 1/√(1-x²)',
+'d/dx(cos⁻¹x) = -1/√(1-x²)',
+'d/dx(tan⁻¹x) = 1/(1+x²)',
+'d/dx(cot⁻¹x) = -1/(1+x²)'
+]},
+{ title: 'Implicit Example', type: 'formula', content: 'x² + y² = 25 → 2x + 2y(dy/dx) = 0 → dy/dx = -x/y' }
+]
+}
+},
+{
+id: 9,
+title: 'Lesson 9: Hyperbolic Functions',
+icon: 'sinh/cosh',
+duration: '50 min',
+lessonUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-2.9/',
+examUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-2.9-exam/',
+lessonTitle: '📖 Lesson Explanation',
+examTitle: '📝 Take the Quiz',
+content: {
+intro: 'Hyperbolic functions are similar to trigonometric functions but have different properties.',
+sections: [
+{ title: 'Definitions', type: 'bullets', content: [
+'sinh x = (eˣ - e⁻ˣ)/2',
+'cosh x = (eˣ + e⁻ˣ)/2',
+'tanh x = sinh x / cosh x'
+]},
+{ title: 'Derivatives', type: 'bullets', content: [
+'d/dx(sinh x) = cosh x',
+'d/dx(cosh x) = sinh x',
+'d/dx(tanh x) = sech²x'
+]},
+{ title: 'Identities', type: 'bullets', content: [
+'cosh²x - sinh²x = 1',
+'sinh(x±y) = sinh x cosh y ± cosh x sinh y',
+'cosh(x±y) = cosh x cosh y ± sinh x sinh y'
+]}
+]
+}
+},
+{
+id: 10,
+title: 'Lesson 10: Mean Value Theorem',
+icon: '📊',
+duration: '55 min',
+lessonUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-2.10/',
+examUrl: 'https://hesham-afandi.github.io/12adv-inspire-math-T1-2.10-exam/',
+lessonTitle: '📖 Lesson Explanation',
+examTitle: '📝 Take the Quiz',
+content: {
+intro: 'The Mean Value Theorem relates average rate of change to instantaneous rate of change.',
+sections: [
+{ title: "Rolle's Theorem", type: 'formula', content: "If f is continuous on [a,b], differentiable on (a,b), and f(a)=f(b), then there exists c in (a,b) where f'(c)=0" },
+{ title: 'Mean Value Theorem', type: 'formula', content: "If f is continuous on [a,b] and differentiable on (a,b), then there exists c in (a,b) where: f'(c) = [f(b)-f(a)]/(b-a)" },
+{ title: 'Geometric Interpretation', type: 'text', content: 'There exists a point where tangent slope equals secant slope' },
+{ title: 'Applications', type: 'bullets', content: [
+'Prove existence of roots',
+'Analyze function behavior',
+'Prove inequalities'
+]}
+]
+}
+}
+]
+}
+]
+}
+}
+},
+
+  
 'physics-10-bridge-3': {
 isEnglish: false,
 units: [
