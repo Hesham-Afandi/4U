@@ -1,5 +1,4 @@
-<writeToFile>
-<content><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -220,6 +219,166 @@ transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 transform: translateY(-10px) scale(1.02);
 box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
+/* ═══════════════════════════════════════════════════ */
+/* NEW FEATURES STYLES - Progress, Favorites, Stats */
+/* ═══════════════════════════════════════════════════ */
+.lesson-progress-bar {
+height: 6px;
+background: rgba(99, 102, 241, 0.2);
+border-radius: 3px;
+overflow: hidden;
+margin-top: 0.5rem;
+}
+.lesson-progress-fill {
+height: 100%;
+background: linear-gradient(90deg, #10b981, #059669);
+border-radius: 3px;
+transition: width 0.5s ease;
+}
+.favorite-btn {
+transition: all 0.3s ease;
+}
+.favorite-btn.active {
+color: #ef4444;
+transform: scale(1.1);
+}
+.favorite-btn:hover {
+transform: scale(1.2);
+}
+/* Modal Styles */
+.modal-overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.7);
+backdrop-filter: blur(5px);
+z-index: 1000;
+display: flex;
+align-items: center;
+justify-content: center;
+animation: fadeIn 0.3s ease;
+}
+.modal-content {
+background: white;
+border-radius: 1.5rem;
+max-width: 600px;
+width: 90%;
+max-height: 90vh;
+overflow-y: auto;
+box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+animation: slideUp 0.4s ease;
+}
+.dark .modal-content {
+background: #1f2937;
+color: #f3f4f6;
+}
+@keyframes slideUp {
+from { opacity: 0; transform: translateY(30px); }
+to { opacity: 1; transform: translateY(0); }
+}
+/* Certificate Styles */
+.certificate {
+background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+border: 8px double #d97706;
+padding: 2rem;
+text-align: center;
+position: relative;
+}
+.certificate::before {
+content: '🏆';
+position: absolute;
+top: -30px;
+left: 50%;
+transform: translateX(-50%);
+font-size: 4rem;
+background: white;
+border-radius: 50%;
+padding: 0.5rem;
+box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.dark .certificate {
+background: linear-gradient(135deg, #451a03 0%, #78350f 100%);
+border-color: #fbbf24;
+}
+/* Stats Card */
+.stat-card {
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+color: white;
+border-radius: 1rem;
+padding: 1.5rem;
+text-align: center;
+transition: all 0.3s ease;
+}
+.stat-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
+/* Top Progress Bar */
+.top-progress-bar {
+height: 3px;
+background: rgba(255, 255, 255, 0.2);
+position: absolute;
+bottom: 0;
+left: 0;
+width: 100%;
+}
+.top-progress-fill {
+height: 100%;
+background: linear-gradient(90deg, #10b981, #34d399);
+transition: width 0.5s ease;
+}
+/* Share Buttons */
+.share-btn {
+transition: all 0.3s ease;
+}
+.share-btn:hover {
+transform: translateY(-3px) scale(1.05);
+}
+/* Keyboard shortcut hint */
+.kbd {
+background: #e5e7eb;
+border: 1px solid #d1d5db;
+border-bottom-width: 2px;
+border-radius: 4px;
+padding: 2px 6px;
+font-family: monospace;
+font-size: 0.75rem;
+color: #374151;
+}
+.dark .kbd {
+background: #374151;
+border-color: #4b5563;
+color: #e5e7eb;
+}
+/* Badge for completed lessons */
+.completed-badge {
+background: linear-gradient(135deg, #10b981, #059669);
+color: white;
+font-size: 0.7rem;
+padding: 2px 8px;
+border-radius: 10px;
+font-weight: bold;
+}
+/* Notification Toast */
+.toast {
+position: fixed;
+bottom: 100px;
+left: 50%;
+transform: translateX(-50%);
+background: #1f2937;
+color: white;
+padding: 12px 24px;
+border-radius: 12px;
+box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+z-index: 9999;
+animation: toastSlide 0.4s ease;
+}
+@keyframes toastSlide {
+from { opacity: 0; transform: translate(-50%, 20px); }
+to { opacity: 1; transform: translate(-50%, 0); }
+}
 </style>
 </head>
 <body class="bg-gray-50 min-h-screen dark:bg-gray-900 dark:text-gray-100">
@@ -245,7 +404,7 @@ box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 <!-- ═══════════════════════════════════════════════════ -->
 <div id="main-content">
 <!-- Top Bar -->
-<div class="gradient-primary text-white py-3 px-6 shadow-lg sticky top-0 z-50">
+<div class="gradient-primary text-white py-3 px-6 shadow-lg sticky top-0 z-50 relative">
 <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-3">
 <div class="flex items-center gap-3 cursor-pointer" onclick="showHome()">
 <img src="logo.png" alt="4U Logo" class="h-12 w-auto drop-shadow-lg">
@@ -260,6 +419,24 @@ class="w-full bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg py-
 <svg class="w-5 h-5 absolute right-3 top-2.5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
 </div>
 <div class="flex items-center gap-2 text-sm">
+<!-- ═══ NEW: زر الرجوع ═══ -->
+<button id="backBtn" onclick="goBack()" class="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg transition font-medium hidden" title="رجوع (Esc)">
+<span class="flex items-center gap-1">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+<span class="hidden sm:inline">رجوع</span>
+</span>
+</button>
+<!-- ═══ NEW: زر المفضلة ═══ -->
+<button onclick="showFavorites()" class="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition" title="المفضلة">
+<span class="flex items-center gap-1">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+<span id="favCount" class="hidden sm:inline text-xs bg-red-500 rounded-full px-1.5 py-0.5">0</span>
+</span>
+</button>
+<!-- ═══ NEW: زر الإحصائيات ═══ -->
+<button onclick="showStats()" class="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition" title="إحصائياتي">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+</button>
 <a href="https://hesham-afandi.github.io/DafterKhana/" target="_blank" title="مكتبة دفتر خانة"
 class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg transition font-medium">
 <span>📓</span>
@@ -276,6 +453,10 @@ class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-3 py-2 rounded-l
 <div class="md:hidden px-4 pb-3 w-full">
 <input type="text" id="mobileSearchInput" placeholder="ابحث عن درس..."
 class="w-full bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg py-2 px-4 text-white placeholder-white/70 focus:outline-none focus:bg-white/30 transition text-sm">
+</div>
+<!-- ═══ NEW: شريط التقدم العام ═══ -->
+<div id="topProgressBar" class="top-progress-bar hidden">
+<div id="topProgressFill" class="top-progress-fill" style="width: 0%"></div>
 </div>
 </div>
 <div id="breadcrumbs" class="max-w-7xl mx-auto px-6 py-4 hidden">
@@ -309,7 +490,6 @@ class="w-full bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg py-
 </div>
 </footer>
 </div> <!-- نهاية main-content -->
-
 <!-- زر التثبيت العائم - تصميم محسّن -->
 <div id="installButton" class="hidden fixed bottom-6 left-6 z-50">
 <button onclick="installApp()"
@@ -328,7 +508,10 @@ title="تثبيت التطبيق">
 </span>
 </button>
 </div>
-
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- NEW: Modal Container -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div id="modalContainer"></div>
 <script>
 // ═══════════════════════════════════════════════════
 // LOADER LOGIC
@@ -344,7 +527,6 @@ loader.style.display = 'none';
 }, 800);
 }, 2500);
 });
-
 document.getElementById('page-loader').addEventListener('click', function() {
 this.classList.add('hidden-loader');
 document.getElementById('main-content').classList.add('visible');
@@ -352,7 +534,6 @@ setTimeout(() => {
 this.style.display = 'none';
 }, 800);
 });
-
 // ═══════════════════════════════════════════════════
 // DARK MODE LOGIC
 // ═══════════════════════════════════════════════════
@@ -360,7 +541,6 @@ const themeToggleBtn = document.getElementById('themeToggle');
 const sunIcon = document.getElementById('sunIcon');
 const moonIcon = document.getElementById('moonIcon');
 const htmlElement = document.documentElement;
-
 function applyTheme(isDark) {
 if (isDark) {
 htmlElement.classList.add('dark');
@@ -372,23 +552,19 @@ sunIcon.classList.add('hidden');
 moonIcon.classList.remove('hidden');
 }
 }
-
 const savedTheme = localStorage.getItem('theme');
 const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 let isDarkMode = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
 applyTheme(isDarkMode);
-
 themeToggleBtn.addEventListener('click', () => {
 isDarkMode = !isDarkMode;
 applyTheme(isDarkMode);
 localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
 });
-
 // ═══════════════════════════════════════════════════
 // SEARCH LOGIC
 // ═══════════════════════════════════════════════════
 const searchInputs = [document.getElementById('searchInput'), document.getElementById('mobileSearchInput')];
-
 function performSearch(query) {
 const term = query.toLowerCase().trim();
 if (term === '' && !state.lesson && !state.unit) {
@@ -404,7 +580,6 @@ return;
 }
 filterCurriculum(term);
 }
-
 function filterCurriculum(term) {
 const allButtons = document.querySelectorAll('#app .grid button, #app .space-y-4 button');
 let visibleCount = 0;
@@ -418,7 +593,6 @@ visibleCount++;
 el.style.display = 'none';
 }
 });
-
 const appDiv = document.getElementById('app');
 let noResultsMsg = document.getElementById('custom-no-results');
 if (visibleCount === 0 && term !== '') {
@@ -437,7 +611,6 @@ appDiv.appendChild(noResultsMsg);
 if (noResultsMsg) noResultsMsg.remove();
 }
 }
-
 searchInputs.forEach(input => {
 input.addEventListener('input', (e) => {
 searchInputs.forEach(i => {
@@ -446,7 +619,497 @@ if(i !== e.target) i.value = e.target.value;
 performSearch(e.target.value);
 });
 });
-
+// ═══════════════════════════════════════════════════
+// NEW: PROGRESS TRACKING SYSTEM
+// ═══════════════════════════════════════════════════
+const ProgressManager = {
+KEY: '4u_progress',
+data: {},
+load() {
+try {
+this.data = JSON.parse(localStorage.getItem(this.KEY)) || {};
+} catch { this.data = {}; }
+},
+save() {
+localStorage.setItem(this.KEY, JSON.stringify(this.data));
+},
+markLessonRead(lessonKey) {
+if (!this.data[lessonKey]) {
+this.data[lessonKey] = { read: false, examDone: false, startTime: null, totalTime: 0 };
+}
+this.data[lessonKey].read = true;
+this.save();
+this.updateUI();
+},
+markExamDone(lessonKey) {
+if (!this.data[lessonKey]) {
+this.data[lessonKey] = { read: false, examDone: false, startTime: null, totalTime: 0 };
+}
+this.data[lessonKey].examDone = true;
+this.save();
+this.updateUI();
+},
+startTracking(lessonKey) {
+if (!this.data[lessonKey]) {
+this.data[lessonKey] = { read: false, examDone: false, startTime: null, totalTime: 0 };
+}
+this.data[lessonKey].startTime = Date.now();
+this.save();
+},
+stopTracking(lessonKey) {
+if (this.data[lessonKey] && this.data[lessonKey].startTime) {
+const elapsed = Math.floor((Date.now() - this.data[lessonKey].startTime) / 1000);
+this.data[lessonKey].totalTime = (this.data[lessonKey].totalTime || 0) + elapsed;
+this.data[lessonKey].startTime = null;
+this.save();
+}
+},
+isRead(lessonKey) {
+return this.data[lessonKey] && this.data[lessonKey].read;
+},
+isExamDone(lessonKey) {
+return this.data[lessonKey] && this.data[lessonKey].examDone;
+},
+getTimeSpent(lessonKey) {
+return (this.data[lessonKey] && this.data[lessonKey].totalTime) || 0;
+},
+getStats() {
+let totalRead = 0, totalExams = 0, totalTime = 0;
+Object.values(this.data).forEach(item => {
+if (item.read) totalRead++;
+if (item.examDone) totalExams++;
+totalTime += item.totalTime || 0;
+});
+return { totalRead, totalExams, totalTime };
+},
+getUnitProgress(unitKey, totalLessons) {
+let completed = 0;
+for (let i = 1; i <= totalLessons; i++) {
+const key = `${unitKey}-${i}`;
+if (this.isRead(key)) completed++;
+}
+return totalLessons > 0 ? Math.round((completed / totalLessons) * 100) : 0;
+},
+updateUI() {
+// Update favorites count
+const favs = FavoritesManager.getAll();
+const favCountEl = document.getElementById('favCount');
+if (favCountEl) {
+favCountEl.textContent = favs.length;
+favCountEl.style.display = favs.length > 0 ? 'inline' : 'none';
+}
+// Update top progress bar
+const stats = this.getStats();
+const totalLessons = this.countTotalLessons();
+const percent = totalLessons > 0 ? Math.round((stats.totalRead / totalLessons) * 100) : 0;
+const topBar = document.getElementById('topProgressBar');
+const topFill = document.getElementById('topProgressFill');
+if (topBar && topFill) {
+if (percent > 0) {
+topBar.classList.remove('hidden');
+topFill.style.width = percent + '%';
+} else {
+topBar.classList.add('hidden');
+}
+}
+},
+countTotalLessons() {
+let count = 0;
+Object.values(DB.curriculum).forEach(curriculum => {
+if (curriculum.units) {
+curriculum.units.forEach(unit => {
+if (unit.lessons) count += unit.lessons.length;
+});
+}
+});
+return count;
+}
+};
+// ═══════════════════════════════════════════════════
+// NEW: FAVORITES MANAGER
+// ═══════════════════════════════════════════════════
+const FavoritesManager = {
+KEY: '4u_favorites',
+data: [],
+load() {
+try {
+this.data = JSON.parse(localStorage.getItem(this.KEY)) || [];
+} catch { this.data = []; }
+},
+save() {
+localStorage.setItem(this.KEY, JSON.stringify(this.data));
+},
+toggle(lessonKey, lessonInfo) {
+const idx = this.data.findIndex(f => f.key === lessonKey);
+if (idx > -1) {
+this.data.splice(idx, 1);
+showToast('❌ تم الإزالة من المفضلة');
+} else {
+this.data.push({ key: lessonKey, ...lessonInfo, addedAt: Date.now() });
+showToast('❤️ تم الإضافة للمفضلة');
+}
+this.save();
+ProgressManager.updateUI();
+},
+isFavorite(lessonKey) {
+return this.data.some(f => f.key === lessonKey);
+},
+getAll() {
+return this.data;
+},
+clear() {
+this.data = [];
+this.save();
+ProgressManager.updateUI();
+}
+};
+// ═══════════════════════════════════════════════════
+// NEW: TOAST NOTIFICATION
+// ═══════════════════════════════════════════════════
+function showToast(message, duration = 2500) {
+const existing = document.querySelector('.toast');
+if (existing) existing.remove();
+const toast = document.createElement('div');
+toast.className = 'toast';
+toast.textContent = message;
+document.body.appendChild(toast);
+setTimeout(() => {
+toast.style.opacity = '0';
+toast.style.transition = 'opacity 0.3s';
+setTimeout(() => toast.remove(), 300);
+}, duration);
+}
+// ═══════════════════════════════════════════════════
+// NEW: MODAL SYSTEM
+// ═══════════════════════════════════════════════════
+function openModal(content) {
+const container = document.getElementById('modalContainer');
+container.innerHTML = `<div class="modal-overlay" onclick="if(event.target===this)closeModal()">${content}</div>`;
+document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+document.getElementById('modalContainer').innerHTML = '';
+document.body.style.overflow = '';
+}
+// ═══════════════════════════════════════════════════
+// NEW: SHOW STATS MODAL
+// ═══════════════════════════════════════════════════
+function showStats() {
+const stats = ProgressManager.getStats();
+const totalLessons = ProgressManager.countTotalLessons();
+const percent = totalLessons > 0 ? Math.round((stats.totalRead / totalLessons) * 100) : 0;
+const hours = Math.floor(stats.totalTime / 3600);
+const minutes = Math.floor((stats.totalTime % 3600) / 60);
+const content = `
+<div class="modal-content p-8">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-2xl font-bold dark:text-white">📊 إحصائياتي</h2>
+<button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-2xl">×</button>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div class="stat-card">
+<div class="text-4xl mb-2">📖</div>
+<div class="text-3xl font-bold">${stats.totalRead}</div>
+<div class="text-sm opacity-90">دروس مكتملة</div>
+</div>
+<div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+<div class="text-4xl mb-2">📝</div>
+<div class="text-3xl font-bold">${stats.totalExams}</div>
+<div class="text-sm opacity-90">اختبارات منجزة</div>
+</div>
+<div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+<div class="text-4xl mb-2">⏱️</div>
+<div class="text-3xl font-bold">${hours}h ${minutes}m</div>
+<div class="text-sm opacity-90">وقت الدراسة</div>
+</div>
+<div class="stat-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+<div class="text-4xl mb-2">🏆</div>
+<div class="text-3xl font-bold">${percent}%</div>
+<div class="text-sm opacity-90">نسبة الإنجاز</div>
+</div>
+</div>
+<div class="bg-gray-100 dark:bg-gray-700 rounded-xl p-4 mb-4">
+<div class="flex justify-between mb-2">
+<span class="font-semibold dark:text-white">التقدم الكلي</span>
+<span class="text-sm text-gray-600 dark:text-gray-300">${stats.totalRead} / ${totalLessons} درس</span>
+</div>
+<div class="w-full bg-gray-300 dark:bg-gray-600 rounded-full h-3">
+<div class="bg-gradient-to-r from-green-500 to-emerald-600 h-3 rounded-full transition-all" style="width: ${percent}%"></div>
+</div>
+</div>
+${stats.totalExams > 0 ? `
+<button onclick="showCertificate()" class="w-full bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 text-white py-3 rounded-xl font-bold transition flex items-center justify-center gap-2">
+<span>🏆</span><span>عرض شهادة الإتمام</span>
+</button>
+` : ''}
+<div class="mt-4 text-center text-xs text-gray-500 dark:text-gray-400">
+💡 <span class="kbd">Esc</span> للإغلاق | البيانات محفوظة على جهازك
+</div>
+</div>
+`;
+openModal(content);
+}
+// ═══════════════════════════════════════════════════
+// NEW: SHOW CERTIFICATE
+// ═══════════════════════════════════════════════════
+function showCertificate() {
+const stats = ProgressManager.getStats();
+const totalLessons = ProgressManager.countTotalLessons();
+const percent = totalLessons > 0 ? Math.round((stats.totalRead / totalLessons) * 100) : 0;
+const today = new Date().toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+const content = `
+<div class="modal-content p-4">
+<div class="flex justify-between items-center mb-4 px-4">
+<h2 class="text-xl font-bold dark:text-white">🏆 شهادة الإتمام</h2>
+<button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-2xl">×</button>
+</div>
+<div class="certificate mx-4 mb-4">
+<div class="mt-8">
+<h3 class="text-2xl font-bold text-amber-900 dark:text-amber-200 mb-2">شهادة تقدير</h3>
+<p class="text-sm text-amber-800 dark:text-amber-300 mb-6">تشهد منصة 4U التعليمية بأن</p>
+<div class="text-3xl font-bold text-indigo-700 dark:text-indigo-300 mb-4 border-b-2 border-amber-600 pb-2 inline-block px-8">
+الطالب / الطالبة
+</div>
+<p class="text-amber-800 dark:text-amber-300 mb-4">قد أتم بنجاح</p>
+<div class="text-xl font-bold text-green-700 dark:text-green-300 mb-2">
+${stats.totalRead} درساً من أصل ${totalLessons}
+</div>
+<div class="text-lg font-bold text-purple-700 dark:text-purple-300 mb-4">
+بنسبة إنجاز ${percent}%
+</div>
+<div class="flex justify-between items-center mt-6 text-sm text-amber-800 dark:text-amber-300">
+<span>📅 ${today}</span>
+<span>🎓 منصة 4U</span>
+</div>
+</div>
+</div>
+<div class="flex gap-2 mx-4 mb-4">
+<button onclick="printCertificate()" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-bold transition flex items-center justify-center gap-2">
+<span>🖨️</span><span>طباعة</span>
+</button>
+<button onclick="closeModal()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-2 rounded-lg font-bold transition">
+إغلاق
+</button>
+</div>
+</div>
+`;
+openModal(content);
+}
+function printCertificate() {
+const cert = document.querySelector('.certificate');
+if (!cert) return;
+const printWindow = window.open('', '', 'width=800,height=600');
+printWindow.document.write(`
+<html><head><title>شهادة الإتمام</title>
+<style>
+body { font-family: 'Cairo', sans-serif; }
+.certificate { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 8px double #d97706; padding: 2rem; text-align: center; }
+</style></head><body>
+${cert.outerHTML}
+<script>window.onload = function() { window.print(); }<\/script>
+</body></html>
+`);
+printWindow.document.close();
+}
+// ═══════════════════════════════════════════════════
+// NEW: SHOW FAVORITES MODAL
+// ═══════════════════════════════════════════════════
+function showFavorites() {
+const favs = FavoritesManager.getAll();
+let favsHTML = '';
+if (favs.length === 0) {
+favsHTML = `
+<div class="text-center py-12">
+<div class="text-6xl mb-4">💔</div>
+<p class="text-gray-600 dark:text-gray-400">لا توجد دروس في المفضلة بعد</p>
+<p class="text-sm text-gray-500 dark:text-gray-500 mt-2">اضغط على ❤️ بجانب أي درس لإضافته</p>
+</div>
+`;
+} else {
+favsHTML = favs.map(f => `
+<div class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg mb-2">
+<div class="text-3xl">${f.icon || '📖'}</div>
+<div class="flex-1">
+<div class="font-semibold dark:text-white text-sm">${f.title}</div>
+<div class="text-xs text-gray-500 dark:text-gray-400">${f.unitName || ''}</div>
+</div>
+<button onclick="removeFavorite('${f.key}')" class="text-red-500 hover:text-red-700 p-2" title="إزالة">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3"></path></svg>
+</button>
+</div>
+`).join('');
+}
+const content = `
+<div class="modal-content p-8">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-2xl font-bold dark:text-white">❤️ المفضلة (${favs.length})</h2>
+<button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-2xl">×</button>
+</div>
+${favs.length > 0 ? `
+<button onclick="if(confirm('هل أنت متأكد من حذف كل المفضلة؟')){FavoritesManager.clear();showFavorites();}" class="mb-4 text-sm text-red-500 hover:text-red-700">
+🗑️ مسح الكل
+</button>
+` : ''}
+<div class="max-h-96 overflow-y-auto">${favsHTML}</div>
+</div>
+`;
+openModal(content);
+}
+function removeFavorite(key) {
+FavoritesManager.toggle(key, {});
+showFavorites();
+}
+// ═══════════════════════════════════════════════════
+// NEW: SHARE MODAL
+// ═══════════════════════════════════════════════════
+function showShareModal(lessonTitle, lessonUrl) {
+const url = lessonUrl || window.location.href;
+const text = `📚 ${lessonTitle}\nمنصة 4U التعليمية`;
+const content = `
+<div class="modal-content p-8">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-2xl font-bold dark:text-white">📤 مشاركة الدرس</h2>
+<button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-2xl">×</button>
+</div>
+<p class="text-gray-600 dark:text-gray-400 mb-4 text-center">شارك هذا الدرس مع أصدقائك</p>
+<div class="grid grid-cols-4 gap-3 mb-6">
+<button onclick="shareTo('whatsapp', '${encodeURIComponent(text)}', '${encodeURIComponent(url)}')" class="share-btn bg-green-500 hover:bg-green-600 text-white p-4 rounded-xl flex flex-col items-center gap-2">
+<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+<span class="text-xs">واتساب</span>
+</button>
+<button onclick="shareTo('twitter', '${encodeURIComponent(text)}', '${encodeURIComponent(url)}')" class="share-btn bg-sky-500 hover:bg-sky-600 text-white p-4 rounded-xl flex flex-col items-center gap-2">
+<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M23.643 4.937c-.835.37-1.732.62-2.675.733.962-.576 1.7-1.49 2.048-2.578-.9.534-1.897.922-2.958 1.13-.85-.904-2.06-1.47-3.4-1.47-2.572 0-4.658 2.086-4.658 4.66 0 .364.042.718.12 1.06-3.873-.195-7.304-2.05-9.602-4.868-.4.69-.63 1.49-.63 2.342 0 1.616.823 3.043 2.072 3.878-.764-.025-1.482-.234-2.11-.583v.06c0 2.257 1.605 4.14 3.737 4.568-.392.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.593 1.85 2.313 3.198 4.352 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.098 7.14 2.098 8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602.91-.658 1.7-1.477 2.323-2.41z"/></svg>
+<span class="text-xs">تويتر</span>
+</button>
+<button onclick="shareTo('facebook', '${encodeURIComponent(text)}', '${encodeURIComponent(url)}')" class="share-btn bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-xl flex flex-col items-center gap-2">
+<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+<span class="text-xs">فيسبوك</span>
+</button>
+<button onclick="shareTo('telegram', '${encodeURIComponent(text)}', '${encodeURIComponent(url)}')" class="share-btn bg-sky-600 hover:bg-sky-700 text-white p-4 rounded-xl flex flex-col items-center gap-2">
+<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+<span class="text-xs">تليجرام</span>
+</button>
+</div>
+<button onclick="copyLink('${url}')" class="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-white py-3 rounded-xl font-bold transition flex items-center justify-center gap-2 mb-2">
+<span>📋</span><span>نسخ الرابط</span>
+</button>
+<div class="text-center text-xs text-gray-500 dark:text-gray-400">
+💡 <span class="kbd">Esc</span> للإغلاق
+</div>
+</div>
+`;
+openModal(content);
+}
+function shareTo(platform, text, url) {
+let shareUrl = '';
+switch(platform) {
+case 'whatsapp': shareUrl = `https://wa.me/?text=${text}%20${url}`; break;
+case 'twitter': shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`; break;
+case 'facebook': shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`; break;
+case 'telegram': shareUrl = `https://t.me/share/url?url=${url}&text=${text}`; break;
+}
+window.open(shareUrl, '_blank');
+}
+function copyLink(url) {
+navigator.clipboard.writeText(url).then(() => {
+showToast('✅ تم نسخ الرابط');
+}).catch(() => {
+showToast('❌ فشل النسخ');
+});
+}
+// ═══════════════════════════════════════════════════
+// NEW: BACK NAVIGATION + KEYBOARD SHORTCUTS
+// ═══════════════════════════════════════════════════
+const navigationHistory = [];
+function pushNavigation(level, id) {
+navigationHistory.push({ level, id });
+updateBackButton();
+}
+function updateBackButton() {
+const backBtn = document.getElementById('backBtn');
+if (backBtn) {
+if (navigationHistory.length > 0) {
+backBtn.classList.remove('hidden');
+} else {
+backBtn.classList.add('hidden');
+}
+}
+}
+function goBack() {
+if (navigationHistory.length > 0) {
+const prev = navigationHistory.pop();
+updateBackButton();
+switch(prev.level) {
+case 'term': selectTerm(prev.id, true); break;
+case 'stream': selectStream(prev.id, true); break;
+case 'program': selectProgram(prev.id, true); break;
+case 'grade': selectGrade(prev.id, true); break;
+case 'subject': selectSubject(prev.id, true); break;
+case 'unit': selectUnit(prev.id, true); break;
+case 'lesson': selectLesson(prev.id, true); break;
+default: showHome();
+}
+} else {
+showHome();
+}
+}
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+// Esc - Back or Close modal
+if (e.key === 'Escape') {
+const modal = document.querySelector('.modal-overlay');
+if (modal) {
+closeModal();
+} else {
+goBack();
+}
+return;
+}
+// Ctrl/Cmd + D - Toggle favorite
+if ((e.ctrlKey || e.metaKey) && e.key === 'd' && state.lesson) {
+e.preventDefault();
+toggleCurrentFavorite();
+return;
+}
+// Ctrl/Cmd + S - Share
+if ((e.ctrlKey || e.metaKey) && e.key === 's' && state.lesson) {
+e.preventDefault();
+const url = state.lesson.lessonUrl || window.location.href;
+showShareModal(state.lesson.title, url);
+return;
+}
+// Home - Go home
+if (e.key === 'Home' && !e.ctrlKey && !e.metaKey) {
+if (document.activeElement.tagName !== 'INPUT') {
+showHome();
+}
+}
+});
+// ═══════════════════════════════════════════════════
+// NEW: TOGGLE FAVORITE FOR CURRENT LESSON
+// ═══════════════════════════════════════════════════
+function toggleCurrentFavorite() {
+if (!state.lesson || !state.unit) return;
+const key = getLessonKey();
+const info = {
+title: state.lesson.title,
+icon: state.lesson.icon,
+unitName: state.unit.name
+};
+FavoritesManager.toggle(key, info);
+// Update UI
+const btn = document.querySelector(`[data-fav-key="${key}"]`);
+if (btn) {
+const isFav = FavoritesManager.isFavorite(key);
+btn.classList.toggle('active', isFav);
+btn.innerHTML = isFav ? '❤️' : '🤍';
+}
+}
+function getLessonKey() {
+if (!state.lesson || !state.unit) return null;
+const currKey = getCurriculumKey();
+return `${currKey}-U${state.unit.id}-L${state.lesson.id}`;
+}
 // ═══════════════════════════════════════════════════
 // DATABASE
 // ═══════════════════════════════════════════════════
@@ -7218,31 +7881,29 @@ sections: [
 };
 
 let state = { term: null, stream: null, program: null, grade: null, subject: null, unit: null, lesson: null };
-
 function getCurriculumKey() {
 if (!state.subject || !state.grade || !state.term) return null;
 if (!state.stream) return null;
 const key = state.stream.id === 'advanced' ? state.program.id : 'general';
 return `${state.subject.id}-${state.grade.id}-${key}-${state.term.id}`;
 }
-
 function getSubjectKey(subjectId) {
 const key = state.stream.id === 'advanced' ? (state.program ? state.program.id : 'advanced') : 'general';
 return `${subjectId}-${state.grade.id}-${key}-${state.term.id}`;
 }
-
 function isCurrentEnglish() {
 return state.program && state.program.isEnglish;
 }
-
 function showHome() {
 state = { term: null, stream: null, program: null, grade: null, subject: null, unit: null, lesson: null };
+navigationHistory.length = 0;
+updateBackButton();
 updateBreadcrumbs();
 renderHome();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-function selectTerm(id) {
+function selectTerm(id, noHistory) {
+if (!noHistory && state.term) pushNavigation('term', state.term.id);
 state.term = DB.terms.find(t => t.id === id);
 state.stream = null; state.program = null; state.grade = null; state.subject = null;
 state.unit = null; state.lesson = null;
@@ -7250,8 +7911,8 @@ updateBreadcrumbs();
 renderStreams();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-function selectStream(id) {
+function selectStream(id, noHistory) {
+if (!noHistory && state.stream) pushNavigation('stream', state.stream.id);
 state.stream = DB.streams.find(s => s.id === id);
 state.program = null; state.grade = null; state.subject = null;
 state.unit = null; state.lesson = null;
@@ -7259,8 +7920,8 @@ updateBreadcrumbs();
 if (state.stream.id === 'advanced') { renderPrograms(); } else { renderGrades(); }
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-function selectProgram(id) {
+function selectProgram(id, noHistory) {
+if (!noHistory && state.program) pushNavigation('program', state.program.id);
 state.program = DB.programs.find(p => p.id === id);
 state.grade = null; state.subject = null;
 state.unit = null; state.lesson = null;
@@ -7268,8 +7929,8 @@ updateBreadcrumbs();
 renderGrades();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-function selectGrade(id) {
+function selectGrade(id, noHistory) {
+if (!noHistory && state.grade) pushNavigation('grade', state.grade.id);
 state.grade = DB.grades.find(g => g.id === id);
 state.subject = null;
 state.unit = null; state.lesson = null;
@@ -7277,49 +7938,83 @@ updateBreadcrumbs();
 renderSubjects();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-function selectSubject(id) {
+function selectSubject(id, noHistory) {
+if (!noHistory && state.subject) pushNavigation('subject', state.subject.id);
 state.subject = DB.subjects.find(s => s.id === id);
 state.unit = null; state.lesson = null;
 updateBreadcrumbs();
 renderUnits();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-function selectUnit(unitId) {
+function selectUnit(unitId, noHistory) {
 const key = getCurriculumKey();
 const curriculum = DB.curriculum[key];
 if (!curriculum) return;
+if (!noHistory && state.unit) pushNavigation('unit', state.unit.id);
 state.unit = curriculum.units.find(u => u.id === unitId);
 state.lesson = null;
 updateBreadcrumbs();
 renderLessons();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-function selectLesson(lessonId) {
+function selectLesson(lessonId, noHistory) {
+if (!noHistory && state.lesson) pushNavigation('lesson', state.lesson.id);
 state.lesson = state.unit.lessons.find(l => l.id === lessonId);
 updateBreadcrumbs();
 renderLessonDetails();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
 function openExam() {
 if (state.lesson && state.lesson.examUrl && state.lesson.examUrl !== '#') {
+// Mark exam as done
+const key = getLessonKey();
+if (key) {
+ProgressManager.markExamDone(key);
+showToast('🎉 أحسنت! تم تسجيل إنجاز الاختبار');
+// Check if all units exams are done → show certificate
+const currKey = getCurriculumKey();
+const curriculum = DB.curriculum[currKey];
+if (curriculum && state.unit) {
+let allDone = true;
+state.unit.lessons.forEach(l => {
+const lk = `${currKey}-U${state.unit.id}-L${l.id}`;
+if (!ProgressManager.isExamDone(lk)) allDone = false;
+});
+if (allDone) {
+setTimeout(() => showCertificate(), 1500);
+}
+}
+}
 window.open(state.lesson.examUrl, '_blank');
 } else {
 alert('الاختبار قيد التحضير! 🚧');
 }
 }
-
 function openLesson() {
 if (state.lesson && state.lesson.lessonUrl && state.lesson.lessonUrl !== '#') {
+// Mark lesson as read & start tracking
+const key = getLessonKey();
+if (key) {
+ProgressManager.markLessonRead(key);
+ProgressManager.startTracking(key);
+// Stop tracking when tab is hidden or closed
+const handleVisibility = () => {
+if (document.hidden) {
+ProgressManager.stopTracking(key);
+} else {
+ProgressManager.startTracking(key);
+}
+};
+document.addEventListener('visibilitychange', handleVisibility);
+window.addEventListener('beforeunload', () => {
+ProgressManager.stopTracking(key);
+});
+}
 window.open(state.lesson.lessonUrl, '_blank');
 } else {
 alert('شرح الدرس قيد التحضير! 🚧');
 }
 }
-
 function updateBreadcrumbs() {
 const bc = document.getElementById('breadcrumbs');
 bc.classList.remove('hidden');
@@ -7341,7 +8036,6 @@ setBC('bc-subject-sep', 'bc-subject-btn', state.subject ? `${state.subject.icon}
 setBC('bc-unit-sep', 'bc-unit-btn', state.unit ? state.unit.name : '', !state.unit, state.unit ? () => selectUnit(state.unit.id) : null);
 setBC('bc-lesson-sep', 'bc-lesson-btn', state.lesson ? state.lesson.title : '', !state.lesson, state.lesson ? () => selectLesson(state.lesson.id) : null);
 }
-
 function renderHome() {
 document.getElementById('app').innerHTML = `
 <div class="gradient-primary rounded-3xl p-8 md:p-12 text-white mb-8 fade-in">
@@ -7371,7 +8065,6 @@ ${DB.terms.map(t => `
 </div>
 `;
 }
-
 function renderStreams() {
 document.getElementById('app').innerHTML = `
 <div class="gradient-secondary rounded-3xl p-8 text-white mb-8 fade-in">
@@ -7390,7 +8083,6 @@ ${DB.streams.map(s => `
 </div>
 `;
 }
-
 function renderPrograms() {
 document.getElementById('app').innerHTML = `
 <div class="gradient-warm rounded-3xl p-8 text-white mb-8 fade-in">
@@ -7410,7 +8102,6 @@ ${p.isEnglish ? '<div class="absolute top-3 left-3 bg-blue-500 text-white text-x
 </div>
 `;
 }
-
 function renderGrades() {
 const title = state.stream.id === 'advanced' && state.program
 ? `${state.term.icon} ${state.term.name} - متقدم - ${state.program.name}`
@@ -7430,7 +8121,6 @@ ${DB.grades.map(g => `
 </div>
 `;
 }
-
 function renderSubjects() {
 const programInfo = state.program ? ` • ${state.program.name}` : '';
 document.getElementById('app').innerHTML = `
@@ -7453,7 +8143,6 @@ return `
 </div>
 `;
 }
-
 function renderUnits() {
 const key = getCurriculumKey();
 const curriculum = DB.curriculum[key];
@@ -7483,14 +8172,19 @@ ${isEnglish ? '<div class="mt-3 inline-block bg-blue-500 text-white text-sm px-3
 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 fade-in">
 ${curriculum.units.map(u => {
 const lessonCount = u.lessons ? u.lessons.length : 0;
+const progress = ProgressManager.getUnitProgress(`${key}-U${u.id}`, lessonCount);
 return `
 <button onclick="selectUnit(${u.id})" class="card-hover bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md text-right border-2 border-transparent hover:border-indigo-500 dark:hover:border-indigo-400 ${contentClass}">
 <div class="flex items-center gap-4 mb-3">
 <div class="bg-gradient-to-br ${u.color} w-16 h-16 rounded-xl flex items-center justify-center text-3xl shadow-lg">${u.icon}</div>
 <div class="flex-1">
+<div class="flex items-center gap-2 flex-wrap">
 <h3 class="font-bold text-xl dark:text-white">${u.name}</h3>
+${progress === 100 ? '<span class="completed-badge">✓ مكتمل</span>' : ''}
+</div>
 ${u.description ? `<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">${u.description}</p>` : ''}
-<p class="text-xs text-indigo-600 dark:text-indigo-400 mt-2 font-semibold">📖 ${lessonCount} ${isEnglish ? 'lessons' : 'دروس'}</p>
+<p class="text-xs text-indigo-600 dark:text-indigo-400 mt-2 font-semibold">📖 ${lessonCount} ${isEnglish ? 'lessons' : 'دروس'} ${progress > 0 ? `• ${progress}%` : ''}</p>
+${progress > 0 ? `<div class="lesson-progress-bar"><div class="lesson-progress-fill" style="width: ${progress}%"></div></div>` : ''}
 </div>
 </div>
 <div class="flex items-center justify-between text-indigo-600 dark:text-indigo-400 font-semibold text-sm"><span>${isEnglish ? 'Browse lessons' : 'استعرض الدروس'}</span><span>${isEnglish ? '→' : '←'}</span></div>
@@ -7500,7 +8194,6 @@ ${u.description ? `<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">${u.
 </div>
 `;
 }
-
 function renderLessons() {
 const programInfo = state.program ? ` • ${state.program.name}` : '';
 const isEnglish = isCurrentEnglish();
@@ -7514,25 +8207,50 @@ ${isEnglish ? '<div class="mt-3 inline-block bg-blue-500 text-white text-sm px-3
 </div>
 <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">${isEnglish ? '📖 Lessons' : '📖 الدروس'}</h2>
 <div class="space-y-4 fade-in">
-${state.unit.lessons.map((l, idx) => `
+${state.unit.lessons.map((l, idx) => {
+const currKey = getCurriculumKey();
+const lessonKey = `${currKey}-U${state.unit.id}-L${l.id}`;
+const isRead = ProgressManager.isRead(lessonKey);
+const isExamDone = ProgressManager.isExamDone(lessonKey);
+const isFav = FavoritesManager.isFavorite(lessonKey);
+return `
 <button onclick="selectLesson(${l.id})" class="card-hover w-full bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-md flex items-center gap-4 text-right border-2 border-transparent hover:border-violet-500 dark:hover:border-violet-400 ${contentClass}">
-<div class="bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 rounded-xl w-14 h-14 flex items-center justify-center text-2xl font-bold flex-shrink-0">${l.icon}</div>
+<div class="bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 rounded-xl w-14 h-14 flex items-center justify-center text-2xl font-bold flex-shrink-0 relative">
+${l.icon}
+${isRead ? '<span class="absolute -top-1 -right-1 bg-green-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">✓</span>' : ''}
+</div>
 <div class="flex-1">
+<div class="flex items-center gap-2 flex-wrap">
 <h3 class="font-bold text-lg dark:text-white">${idx + 1}. ${l.title}</h3>
+${isExamDone ? '<span class="completed-badge">🏆</span>' : ''}
+</div>
 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">⏱️ ${l.duration}</p>
 </div>
+<button onclick="event.stopPropagation();toggleFavoriteFromList('${lessonKey}','${l.title.replace(/'/g,"\\'")}','${l.icon}','${state.unit.name.replace(/'/g,"\\'")}')" class="favorite-btn ${isFav ? 'active' : ''} text-2xl p-2" data-fav-key="${lessonKey}" title="المفضلة">
+${isFav ? '❤️' : '🤍'}
+</button>
 <div class="text-violet-600 dark:text-violet-400 text-2xl">${isEnglish ? '→' : '←'}</div>
 </button>
-`).join('')}
+`;
+}).join('')}
 </div>
 `;
 }
-
+function toggleFavoriteFromList(key, title, icon, unitName) {
+FavoritesManager.toggle(key, { title, icon, unitName });
+renderLessons();
+}
 function renderLessonDetails() {
 const c = state.lesson.content;
 const programInfo = state.program ? ` • ${state.program.name}` : '';
 const isEnglish = isCurrentEnglish();
 const contentClass = isEnglish ? 'en-content' : '';
+const lessonKey = getLessonKey();
+const isFav = FavoritesManager.isFavorite(lessonKey);
+const isRead = ProgressManager.isRead(lessonKey);
+const isExamDone = ProgressManager.isExamDone(lessonKey);
+const timeSpent = ProgressManager.getTimeSpent(lessonKey);
+const minutes = Math.floor(timeSpent / 60);
 let sectionsHTML = '';
 if (c && c.sections) {
 sectionsHTML = c.sections.map(s => {
@@ -7561,16 +8279,30 @@ return `<div class="my-4"><h4 class="font-bold text-lg mb-2 text-gray-800 dark:t
 }
 }).join('');
 }
+const shareUrl = state.lesson.lessonUrl || window.location.href;
 document.getElementById('app').innerHTML = `
 <div class="gradient-teal rounded-3xl p-8 text-white mb-8 fade-in">
 <div class="flex items-center gap-4 mb-4 flex-wrap">
 <button onclick="selectUnit(${state.unit.id})" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition">${isEnglish ? '← Back to Unit' : '→ رجوع للوحدة'}</button>
+<!-- NEW: زر المشاركة -->
+<button onclick="showShareModal('${state.lesson.title.replace(/'/g,"\\'")}','${shareUrl}')" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition flex items-center gap-2" title="مشاركة">
+<span>📤</span><span class="hidden sm:inline">${isEnglish ? 'Share' : 'مشاركة'}</span>
+</button>
+<!-- NEW: زر المفضلة -->
+<button onclick="toggleCurrentFavorite()" data-fav-key="${lessonKey}" class="favorite-btn ${isFav ? 'active' : ''} bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition flex items-center gap-2" title="المفضلة (Ctrl+D)">
+<span class="text-xl">${isFav ? '❤️' : '🤍'}</span><span class="hidden sm:inline">${isEnglish ? 'Favorite' : 'المفضلة'}</span>
+</button>
 </div>
 <div class="flex items-center gap-4 flex-wrap ${contentClass}">
 <span class="text-6xl">${state.lesson.icon}</span>
 <div>
+<div class="flex items-center gap-2 flex-wrap">
 <h1 class="text-3xl md:text-4xl font-bold mb-2">${state.lesson.title}</h1>
+${isRead ? '<span class="bg-green-500 text-white text-xs px-2 py-1 rounded-full">✓ مقروء</span>' : ''}
+${isExamDone ? '<span class="bg-amber-500 text-white text-xs px-2 py-1 rounded-full">🏆 مكتمل</span>' : ''}
+</div>
 <p class="opacity-90">⏱️ ${state.lesson.duration} • ${state.subject.name}${programInfo}</p>
+${timeSpent > 0 ? `<p class="opacity-90 text-xs mt-1">⏱️ الوقت المستغرق: ${minutes} دقيقة</p>` : ''}
 ${isEnglish ? '<div class="mt-2 inline-block bg-blue-500 text-white text-xs px-3 py-1 rounded-full">🇬🇧 English</div>' : ''}
 </div>
 </div>
@@ -7595,6 +8327,7 @@ ${sectionsHTML}
 <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg"><span class="text-xs text-gray-500 dark:text-gray-400">${isEnglish ? 'Unit' : 'الوحدة'}</span><p class="font-semibold dark:text-white ${contentClass}">${state.unit.name}</p></div>
 <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg"><span class="text-xs text-gray-500 dark:text-gray-400">${isEnglish ? 'Duration' : 'المدة الزمنية'}</span><p class="font-semibold dark:text-white">⏱️ ${state.lesson.duration}</p></div>
 <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg"><span class="text-xs text-gray-500 dark:text-gray-400">${isEnglish ? 'Grade' : 'الصف'}</span><p class="font-semibold dark:text-white">${state.grade.name}</p></div>
+${isRead ? `<div class="bg-green-50 dark:bg-green-900/30 p-3 rounded-lg border border-green-200 dark:border-green-800"><span class="text-xs text-green-600 dark:text-green-400">✓ ${isEnglish ? 'Status' : 'الحالة'}</span><p class="font-semibold text-green-700 dark:text-green-300">${isEnglish ? 'Completed' : 'مكتمل'}</p></div>` : ''}
 </div>
 <button onclick="openLesson()" class="mt-6 w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white py-4 rounded-xl font-bold transition transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
 <span class="text-2xl">📖</span><span>${state.lesson.lessonTitle || (isEnglish ? 'Lesson Explanation' : 'شرح الدرس')}</span><span>↗</span>
@@ -7604,18 +8337,35 @@ ${sectionsHTML}
 <span class="text-2xl">📝</span><span>${state.lesson.examTitle || (isEnglish ? 'Take the Quiz' : 'ابدأ الاختبار')}</span><span>↗</span>
 </button>
 <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">${isEnglish ? 'Opens in new tab' : 'سيفتح في نافذة جديدة'}</p>
+<!-- NEW: زر المشاركة السريع -->
+<button onclick="showShareModal('${state.lesson.title.replace(/'/g,"\\'")}','${shareUrl}')" class="mt-3 w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 rounded-xl font-bold transition transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
+<span class="text-xl">📤</span><span>${isEnglish ? 'Share Lesson' : 'مشاركة الدرس'}</span>
+</button>
 </div>
 <div class="bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-200 dark:border-amber-800 rounded-2xl p-6">
 <h4 class="font-bold text-amber-700 dark:text-amber-400 mb-2 flex items-center gap-2"><span>💡</span> ${isEnglish ? 'Tip' : 'نصيحة'}</h4>
 <p class="text-sm text-gray-700 dark:text-gray-300">${isEnglish ? 'Review the lesson thoroughly before starting the quiz for the best results!' : 'راجع الدرس جيداً قبل البدء في الاختبار للحصول على أفضل نتيجة!'}</p>
 </div>
+<!-- NEW: اختصارات لوحة المفاتيح -->
+<div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-4">
+<h4 class="font-bold text-gray-700 dark:text-gray-300 mb-2 text-sm flex items-center gap-2"><span>⌨️</span> ${isEnglish ? 'Keyboard Shortcuts' : 'اختصارات لوحة المفاتيح'}</h4>
+<div class="space-y-1 text-xs text-gray-600 dark:text-gray-400">
+<div class="flex justify-between"><span>${isEnglish ? 'Back' : 'رجوع'}</span><span class="kbd">Esc</span></div>
+<div class="flex justify-between"><span>${isEnglish ? 'Favorite' : 'المفضلة'}</span><span><span class="kbd">Ctrl</span> + <span class="kbd">D</span></span></div>
+<div class="flex justify-between"><span>${isEnglish ? 'Share' : 'مشاركة'}</span><span><span class="kbd">Ctrl</span> + <span class="kbd">S</span></span></div>
+</div>
+</div>
 </div>
 </div>
 `;
 }
-
 showHome();
-
+// ═══════════════════════════════════════════════════
+// NEW: INIT PROGRESS & FAVORITES ON LOAD
+// ═══════════════════════════════════════════════════
+ProgressManager.load();
+FavoritesManager.load();
+ProgressManager.updateUI();
 // ═══════════════════════════════════════════════════
 // SERVICE WORKER & INSTALL LOGIC
 // ═══════════════════════════════════════════════════
@@ -7626,10 +8376,8 @@ navigator.serviceWorker.register('./sw.js')
 .catch(err => console.log('❌ فشل التسجيل:', err));
 });
 }
-
 let deferredPrompt;
 const installButton = document.getElementById('installButton');
-
 window.addEventListener('beforeinstallprompt', (e) => {
 e.preventDefault();
 deferredPrompt = e;
@@ -7637,7 +8385,6 @@ console.log('📥 حدث التثبيت متوفر');
 installButton.classList.remove('hidden');
 installButton.style.animation = 'fadeInUp 0.5s ease-out';
 });
-
 const style = document.createElement('style');
 style.textContent = `
 @keyframes fadeInUp {
@@ -7652,7 +8399,6 @@ transform: translateY(0);
 }
 `;
 document.head.appendChild(style);
-
 function installApp() {
 if (deferredPrompt) {
 deferredPrompt.prompt();
@@ -7665,7 +8411,6 @@ installButton.classList.add('hidden');
 });
 }
 }
-
 window.addEventListener('appinstalled', () => {
 installButton.classList.add('hidden');
 deferredPrompt = null;
@@ -7673,5 +8418,4 @@ console.log('🎉 تم تثبيت التطبيق بنجاح');
 });
 </script>
 </body>
-</html></content>
-</writeToFile>
+</html>
