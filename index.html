@@ -7072,10 +7072,10 @@ return this.data;
 
 // Helper Functions
 function getCurriculumKey() {
-if (!state.subject || !state.grade || !state.term) return null;
-if (!state.stream) return null;
-const key = state.stream.id === 'advanced' ? state.program.id : 'general';
-return `${state.subject.id}-${state.grade.id}-${key}-${state.term.id}`;
+    if (!state.subject || !state.grade || !state.term) return null;
+    if (!state.stream) return null;
+    const key = state.stream.id === 'advanced' ? state.program.id : 'general';
+    return `${state.subject.id}-${state.grade.id}-${key}-${state.term.id}`;
 }
 
 function getSubjectKey(subjectId) {
