@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<writeToFile>
+<content><!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -54,38 +55,195 @@ table.comparison th { background: #f3f4f6; font-weight: bold; }
 .en-content table.comparison th, .en-content table.comparison td { text-align: left; }
 mark { background-color: #fbbf24; color: #000; padding: 0 2px; border-radius: 2px; }
 .dark mark { background-color: #d97706; color: #fff; }
-.lesson-progress-bar { width: 100%; height: 6px; background: #e5e7eb; border-radius: 3px; overflow: hidden; margin-top: 8px; }
-.lesson-progress-fill { height: 100%; background: linear-gradient(90deg, #10b981, #34d399); transition: width 0.5s ease; }
-.completed-badge { background: #10b981; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; }
-.favorite-btn { transition: all 0.3s; }
-.favorite-btn.active { transform: scale(1.2); }
-.kbd { background: #e5e7eb; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
-.dark .kbd { background: #374151; }
-/* Modal Styles */
-.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s; }
-.modal-overlay.active { opacity: 1; visibility: visible; }
-.modal-content { background: white; border-radius: 16px; padding: 2rem; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; transform: scale(0.9); transition: transform 0.3s; }
-.dark .modal-content { background: #1f2937; }
-.modal-overlay.active .modal-content { transform: scale(1); }
-/* Certificate Styles */
-.certificate { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 3rem; border-radius: 16px; text-align: center; }
-.certificate h2 { font-size: 2.5rem; margin-bottom: 1rem; }
-.certificate .student-name { font-size: 2rem; margin: 2rem 0; padding: 1rem; background: rgba(255,255,255,0.2); border-radius: 8px; }
-/* Toast Notification */
-.toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: #10b981; color: white; padding: 1rem 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 2000; transition: transform 0.3s; }
-.toast.show { transform: translateX(-50%) translateY(0); }
+/* ═══════════════════════════════════════════════════ */
+/* LOADER STYLES */
+/* ═══════════════════════════════════════════════════ */
+#page-loader {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100vh;
+z-index: 9999;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+overflow: hidden;
+transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+#page-loader::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-image: url('Loader.png');
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+filter: blur(8px) brightness(0.4);
+transform: scale(1.1);
+z-index: -1;
+}
+#page-loader::after {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: linear-gradient(135deg,
+rgba(102, 126, 234, 0.3) 0%,
+rgba(118, 75, 162, 0.3) 100%);
+z-index: -1;
+}
+.loader-spinner {
+width: 80px;
+height: 80px;
+border: 5px solid rgba(255, 255, 255, 0.2);
+border-top: 5px solid #ffffff;
+border-right: 5px solid #fbbf24;
+border-radius: 50%;
+animation: spin 1s linear infinite;
+margin-bottom: 2rem;
+box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+}
+@keyframes spin {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+.loader-text {
+color: #ffffff;
+font-size: 2rem;
+font-weight: 700;
+letter-spacing: 2px;
+text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+animation: textPulse 2s ease-in-out infinite;
+}
+@keyframes textPulse {
+0%, 100% {
+opacity: 0.7;
+transform: scale(1);
+}
+50% {
+opacity: 1;
+transform: scale(1.05);
+}
+}
+.loader-dots {
+display: inline-flex;
+gap: 4px;
+margin-right: 8px;
+}
+.loader-dots span {
+width: 8px;
+height: 8px;
+background: #fbbf24;
+border-radius: 50%;
+animation: dotBounce 1.4s ease-in-out infinite;
+}
+.loader-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loader-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dotBounce {
+0%, 80%, 100% {
+transform: scale(0.6);
+opacity: 0.5;
+}
+40% {
+transform: scale(1);
+opacity: 1;
+}
+}
+.loader-progress {
+width: 240px;
+height: 4px;
+background: rgba(255, 255, 255, 0.2);
+border-radius: 2px;
+margin-top: 2rem;
+overflow: hidden;
+position: relative;
+}
+.loader-progress-bar {
+height: 100%;
+background: linear-gradient(90deg, #fbbf24, #f59e0b);
+width: 0%;
+animation: progressFill 2.5s ease-in-out forwards;
+border-radius: 2px;
+box-shadow: 0 0 10px rgba(251, 191, 36, 0.8);
+}
+@keyframes progressFill {
+0% { width: 0%; }
+50% { width: 70%; }
+100% { width: 100%; }
+}
+#page-loader.hidden-loader {
+opacity: 0;
+visibility: hidden;
+}
+#main-content {
+opacity: 0;
+transition: opacity 0.8s ease;
+}
+#main-content.visible {
+opacity: 1;
+}
+/* ═══════════════════════════════════════════════════ */
+/* NEW HOME PAGE STYLES */
+/* ═══════════════════════════════════════════════════ */
+.animated-bg {
+background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+background-size: 400% 400%;
+animation: gradient 15s ease infinite;
+}
+.glass-effect {
+background: rgba(255, 255, 255, 0.1);
+backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.particle {
+position: absolute;
+border-radius: 50%;
+background: rgba(255, 255, 255, 0.3);
+animation: float 10s infinite;
+}
+.glow {
+box-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
+0 0 40px rgba(255, 255, 255, 0.3),
+0 0 60px rgba(255, 255, 255, 0.1);
+}
+.term-card {
+transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.term-card:hover {
+transform: translateY(-10px) scale(1.02);
+box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
 </style>
 </head>
 <body class="bg-gray-50 min-h-screen dark:bg-gray-900 dark:text-gray-100">
-<!-- Loader -->
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- LOADER -->
+<!-- ═══════════════════════════════════════════════════ -->
 <div id="page-loader">
 <div class="loader-spinner"></div>
-<div class="loader-text">جاري تحميل المنصة<span class="loader-dots"><span></span><span></span><span></span></span></div>
-<div class="loader-progress"><div class="loader-progress-bar"></div></div>
+<div class="loader-text">
+جاري تحميل المنصة
+<span class="loader-dots">
+<span></span>
+<span></span>
+<span></span>
+</span>
 </div>
-
-<!-- Main Content -->
-<div id="main-content" style="display:none;">
+<div class="loader-progress">
+<div class="loader-progress-bar"></div>
+</div>
+</div>
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- MAIN CONTENT (يظهر بعد اختفاء الـ Loader) -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div id="main-content">
 <!-- Top Bar -->
 <div class="gradient-primary text-white py-3 px-6 shadow-lg sticky top-0 z-50">
 <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-3">
@@ -102,16 +260,15 @@ class="w-full bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg py-
 <svg class="w-5 h-5 absolute right-3 top-2.5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
 </div>
 <div class="flex items-center gap-2 text-sm">
-<button onclick="showStatsModal()" class="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg transition" title="الإحصائيات">📊</button>
 <a href="https://hesham-afandi.github.io/DafterKhana/" target="_blank" title="مكتبة دفتر خانة"
 class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg transition font-medium">
-<span>📓</span><span class="hidden sm:inline">دفتر خانة</span>
+<span>📓</span>
+<span class="hidden sm:inline">دفتر خانة</span>
 </a>
 <button id="themeToggle" class="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition" title="تبديل الوضع">
 <svg id="sunIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
 <svg id="moonIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
 </button>
-<button onclick="showFavoritesModal()" class="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg transition" title="المفضلة">❤️</button>
 <span class="hidden md:block ml-2">مرحباً بك 👋</span>
 <button onclick="showHome()" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition">🎓 الرئيسية</button>
 </div>
@@ -121,8 +278,6 @@ class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-3 py-2 rounded-l
 class="w-full bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg py-2 px-4 text-white placeholder-white/70 focus:outline-none focus:bg-white/30 transition text-sm">
 </div>
 </div>
-
-<!-- Breadcrumbs -->
 <div id="breadcrumbs" class="max-w-7xl mx-auto px-6 py-4 hidden">
 <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 flex-wrap">
 <button onclick="showHome()" class="hover:text-indigo-600 dark:hover:text-indigo-400">🎓 الرئيسية</button>
@@ -142,11 +297,7 @@ class="w-full bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg py-
 <button id="bc-lesson-btn" class="hidden hover:text-indigo-600 dark:hover:text-indigo-400"></button>
 </div>
 </div>
-
-<!-- App Container -->
 <div id="app" class="max-w-7xl mx-auto px-4 md:px-6 pb-12"></div>
-
-<!-- Footer -->
 <footer class="bg-gray-900 text-white py-8 mt-16">
 <div class="max-w-7xl mx-auto px-6 text-center">
 <img src="logo.png" alt="4U Logo" class="h-16 w-auto mx-auto mb-4 drop-shadow-lg">
@@ -157,17 +308,20 @@ class="w-full bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg py-
 </div>
 </div>
 </footer>
-</div>
+</div> <!-- نهاية main-content -->
 
-<!-- Install Button -->
+<!-- زر التثبيت العائم - تصميم محسّن -->
 <div id="installButton" class="hidden fixed bottom-6 left-6 z-50">
 <button onclick="installApp()"
 class="group relative bg-gradient-to-br from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:shadow-teal-500/50"
 title="تثبيت التطبيق">
+<!-- أيقونة التثبيت -->
 <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 transition-transform duration-300 group-hover:-translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
 <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
 </svg>
+<!-- نبضة خفيفة لجذب الانتباه -->
 <span class="absolute inset-0 rounded-full bg-teal-400 opacity-75 animate-ping"></span>
+<!-- Tooltip عند التمرير -->
 <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-gray-900 text-white text-xs font-semibold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none shadow-lg">
 📲 تثبيت التطبيق
 <span class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></span>
@@ -175,43 +329,127 @@ title="تثبيت التطبيق">
 </button>
 </div>
 
-<!-- Modals -->
-<div id="statsModal" class="modal-overlay" onclick="if(event.target===this)closeStatsModal()">
-<div class="modal-content dark:bg-gray-800">
-<h2 class="text-2xl font-bold mb-6 dark:text-white">📊 إحصائيات تقدمك</h2>
-<div id="statsContent"></div>
-<button onclick="closeStatsModal()" class="mt-6 w-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 py-3 rounded-lg font-bold transition">إغلاق</button>
-</div>
-</div>
-
-<div id="favoritesModal" class="modal-overlay" onclick="if(event.target===this)closeFavoritesModal()">
-<div class="modal-content dark:bg-gray-800">
-<h2 class="text-2xl font-bold mb-6 dark:text-white">❤️ الدروس المفضلة</h2>
-<div id="favoritesContent"></div>
-<button onclick="closeFavoritesModal()" class="mt-6 w-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 py-3 rounded-lg font-bold transition">إغلاق</button>
-</div>
-</div>
-
-<div id="shareModal" class="modal-overlay" onclick="if(event.target===this)closeShareModal()">
-<div class="modal-content dark:bg-gray-800">
-<h2 class="text-2xl font-bold mb-6 dark:text-white">📤 مشاركة الدرس</h2>
-<div id="shareContent"></div>
-<button onclick="closeShareModal()" class="mt-6 w-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 py-3 rounded-lg font-bold transition">إغلاق</button>
-</div>
-</div>
-
-<div id="certificateModal" class="modal-overlay" onclick="if(event.target===this)closeCertificateModal()">
-<div class="modal-content" style="max-width:800px;">
-<div id="certificateContent"></div>
-<button onclick="closeCertificateModal()" class="mt-6 w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-lg font-bold transition">إغلاق</button>
-</div>
-</div>
-
-<!-- Toast -->
-<div id="toast" class="toast"></div>
-
 <script>
-// Database
+// ═══════════════════════════════════════════════════
+// LOADER LOGIC
+// ═══════════════════════════════════════════════════
+window.addEventListener('load', () => {
+const loader = document.getElementById('page-loader');
+const mainContent = document.getElementById('main-content');
+setTimeout(() => {
+loader.classList.add('hidden-loader');
+mainContent.classList.add('visible');
+setTimeout(() => {
+loader.style.display = 'none';
+}, 800);
+}, 2500);
+});
+
+document.getElementById('page-loader').addEventListener('click', function() {
+this.classList.add('hidden-loader');
+document.getElementById('main-content').classList.add('visible');
+setTimeout(() => {
+this.style.display = 'none';
+}, 800);
+});
+
+// ═══════════════════════════════════════════════════
+// DARK MODE LOGIC
+// ═══════════════════════════════════════════════════
+const themeToggleBtn = document.getElementById('themeToggle');
+const sunIcon = document.getElementById('sunIcon');
+const moonIcon = document.getElementById('moonIcon');
+const htmlElement = document.documentElement;
+
+function applyTheme(isDark) {
+if (isDark) {
+htmlElement.classList.add('dark');
+sunIcon.classList.remove('hidden');
+moonIcon.classList.add('hidden');
+} else {
+htmlElement.classList.remove('dark');
+sunIcon.classList.add('hidden');
+moonIcon.classList.remove('hidden');
+}
+}
+
+const savedTheme = localStorage.getItem('theme');
+const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+let isDarkMode = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
+applyTheme(isDarkMode);
+
+themeToggleBtn.addEventListener('click', () => {
+isDarkMode = !isDarkMode;
+applyTheme(isDarkMode);
+localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+});
+
+// ═══════════════════════════════════════════════════
+// SEARCH LOGIC
+// ═══════════════════════════════════════════════════
+const searchInputs = [document.getElementById('searchInput'), document.getElementById('mobileSearchInput')];
+
+function performSearch(query) {
+const term = query.toLowerCase().trim();
+if (term === '' && !state.lesson && !state.unit) {
+document.querySelectorAll('#app button, #app a').forEach(el => {
+el.style.display = '';
+});
+return;
+}
+if (state.lesson || state.unit) {
+showHome();
+setTimeout(() => filterCurriculum(term), 50);
+return;
+}
+filterCurriculum(term);
+}
+
+function filterCurriculum(term) {
+const allButtons = document.querySelectorAll('#app .grid button, #app .space-y-4 button');
+let visibleCount = 0;
+allButtons.forEach(el => {
+const text = el.textContent.toLowerCase();
+if (term === '' || text.includes(term)) {
+el.style.display = '';
+el.style.opacity = '1';
+visibleCount++;
+} else {
+el.style.display = 'none';
+}
+});
+
+const appDiv = document.getElementById('app');
+let noResultsMsg = document.getElementById('custom-no-results');
+if (visibleCount === 0 && term !== '') {
+if (!noResultsMsg) {
+noResultsMsg = document.createElement('div');
+noResultsMsg.id = 'custom-no-results';
+noResultsMsg.className = 'text-center py-12 fade-in';
+noResultsMsg.innerHTML = `
+<div class="text-6xl mb-4">🔍</div>
+<h3 class="text-xl font-bold text-gray-700 dark:text-gray-300 mb-2">لا توجد نتائج مطابقة</h3>
+<p class="text-gray-500 dark:text-gray-400">جرب البحث بكلمات مختلفة مثل "فيزياء"، "مثلثات"، أو "SAT"</p>
+`;
+appDiv.appendChild(noResultsMsg);
+}
+} else {
+if (noResultsMsg) noResultsMsg.remove();
+}
+}
+
+searchInputs.forEach(input => {
+input.addEventListener('input', (e) => {
+searchInputs.forEach(i => {
+if(i !== e.target) i.value = e.target.value;
+});
+performSearch(e.target.value);
+});
+});
+
+// ═══════════════════════════════════════════════════
+// DATABASE
+// ═══════════════════════════════════════════════════
 const DB = {
 terms: [
 { id: 1, name: 'الترم الأول', icon: '📘' },
@@ -237,355 +475,8 @@ subjects: [
 { id: 'math', name: 'الرياضيات', icon: '📐' },
 { id: 'chemistry', name: 'الكيمياء', icon: '🧪' },
 { id: 'biology', name: 'الأحياء', icon: '🧬' }
-],curriculum: {
-  // ═══════════════════════════════════════════════
-// PHYSICS 12 ADVANCED BRIDGE - TERM 1
-// الصف 12 متقدم بريدج - الفصل الأول (فيزياء)
-// ═══════════════════════════════════════════════
-'physics-12-bridge-1': {
-isEnglish: false,
-units: [
-// ═══════════════════════════════════════════════
-// UNIT 1: القوى الكهروستاتيكية
-// ═══════════════════════════════════════════════
-{
-id: 1,
-name: 'الوحدة الأولى: القوى الكهروستاتيكية',
-icon: '⚡',
-color: 'from-blue-500 to-cyan-600',
-description: 'دراسة الشحنة الكهربائية، طرق الشحن، قانون كولوم، والقوة الكهروستاتيكية بين الشحنات',
-lessons: [
-{
-id: 1,
-title: 'الجزء الأول: الكهرومغناطيسية - الشحنة الكهربائية',
-icon: '🔋',
-duration: '50 دقيقة',
-lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-1.1-1.4/',
-examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-1.1-1.4-exam/',
-lessonTitle: '📖 شرح الدرس',
-examTitle: '📝 ابدأ الاختبار',
-content: {
-intro: 'الكهرومغناطيسية هي أحد فروع الفيزياء التي تدرس الظواهر الكهربائية والمغناطيسية. تبدأ رحلتنا بفهم الشحنة الكهربائية - إحدى الخصائص الأساسية للمادة التي تُسبب القوى الكهربائية.',
-sections: [
-{ title: '📋 مفهوم الشحنة الكهربائية', type: 'bullets', content: [
-'الشحنة الكهربائية (Electric Charge): خاصية أساسية للمادة تُسبب تفاعلها مع المجالات الكهرومغناطيسية',
-'رمز الشحنة: Q أو q وتقاس بوحدة الكولوم (Coulomb - C)',
-'هناك نوعان من الشحنات: موجبة (+) وسالبة (-)',
-'الشحنات المتشابهة تتنافر، والمختلفة تتجاذب',
-'الشحنة الأولية: e = 1.6 × 10⁻¹⁹ C (شحنة الإلكترون سالبة، والبروتون موجبة)'
-]},
-{ title: 'قانون حفظ الشحنة الكهربية', type: 'formula', content: 'ΣQ قبل = ΣQ بعد (الشحنة لا تُفنى ولا تُستحدث)' },
-{ title: 'تكميم الشحنة (Quantization)', type: 'formula', content: 'Q = n·e (حيث n عدد صحيح، e = 1.6 × 10⁻¹⁹ C)' },
-{ title: '📋 طرق شحن الأجسام', type: 'table', headers: ['الطريقة', 'الآلية', 'مثال'], rows: [
-['الشحن بالدلك (Friction)', 'انتقال الإلكترونات بالاحتكاك', 'دلك الزجاج بالحرير'],
-['الشحن بالتلامس (Conduction)', 'انتقال الشحنة بالملامسة المباشرة', 'مس جسم مشحون بجسم متعادل'],
-['الشحن بالحث (Induction)', 'إعادة توزيع الشحنات دون تلامس', 'تقريب جسم مشحون من موصل']
-]},
-{ title: 'الموصلات والعوازل', type: 'bullets', content: [
-'الموصلات (Conductors): تسمح بحرية حركة الشحنات (المعادن - النحاس - الفضة)',
-'العوازل (Insulators): تمنع حركة الشحنات (المطاط - الزجاج - البلاستيك)',
-'أشباه الموصلات (Semiconductors): بين الموصل والعازل (السيليكون - الجرمانيوم)',
-'الموصلات الفائقة (Superconductors): مقاومتها صفر عند درجات حرارة منخفضة جداً'
-]},
-{ title: 'ثابت العزل الكهربائي للفراغ', type: 'formula', content: 'ε₀ = 8.85 × 10⁻¹² C²/(N·m²)' }
-]
-}
-},
-{
-id: 2,
-title: 'الجزء الثاني: الشحن والقوة الكهروستاتيكي - قوانين كولوم ونيوتن',
-icon: '⚖️',
-duration: '55 دقيقة',
-lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-1.5-1.6/',
-examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-1.5-1.6-exam/',
-lessonTitle: '📖 شرح الدرس',
-examTitle: '📝 ابدأ الاختبار',
-content: {
-intro: 'قانون كولوم هو القانون الأساسي الذي يحكم القوة بين الشحنات الكهربية الساكنة. يشبه في صياغته قانون نيوتن للجذب العام، لكنه يتعامل مع الشحنات بدلاً من الكتل.',
-sections: [
-{ title: '📋 نص قانون كولوم', type: 'bullets', content: [
-'القوة الكهروستاتيكية بين شحنتين نقطيتين تتناسب طردياً مع حاصل ضرب الشحنتين',
-'وتتناسب عكسياً مع مربع المسافة بينهما',
-'وتؤثر القوة على خط الواصل بين الشحنتين',
-'قوة تجاذب إذا كانت الشحنتان مختلفتين، وتنافر إذا كانتا متشابهتين'
-]},
-{ title: 'صيغة قانون كولوم', type: 'formula', content: 'F = k · |q₁·q₂| / r²' },
-{ title: 'ثابت كولوم', type: 'formula', content: 'k = 1/(4πε₀) = 8.99 × 10⁹ N·m²/C²' },
-{ title: 'الصيغة البديلة باستخدام ε₀', type: 'formula', content: 'F = |q₁·q₂| / (4πε₀·r²)' },
-{ title: '📋 مقارنة: كولوم vs نيوتن للجذب', type: 'table', headers: ['وجه المقارنة', 'قانون كولوم', 'قانون نيوتن للجذب'], rows: [
-['الصيغة الرياضية', 'F = k·q₁q₂/r²', 'F = G·m₁m₂/r²'],
-['نوع القوة', 'تجاذب أو تنافر', 'تجاذب فقط'],
-['الثابت', 'k = 8.99 × 10⁹', 'G = 6.67 × 10⁻¹¹'],
-['المؤثر', 'الشحنات الكهربائية', 'الكتل'],
-['شدة القوة', 'قوية جداً', 'ضعيفة جداً'],
-['التناسب', 'مع 1/r²', 'مع 1/r²']
-]},
-{ title: 'مبدأ تراكب القوى (Superposition)', type: 'formula', content: 'F_net = F₁ + F₂ + F₃ + ... = ΣFᵢ (الجمع الاتجاهي)' },
-{ title: '💡 ملاحظات هامة', type: 'bullets', content: [
-'قانون كولوم ينطبق على الشحنات النقطية أو الكرات المنتظمة',
-'القوة الكهروستاتيكية أكبر بكثير من قوة الجذب (≈ 10³⁹ مرة للإلكترونات)',
-'القوة الكهروستاتيكية قوة محافظة (يمكن تعريف طاقة وضع لها)',
-'في المسائل ثنائية الأبعاد: نحلل القوى إلى مركبات x, y ثم نجمع'
-]}
-]
-}
-}
-]
-},
-// ═══════════════════════════════════════════════
-// UNIT 2: المجالات الكهربية وقانون جاوس
-// ═══════════════════════════════════════════════
-{
-id: 2,
-name: 'الوحدة الثانية: المجالات الكهربية وقانون جاوس',
-icon: '🌐',
-color: 'from-purple-500 to-pink-600',
-description: 'دراسة المجال الكهربي، التدفق الكهربي، قانون جاوس وتطبيقاته في حساب المجالات',
-lessons: [
-{
-id: 1,
-title: 'الجزء الأول: المجال الكهربي - المجال عن شحنة نقطية',
-icon: '🌐',
-duration: '55 دقيقة',
-lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-2.1-2.4/',
-examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-2.1-2.4-exam/',
-lessonTitle: '📖 شرح الدرس',
-examTitle: '📝 ابدأ الاختبار',
-content: {
-intro: 'المجال الكهربي هو المنطقة المحيطة بالشحنة التي تؤثر فيها بقوة على الشحنات الأخرى. بدلاً من التفكير في "التأثير عن بُعد"، نصف التأثير من خلال المجال.',
-sections: [
-{ title: '📋 تعريف المجال الكهربي', type: 'bullets', content: [
-'المجال الكهربي (E): كمية متجهة تصف القوة المؤثرة على شحنة اختبار موجبة موضوعة في نقطة ما',
-'وحدته: N/C أو V/m (فولت/متر)',
-'اتجاه المجال: نفس اتجاه القوة على شحنة اختبار موجبة',
-'يخرج من الشحنات الموجبة ويدخل إلى الشحنات السالبة'
-]},
-{ title: 'التعريف الرياضي للمجال', type: 'formula', content: 'E⃗ = F⃗ / q₀' },
-{ title: 'المجال عن شحنة نقطية', type: 'formula', content: 'E = k·|Q| / r²' },
-{ title: 'الصيغة باستخدام ε₀', type: 'formula', content: 'E = |Q| / (4πε₀·r²)' },
-{ title: '📋 خصائص خطوط المجال الكهربي', type: 'bullets', content: [
-'تبدأ من الشحنات الموجبة وتنتهي عند السالبة',
-'لا تتقاطع أبداً (لأن للمجال اتجاه واحد عند كل نقطة)',
-'كثافتها تدل على شدة المجال',
-'عمودية على سطح الموصل عند التوازن الكهروستاتيكي',
-'داخل الموصل: E = 0 (عند التوازن)'
-]},
-{ title: 'مبدأ تراكب المجالات', type: 'formula', content: 'E⃗_net = E⃗₁ + E⃗₂ + E⃗₃ + ... = ΣE⃗ᵢ' },
-{ title: '💡 تطبيقات', type: 'bullets', content: [
-'إيجاد المجال عند نقطة منتصفة بين شحنتين',
-'حساب المجال على محور حلقة مشحونة',
-'المجال على محور ثنائي القطب (Dipole)'
-]}
-]
-}
-},
-{
-id: 2,
-title: 'الجزء الثاني: التوزيعات العامة للشحنة - القوة الناتجة عن المجال',
-icon: '📊',
-duration: '55 دقيقة',
-lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-2.5-2.6/',
-examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-2.5-2.6-exam/',
-lessonTitle: '📖 شرح الدرس',
-examTitle: '📝 ابدأ الاختبار',
-content: {
-intro: 'في الواقع، الشحنات نادراً ما تكون نقطية. غالباً ما تكون موزعة على أسلاك أو أسطح أو أحجام. نتعلم هنا كيفية التعامل مع هذه التوزيعات.',
-sections: [
-{ title: '📋 أنواع كثافة الشحنة', type: 'table', headers: ['النوع', 'الرمز', 'الصيغة', 'الوحدة'], rows: [
-['كثافة خطية (Linear)', 'λ', 'λ = Q/L', 'C/m'],
-['كثافة سطحية (Surface)', 'σ', 'σ = Q/A', 'C/m²'],
-['كثافة حجمية (Volume)', 'ρ', 'ρ = Q/V', 'C/m³']
-]},
-{ title: 'المجال لشحنة نقطية متجهة', type: 'formula', content: 'E⃗ = (k·Q/r²)·r̂' },
-{ title: 'المجال لتوزيع مستمر', type: 'formula', content: 'E⃗ = k·∫(dq/r²)·r̂' },
-{ title: 'القوة على شحنة في مجال', type: 'formula', content: 'F⃗ = q·E⃗' },
-{ title: 'حركة شحنة في مجال منتظم', type: 'bullets', content: [
-'التسارع: a = qE/m',
-'شحنة موجبة تتسارع في اتجاه المجال',
-'شحنة سالبة تتسارع عكس اتجاه المجال',
-'حركة مكافئة لحركة المقذوفات في مجال الجاذبية'
-]},
-{ title: '💡 حالات خاصة مشهورة', type: 'bullets', content: [
-'سلك طويل مشحون (بعيد عنه): E ≈ 2kλ/r',
-'مستوى لا نهائي مشحون: E = σ/(2ε₀) (ثابت لا يعتمد على المسافة)',
-'بين لوحين متوازيين: E = σ/ε₀'
-]}
-]
-}
-},
-{
-id: 3,
-title: 'الجزء الثالث: التدفق الكهربي - قانون جاوس - حالات جاوس الخاصة',
-icon: '🔬',
-duration: '60 دقيقة',
-lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-2.7-2.9/',
-examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-2.7-2.9-exam/',
-lessonTitle: '📖 شرح الدرس',
-examTitle: '📝 ابدأ الاختبار',
-content: {
-intro: 'قانون جاوس هو أحد معادلات ماكسويل الأربع، ويعطينا طريقة أنيقة لحساب المجال الكهربي عندما يكون التوزيع متماثلاً.',
-sections: [
-{ title: '📋 التدفق الكهربي (Electric Flux)', type: 'bullets', content: [
-'التدفق الكهربي (Φ): مقياس لعدد خطوط المجال التي تخترق سطحاً ما',
-'وحدته: N·m²/C أو V·m',
-'كمية قياسية (ليست متجهة)',
-'يمكن أن يكون موجباً أو سالباً أو صفراً'
-]},
-{ title: 'صيغة التدفق الكهربي', type: 'formula', content: 'Φ = E⃗ · A⃗ = E·A·cos(θ)' },
-{ title: 'التدفق لسطح مغلق', type: 'formula', content: 'Φ = ∮E⃗ · dA⃗' },
-{ title: '📋 نص قانون جاوس', type: 'bullets', content: [
-'التدفق الكهربي الكلي عبر أي سطح مغلق = الشحنة المحصورة مقسومة على ε₀',
-'لا يعتمد على شكل السطح أو حجمه',
-'الشحنات خارج السطح لا تساهم في التدفق الكلي'
-]},
-{ title: 'صيغة قانون جاوس', type: 'formula', content: '∮E⃗ · dA⃗ = Q_enc / ε₀' },
-{ title: '📋 حالات جاوس الخاصة', type: 'table', headers: ['التوزيع', 'السطح الغاوسي', 'المجال E'], rows: [
-['كرة مشحونة (خارجها)', 'كرة نصف قطرها r', 'E = kQ/r²'],
-['كرة مشحونة (داخلها)', 'كرة نصف قطرها r<R', 'E = kQr/R³ (منتظمة)'],
-['سلك طويل لا نهائي', 'أسطوانة', 'E = λ/(2πε₀r)'],
-['مستوى لا نهائي', 'صندوق', 'E = σ/(2ε₀)'],
-['موصل عند التوازن', 'داخل الموصل', 'E = 0']
-]},
-{ title: '💡 شروط اختيار السطح الغاوسي', type: 'bullets', content: [
-'يجب أن يكون E ثابت المقدار على السطح',
-'يجب أن يكون E موازياً أو عمودياً على السطح',
-'يُختار السطح ليتناسب مع تماثل التوزيع'
-]}
-]
-}
-}
-]
-},
-// ═══════════════════════════════════════════════
-// UNIT 3: الطاقة الكهربية
-// ═══════════════════════════════════════════════
-{
-id: 3,
-name: 'الوحدة الثالثة: الطاقة الكهربية',
-icon: '⚡',
-color: 'from-yellow-500 to-orange-600',
-description: 'دراسة طاقة الوضع الكهربية، الجهد الكهربي، أسطح تساوي الجهد، وتطبيقاتها',
-lessons: [
-{
-id: 1,
-title: 'الجزء الأول: طاقة الوضع الكهربية - تعريف الجهد الكهربي',
-icon: '🔋',
-duration: '55 دقيقة',
-lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-3.1-3.2/',
-examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-3.1-3.2-exam/',
-lessonTitle: '📖 شرح الدرس',
-examTitle: '📝 ابدأ الاختبار',
-content: {
-intro: 'بما أن القوة الكهروستاتيكية قوة محافظة، يمكننا تعريف طاقة وضع لها. الجهد الكهربي هو طاقة الوضع لكل وحدة شحنة - وهو مفهوم أساسي في الدوائر الكهربية.',
-sections: [
-{ title: '📋 طاقة الوضع الكهربية (U)', type: 'bullets', content: [
-'طاقة الوضع الكهربية: الطاقة المخزنة في نظام من الشحنات بسبب مواقعها النسبية',
-'وحدتها: الجول (J)',
-'القوة الكهروستاتيكية محافظة → يمكن تعريف U',
-'الشغل المبذول = -ΔU (نقصان طاقة الوضع)'
-]},
-{ title: 'طاقة الوضع لشحنتين نقطيتين', type: 'formula', content: 'U = k·q₁·q₂ / r' },
-{ title: 'العلاقة بين الشغل وطاقة الوضع', type: 'formula', content: 'W = -ΔU = U_i - U_f' },
-{ title: '📋 تعريف الجهد الكهربي (V)', type: 'bullets', content: [
-'الجهد الكهربي: طاقة الوضع الكهربية لكل وحدة شحنة',
-'V = U/q',
-'وحدته: الفولت (V) = J/C',
-'كمية قياسية (ليست متجهة)',
-'الجهد عند اللانهاية = صفر (كمرجع)'
-]},
-{ title: 'الجهد عن شحنة نقطية', type: 'formula', content: 'V = k·Q / r' },
-{ title: 'فرق الجهد', type: 'formula', content: 'ΔV = V_B - V_A = W_{A→B} / q = -∫E⃗·dl⃗' },
-{ title: 'الإلكترون فولت (eV)', type: 'formula', content: '1 eV = 1.6 × 10⁻¹⁹ J' },
-{ title: '💡 ملاحظات', type: 'bullets', content: [
-'الجهد موجب قرب الشحنات الموجبة، وسالب قرب السالبة',
-'الشحنة الموجبة تتحرك تلقائياً من جهد عالٍ إلى منخفض',
-'الشحنة السالبة تتحرك تلقائياً من جهد منخفض إلى عالٍ'
-]}
-]
-}
-},
-{
-id: 2,
-title: 'الجزء الثاني: أسطح وخطوط تساوي الجهد - الجهد للتوزيعات العامة',
-icon: '📈',
-duration: '55 دقيقة',
-lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-3.3-3.4/',
-examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-3.3-3.4-exam/',
-lessonTitle: '📖 شرح الدرس',
-examTitle: '📝 ابدأ الاختبار',
-content: {
-intro: 'أسطح تساوي الجهد هي الأسطح التي يكون عندها الجهد ثابتاً. هذه الأسطح دائماً عمودية على خطوط المجال الكهربي.',
-sections: [
-{ title: '📋 أسطح تساوي الجهد (Equipotential Surfaces)', type: 'bullets', content: [
-'السطح متساوي الجهد: كل نقاطه لها نفس قيمة الجهد',
-'لا يُبذل شغل عند تحريك شحنة على سطح متساوي الجهد',
-'خطوط المجال الكهربي دائماً عمودية على أسطح تساوي الجهد',
-'أسطح تساوي الجهد لا تتقاطع أبداً'
-]},
-{ title: 'أمثلة على أسطح تساوي الجهد', type: 'table', headers: ['التوزيع', 'شكل السطح'], rows: [
-['شحنة نقطية', 'كرات متمركزة حول الشحنة'],
-['مجال منتظم', 'مستويات متوازية عمودية على المجال'],
-['سلك طويل مشحون', 'أسطوانات متحد المحور'],
-['موصل عند التوازن', 'سطح الموصل نفسه متساوي الجهد']
-]},
-{ title: 'العلاقة بين المجال والجهد', type: 'formula', content: 'E = -dV/dr (في بعد واحد)' },
-{ title: 'الصيغة المتجهية', type: 'formula', content: 'E⃗ = -∇V (تدرج الجهد)' },
-{ title: '💡 الدلالة الفيزيائية', type: 'bullets', content: [
-'المجال الكهربي يشير من الجهد الأعلى إلى الأقل',
-'شدة المجال = معدل تغير الجهد مع المسافة',
-'كلما تقاربت أسطح تساوي الجهد، زادت شدة المجال'
-]},
-{ title: 'جهد التوزيعات الشائعة', type: 'table', headers: ['التوزيع', 'الجهد V'], rows: [
-['شحنة نقطية', 'V = kQ/r'],
-['كرة مشحونة (خارجها)', 'V = kQ/r'],
-['كرة مشحونة (داخلها)', 'V = kQ/R (ثابت)'],
-['مكثف متوازي اللوحين', 'V = E·d']
-]}
-]
-}
-},
-{
-id: 3,
-title: 'الجزء الثالث: الجهد من المجال - طاقة الوضع لنظام مختلف الشحنات',
-icon: '🎯',
-duration: '60 دقيقة',
-lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-3.5-3.6/',
-examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-3.5-3.6-exam/',
-lessonTitle: '📖 شرح الدرس',
-examTitle: '📝 ابدأ الاختبار',
-content: {
-intro: 'يمكن حساب الجهد من المجال الكهربي بالتكامل، والعكس صحيح. كما يمكننا حساب طاقة الوضع الكلية لأي نظام من الشحنات.',
-sections: [
-{ title: 'حساب الجهد من المجال', type: 'formula', content: 'V_B - V_A = -∫ₐᵇ E⃗ · dl⃗' },
-{ title: 'حساب المجال من الجهد', type: 'formula', content: 'E_x = -∂V/∂x , E_y = -∂V/∂y , E_z = -∂V/∂z' },
-{ title: '📋 طاقة الوضع لنظام من الشحنات', type: 'bullets', content: [
-'الطاقة الكلية = مجموع طاقات كل زوج من الشحنات',
-'نحسب الطاقة اللازمة لتجميع الشحنات من اللانهاية',
-'الطاقة كمية قياسية (جمع جبري وليس اتجاهي)'
-]},
-{ title: 'طاقة الوضع لنظام من n شحنة', type: 'formula', content: 'U = (1/2)·Σᵢ Σⱼ₌ᵢ₊₁ⁿ k·qᵢ·qⱼ / rᵢⱼ' },
-{ title: 'طاقة الوضع لشحنتين', type: 'formula', content: 'U = k·q₁·q₂ / r₁₂' },
-{ title: 'طاقة الوضع لثلاث شحنات', type: 'formula', content: 'U = k·(q₁q₂/r₁₂ + q₁q₃/r₁₃ + q₂q₃/r₂₃)' },
-{ title: '💡 طاقة المكثف', type: 'bullets', content: [
-'المكثف يخزن طاقة في مجاله الكهربي',
-'U = ½CV² = ½QV = Q²/(2C)',
-'كثافة الطاقة في المجال: u = ½ε₀E² (J/m³)'
-]},
-{ title: '📋 مقارنة: الجهد vs المجال', type: 'table', headers: ['الخاصية', 'الجهد V', 'المجال E'], rows: [
-['النوع', 'كمية قياسية', 'كمية متجهة'],
-['الوحدة', 'فولت (V)', 'N/C أو V/m'],
-['العلاقة', 'V = kQ/r', 'E = kQ/r²'],
-['التناسب', 'مع 1/r', 'مع 1/r²'],
-['الحساب', 'جمع جبري', 'جمع اتجاهي'],
-['الاشتقاق', 'E = -dV/dr', 'V = -∫E·dr']
-]}
-]
-}
-}
-]
-}
-]
-},
+],
+curriculum: {
   'math-12-bridge-1': {
 isEnglish: false,
 units: [
@@ -6978,143 +6869,32 @@ sections: [
 }
 };
 
-
-// State
 let state = { term: null, stream: null, program: null, grade: null, subject: null, unit: null, lesson: null };
-let navigationHistory = [];
 
-// Progress Manager
-const ProgressManager = {
-data: {},
-load() {
-const saved = localStorage.getItem('progress');
-if (saved) this.data = JSON.parse(saved);
-},
-save() {
-localStorage.setItem('progress', JSON.stringify(this.data));
-},
-markLessonRead(key) {
-if (!this.data[key]) this.data[key] = { read: false, examDone: false, timeSpent: 0 };
-this.data[key].read = true;
-this.save();
-this.updateUI();
-},
-markExamDone(key) {
-if (!this.data[key]) this.data[key] = { read: false, examDone: false, timeSpent: 0 };
-this.data[key].examDone = true;
-this.save();
-this.updateUI();
-},
-isRead(key) {
-return this.data[key] && this.data[key].read;
-},
-isExamDone(key) {
-return this.data[key] && this.data[key].examDone;
-},
-startTracking(key) {
-if (!this.data[key]) this.data[key] = { read: false, examDone: false, timeSpent: 0 };
-this.data[key].trackingInterval = setInterval(() => {
-this.data[key].timeSpent++;
-this.save();
-}, 1000);
-},
-stopTracking(key) {
-if (this.data[key] && this.data[key].trackingInterval) {
-clearInterval(this.data[key].trackingInterval);
-delete this.data[key].trackingInterval;
+function getCurriculumKey() {
+if (!state.subject || !state.grade || !state.term) return null;
+if (!state.stream) return null;
+const key = state.stream.id === 'advanced' ? state.program.id : 'general';
+return `${state.subject.id}-${state.grade.id}-${key}-${state.term.id}`;
 }
-},
-getTimeSpent(key) {
-return this.data[key] ? this.data[key].timeSpent : 0;
-},
-getUnitProgress(unitKey, lessonCount) {
-if (lessonCount === 0) return 0;
-let done = 0;
-for (let i = 1; i <= lessonCount; i++) {
-const lessonKey = `${unitKey}-L${i}`;
-if (this.isExamDone(lessonKey)) done++;
-}
-return Math.round((done / lessonCount) * 100);
-},
-updateUI() {
-// Update UI elements if needed
-}
-};
-
-// Favorites Manager
-const FavoritesManager = {
-data: [],
-load() {
-const saved = localStorage.getItem('favorites');
-if (saved) this.data = JSON.parse(saved);
-},
-save() {
-localStorage.setItem('favorites', JSON.stringify(this.data));
-},
-toggle(key, lessonInfo) {
-const index = this.data.findIndex(f => f.key === key);
-if (index > -1) {
-this.data.splice(index, 1);
-showToast('❌ أزيل من المفضلة');
-} else {
-this.data.push({ key, ...lessonInfo, addedAt: new Date().toISOString() });
-showToast('✅ أضيف للمفضلة');
-}
-this.save();
-},
-isFavorite(key) {
-return this.data.some(f => f.key === key);
-},
-getAll() {
-return this.data;
-}
-};
-
-// Helper Functions
-
 
 function getSubjectKey(subjectId) {
 const key = state.stream.id === 'advanced' ? (state.program ? state.program.id : 'advanced') : 'general';
 return `${subjectId}-${state.grade.id}-${key}-${state.term.id}`;
 }
 
-function getLessonKey() {
-const currKey = getCurriculumKey();
-if (!currKey || !state.unit || !state.lesson) return null;
-return `${currKey}-U${state.unit.id}-L${state.lesson.id}`;
-}
-
 function isCurrentEnglish() {
 return state.program && state.program.isEnglish;
 }
 
-function showToast(message) {
-const toast = document.getElementById('toast');
-toast.textContent = message;
-toast.classList.add('show');
-setTimeout(() => toast.classList.remove('show'), 3000);
-}
-
-function pushNavigation(type, id) {
-navigationHistory.push({ type, id });
-}
-
-function updateBackButton() {
-// Update back button visibility based on history
-}
-
-// Navigation Functions
 function showHome() {
 state = { term: null, stream: null, program: null, grade: null, subject: null, unit: null, lesson: null };
-navigationHistory.length = 0;
-updateBackButton();
 updateBreadcrumbs();
 renderHome();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function selectTerm(id, noHistory) {
-if (!noHistory && state.term) pushNavigation('term', state.term.id);
+function selectTerm(id) {
 state.term = DB.terms.find(t => t.id === id);
 state.stream = null; state.program = null; state.grade = null; state.subject = null;
 state.unit = null; state.lesson = null;
@@ -7123,8 +6903,7 @@ renderStreams();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function selectStream(id, noHistory) {
-if (!noHistory && state.stream) pushNavigation('stream', state.stream.id);
+function selectStream(id) {
 state.stream = DB.streams.find(s => s.id === id);
 state.program = null; state.grade = null; state.subject = null;
 state.unit = null; state.lesson = null;
@@ -7133,8 +6912,7 @@ if (state.stream.id === 'advanced') { renderPrograms(); } else { renderGrades();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function selectProgram(id, noHistory) {
-if (!noHistory && state.program) pushNavigation('program', state.program.id);
+function selectProgram(id) {
 state.program = DB.programs.find(p => p.id === id);
 state.grade = null; state.subject = null;
 state.unit = null; state.lesson = null;
@@ -7143,8 +6921,7 @@ renderGrades();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function selectGrade(id, noHistory) {
-if (!noHistory && state.grade) pushNavigation('grade', state.grade.id);
+function selectGrade(id) {
 state.grade = DB.grades.find(g => g.id === id);
 state.subject = null;
 state.unit = null; state.lesson = null;
@@ -7153,8 +6930,7 @@ renderSubjects();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function selectSubject(id, noHistory) {
-if (!noHistory && state.subject) pushNavigation('subject', state.subject.id);
+function selectSubject(id) {
 state.subject = DB.subjects.find(s => s.id === id);
 state.unit = null; state.lesson = null;
 updateBreadcrumbs();
@@ -7162,11 +6938,10 @@ renderUnits();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function selectUnit(unitId, noHistory) {
+function selectUnit(unitId) {
 const key = getCurriculumKey();
 const curriculum = DB.curriculum[key];
 if (!curriculum) return;
-if (!noHistory && state.unit) pushNavigation('unit', state.unit.id);
 state.unit = curriculum.units.find(u => u.id === unitId);
 state.lesson = null;
 updateBreadcrumbs();
@@ -7174,153 +6949,29 @@ renderLessons();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function selectLesson(lessonId, noHistory) {
-if (!noHistory && state.lesson) pushNavigation('lesson', state.lesson.id);
+function selectLesson(lessonId) {
 state.lesson = state.unit.lessons.find(l => l.id === lessonId);
 updateBreadcrumbs();
 renderLessonDetails();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Modal Functions
-function showStatsModal() {
-const modal = document.getElementById('statsModal');
-const content = document.getElementById('statsContent');
-let totalLessons = 0, readLessons = 0, completedExams = 0;
-let totalTime = 0;
-
-Object.keys(ProgressManager.data).forEach(key => {
-const item = ProgressManager.data[key];
-totalLessons++;
-if (item.read) readLessons++;
-if (item.examDone) completedExams++;
-totalTime += item.timeSpent || 0;
-});
-
-const hours = Math.floor(totalTime / 3600);
-const minutes = Math.floor((totalTime % 3600) / 60);
-
-content.innerHTML = `
-<div class="grid grid-cols-2 gap-4">
-<div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-4 rounded-xl">
-<div class="text-3xl font-bold">${totalLessons}</div>
-<div class="text-sm opacity-90">إجمالي الدروس</div>
-</div>
-<div class="bg-gradient-to-br from-green-500 to-green-600 text-white p-4 rounded-xl">
-<div class="text-3xl font-bold">${readLessons}</div>
-<div class="text-sm opacity-90">الدروس المقروءة</div>
-</div>
-<div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-4 rounded-xl">
-<div class="text-3xl font-bold">${completedExams}</div>
-<div class="text-sm opacity-90">الاختبارات المكتملة</div>
-</div>
-<div class="bg-gradient-to-br from-orange-500 to-orange-600 text-white p-4 rounded-xl">
-<div class="text-3xl font-bold">${hours}س ${minutes}د</div>
-<div class="text-sm opacity-90">الوقت المستغرق</div>
-</div>
-</div>
-`;
-
-modal.classList.add('active');
-}
-
-function closeStatsModal() {
-document.getElementById('statsModal').classList.remove('active');
-}
-
-function showFavoritesModal() {
-const modal = document.getElementById('favoritesModal');
-const content = document.getElementById('favoritesContent');
-const favorites = FavoritesManager.getAll();
-
-if (favorites.length === 0) {
-content.innerHTML = '<div class="text-center text-gray-500 dark:text-gray-400 py-8">لا توجد دروس مفضلة بعد</div>';
+function openExam() {
+if (state.lesson && state.lesson.examUrl && state.lesson.examUrl !== '#') {
+window.open(state.lesson.examUrl, '_blank');
 } else {
-content.innerHTML = `<div class="space-y-3">${favorites.map(f => `
-<div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-xl flex items-center gap-3">
-<span class="text-2xl">${f.icon}</span>
-<div class="flex-1">
-<div class="font-bold dark:text-white">${f.title}</div>
-<div class="text-sm text-gray-500 dark:text-gray-400">${f.unitName}</div>
-</div>
-<button onclick="removeFavorite('${f.key}')" class="text-red-500 hover:text-red-700">🗑️</button>
-</div>
-`).join('')}</div>`;
-}
-
-modal.classList.add('active');
-}
-
-function closeFavoritesModal() {
-document.getElementById('favoritesModal').classList.remove('active');
-}
-
-function removeFavorite(key) {
-const index = FavoritesManager.data.findIndex(f => f.key === key);
-if (index > -1) {
-FavoritesManager.data.splice(index, 1);
-FavoritesManager.save();
-showFavoritesModal();
-showToast('✅ أزيل من المفضلة');
+alert('الاختبار قيد التحضير! 🚧');
 }
 }
 
-function showShareModal(title, url) {
-const modal = document.getElementById('shareModal');
-const content = document.getElementById('shareContent');
-
-content.innerHTML = `
-<div class="space-y-4">
-<div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-xl">
-<div class="text-sm text-gray-500 dark:text-gray-400 mb-2">عنوان الدرس</div>
-<div class="font-bold dark:text-white">${title}</div>
-</div>
-<div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-xl">
-<div class="text-sm text-gray-500 dark:text-gray-400 mb-2">الرابط</div>
-<div class="font-mono text-sm dark:text-white break-all">${url}</div>
-</div>
-<button onclick="copyToClipboard('${url}')" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-lg font-bold transition">
-📋 نسخ الرابط
-</button>
-</div>
-`;
-
-modal.classList.add('active');
+function openLesson() {
+if (state.lesson && state.lesson.lessonUrl && state.lesson.lessonUrl !== '#') {
+window.open(state.lesson.lessonUrl, '_blank');
+} else {
+alert('شرح الدرس قيد التحضير! 🚧');
+}
 }
 
-function closeShareModal() {
-document.getElementById('shareModal').classList.remove('active');
-}
-
-function copyToClipboard(text) {
-navigator.clipboard.writeText(text).then(() => {
-showToast('✅ تم نسخ الرابط');
-closeShareModal();
-});
-}
-
-function showCertificate() {
-const modal = document.getElementById('certificateModal');
-const content = document.getElementById('certificateContent');
-
-content.innerHTML = `
-<div class="certificate">
-<h2>🏆 شهادة إنجاز</h2>
-<p class="text-xl mb-4">نشيد بجهودك المتميزة في إكمال</p>
-<div class="student-name">${state.unit ? state.unit.name : 'الوحدة'}</div>
-<p class="text-lg">من منصة 4U التعليمية</p>
-<p class="text-sm mt-4 opacity-80">${new Date().toLocaleDateString('ar-AE')}</p>
-</div>
-`;
-
-modal.classList.add('active');
-}
-
-function closeCertificateModal() {
-document.getElementById('certificateModal').classList.remove('active');
-}
-
-// Breadcrumbs
 function updateBreadcrumbs() {
 const bc = document.getElementById('breadcrumbs');
 bc.classList.remove('hidden');
@@ -7343,7 +6994,6 @@ setBC('bc-unit-sep', 'bc-unit-btn', state.unit ? state.unit.name : '', !state.un
 setBC('bc-lesson-sep', 'bc-lesson-btn', state.lesson ? state.lesson.title : '', !state.lesson, state.lesson ? () => selectLesson(state.lesson.id) : null);
 }
 
-// Render Functions
 function renderHome() {
 document.getElementById('app').innerHTML = `
 <div class="gradient-primary rounded-3xl p-8 md:p-12 text-white mb-8 fade-in">
@@ -7462,7 +7112,6 @@ const curriculum = DB.curriculum[key];
 const programInfo = state.program ? ` • ${state.program.name}` : '';
 const isEnglish = isCurrentEnglish();
 const contentClass = isEnglish ? 'en-content' : '';
-
 if (!curriculum) {
 document.getElementById('app').innerHTML = `
 <div class="bg-gradient-to-br from-gray-500 to-gray-700 rounded-3xl p-8 text-white mb-8 fade-in">
@@ -7476,30 +7125,24 @@ document.getElementById('app').innerHTML = `
 `;
 return;
 }
-
 document.getElementById('app').innerHTML = `
 <div class="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-3xl p-8 text-white mb-8 fade-in">
 <h1 class="text-3xl md:text-4xl font-bold mb-2">${state.subject.icon} ${state.subject.name}</h1>
 <p class="opacity-90">${state.term.name} • ${state.stream.name}${programInfo} • ${state.grade.name}</p>
-${isEnglish ? '<div class="mt-3 inline-block bg-blue-500 text-white text-sm px-3 py-1 rounded-full">🇬 Content in English</div>' : ''}
+${isEnglish ? '<div class="mt-3 inline-block bg-blue-500 text-white text-sm px-3 py-1 rounded-full">🇬🇧 Content in English</div>' : ''}
 </div>
 <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">📚 اختر الوحدة</h2>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 fade-in">
 ${curriculum.units.map(u => {
 const lessonCount = u.lessons ? u.lessons.length : 0;
-const progress = ProgressManager.getUnitProgress(`${key}-U${u.id}`, lessonCount);
 return `
 <button onclick="selectUnit(${u.id})" class="card-hover bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md text-right border-2 border-transparent hover:border-indigo-500 dark:hover:border-indigo-400 ${contentClass}">
 <div class="flex items-center gap-4 mb-3">
 <div class="bg-gradient-to-br ${u.color} w-16 h-16 rounded-xl flex items-center justify-center text-3xl shadow-lg">${u.icon}</div>
 <div class="flex-1">
-<div class="flex items-center gap-2 flex-wrap">
 <h3 class="font-bold text-xl dark:text-white">${u.name}</h3>
-${progress === 100 ? '<span class="completed-badge">✓ مكتمل</span>' : ''}
-</div>
 ${u.description ? `<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">${u.description}</p>` : ''}
-<p class="text-xs text-indigo-600 dark:text-indigo-400 mt-2 font-semibold">📖 ${lessonCount} ${isEnglish ? 'lessons' : 'دروس'} ${progress > 0 ? `• ${progress}%` : ''}</p>
-${progress > 0 ? `<div class="lesson-progress-bar"><div class="lesson-progress-fill" style="width: ${progress}%"></div></div>` : ''}
+<p class="text-xs text-indigo-600 dark:text-indigo-400 mt-2 font-semibold">📖 ${lessonCount} ${isEnglish ? 'lessons' : 'دروس'}</p>
 </div>
 </div>
 <div class="flex items-center justify-between text-indigo-600 dark:text-indigo-400 font-semibold text-sm"><span>${isEnglish ? 'Browse lessons' : 'استعرض الدروس'}</span><span>${isEnglish ? '→' : '←'}</span></div>
@@ -7514,7 +7157,6 @@ function renderLessons() {
 const programInfo = state.program ? ` • ${state.program.name}` : '';
 const isEnglish = isCurrentEnglish();
 const contentClass = isEnglish ? 'en-content' : '';
-
 document.getElementById('app').innerHTML = `
 <div class="gradient-violet rounded-3xl p-8 text-white mb-8 fade-in">
 <h1 class="text-3xl md:text-4xl font-bold mb-2 ${contentClass}">${state.unit.icon} ${state.unit.name}</h1>
@@ -7524,39 +7166,18 @@ ${isEnglish ? '<div class="mt-3 inline-block bg-blue-500 text-white text-sm px-3
 </div>
 <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">${isEnglish ? '📖 Lessons' : '📖 الدروس'}</h2>
 <div class="space-y-4 fade-in">
-${state.unit.lessons.map((l, idx) => {
-const currKey = getCurriculumKey();
-const lessonKey = `${currKey}-U${state.unit.id}-L${l.id}`;
-const isRead = ProgressManager.isRead(lessonKey);
-const isExamDone = ProgressManager.isExamDone(lessonKey);
-const isFav = FavoritesManager.isFavorite(lessonKey);
-return `
+${state.unit.lessons.map((l, idx) => `
 <button onclick="selectLesson(${l.id})" class="card-hover w-full bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-md flex items-center gap-4 text-right border-2 border-transparent hover:border-violet-500 dark:hover:border-violet-400 ${contentClass}">
-<div class="bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 rounded-xl w-14 h-14 flex items-center justify-center text-2xl font-bold flex-shrink-0 relative">
-${l.icon}
-${isRead ? '<span class="absolute -top-1 -right-1 bg-green-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">✓</span>' : ''}
-</div>
+<div class="bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 rounded-xl w-14 h-14 flex items-center justify-center text-2xl font-bold flex-shrink-0">${l.icon}</div>
 <div class="flex-1">
-<div class="flex items-center gap-2 flex-wrap">
 <h3 class="font-bold text-lg dark:text-white">${idx + 1}. ${l.title}</h3>
-${isExamDone ? '<span class="completed-badge">🏆</span>' : ''}
-</div>
 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">⏱️ ${l.duration}</p>
 </div>
-<button onclick="event.stopPropagation();toggleFavoriteFromList('${lessonKey}','${l.title.replace(/'/g,"\\'")}','${l.icon}','${state.unit.name.replace(/'/g,"\\'")}')" class="favorite-btn ${isFav ? 'active' : ''} text-2xl p-2" data-fav-key="${lessonKey}" title="المفضلة">
-${isFav ? '❤️' : '🤍'}
-</button>
 <div class="text-violet-600 dark:text-violet-400 text-2xl">${isEnglish ? '→' : '←'}</div>
 </button>
-`;
-}).join('')}
+`).join('')}
 </div>
 `;
-}
-
-function toggleFavoriteFromList(key, title, icon, unitName) {
-FavoritesManager.toggle(key, { title, icon, unitName });
-renderLessons();
 }
 
 function renderLessonDetails() {
@@ -7564,13 +7185,6 @@ const c = state.lesson.content;
 const programInfo = state.program ? ` • ${state.program.name}` : '';
 const isEnglish = isCurrentEnglish();
 const contentClass = isEnglish ? 'en-content' : '';
-const lessonKey = getLessonKey();
-const isFav = FavoritesManager.isFavorite(lessonKey);
-const isRead = ProgressManager.isRead(lessonKey);
-const isExamDone = ProgressManager.isExamDone(lessonKey);
-const timeSpent = ProgressManager.getTimeSpent(lessonKey);
-const minutes = Math.floor(timeSpent / 60);
-
 let sectionsHTML = '';
 if (c && c.sections) {
 sectionsHTML = c.sections.map(s => {
@@ -7599,30 +7213,16 @@ return `<div class="my-4"><h4 class="font-bold text-lg mb-2 text-gray-800 dark:t
 }
 }).join('');
 }
-
-const shareUrl = state.lesson.lessonUrl || window.location.href;
-
 document.getElementById('app').innerHTML = `
 <div class="gradient-teal rounded-3xl p-8 text-white mb-8 fade-in">
 <div class="flex items-center gap-4 mb-4 flex-wrap">
 <button onclick="selectUnit(${state.unit.id})" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition">${isEnglish ? '← Back to Unit' : '→ رجوع للوحدة'}</button>
-<button onclick="showShareModal('${state.lesson.title.replace(/'/g,"\\'")}','${shareUrl}')" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition flex items-center gap-2" title="مشاركة">
-<span>📤</span><span class="hidden sm:inline">${isEnglish ? 'Share' : 'مشاركة'}</span>
-</button>
-<button onclick="toggleCurrentFavorite()" data-fav-key="${lessonKey}" class="favorite-btn ${isFav ? 'active' : ''} bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition flex items-center gap-2" title="المفضلة (Ctrl+D)">
-<span class="text-xl">${isFav ? '❤️' : '🤍'}</span><span class="hidden sm:inline">${isEnglish ? 'Favorite' : 'المفضلة'}</span>
-</button>
 </div>
 <div class="flex items-center gap-4 flex-wrap ${contentClass}">
 <span class="text-6xl">${state.lesson.icon}</span>
 <div>
-<div class="flex items-center gap-2 flex-wrap">
 <h1 class="text-3xl md:text-4xl font-bold mb-2">${state.lesson.title}</h1>
-${isRead ? '<span class="bg-green-500 text-white text-xs px-2 py-1 rounded-full">✓ مقروء</span>' : ''}
-${isExamDone ? '<span class="bg-amber-500 text-white text-xs px-2 py-1 rounded-full">🏆 مكتمل</span>' : ''}
-</div>
 <p class="opacity-90">⏱️ ${state.lesson.duration} • ${state.subject.name}${programInfo}</p>
-${timeSpent > 0 ? `<p class="opacity-90 text-xs mt-1">⏱️ الوقت المستغرق: ${minutes} دقيقة</p>` : ''}
 ${isEnglish ? '<div class="mt-2 inline-block bg-blue-500 text-white text-xs px-3 py-1 rounded-full">🇬🇧 English</div>' : ''}
 </div>
 </div>
@@ -7647,7 +7247,6 @@ ${sectionsHTML}
 <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg"><span class="text-xs text-gray-500 dark:text-gray-400">${isEnglish ? 'Unit' : 'الوحدة'}</span><p class="font-semibold dark:text-white ${contentClass}">${state.unit.name}</p></div>
 <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg"><span class="text-xs text-gray-500 dark:text-gray-400">${isEnglish ? 'Duration' : 'المدة الزمنية'}</span><p class="font-semibold dark:text-white">⏱️ ${state.lesson.duration}</p></div>
 <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg"><span class="text-xs text-gray-500 dark:text-gray-400">${isEnglish ? 'Grade' : 'الصف'}</span><p class="font-semibold dark:text-white">${state.grade.name}</p></div>
-${isRead ? `<div class="bg-green-50 dark:bg-green-900/30 p-3 rounded-lg border border-green-200 dark:border-green-800"><span class="text-xs text-green-600 dark:text-green-400">✓ ${isEnglish ? 'Status' : 'الحالة'}</span><p class="font-semibold text-green-700 dark:text-green-300">${isEnglish ? 'Completed' : 'مكتمل'}</p></div>` : ''}
 </div>
 <button onclick="openLesson()" class="mt-6 w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white py-4 rounded-xl font-bold transition transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
 <span class="text-2xl">📖</span><span>${state.lesson.lessonTitle || (isEnglish ? 'Lesson Explanation' : 'شرح الدرس')}</span><span>↗</span>
@@ -7657,139 +7256,21 @@ ${isRead ? `<div class="bg-green-50 dark:bg-green-900/30 p-3 rounded-lg border b
 <span class="text-2xl">📝</span><span>${state.lesson.examTitle || (isEnglish ? 'Take the Quiz' : 'ابدأ الاختبار')}</span><span>↗</span>
 </button>
 <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">${isEnglish ? 'Opens in new tab' : 'سيفتح في نافذة جديدة'}</p>
-<button onclick="showShareModal('${state.lesson.title.replace(/'/g,"\\'")}','${shareUrl}')" class="mt-3 w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 rounded-xl font-bold transition transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
-<span class="text-xl">📤</span><span>${isEnglish ? 'Share Lesson' : 'مشاركة الدرس'}</span>
-</button>
 </div>
 <div class="bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-200 dark:border-amber-800 rounded-2xl p-6">
 <h4 class="font-bold text-amber-700 dark:text-amber-400 mb-2 flex items-center gap-2"><span>💡</span> ${isEnglish ? 'Tip' : 'نصيحة'}</h4>
 <p class="text-sm text-gray-700 dark:text-gray-300">${isEnglish ? 'Review the lesson thoroughly before starting the quiz for the best results!' : 'راجع الدرس جيداً قبل البدء في الاختبار للحصول على أفضل نتيجة!'}</p>
-</div>
-<div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-4">
-<h4 class="font-bold text-gray-700 dark:text-gray-300 mb-2 text-sm flex items-center gap-2"><span>⌨️</span> ${isEnglish ? 'Keyboard Shortcuts' : 'اختصارات لوحة المفاتيح'}</h4>
-<div class="space-y-1 text-xs text-gray-600 dark:text-gray-400">
-<div class="flex justify-between"><span>${isEnglish ? 'Back' : 'رجوع'}</span><span class="kbd">Esc</span></div>
-<div class="flex justify-between"><span>${isEnglish ? 'Favorite' : 'المفضلة'}</span><span><span class="kbd">Ctrl</span> + <span class="kbd">D</span></span></div>
-<div class="flex justify-between"><span>${isEnglish ? 'Share' : 'مشاركة'}</span><span><span class="kbd">Ctrl</span> + <span class="kbd">S</span></span></div>
-</div>
 </div>
 </div>
 </div>
 `;
 }
 
-function toggleCurrentFavorite() {
-const key = getLessonKey();
-if (!key) return;
-FavoritesManager.toggle(key, {
-title: state.lesson.title,
-icon: state.lesson.icon,
-unitName: state.unit.name
-});
-renderLessonDetails();
-}
-
-function openExam() {
-if (state.lesson && state.lesson.examUrl && state.lesson.examUrl !== '#') {
-const key = getLessonKey();
-if (key) {
-ProgressManager.markExamDone(key);
-showToast('🎉 أحسنت! تم تسجيل إنجاز الاختبار');
-const currKey = getCurriculumKey();
-const curriculum = DB.curriculum[currKey];
-if (curriculum && state.unit) {
-let allDone = true;
-state.unit.lessons.forEach(l => {
-const lk = `${currKey}-U${state.unit.id}-L${l.id}`;
-if (!ProgressManager.isExamDone(lk)) allDone = false;
-});
-if (allDone) {
-setTimeout(() => showCertificate(), 1500);
-}
-}
-}
-window.open(state.lesson.examUrl, '_blank');
-} else {
-alert('الاختبار قيد التحضير! 🚧');
-}
-}
-
-function openLesson() {
-if (state.lesson && state.lesson.lessonUrl && state.lesson.lessonUrl !== '#') {
-const key = getLessonKey();
-if (key) {
-ProgressManager.markLessonRead(key);
-ProgressManager.startTracking(key);
-const handleVisibility = () => {
-if (document.hidden) {
-ProgressManager.stopTracking(key);
-} else {
-ProgressManager.startTracking(key);
-}
-};
-document.addEventListener('visibilitychange', handleVisibility);
-window.addEventListener('beforeunload', () => {
-ProgressManager.stopTracking(key);
-});
-}
-window.open(state.lesson.lessonUrl, '_blank');
-} else {
-alert('شرح الدرس قيد التحضير! 🚧');
-}
-}
-
-// Dark Mode
-const themeToggleBtn = document.getElementById('themeToggle');
-const sunIcon = document.getElementById('sunIcon');
-const moonIcon = document.getElementById('moonIcon');
-const htmlElement = document.documentElement;
-
-function applyTheme(isDark) {
-if (isDark) {
-htmlElement.classList.add('dark');
-sunIcon.classList.remove('hidden');
-moonIcon.classList.add('hidden');
-} else {
-htmlElement.classList.remove('dark');
-sunIcon.classList.add('hidden');
-moonIcon.classList.remove('hidden');
-}
-}
-
-const savedTheme = localStorage.getItem('theme');
-const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-let isDarkMode = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
-applyTheme(isDarkMode);
-
-themeToggleBtn.addEventListener('click', () => {
-isDarkMode = !isDarkMode;
-applyTheme(isDarkMode);
-localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-});
-
-// Keyboard Shortcuts
-document.addEventListener('keydown', (e) => {
-if (e.key === 'Escape') {
-if (state.lesson) selectUnit(state.unit.id);
-}
-if (e.ctrlKey && e.key === 'd') {
-e.preventDefault();
-toggleCurrentFavorite();
-}
-if (e.ctrlKey && e.key === 's') {
-e.preventDefault();
-const key = getLessonKey();
-if (key) showShareModal(state.lesson.title, state.lesson.lessonUrl || window.location.href);
-}
-});
-
-// Initialize
 showHome();
-ProgressManager.load();
-FavoritesManager.load();
-ProgressManager.updateUI();
 
-// Service Worker & Install Logic
+// ═══════════════════════════════════════════════════
+// SERVICE WORKER & INSTALL LOGIC
+// ═══════════════════════════════════════════════════
 if ('serviceWorker' in navigator) {
 window.addEventListener('load', () => {
 navigator.serviceWorker.register('./sw.js')
@@ -7804,9 +7285,25 @@ const installButton = document.getElementById('installButton');
 window.addEventListener('beforeinstallprompt', (e) => {
 e.preventDefault();
 deferredPrompt = e;
+console.log('📥 حدث التثبيت متوفر');
 installButton.classList.remove('hidden');
 installButton.style.animation = 'fadeInUp 0.5s ease-out';
 });
+
+const style = document.createElement('style');
+style.textContent = `
+@keyframes fadeInUp {
+from {
+opacity: 0;
+transform: translateY(20px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+`;
+document.head.appendChild(style);
 
 function installApp() {
 if (deferredPrompt) {
@@ -7826,14 +7323,7 @@ installButton.classList.add('hidden');
 deferredPrompt = null;
 console.log('🎉 تم تثبيت التطبيق بنجاح');
 });
-
-// Hide loader and show main content
-window.addEventListener('load', () => {
-setTimeout(() => {
-document.getElementById('page-loader').style.display = 'none';
-document.getElementById('main-content').style.display = 'block';
-}, 2500);
-});
 </script>
 </body>
-</html>
+</html></content>
+</writeToFile>
