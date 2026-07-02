@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<writeToFile>
+<path>index.html</path>
+<content><!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -54,9 +56,6 @@ table.comparison th { background: #f3f4f6; font-weight: bold; }
 .en-content table.comparison th, .en-content table.comparison td { text-align: left; }
 mark { background-color: #fbbf24; color: #000; padding: 0 2px; border-radius: 2px; }
 .dark mark { background-color: #d97706; color: #fff; }
-/* ═══════════════════════════════════════════════════ */
-/* LOADER STYLES */
-/* ═══════════════════════════════════════════════════ */
 #page-loader {
 position: fixed;
 top: 0;
@@ -188,40 +187,6 @@ transition: opacity 0.8s ease;
 #main-content.visible {
 opacity: 1;
 }
-/* ═══════════════════════════════════════════════════ */
-/* NEW HOME PAGE STYLES */
-/* ═══════════════════════════════════════════════════ */
-.animated-bg {
-background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-background-size: 400% 400%;
-animation: gradient 15s ease infinite;
-}
-.glass-effect {
-background: rgba(255, 255, 255, 0.1);
-backdrop-filter: blur(10px);
-border: 1px solid rgba(255, 255, 255, 0.2);
-}
-.particle {
-position: absolute;
-border-radius: 50%;
-background: rgba(255, 255, 255, 0.3);
-animation: float 10s infinite;
-}
-.glow {
-box-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
-0 0 40px rgba(255, 255, 255, 0.3),
-0 0 60px rgba(255, 255, 255, 0.1);
-}
-.term-card {
-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.term-card:hover {
-transform: translateY(-10px) scale(1.02);
-box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
-/* ═══════════════════════════════════════════════════ */
-/* NEW FEATURES STYLES - Progress, Favorites, Stats */
-/* ═══════════════════════════════════════════════════ */
 .lesson-progress-bar {
 height: 6px;
 background: rgba(99, 102, 241, 0.2);
@@ -245,7 +210,6 @@ transform: scale(1.1);
 .favorite-btn:hover {
 transform: scale(1.2);
 }
-/* Modal Styles */
 .modal-overlay {
 position: fixed;
 top: 0;
@@ -278,7 +242,6 @@ color: #f3f4f6;
 from { opacity: 0; transform: translateY(30px); }
 to { opacity: 1; transform: translateY(0); }
 }
-/* Certificate Styles */
 .certificate {
 background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
 border: 8px double #d97706;
@@ -302,7 +265,6 @@ box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 background: linear-gradient(135deg, #451a03 0%, #78350f 100%);
 border-color: #fbbf24;
 }
-/* Stats Card */
 .stat-card {
 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 color: white;
@@ -315,7 +277,6 @@ transition: all 0.3s ease;
 transform: translateY(-5px);
 box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
 }
-/* Top Progress Bar */
 .top-progress-bar {
 height: 3px;
 background: rgba(255, 255, 255, 0.2);
@@ -329,14 +290,12 @@ height: 100%;
 background: linear-gradient(90deg, #10b981, #34d399);
 transition: width 0.5s ease;
 }
-/* Share Buttons */
 .share-btn {
 transition: all 0.3s ease;
 }
 .share-btn:hover {
 transform: translateY(-3px) scale(1.05);
 }
-/* Keyboard shortcut hint */
 .kbd {
 background: #e5e7eb;
 border: 1px solid #d1d5db;
@@ -352,7 +311,6 @@ background: #374151;
 border-color: #4b5563;
 color: #e5e7eb;
 }
-/* Badge for completed lessons */
 .completed-badge {
 background: linear-gradient(135deg, #10b981, #059669);
 color: white;
@@ -361,7 +319,6 @@ padding: 2px 8px;
 border-radius: 10px;
 font-weight: bold;
 }
-/* Notification Toast */
 .toast {
 position: fixed;
 bottom: 100px;
@@ -382,9 +339,6 @@ to { opacity: 1; transform: translate(-50%, 0); }
 </style>
 </head>
 <body class="bg-gray-50 min-h-screen dark:bg-gray-900 dark:text-gray-100">
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- LOADER -->
-<!-- ═══════════════════════════════════════════════════ -->
 <div id="page-loader">
 <div class="loader-spinner"></div>
 <div class="loader-text">
@@ -399,11 +353,7 @@ to { opacity: 1; transform: translate(-50%, 0); }
 <div class="loader-progress-bar"></div>
 </div>
 </div>
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- MAIN CONTENT (يظهر بعد اختفاء الـ Loader) -->
-<!-- ═══════════════════════════════════════════════════ -->
 <div id="main-content">
-<!-- Top Bar -->
 <div class="gradient-primary text-white py-3 px-6 shadow-lg sticky top-0 z-50 relative">
 <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-3">
 <div class="flex items-center gap-3 cursor-pointer" onclick="showHome()">
@@ -419,21 +369,18 @@ class="w-full bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg py-
 <svg class="w-5 h-5 absolute right-3 top-2.5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
 </div>
 <div class="flex items-center gap-2 text-sm">
-<!-- ═══ NEW: زر الرجوع ═══ -->
 <button id="backBtn" onclick="goBack()" class="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg transition font-medium hidden" title="رجوع (Esc)">
 <span class="flex items-center gap-1">
 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
 <span class="hidden sm:inline">رجوع</span>
 </span>
 </button>
-<!-- ═══ NEW: زر المفضلة ═══ -->
 <button onclick="showFavorites()" class="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition" title="المفضلة">
 <span class="flex items-center gap-1">
 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
 <span id="favCount" class="hidden sm:inline text-xs bg-red-500 rounded-full px-1.5 py-0.5">0</span>
 </span>
 </button>
-<!-- ═══ NEW: زر الإحصائيات ═══ -->
 <button onclick="showStats()" class="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition" title="إحصائياتي">
 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
 </button>
@@ -454,7 +401,6 @@ class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-3 py-2 rounded-l
 <input type="text" id="mobileSearchInput" placeholder="ابحث عن درس..."
 class="w-full bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg py-2 px-4 text-white placeholder-white/70 focus:outline-none focus:bg-white/30 transition text-sm">
 </div>
-<!-- ═══ NEW: شريط التقدم العام ═══ -->
 <div id="topProgressBar" class="top-progress-bar hidden">
 <div id="topProgressFill" class="top-progress-fill" style="width: 0%"></div>
 </div>
@@ -489,33 +435,23 @@ class="w-full bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg py-
 </div>
 </div>
 </footer>
-</div> <!-- نهاية main-content -->
-<!-- زر التثبيت العائم - تصميم محسّن -->
+</div>
 <div id="installButton" class="hidden fixed bottom-6 left-6 z-50">
 <button onclick="installApp()"
 class="group relative bg-gradient-to-br from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:shadow-teal-500/50"
 title="تثبيت التطبيق">
-<!-- أيقونة التثبيت -->
 <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 transition-transform duration-300 group-hover:-translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
 <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
 </svg>
-<!-- نبضة خفيفة لجذب الانتباه -->
 <span class="absolute inset-0 rounded-full bg-teal-400 opacity-75 animate-ping"></span>
-<!-- Tooltip عند التمرير -->
 <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-gray-900 text-white text-xs font-semibold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none shadow-lg">
 📲 تثبيت التطبيق
 <span class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></span>
 </span>
 </button>
 </div>
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- NEW: Modal Container -->
-<!-- ═══════════════════════════════════════════════════ -->
 <div id="modalContainer"></div>
 <script>
-// ═══════════════════════════════════════════════════
-// LOADER LOGIC
-// ═══════════════════════════════════════════════════
 window.addEventListener('load', () => {
 const loader = document.getElementById('page-loader');
 const mainContent = document.getElementById('main-content');
@@ -534,9 +470,6 @@ setTimeout(() => {
 this.style.display = 'none';
 }, 800);
 });
-// ═══════════════════════════════════════════════════
-// DARK MODE LOGIC
-// ═══════════════════════════════════════════════════
 const themeToggleBtn = document.getElementById('themeToggle');
 const sunIcon = document.getElementById('sunIcon');
 const moonIcon = document.getElementById('moonIcon');
@@ -561,9 +494,6 @@ isDarkMode = !isDarkMode;
 applyTheme(isDarkMode);
 localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
 });
-// ═══════════════════════════════════════════════════
-// SEARCH LOGIC
-// ═══════════════════════════════════════════════════
 const searchInputs = [document.getElementById('searchInput'), document.getElementById('mobileSearchInput')];
 function performSearch(query) {
 const term = query.toLowerCase().trim();
@@ -619,9 +549,6 @@ if(i !== e.target) i.value = e.target.value;
 performSearch(e.target.value);
 });
 });
-// ═══════════════════════════════════════════════════
-// NEW: PROGRESS TRACKING SYSTEM
-// ═══════════════════════════════════════════════════
 const ProgressManager = {
 KEY: '4u_progress',
 data: {},
@@ -691,14 +618,12 @@ if (this.isRead(key)) completed++;
 return totalLessons > 0 ? Math.round((completed / totalLessons) * 100) : 0;
 },
 updateUI() {
-// Update favorites count
 const favs = FavoritesManager.getAll();
 const favCountEl = document.getElementById('favCount');
 if (favCountEl) {
 favCountEl.textContent = favs.length;
 favCountEl.style.display = favs.length > 0 ? 'inline' : 'none';
 }
-// Update top progress bar
 const stats = this.getStats();
 const totalLessons = this.countTotalLessons();
 const percent = totalLessons > 0 ? Math.round((stats.totalRead / totalLessons) * 100) : 0;
@@ -725,9 +650,6 @@ if (unit.lessons) count += unit.lessons.length;
 return count;
 }
 };
-// ═══════════════════════════════════════════════════
-// NEW: FAVORITES MANAGER
-// ═══════════════════════════════════════════════════
 const FavoritesManager = {
 KEY: '4u_favorites',
 data: [],
@@ -763,9 +685,6 @@ this.save();
 ProgressManager.updateUI();
 }
 };
-// ═══════════════════════════════════════════════════
-// NEW: TOAST NOTIFICATION
-// ═══════════════════════════════════════════════════
 function showToast(message, duration = 2500) {
 const existing = document.querySelector('.toast');
 if (existing) existing.remove();
@@ -779,9 +698,6 @@ toast.style.transition = 'opacity 0.3s';
 setTimeout(() => toast.remove(), 300);
 }, duration);
 }
-// ═══════════════════════════════════════════════════
-// NEW: MODAL SYSTEM
-// ═══════════════════════════════════════════════════
 function openModal(content) {
 const container = document.getElementById('modalContainer');
 container.innerHTML = `<div class="modal-overlay" onclick="if(event.target===this)closeModal()">${content}</div>`;
@@ -791,9 +707,6 @@ function closeModal() {
 document.getElementById('modalContainer').innerHTML = '';
 document.body.style.overflow = '';
 }
-// ═══════════════════════════════════════════════════
-// NEW: SHOW STATS MODAL
-// ═══════════════════════════════════════════════════
 function showStats() {
 const stats = ProgressManager.getStats();
 const totalLessons = ProgressManager.countTotalLessons();
@@ -849,9 +762,6 @@ ${stats.totalExams > 0 ? `
 `;
 openModal(content);
 }
-// ═══════════════════════════════════════════════════
-// NEW: SHOW CERTIFICATE
-// ═══════════════════════════════════════════════════
 function showCertificate() {
 const stats = ProgressManager.getStats();
 const totalLessons = ProgressManager.countTotalLessons();
@@ -911,9 +821,6 @@ ${cert.outerHTML}
 `);
 printWindow.document.close();
 }
-// ═══════════════════════════════════════════════════
-// NEW: SHOW FAVORITES MODAL
-// ═══════════════════════════════════════════════════
 function showFavorites() {
 const favs = FavoritesManager.getAll();
 let favsHTML = '';
@@ -959,12 +866,10 @@ function removeFavorite(key) {
 FavoritesManager.toggle(key, {});
 showFavorites();
 }
-// ═══════════════════════════════════════════════════
-// NEW: SHARE MODAL
-// ═══════════════════════════════════════════════════
 function showShareModal(lessonTitle, lessonUrl) {
 const url = lessonUrl || window.location.href;
-const text = `📚 ${lessonTitle}\nمنصة 4U التعليمية`;
+const text = `📚 ${lessonTitle}
+منصة 4U التعليمية`;
 const content = `
 <div class="modal-content p-8">
 <div class="flex justify-between items-center mb-6">
@@ -1017,9 +922,6 @@ showToast('✅ تم نسخ الرابط');
 showToast('❌ فشل النسخ');
 });
 }
-// ═══════════════════════════════════════════════════
-// NEW: BACK NAVIGATION + KEYBOARD SHORTCUTS
-// ═══════════════════════════════════════════════════
 const navigationHistory = [];
 function pushNavigation(level, id) {
 navigationHistory.push({ level, id });
@@ -1053,9 +955,7 @@ default: showHome();
 showHome();
 }
 }
-// Keyboard shortcuts
 document.addEventListener('keydown', (e) => {
-// Esc - Back or Close modal
 if (e.key === 'Escape') {
 const modal = document.querySelector('.modal-overlay');
 if (modal) {
@@ -1065,29 +965,23 @@ goBack();
 }
 return;
 }
-// Ctrl/Cmd + D - Toggle favorite
 if ((e.ctrlKey || e.metaKey) && e.key === 'd' && state.lesson) {
 e.preventDefault();
 toggleCurrentFavorite();
 return;
 }
-// Ctrl/Cmd + S - Share
 if ((e.ctrlKey || e.metaKey) && e.key === 's' && state.lesson) {
 e.preventDefault();
 const url = state.lesson.lessonUrl || window.location.href;
 showShareModal(state.lesson.title, url);
 return;
 }
-// Home - Go home
 if (e.key === 'Home' && !e.ctrlKey && !e.metaKey) {
 if (document.activeElement.tagName !== 'INPUT') {
 showHome();
 }
 }
 });
-// ═══════════════════════════════════════════════════
-// NEW: TOGGLE FAVORITE FOR CURRENT LESSON
-// ═══════════════════════════════════════════════════
 function toggleCurrentFavorite() {
 if (!state.lesson || !state.unit) return;
 const key = getLessonKey();
@@ -1097,7 +991,6 @@ icon: state.lesson.icon,
 unitName: state.unit.name
 };
 FavoritesManager.toggle(key, info);
-// Update UI
 const btn = document.querySelector(`[data-fav-key="${key}"]`);
 if (btn) {
 const isFav = FavoritesManager.isFavorite(key);
@@ -1110,9 +1003,6 @@ if (!state.lesson || !state.unit) return null;
 const currKey = getCurriculumKey();
 return `${currKey}-U${state.unit.id}-L${state.lesson.id}`;
 }
-// ═══════════════════════════════════════════════════
-// DATABASE
-// ═══════════════════════════════════════════════════
 const DB = {
 terms: [
 { id: 1, name: 'الترم الأول', icon: '📘' },
@@ -1140,355 +1030,7 @@ subjects: [
 { id: 'biology', name: 'الأحياء', icon: '🧬' }
 ],
 curriculum: {
-  // ═══════════════════════════════════════════════
-// PHYSICS 12 ADVANCED BRIDGE - TERM 1
-// الصف 12 متقدم بريدج - الفصل الأول (فيزياء)
-// ═══════════════════════════════════════════════
-'physics-12-bridge-1': {
-isEnglish: false,
-units: [
-// ═══════════════════════════════════════════════
-// UNIT 1: القوى الكهروستاتيكية
-// ═══════════════════════════════════════════════
-{
-id: 1,
-name: 'الوحدة الأولى: القوى الكهروستاتيكية',
-icon: '⚡',
-color: 'from-blue-500 to-cyan-600',
-description: 'دراسة الشحنة الكهربائية، طرق الشحن، قانون كولوم، والقوة الكهروستاتيكية بين الشحنات',
-lessons: [
-{
-id: 1,
-title: 'الجزء الأول: الكهرومغناطيسية - الشحنة الكهربائية',
-icon: '🔋',
-duration: '50 دقيقة',
-lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-1.1-1.4/',
-examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-1.1-1.4-exam/',
-lessonTitle: '📖 شرح الدرس',
-examTitle: '📝 ابدأ الاختبار',
-content: {
-intro: 'الكهرومغناطيسية هي أحد فروع الفيزياء التي تدرس الظواهر الكهربائية والمغناطيسية. تبدأ رحلتنا بفهم الشحنة الكهربائية - إحدى الخصائص الأساسية للمادة التي تُسبب القوى الكهربائية.',
-sections: [
-{ title: '📋 مفهوم الشحنة الكهربائية', type: 'bullets', content: [
-'الشحنة الكهربائية (Electric Charge): خاصية أساسية للمادة تُسبب تفاعلها مع المجالات الكهرومغناطيسية',
-'رمز الشحنة: Q أو q وتقاس بوحدة الكولوم (Coulomb - C)',
-'هناك نوعان من الشحنات: موجبة (+) وسالبة (-)',
-'الشحنات المتشابهة تتنافر، والمختلفة تتجاذب',
-'الشحنة الأولية: e = 1.6 × 10⁻¹⁹ C (شحنة الإلكترون سالبة، والبروتون موجبة)'
-]},
-{ title: 'قانون حفظ الشحنة الكهربية', type: 'formula', content: 'ΣQ قبل = ΣQ بعد (الشحنة لا تُفنى ولا تُستحدث)' },
-{ title: 'تكميم الشحنة (Quantization)', type: 'formula', content: 'Q = n·e (حيث n عدد صحيح، e = 1.6 × 10⁻¹⁹ C)' },
-{ title: '📋 طرق شحن الأجسام', type: 'table', headers: ['الطريقة', 'الآلية', 'مثال'], rows: [
-['الشحن بالدلك (Friction)', 'انتقال الإلكترونات بالاحتكاك', 'دلك الزجاج بالحرير'],
-['الشحن بالتلامس (Conduction)', 'انتقال الشحنة بالملامسة المباشرة', 'مس جسم مشحون بجسم متعادل'],
-['الشحن بالحث (Induction)', 'إعادة توزيع الشحنات دون تلامس', 'تقريب جسم مشحون من موصل']
-]},
-{ title: 'الموصلات والعوازل', type: 'bullets', content: [
-'الموصلات (Conductors): تسمح بحرية حركة الشحنات (المعادن - النحاس - الفضة)',
-'العوازل (Insulators): تمنع حركة الشحنات (المطاط - الزجاج - البلاستيك)',
-'أشباه الموصلات (Semiconductors): بين الموصل والعازل (السيليكون - الجرمانيوم)',
-'الموصلات الفائقة (Superconductors): مقاومتها صفر عند درجات حرارة منخفضة جداً'
-]},
-{ title: 'ثابت العزل الكهربائي للفراغ', type: 'formula', content: 'ε₀ = 8.85 × 10⁻¹² C²/(N·m²)' }
-]
-}
-},
-{
-id: 2,
-title: 'الجزء الثاني: الشحن والقوة الكهروستاتيكي - قوانين كولوم ونيوتن',
-icon: '⚖️',
-duration: '55 دقيقة',
-lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-1.5-1.6/',
-examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-1.5-1.6-exam/',
-lessonTitle: '📖 شرح الدرس',
-examTitle: '📝 ابدأ الاختبار',
-content: {
-intro: 'قانون كولوم هو القانون الأساسي الذي يحكم القوة بين الشحنات الكهربية الساكنة. يشبه في صياغته قانون نيوتن للجذب العام، لكنه يتعامل مع الشحنات بدلاً من الكتل.',
-sections: [
-{ title: '📋 نص قانون كولوم', type: 'bullets', content: [
-'القوة الكهروستاتيكية بين شحنتين نقطيتين تتناسب طردياً مع حاصل ضرب الشحنتين',
-'وتتناسب عكسياً مع مربع المسافة بينهما',
-'وتؤثر القوة على خط الواصل بين الشحنتين',
-'قوة تجاذب إذا كانت الشحنتان مختلفتين، وتنافر إذا كانتا متشابهتين'
-]},
-{ title: 'صيغة قانون كولوم', type: 'formula', content: 'F = k · |q₁·q₂| / r²' },
-{ title: 'ثابت كولوم', type: 'formula', content: 'k = 1/(4πε₀) = 8.99 × 10⁹ N·m²/C²' },
-{ title: 'الصيغة البديلة باستخدام ε₀', type: 'formula', content: 'F = |q₁·q₂| / (4πε₀·r²)' },
-{ title: '📋 مقارنة: كولوم vs نيوتن للجذب', type: 'table', headers: ['وجه المقارنة', 'قانون كولوم', 'قانون نيوتن للجذب'], rows: [
-['الصيغة الرياضية', 'F = k·q₁q₂/r²', 'F = G·m₁m₂/r²'],
-['نوع القوة', 'تجاذب أو تنافر', 'تجاذب فقط'],
-['الثابت', 'k = 8.99 × 10⁹', 'G = 6.67 × 10⁻¹¹'],
-['المؤثر', 'الشحنات الكهربائية', 'الكتل'],
-['شدة القوة', 'قوية جداً', 'ضعيفة جداً'],
-['التناسب', 'مع 1/r²', 'مع 1/r²']
-]},
-{ title: 'مبدأ تراكب القوى (Superposition)', type: 'formula', content: 'F_net = F₁ + F₂ + F₃ + ... = ΣFᵢ (الجمع الاتجاهي)' },
-{ title: '💡 ملاحظات هامة', type: 'bullets', content: [
-'قانون كولوم ينطبق على الشحنات النقطية أو الكرات المنتظمة',
-'القوة الكهروستاتيكية أكبر بكثير من قوة الجذب (≈ 10³⁹ مرة للإلكترونات)',
-'القوة الكهروستاتيكية قوة محافظة (يمكن تعريف طاقة وضع لها)',
-'في المسائل ثنائية الأبعاد: نحلل القوى إلى مركبات x, y ثم نجمع'
-]}
-]
-}
-}
-]
-},
-// ═══════════════════════════════════════════════
-// UNIT 2: المجالات الكهربية وقانون جاوس
-// ═══════════════════════════════════════════════
-{
-id: 2,
-name: 'الوحدة الثانية: المجالات الكهربية وقانون جاوس',
-icon: '🌐',
-color: 'from-purple-500 to-pink-600',
-description: 'دراسة المجال الكهربي، التدفق الكهربي، قانون جاوس وتطبيقاته في حساب المجالات',
-lessons: [
-{
-id: 1,
-title: 'الجزء الأول: المجال الكهربي - المجال عن شحنة نقطية',
-icon: '🌐',
-duration: '55 دقيقة',
-lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-2.1-2.4/',
-examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-2.1-2.4-exam/',
-lessonTitle: '📖 شرح الدرس',
-examTitle: '📝 ابدأ الاختبار',
-content: {
-intro: 'المجال الكهربي هو المنطقة المحيطة بالشحنة التي تؤثر فيها بقوة على الشحنات الأخرى. بدلاً من التفكير في "التأثير عن بُعد"، نصف التأثير من خلال المجال.',
-sections: [
-{ title: '📋 تعريف المجال الكهربي', type: 'bullets', content: [
-'المجال الكهربي (E): كمية متجهة تصف القوة المؤثرة على شحنة اختبار موجبة موضوعة في نقطة ما',
-'وحدته: N/C أو V/m (فولت/متر)',
-'اتجاه المجال: نفس اتجاه القوة على شحنة اختبار موجبة',
-'يخرج من الشحنات الموجبة ويدخل إلى الشحنات السالبة'
-]},
-{ title: 'التعريف الرياضي للمجال', type: 'formula', content: 'E⃗ = F⃗ / q₀' },
-{ title: 'المجال عن شحنة نقطية', type: 'formula', content: 'E = k·|Q| / r²' },
-{ title: 'الصيغة باستخدام ε₀', type: 'formula', content: 'E = |Q| / (4πε₀·r²)' },
-{ title: '📋 خصائص خطوط المجال الكهربي', type: 'bullets', content: [
-'تبدأ من الشحنات الموجبة وتنتهي عند السالبة',
-'لا تتقاطع أبداً (لأن للمجال اتجاه واحد عند كل نقطة)',
-'كثافتها تدل على شدة المجال',
-'عمودية على سطح الموصل عند التوازن الكهروستاتيكي',
-'داخل الموصل: E = 0 (عند التوازن)'
-]},
-{ title: 'مبدأ تراكب المجالات', type: 'formula', content: 'E⃗_net = E⃗₁ + E⃗₂ + E⃗₃ + ... = ΣE⃗ᵢ' },
-{ title: '💡 تطبيقات', type: 'bullets', content: [
-'إيجاد المجال عند نقطة منتصفة بين شحنتين',
-'حساب المجال على محور حلقة مشحونة',
-'المجال على محور ثنائي القطب (Dipole)'
-]}
-]
-}
-},
-{
-id: 2,
-title: 'الجزء الثاني: التوزيعات العامة للشحنة - القوة الناتجة عن المجال',
-icon: '📊',
-duration: '55 دقيقة',
-lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-2.5-2.6/',
-examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-2.5-2.6-exam/',
-lessonTitle: '📖 شرح الدرس',
-examTitle: '📝 ابدأ الاختبار',
-content: {
-intro: 'في الواقع، الشحنات نادراً ما تكون نقطية. غالباً ما تكون موزعة على أسلاك أو أسطح أو أحجام. نتعلم هنا كيفية التعامل مع هذه التوزيعات.',
-sections: [
-{ title: '📋 أنواع كثافة الشحنة', type: 'table', headers: ['النوع', 'الرمز', 'الصيغة', 'الوحدة'], rows: [
-['كثافة خطية (Linear)', 'λ', 'λ = Q/L', 'C/m'],
-['كثافة سطحية (Surface)', 'σ', 'σ = Q/A', 'C/m²'],
-['كثافة حجمية (Volume)', 'ρ', 'ρ = Q/V', 'C/m³']
-]},
-{ title: 'المجال لشحنة نقطية متجهة', type: 'formula', content: 'E⃗ = (k·Q/r²)·r̂' },
-{ title: 'المجال لتوزيع مستمر', type: 'formula', content: 'E⃗ = k·∫(dq/r²)·r̂' },
-{ title: 'القوة على شحنة في مجال', type: 'formula', content: 'F⃗ = q·E⃗' },
-{ title: 'حركة شحنة في مجال منتظم', type: 'bullets', content: [
-'التسارع: a = qE/m',
-'شحنة موجبة تتسارع في اتجاه المجال',
-'شحنة سالبة تتسارع عكس اتجاه المجال',
-'حركة مكافئة لحركة المقذوفات في مجال الجاذبية'
-]},
-{ title: '💡 حالات خاصة مشهورة', type: 'bullets', content: [
-'سلك طويل مشحون (بعيد عنه): E ≈ 2kλ/r',
-'مستوى لا نهائي مشحون: E = σ/(2ε₀) (ثابت لا يعتمد على المسافة)',
-'بين لوحين متوازيين: E = σ/ε₀'
-]}
-]
-}
-},
-{
-id: 3,
-title: 'الجزء الثالث: التدفق الكهربي - قانون جاوس - حالات جاوس الخاصة',
-icon: '🔬',
-duration: '60 دقيقة',
-lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-2.7-2.9/',
-examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-2.7-2.9-exam/',
-lessonTitle: '📖 شرح الدرس',
-examTitle: '📝 ابدأ الاختبار',
-content: {
-intro: 'قانون جاوس هو أحد معادلات ماكسويل الأربع، ويعطينا طريقة أنيقة لحساب المجال الكهربي عندما يكون التوزيع متماثلاً.',
-sections: [
-{ title: '📋 التدفق الكهربي (Electric Flux)', type: 'bullets', content: [
-'التدفق الكهربي (Φ): مقياس لعدد خطوط المجال التي تخترق سطحاً ما',
-'وحدته: N·m²/C أو V·m',
-'كمية قياسية (ليست متجهة)',
-'يمكن أن يكون موجباً أو سالباً أو صفراً'
-]},
-{ title: 'صيغة التدفق الكهربي', type: 'formula', content: 'Φ = E⃗ · A⃗ = E·A·cos(θ)' },
-{ title: 'التدفق لسطح مغلق', type: 'formula', content: 'Φ = ∮E⃗ · dA⃗' },
-{ title: '📋 نص قانون جاوس', type: 'bullets', content: [
-'التدفق الكهربي الكلي عبر أي سطح مغلق = الشحنة المحصورة مقسومة على ε₀',
-'لا يعتمد على شكل السطح أو حجمه',
-'الشحنات خارج السطح لا تساهم في التدفق الكلي'
-]},
-{ title: 'صيغة قانون جاوس', type: 'formula', content: '∮E⃗ · dA⃗ = Q_enc / ε₀' },
-{ title: '📋 حالات جاوس الخاصة', type: 'table', headers: ['التوزيع', 'السطح الغاوسي', 'المجال E'], rows: [
-['كرة مشحونة (خارجها)', 'كرة نصف قطرها r', 'E = kQ/r²'],
-['كرة مشحونة (داخلها)', 'كرة نصف قطرها r<R', 'E = kQr/R³ (منتظمة)'],
-['سلك طويل لا نهائي', 'أسطوانة', 'E = λ/(2πε₀r)'],
-['مستوى لا نهائي', 'صندوق', 'E = σ/(2ε₀)'],
-['موصل عند التوازن', 'داخل الموصل', 'E = 0']
-]},
-{ title: '💡 شروط اختيار السطح الغاوسي', type: 'bullets', content: [
-'يجب أن يكون E ثابت المقدار على السطح',
-'يجب أن يكون E موازياً أو عمودياً على السطح',
-'يُختار السطح ليتناسب مع تماثل التوزيع'
-]}
-]
-}
-}
-]
-},
-// ═══════════════════════════════════════════════
-// UNIT 3: الطاقة الكهربية
-// ═══════════════════════════════════════════════
-{
-id: 3,
-name: 'الوحدة الثالثة: الطاقة الكهربية',
-icon: '⚡',
-color: 'from-yellow-500 to-orange-600',
-description: 'دراسة طاقة الوضع الكهربية، الجهد الكهربي، أسطح تساوي الجهد، وتطبيقاتها',
-lessons: [
-{
-id: 1,
-title: 'الجزء الأول: طاقة الوضع الكهربية - تعريف الجهد الكهربي',
-icon: '🔋',
-duration: '55 دقيقة',
-lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-3.1-3.2/',
-examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-3.1-3.2-exam/',
-lessonTitle: '📖 شرح الدرس',
-examTitle: '📝 ابدأ الاختبار',
-content: {
-intro: 'بما أن القوة الكهروستاتيكية قوة محافظة، يمكننا تعريف طاقة وضع لها. الجهد الكهربي هو طاقة الوضع لكل وحدة شحنة - وهو مفهوم أساسي في الدوائر الكهربية.',
-sections: [
-{ title: '📋 طاقة الوضع الكهربية (U)', type: 'bullets', content: [
-'طاقة الوضع الكهربية: الطاقة المخزنة في نظام من الشحنات بسبب مواقعها النسبية',
-'وحدتها: الجول (J)',
-'القوة الكهروستاتيكية محافظة → يمكن تعريف U',
-'الشغل المبذول = -ΔU (نقصان طاقة الوضع)'
-]},
-{ title: 'طاقة الوضع لشحنتين نقطيتين', type: 'formula', content: 'U = k·q₁·q₂ / r' },
-{ title: 'العلاقة بين الشغل وطاقة الوضع', type: 'formula', content: 'W = -ΔU = U_i - U_f' },
-{ title: '📋 تعريف الجهد الكهربي (V)', type: 'bullets', content: [
-'الجهد الكهربي: طاقة الوضع الكهربية لكل وحدة شحنة',
-'V = U/q',
-'وحدته: الفولت (V) = J/C',
-'كمية قياسية (ليست متجهة)',
-'الجهد عند اللانهاية = صفر (كمرجع)'
-]},
-{ title: 'الجهد عن شحنة نقطية', type: 'formula', content: 'V = k·Q / r' },
-{ title: 'فرق الجهد', type: 'formula', content: 'ΔV = V_B - V_A = W_{A→B} / q = -∫E⃗·dl⃗' },
-{ title: 'الإلكترون فولت (eV)', type: 'formula', content: '1 eV = 1.6 × 10⁻¹⁹ J' },
-{ title: '💡 ملاحظات', type: 'bullets', content: [
-'الجهد موجب قرب الشحنات الموجبة، وسالب قرب السالبة',
-'الشحنة الموجبة تتحرك تلقائياً من جهد عالٍ إلى منخفض',
-'الشحنة السالبة تتحرك تلقائياً من جهد منخفض إلى عالٍ'
-]}
-]
-}
-},
-{
-id: 2,
-title: 'الجزء الثاني: أسطح وخطوط تساوي الجهد - الجهد للتوزيعات العامة',
-icon: '📈',
-duration: '55 دقيقة',
-lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-3.3-3.4/',
-examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-3.3-3.4-exam/',
-lessonTitle: '📖 شرح الدرس',
-examTitle: '📝 ابدأ الاختبار',
-content: {
-intro: 'أسطح تساوي الجهد هي الأسطح التي يكون عندها الجهد ثابتاً. هذه الأسطح دائماً عمودية على خطوط المجال الكهربي.',
-sections: [
-{ title: '📋 أسطح تساوي الجهد (Equipotential Surfaces)', type: 'bullets', content: [
-'السطح متساوي الجهد: كل نقاطه لها نفس قيمة الجهد',
-'لا يُبذل شغل عند تحريك شحنة على سطح متساوي الجهد',
-'خطوط المجال الكهربي دائماً عمودية على أسطح تساوي الجهد',
-'أسطح تساوي الجهد لا تتقاطع أبداً'
-]},
-{ title: 'أمثلة على أسطح تساوي الجهد', type: 'table', headers: ['التوزيع', 'شكل السطح'], rows: [
-['شحنة نقطية', 'كرات متمركزة حول الشحنة'],
-['مجال منتظم', 'مستويات متوازية عمودية على المجال'],
-['سلك طويل مشحون', 'أسطوانات متحد المحور'],
-['موصل عند التوازن', 'سطح الموصل نفسه متساوي الجهد']
-]},
-{ title: 'العلاقة بين المجال والجهد', type: 'formula', content: 'E = -dV/dr (في بعد واحد)' },
-{ title: 'الصيغة المتجهية', type: 'formula', content: 'E⃗ = -∇V (تدرج الجهد)' },
-{ title: '💡 الدلالة الفيزيائية', type: 'bullets', content: [
-'المجال الكهربي يشير من الجهد الأعلى إلى الأقل',
-'شدة المجال = معدل تغير الجهد مع المسافة',
-'كلما تقاربت أسطح تساوي الجهد، زادت شدة المجال'
-]},
-{ title: 'جهد التوزيعات الشائعة', type: 'table', headers: ['التوزيع', 'الجهد V'], rows: [
-['شحنة نقطية', 'V = kQ/r'],
-['كرة مشحونة (خارجها)', 'V = kQ/r'],
-['كرة مشحونة (داخلها)', 'V = kQ/R (ثابت)'],
-['مكثف متوازي اللوحين', 'V = E·d']
-]}
-]
-}
-},
-{
-id: 3,
-title: 'الجزء الثالث: الجهد من المجال - طاقة الوضع لنظام مختلف الشحنات',
-icon: '🎯',
-duration: '60 دقيقة',
-lessonUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-3.5-3.6/',
-examUrl: 'https://hesham-afandi.github.io/12Adv-Bri-phy-T1-3.5-3.6-exam/',
-lessonTitle: '📖 شرح الدرس',
-examTitle: '📝 ابدأ الاختبار',
-content: {
-intro: 'يمكن حساب الجهد من المجال الكهربي بالتكامل، والعكس صحيح. كما يمكننا حساب طاقة الوضع الكلية لأي نظام من الشحنات.',
-sections: [
-{ title: 'حساب الجهد من المجال', type: 'formula', content: 'V_B - V_A = -∫ₐᵇ E⃗ · dl⃗' },
-{ title: 'حساب المجال من الجهد', type: 'formula', content: 'E_x = -∂V/∂x , E_y = -∂V/∂y , E_z = -∂V/∂z' },
-{ title: '📋 طاقة الوضع لنظام من الشحنات', type: 'bullets', content: [
-'الطاقة الكلية = مجموع طاقات كل زوج من الشحنات',
-'نحسب الطاقة اللازمة لتجميع الشحنات من اللانهاية',
-'الطاقة كمية قياسية (جمع جبري وليس اتجاهي)'
-]},
-{ title: 'طاقة الوضع لنظام من n شحنة', type: 'formula', content: 'U = (1/2)·Σᵢ Σⱼ₌ᵢ₊₁ⁿ k·qᵢ·qⱼ / rᵢⱼ' },
-{ title: 'طاقة الوضع لشحنتين', type: 'formula', content: 'U = k·q₁·q₂ / r₁₂' },
-{ title: 'طاقة الوضع لثلاث شحنات', type: 'formula', content: 'U = k·(q₁q₂/r₁₂ + q₁q₃/r₁₃ + q₂q₃/r₂₃)' },
-{ title: '💡 طاقة المكثف', type: 'bullets', content: [
-'المكثف يخزن طاقة في مجاله الكهربي',
-'U = ½CV² = ½QV = Q²/(2C)',
-'كثافة الطاقة في المجال: u = ½ε₀E² (J/m³)'
-]},
-{ title: '📋 مقارنة: الجهد vs المجال', type: 'table', headers: ['الخاصية', 'الجهد V', 'المجال E'], rows: [
-['النوع', 'كمية قياسية', 'كمية متجهة'],
-['الوحدة', 'فولت (V)', 'N/C أو V/m'],
-['العلاقة', 'V = kQ/r', 'E = kQ/r²'],
-['التناسب', 'مع 1/r', 'مع 1/r²'],
-['الحساب', 'جمع جبري', 'جمع اتجاهي'],
-['الاشتقاق', 'E = -dV/dr', 'V = -∫E·dr']
-]}
-]
-}
-}
-]
-}
-]
-},
-  'math-12-bridge-1': {
+ 'math-12-bridge-1': {
 isEnglish: false,
 units: [
 // ═══════════════════════════════════════════════════
@@ -7879,16 +7421,15 @@ sections: [
 ]
 }
 };
-
 let state = { term: null, stream: null, program: null, grade: null, subject: null, unit: null, lesson: null };
 function getCurriculumKey() {
 if (!state.subject || !state.grade || !state.term) return null;
 if (!state.stream) return null;
-const key = state.stream.id === 'advanced' ? state.program.id : 'general';
+const key = state.stream.id === 'advanced' ? (state.program ? state.program.id : 'inspire') : 'general';
 return `${state.subject.id}-${state.grade.id}-${key}-${state.term.id}`;
 }
 function getSubjectKey(subjectId) {
-const key = state.stream.id === 'advanced' ? (state.program ? state.program.id : 'advanced') : 'general';
+const key = state.stream.id === 'advanced' ? (state.program ? state.program.id : 'inspire') : 'general';
 return `${subjectId}-${state.grade.id}-${key}-${state.term.id}`;
 }
 function isCurrentEnglish() {
@@ -7966,12 +7507,10 @@ window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function openExam() {
 if (state.lesson && state.lesson.examUrl && state.lesson.examUrl !== '#') {
-// Mark exam as done
 const key = getLessonKey();
 if (key) {
 ProgressManager.markExamDone(key);
 showToast('🎉 أحسنت! تم تسجيل إنجاز الاختبار');
-// Check if all units exams are done → show certificate
 const currKey = getCurriculumKey();
 const curriculum = DB.curriculum[currKey];
 if (curriculum && state.unit) {
@@ -7992,12 +7531,10 @@ alert('الاختبار قيد التحضير! 🚧');
 }
 function openLesson() {
 if (state.lesson && state.lesson.lessonUrl && state.lesson.lessonUrl !== '#') {
-// Mark lesson as read & start tracking
 const key = getLessonKey();
 if (key) {
 ProgressManager.markLessonRead(key);
 ProgressManager.startTracking(key);
-// Stop tracking when tab is hidden or closed
 const handleVisibility = () => {
 if (document.hidden) {
 ProgressManager.stopTracking(key);
@@ -8284,11 +7821,9 @@ document.getElementById('app').innerHTML = `
 <div class="gradient-teal rounded-3xl p-8 text-white mb-8 fade-in">
 <div class="flex items-center gap-4 mb-4 flex-wrap">
 <button onclick="selectUnit(${state.unit.id})" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition">${isEnglish ? '← Back to Unit' : '→ رجوع للوحدة'}</button>
-<!-- NEW: زر المشاركة -->
 <button onclick="showShareModal('${state.lesson.title.replace(/'/g,"\\'")}','${shareUrl}')" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition flex items-center gap-2" title="مشاركة">
 <span>📤</span><span class="hidden sm:inline">${isEnglish ? 'Share' : 'مشاركة'}</span>
 </button>
-<!-- NEW: زر المفضلة -->
 <button onclick="toggleCurrentFavorite()" data-fav-key="${lessonKey}" class="favorite-btn ${isFav ? 'active' : ''} bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition flex items-center gap-2" title="المفضلة (Ctrl+D)">
 <span class="text-xl">${isFav ? '❤️' : '🤍'}</span><span class="hidden sm:inline">${isEnglish ? 'Favorite' : 'المفضلة'}</span>
 </button>
@@ -8337,7 +7872,6 @@ ${isRead ? `<div class="bg-green-50 dark:bg-green-900/30 p-3 rounded-lg border b
 <span class="text-2xl">📝</span><span>${state.lesson.examTitle || (isEnglish ? 'Take the Quiz' : 'ابدأ الاختبار')}</span><span>↗</span>
 </button>
 <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">${isEnglish ? 'Opens in new tab' : 'سيفتح في نافذة جديدة'}</p>
-<!-- NEW: زر المشاركة السريع -->
 <button onclick="showShareModal('${state.lesson.title.replace(/'/g,"\\'")}','${shareUrl}')" class="mt-3 w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 rounded-xl font-bold transition transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
 <span class="text-xl">📤</span><span>${isEnglish ? 'Share Lesson' : 'مشاركة الدرس'}</span>
 </button>
@@ -8346,7 +7880,6 @@ ${isRead ? `<div class="bg-green-50 dark:bg-green-900/30 p-3 rounded-lg border b
 <h4 class="font-bold text-amber-700 dark:text-amber-400 mb-2 flex items-center gap-2"><span>💡</span> ${isEnglish ? 'Tip' : 'نصيحة'}</h4>
 <p class="text-sm text-gray-700 dark:text-gray-300">${isEnglish ? 'Review the lesson thoroughly before starting the quiz for the best results!' : 'راجع الدرس جيداً قبل البدء في الاختبار للحصول على أفضل نتيجة!'}</p>
 </div>
-<!-- NEW: اختصارات لوحة المفاتيح -->
 <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-4">
 <h4 class="font-bold text-gray-700 dark:text-gray-300 mb-2 text-sm flex items-center gap-2"><span>⌨️</span> ${isEnglish ? 'Keyboard Shortcuts' : 'اختصارات لوحة المفاتيح'}</h4>
 <div class="space-y-1 text-xs text-gray-600 dark:text-gray-400">
@@ -8360,15 +7893,9 @@ ${isRead ? `<div class="bg-green-50 dark:bg-green-900/30 p-3 rounded-lg border b
 `;
 }
 showHome();
-// ═══════════════════════════════════════════════════
-// NEW: INIT PROGRESS & FAVORITES ON LOAD
-// ═══════════════════════════════════════════════════
 ProgressManager.load();
 FavoritesManager.load();
 ProgressManager.updateUI();
-// ═══════════════════════════════════════════════════
-// SERVICE WORKER & INSTALL LOGIC
-// ═══════════════════════════════════════════════════
 if ('serviceWorker' in navigator) {
 window.addEventListener('load', () => {
 navigator.serviceWorker.register('./sw.js')
@@ -8418,4 +7945,5 @@ console.log('🎉 تم تثبيت التطبيق بنجاح');
 });
 </script>
 </body>
-</html>
+</html></content>
+</writeToFile>
