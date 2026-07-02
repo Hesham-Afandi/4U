@@ -54,333 +54,40 @@ table.comparison th { background: #f3f4f6; font-weight: bold; }
 .en-content table.comparison th, .en-content table.comparison td { text-align: left; }
 mark { background-color: #fbbf24; color: #000; padding: 0 2px; border-radius: 2px; }
 .dark mark { background-color: #d97706; color: #fff; }
-#page-loader {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100vh;
-z-index: 9999;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-overflow: hidden;
-transition: opacity 0.8s ease, visibility 0.8s ease;
-}
-#page-loader::before {
-content: '';
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background-image: url('Loader.png');
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-filter: blur(8px) brightness(0.4);
-transform: scale(1.1);
-z-index: -1;
-}
-#page-loader::after {
-content: '';
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: linear-gradient(135deg,
-rgba(102, 126, 234, 0.3) 0%,
-rgba(118, 75, 162, 0.3) 100%);
-z-index: -1;
-}
-.loader-spinner {
-width: 80px;
-height: 80px;
-border: 5px solid rgba(255, 255, 255, 0.2);
-border-top: 5px solid #ffffff;
-border-right: 5px solid #fbbf24;
-border-radius: 50%;
-animation: spin 1s linear infinite;
-margin-bottom: 2rem;
-box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-}
-@keyframes spin {
-0% { transform: rotate(0deg); }
-100% { transform: rotate(360deg); }
-}
-.loader-text {
-color: #ffffff;
-font-size: 2rem;
-font-weight: 700;
-letter-spacing: 2px;
-text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-animation: textPulse 2s ease-in-out infinite;
-}
-@keyframes textPulse {
-0%, 100% {
-opacity: 0.7;
-transform: scale(1);
-}
-50% {
-opacity: 1;
-transform: scale(1.05);
-}
-}
-.loader-dots {
-display: inline-flex;
-gap: 4px;
-margin-right: 8px;
-}
-.loader-dots span {
-width: 8px;
-height: 8px;
-background: #fbbf24;
-border-radius: 50%;
-animation: dotBounce 1.4s ease-in-out infinite;
-}
-.loader-dots span:nth-child(2) { animation-delay: 0.2s; }
-.loader-dots span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes dotBounce {
-0%, 80%, 100% {
-transform: scale(0.6);
-opacity: 0.5;
-}
-40% {
-transform: scale(1);
-opacity: 1;
-}
-}
-.loader-progress {
-width: 240px;
-height: 4px;
-background: rgba(255, 255, 255, 0.2);
-border-radius: 2px;
-margin-top: 2rem;
-overflow: hidden;
-position: relative;
-}
-.loader-progress-bar {
-height: 100%;
-background: linear-gradient(90deg, #fbbf24, #f59e0b);
-width: 0%;
-animation: progressFill 2.5s ease-in-out forwards;
-border-radius: 2px;
-box-shadow: 0 0 10px rgba(251, 191, 36, 0.8);
-}
-@keyframes progressFill {
-0% { width: 0%; }
-50% { width: 70%; }
-100% { width: 100%; }
-}
-#page-loader.hidden-loader {
-opacity: 0;
-visibility: hidden;
-}
-#main-content {
-opacity: 0;
-transition: opacity 0.8s ease;
-}
-#main-content.visible {
-opacity: 1;
-}
-.animated-bg {
-background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-background-size: 400% 400%;
-animation: gradient 15s ease infinite;
-}
-.glass-effect {
-background: rgba(255, 255, 255, 0.1);
-backdrop-filter: blur(10px);
-border: 1px solid rgba(255, 255, 255, 0.2);
-}
-.particle {
-position: absolute;
-border-radius: 50%;
-background: rgba(255, 255, 255, 0.3);
-animation: float 10s infinite;
-}
-.glow {
-box-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
-0 0 40px rgba(255, 255, 255, 0.3),
-0 0 60px rgba(255, 255, 255, 0.1);
-}
-.term-card {
-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.term-card:hover {
-transform: translateY(-10px) scale(1.02);
-box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
-.lesson-progress-bar {
-height: 6px;
-background: rgba(99, 102, 241, 0.2);
-border-radius: 3px;
-overflow: hidden;
-margin-top: 0.5rem;
-}
-.lesson-progress-fill {
-height: 100%;
-background: linear-gradient(90deg, #10b981, #059669);
-border-radius: 3px;
-transition: width 0.5s ease;
-}
-.favorite-btn {
-transition: all 0.3s ease;
-}
-.favorite-btn.active {
-color: #ef4444;
-transform: scale(1.1);
-}
-.favorite-btn:hover {
-transform: scale(1.2);
-}
-.modal-overlay {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: rgba(0, 0, 0, 0.7);
-backdrop-filter: blur(5px);
-z-index: 1000;
-display: flex;
-align-items: center;
-justify-content: center;
-animation: fadeIn 0.3s ease;
-}
-.modal-content {
-background: white;
-border-radius: 1.5rem;
-max-width: 600px;
-width: 90%;
-max-height: 90vh;
-overflow-y: auto;
-box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-animation: slideUp 0.4s ease;
-}
-.dark .modal-content {
-background: #1f2937;
-color: #f3f4f6;
-}
-@keyframes slideUp {
-from { opacity: 0; transform: translateY(30px); }
-to { opacity: 1; transform: translateY(0); }
-}
-.certificate {
-background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-border: 8px double #d97706;
-padding: 2rem;
-text-align: center;
-position: relative;
-}
-.certificate::before {
-content: '🏆';
-position: absolute;
-top: -30px;
-left: 50%;
-transform: translateX(-50%);
-font-size: 4rem;
-background: white;
-border-radius: 50%;
-padding: 0.5rem;
-box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-.dark .certificate {
-background: linear-gradient(135deg, #451a03 0%, #78350f 100%);
-border-color: #fbbf24;
-}
-.stat-card {
-background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-color: white;
-border-radius: 1rem;
-padding: 1.5rem;
-text-align: center;
-transition: all 0.3s ease;
-}
-.stat-card:hover {
-transform: translateY(-5px);
-box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-}
-.top-progress-bar {
-height: 3px;
-background: rgba(255, 255, 255, 0.2);
-position: absolute;
-bottom: 0;
-left: 0;
-width: 100%;
-}
-.top-progress-fill {
-height: 100%;
-background: linear-gradient(90deg, #10b981, #34d399);
-transition: width 0.5s ease;
-}
-.share-btn {
-transition: all 0.3s ease;
-}
-.share-btn:hover {
-transform: translateY(-3px) scale(1.05);
-}
-.kbd {
-background: #e5e7eb;
-border: 1px solid #d1d5db;
-border-bottom-width: 2px;
-border-radius: 4px;
-padding: 2px 6px;
-font-family: monospace;
-font-size: 0.75rem;
-color: #374151;
-}
-.dark .kbd {
-background: #374151;
-border-color: #4b5563;
-color: #e5e7eb;
-}
-.completed-badge {
-background: linear-gradient(135deg, #10b981, #059669);
-color: white;
-font-size: 0.7rem;
-padding: 2px 8px;
-border-radius: 10px;
-font-weight: bold;
-}
-.toast {
-position: fixed;
-bottom: 100px;
-left: 50%;
-transform: translateX(-50%);
-background: #1f2937;
-color: white;
-padding: 12px 24px;
-border-radius: 12px;
-box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-z-index: 9999;
-animation: toastSlide 0.4s ease;
-}
-@keyframes toastSlide {
-from { opacity: 0; transform: translate(-50%, 20px); }
-to { opacity: 1; transform: translate(-50%, 0); }
-}
+.lesson-progress-bar { width: 100%; height: 6px; background: #e5e7eb; border-radius: 3px; overflow: hidden; margin-top: 8px; }
+.lesson-progress-fill { height: 100%; background: linear-gradient(90deg, #10b981, #34d399); transition: width 0.5s ease; }
+.completed-badge { background: #10b981; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; }
+.favorite-btn { transition: all 0.3s; }
+.favorite-btn.active { transform: scale(1.2); }
+.kbd { background: #e5e7eb; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+.dark .kbd { background: #374151; }
+/* Modal Styles */
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s; }
+.modal-overlay.active { opacity: 1; visibility: visible; }
+.modal-content { background: white; border-radius: 16px; padding: 2rem; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; transform: scale(0.9); transition: transform 0.3s; }
+.dark .modal-content { background: #1f2937; }
+.modal-overlay.active .modal-content { transform: scale(1); }
+/* Certificate Styles */
+.certificate { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 3rem; border-radius: 16px; text-align: center; }
+.certificate h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+.certificate .student-name { font-size: 2rem; margin: 2rem 0; padding: 1rem; background: rgba(255,255,255,0.2); border-radius: 8px; }
+/* Toast Notification */
+.toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: #10b981; color: white; padding: 1rem 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 2000; transition: transform 0.3s; }
+.toast.show { transform: translateX(-50%) translateY(0); }
 </style>
 </head>
 <body class="bg-gray-50 min-h-screen dark:bg-gray-900 dark:text-gray-100">
+<!-- Loader -->
 <div id="page-loader">
 <div class="loader-spinner"></div>
-<div class="loader-text">
-جاري تحميل المنصة
-<span class="loader-dots">
-<span></span>
-<span></span>
-<span></span>
-</span>
+<div class="loader-text">جاري تحميل المنصة<span class="loader-dots"><span></span><span></span><span></span></span></div>
+<div class="loader-progress"><div class="loader-progress-bar"></div></div>
 </div>
-<div class="loader-progress">
-<div class="loader-progress-bar"></div>
-</div>
-</div>
-<div id="main-content">
-<div class="gradient-primary text-white py-3 px-6 shadow-lg sticky top-0 z-50 relative">
+
+<!-- Main Content -->
+<div id="main-content" style="display:none;">
+<!-- Top Bar -->
+<div class="gradient-primary text-white py-3 px-6 shadow-lg sticky top-0 z-50">
 <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-3">
 <div class="flex items-center gap-3 cursor-pointer" onclick="showHome()">
 <img src="logo.png" alt="4U Logo" class="h-12 w-auto drop-shadow-lg">
@@ -395,30 +102,16 @@ class="w-full bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg py-
 <svg class="w-5 h-5 absolute right-3 top-2.5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
 </div>
 <div class="flex items-center gap-2 text-sm">
-<button id="backBtn" onclick="goBack()" class="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg transition font-medium hidden" title="رجوع (Esc)">
-<span class="flex items-center gap-1">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-<span class="hidden sm:inline">رجوع</span>
-</span>
-</button>
-<button onclick="showFavorites()" class="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition" title="المفضلة">
-<span class="flex items-center gap-1">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-<span id="favCount" class="hidden sm:inline text-xs bg-red-500 rounded-full px-1.5 py-0.5">0</span>
-</span>
-</button>
-<button onclick="showStats()" class="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition" title="إحصائياتي">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-</button>
+<button onclick="showStatsModal()" class="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg transition" title="الإحصائيات">📊</button>
 <a href="https://hesham-afandi.github.io/DafterKhana/" target="_blank" title="مكتبة دفتر خانة"
 class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg transition font-medium">
-<span>📓</span>
-<span class="hidden sm:inline">دفتر خانة</span>
+<span>📓</span><span class="hidden sm:inline">دفتر خانة</span>
 </a>
 <button id="themeToggle" class="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition" title="تبديل الوضع">
 <svg id="sunIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
 <svg id="moonIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
 </button>
+<button onclick="showFavoritesModal()" class="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg transition" title="المفضلة">❤️</button>
 <span class="hidden md:block ml-2">مرحباً بك 👋</span>
 <button onclick="showHome()" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition">🎓 الرئيسية</button>
 </div>
@@ -427,10 +120,9 @@ class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-3 py-2 rounded-l
 <input type="text" id="mobileSearchInput" placeholder="ابحث عن درس..."
 class="w-full bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg py-2 px-4 text-white placeholder-white/70 focus:outline-none focus:bg-white/30 transition text-sm">
 </div>
-<div id="topProgressBar" class="top-progress-bar hidden">
-<div id="topProgressFill" class="top-progress-fill" style="width: 0%"></div>
 </div>
-</div>
+
+<!-- Breadcrumbs -->
 <div id="breadcrumbs" class="max-w-7xl mx-auto px-6 py-4 hidden">
 <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 flex-wrap">
 <button onclick="showHome()" class="hover:text-indigo-600 dark:hover:text-indigo-400">🎓 الرئيسية</button>
@@ -450,7 +142,11 @@ class="w-full bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg py-
 <button id="bc-lesson-btn" class="hidden hover:text-indigo-600 dark:hover:text-indigo-400"></button>
 </div>
 </div>
+
+<!-- App Container -->
 <div id="app" class="max-w-7xl mx-auto px-4 md:px-6 pb-12"></div>
+
+<!-- Footer -->
 <footer class="bg-gray-900 text-white py-8 mt-16">
 <div class="max-w-7xl mx-auto px-6 text-center">
 <img src="logo.png" alt="4U Logo" class="h-16 w-auto mx-auto mb-4 drop-shadow-lg">
@@ -462,6 +158,8 @@ class="w-full bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg py-
 </div>
 </footer>
 </div>
+
+<!-- Install Button -->
 <div id="installButton" class="hidden fixed bottom-6 left-6 z-50">
 <button onclick="installApp()"
 class="group relative bg-gradient-to-br from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:shadow-teal-500/50"
@@ -476,601 +174,44 @@ title="تثبيت التطبيق">
 </span>
 </button>
 </div>
-<div id="modalContainer"></div>
+
+<!-- Modals -->
+<div id="statsModal" class="modal-overlay" onclick="if(event.target===this)closeStatsModal()">
+<div class="modal-content dark:bg-gray-800">
+<h2 class="text-2xl font-bold mb-6 dark:text-white">📊 إحصائيات تقدمك</h2>
+<div id="statsContent"></div>
+<button onclick="closeStatsModal()" class="mt-6 w-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 py-3 rounded-lg font-bold transition">إغلاق</button>
+</div>
+</div>
+
+<div id="favoritesModal" class="modal-overlay" onclick="if(event.target===this)closeFavoritesModal()">
+<div class="modal-content dark:bg-gray-800">
+<h2 class="text-2xl font-bold mb-6 dark:text-white">❤️ الدروس المفضلة</h2>
+<div id="favoritesContent"></div>
+<button onclick="closeFavoritesModal()" class="mt-6 w-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 py-3 rounded-lg font-bold transition">إغلاق</button>
+</div>
+</div>
+
+<div id="shareModal" class="modal-overlay" onclick="if(event.target===this)closeShareModal()">
+<div class="modal-content dark:bg-gray-800">
+<h2 class="text-2xl font-bold mb-6 dark:text-white">📤 مشاركة الدرس</h2>
+<div id="shareContent"></div>
+<button onclick="closeShareModal()" class="mt-6 w-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 py-3 rounded-lg font-bold transition">إغلاق</button>
+</div>
+</div>
+
+<div id="certificateModal" class="modal-overlay" onclick="if(event.target===this)closeCertificateModal()">
+<div class="modal-content" style="max-width:800px;">
+<div id="certificateContent"></div>
+<button onclick="closeCertificateModal()" class="mt-6 w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-lg font-bold transition">إغلاق</button>
+</div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
 <script>
-// ═══════════════════════════════════════════════════
-// LOADER LOGIC
-// ═══════════════════════════════════════════════════
-window.addEventListener('load', () => {
-const loader = document.getElementById('page-loader');
-const mainContent = document.getElementById('main-content');
-setTimeout(() => {
-loader.classList.add('hidden-loader');
-mainContent.classList.add('visible');
-setTimeout(() => {
-loader.style.display = 'none';
-}, 800);
-}, 2500);
-});
-document.getElementById('page-loader').addEventListener('click', function() {
-this.classList.add('hidden-loader');
-document.getElementById('main-content').classList.add('visible');
-setTimeout(() => {
-this.style.display = 'none';
-}, 800);
-});
-// ═══════════════════════════════════════════════════
-// DARK MODE LOGIC
-// ═══════════════════════════════════════════════════
-const themeToggleBtn = document.getElementById('themeToggle');
-const sunIcon = document.getElementById('sunIcon');
-const moonIcon = document.getElementById('moonIcon');
-const htmlElement = document.documentElement;
-function applyTheme(isDark) {
-if (isDark) {
-htmlElement.classList.add('dark');
-sunIcon.classList.remove('hidden');
-moonIcon.classList.add('hidden');
-} else {
-htmlElement.classList.remove('dark');
-sunIcon.classList.add('hidden');
-moonIcon.classList.remove('hidden');
-}
-}
-const savedTheme = localStorage.getItem('theme');
-const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-let isDarkMode = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
-applyTheme(isDarkMode);
-themeToggleBtn.addEventListener('click', () => {
-isDarkMode = !isDarkMode;
-applyTheme(isDarkMode);
-localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-});
-// ═══════════════════════════════════════════════════
-// SEARCH LOGIC
-// ═══════════════════════════════════════════════════
-const searchInputs = [document.getElementById('searchInput'), document.getElementById('mobileSearchInput')];
-function performSearch(query) {
-const term = query.toLowerCase().trim();
-if (term === '' && !state.lesson && !state.unit) {
-document.querySelectorAll('#app button, #app a').forEach(el => {
-el.style.display = '';
-});
-return;
-}
-if (state.lesson || state.unit) {
-showHome();
-setTimeout(() => filterCurriculum(term), 50);
-return;
-}
-filterCurriculum(term);
-}
-function filterCurriculum(term) {
-const allButtons = document.querySelectorAll('#app .grid button, #app .space-y-4 button');
-let visibleCount = 0;
-allButtons.forEach(el => {
-const text = el.textContent.toLowerCase();
-if (term === '' || text.includes(term)) {
-el.style.display = '';
-el.style.opacity = '1';
-visibleCount++;
-} else {
-el.style.display = 'none';
-}
-});
-const appDiv = document.getElementById('app');
-let noResultsMsg = document.getElementById('custom-no-results');
-if (visibleCount === 0 && term !== '') {
-if (!noResultsMsg) {
-noResultsMsg = document.createElement('div');
-noResultsMsg.id = 'custom-no-results';
-noResultsMsg.className = 'text-center py-12 fade-in';
-noResultsMsg.innerHTML = `
-<div class="text-6xl mb-4">🔍</div>
-<h3 class="text-xl font-bold text-gray-700 dark:text-gray-300 mb-2">لا توجد نتائج مطابقة</h3>
-<p class="text-gray-500 dark:text-gray-400">جرب البحث بكلمات مختلفة مثل "فيزياء"، "مثلثات"، أو "SAT"</p>
-`;
-appDiv.appendChild(noResultsMsg);
-}
-} else {
-if (noResultsMsg) noResultsMsg.remove();
-}
-}
-searchInputs.forEach(input => {
-input.addEventListener('input', (e) => {
-searchInputs.forEach(i => {
-if(i !== e.target) i.value = e.target.value;
-});
-performSearch(e.target.value);
-});
-});
-// ═══════════════════════════════════════════════════
-// PROGRESS TRACKING SYSTEM
-// ═══════════════════════════════════════════════════
-const ProgressManager = {
-KEY: '4u_progress',
-data: {},
-load() {
-try {
-this.data = JSON.parse(localStorage.getItem(this.KEY)) || {};
-} catch { this.data = {}; }
-},
-save() {
-localStorage.setItem(this.KEY, JSON.stringify(this.data));
-},
-markLessonRead(lessonKey) {
-if (!this.data[lessonKey]) {
-this.data[lessonKey] = { read: false, examDone: false, startTime: null, totalTime: 0 };
-}
-this.data[lessonKey].read = true;
-this.save();
-this.updateUI();
-},
-markExamDone(lessonKey) {
-if (!this.data[lessonKey]) {
-this.data[lessonKey] = { read: false, examDone: false, startTime: null, totalTime: 0 };
-}
-this.data[lessonKey].examDone = true;
-this.save();
-this.updateUI();
-},
-startTracking(lessonKey) {
-if (!this.data[lessonKey]) {
-this.data[lessonKey] = { read: false, examDone: false, startTime: null, totalTime: 0 };
-}
-this.data[lessonKey].startTime = Date.now();
-this.save();
-},
-stopTracking(lessonKey) {
-if (this.data[lessonKey] && this.data[lessonKey].startTime) {
-const elapsed = Math.floor((Date.now() - this.data[lessonKey].startTime) / 1000);
-this.data[lessonKey].totalTime = (this.data[lessonKey].totalTime || 0) + elapsed;
-this.data[lessonKey].startTime = null;
-this.save();
-}
-},
-isRead(lessonKey) {
-return this.data[lessonKey] && this.data[lessonKey].read;
-},
-isExamDone(lessonKey) {
-return this.data[lessonKey] && this.data[lessonKey].examDone;
-},
-getTimeSpent(lessonKey) {
-return (this.data[lessonKey] && this.data[lessonKey].totalTime) || 0;
-},
-getStats() {
-let totalRead = 0, totalExams = 0, totalTime = 0;
-Object.values(this.data).forEach(item => {
-if (item.read) totalRead++;
-if (item.examDone) totalExams++;
-totalTime += item.totalTime || 0;
-});
-return { totalRead, totalExams, totalTime };
-},
-getUnitProgress(unitKey, totalLessons) {
-let completed = 0;
-for (let i = 1; i <= totalLessons; i++) {
-const key = `${unitKey}-${i}`;
-if (this.isRead(key)) completed++;
-}
-return totalLessons > 0 ? Math.round((completed / totalLessons) * 100) : 0;
-},
-updateUI() {
-const favs = FavoritesManager.getAll();
-const favCountEl = document.getElementById('favCount');
-if (favCountEl) {
-favCountEl.textContent = favs.length;
-favCountEl.style.display = favs.length > 0 ? 'inline' : 'none';
-}
-const stats = this.getStats();
-const totalLessons = this.countTotalLessons();
-const percent = totalLessons > 0 ? Math.round((stats.totalRead / totalLessons) * 100) : 0;
-const topBar = document.getElementById('topProgressBar');
-const topFill = document.getElementById('topProgressFill');
-if (topBar && topFill) {
-if (percent > 0) {
-topBar.classList.remove('hidden');
-topFill.style.width = percent + '%';
-} else {
-topBar.classList.add('hidden');
-}
-}
-},
-countTotalLessons() {
-let count = 0;
-Object.values(DB.curriculum).forEach(curriculum => {
-if (curriculum.units) {
-curriculum.units.forEach(unit => {
-if (unit.lessons) count += unit.lessons.length;
-});
-}
-});
-return count;
-}
-};
-// ═══════════════════════════════════════════════════
-// FAVORITES MANAGER
-// ═══════════════════════════════════════════════════
-const FavoritesManager = {
-KEY: '4u_favorites',
-data: [],
-load() {
-try {
-this.data = JSON.parse(localStorage.getItem(this.KEY)) || [];
-} catch { this.data = []; }
-},
-save() {
-localStorage.setItem(this.KEY, JSON.stringify(this.data));
-},
-toggle(lessonKey, lessonInfo) {
-const idx = this.data.findIndex(f => f.key === lessonKey);
-if (idx > -1) {
-this.data.splice(idx, 1);
-showToast('❌ تم الإزالة من المفضلة');
-} else {
-this.data.push({ key: lessonKey, ...lessonInfo, addedAt: Date.now() });
-showToast('❤️ تم الإضافة للمفضلة');
-}
-this.save();
-ProgressManager.updateUI();
-},
-isFavorite(lessonKey) {
-return this.data.some(f => f.key === lessonKey);
-},
-getAll() {
-return this.data;
-},
-clear() {
-this.data = [];
-this.save();
-ProgressManager.updateUI();
-}
-};
-// ═══════════════════════════════════════════════════
-// TOAST NOTIFICATION
-// ═══════════════════════════════════════════════════
-function showToast(message, duration = 2500) {
-const existing = document.querySelector('.toast');
-if (existing) existing.remove();
-const toast = document.createElement('div');
-toast.className = 'toast';
-toast.textContent = message;
-document.body.appendChild(toast);
-setTimeout(() => {
-toast.style.opacity = '0';
-toast.style.transition = 'opacity 0.3s';
-setTimeout(() => toast.remove(), 300);
-}, duration);
-}
-// ══════════════════════════════════════════════════
-// MODAL SYSTEM
-// ══════════════════════════════════════════════════
-function openModal(content) {
-const container = document.getElementById('modalContainer');
-container.innerHTML = `<div class="modal-overlay" onclick="if(event.target===this)closeModal()">${content}</div>`;
-document.body.style.overflow = 'hidden';
-}
-function closeModal() {
-document.getElementById('modalContainer').innerHTML = '';
-document.body.style.overflow = '';
-}
-// ═══════════════════════════════════════════════════
-// SHOW STATS MODAL
-// ═══════════════════════════════════════════════════
-function showStats() {
-const stats = ProgressManager.getStats();
-const totalLessons = ProgressManager.countTotalLessons();
-const percent = totalLessons > 0 ? Math.round((stats.totalRead / totalLessons) * 100) : 0;
-const hours = Math.floor(stats.totalTime / 3600);
-const minutes = Math.floor((stats.totalTime % 3600) / 60);
-const content = `
-<div class="modal-content p-8">
-<div class="flex justify-between items-center mb-6">
-<h2 class="text-2xl font-bold dark:text-white">📊 إحصائياتي</h2>
-<button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-2xl">×</button>
-</div>
-<div class="grid grid-cols-2 gap-4 mb-6">
-<div class="stat-card">
-<div class="text-4xl mb-2">📖</div>
-<div class="text-3xl font-bold">${stats.totalRead}</div>
-<div class="text-sm opacity-90">دروس مكتملة</div>
-</div>
-<div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-<div class="text-4xl mb-2"></div>
-<div class="text-3xl font-bold">${stats.totalExams}</div>
-<div class="text-sm opacity-90">اختبارات منجزة</div>
-</div>
-<div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-<div class="text-4xl mb-2">⏱️</div>
-<div class="text-3xl font-bold">${hours}h ${minutes}m</div>
-<div class="text-sm opacity-90">وقت الدراسة</div>
-</div>
-<div class="stat-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-<div class="text-4xl mb-2">🏆</div>
-<div class="text-3xl font-bold">${percent}%</div>
-<div class="text-sm opacity-90">نسبة الإنجاز</div>
-</div>
-</div>
-<div class="bg-gray-100 dark:bg-gray-700 rounded-xl p-4 mb-4">
-<div class="flex justify-between mb-2">
-<span class="font-semibold dark:text-white">التقدم الكلي</span>
-<span class="text-sm text-gray-600 dark:text-gray-300">${stats.totalRead} / ${totalLessons} درس</span>
-</div>
-<div class="w-full bg-gray-300 dark:bg-gray-600 rounded-full h-3">
-<div class="bg-gradient-to-r from-green-500 to-emerald-600 h-3 rounded-full transition-all" style="width: ${percent}%"></div>
-</div>
-</div>
-${stats.totalExams > 0 ? `
-<button onclick="showCertificate()" class="w-full bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 text-white py-3 rounded-xl font-bold transition flex items-center justify-center gap-2">
-<span>🏆</span><span>عرض شهادة الإتمام</span>
-</button>
-` : ''}
-<div class="mt-4 text-center text-xs text-gray-500 dark:text-gray-400">
-💡 <span class="kbd">Esc</span> للإغلاق | البيانات محفوظة على جهازك
-</div>
-</div>
-`;
-openModal(content);
-}
-// ═══════════════════════════════════════════════════
-// SHOW CERTIFICATE
-// ══════════════════════════════════════════════════
-function showCertificate() {
-const stats = ProgressManager.getStats();
-const totalLessons = ProgressManager.countTotalLessons();
-const percent = totalLessons > 0 ? Math.round((stats.totalRead / totalLessons) * 100) : 0;
-const today = new Date().toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
-const content = `
-<div class="modal-content p-4">
-<div class="flex justify-between items-center mb-4 px-4">
-<h2 class="text-xl font-bold dark:text-white">🏆 شهادة الإتمام</h2>
-<button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-2xl">×</button>
-</div>
-<div class="certificate mx-4 mb-4">
-<div class="mt-8">
-<h3 class="text-2xl font-bold text-amber-900 dark:text-amber-200 mb-2">شهادة تقدير</h3>
-<p class="text-sm text-amber-800 dark:text-amber-300 mb-6">تشهد منصة 4U التعليمية بأن</p>
-<div class="text-3xl font-bold text-indigo-700 dark:text-indigo-300 mb-4 border-b-2 border-amber-600 pb-2 inline-block px-8">
-الطالب / الطالبة
-</div>
-<p class="text-amber-800 dark:text-amber-300 mb-4">قد أتم بنجاح</p>
-<div class="text-xl font-bold text-green-700 dark:text-green-300 mb-2">
-${stats.totalRead} درساً من أصل ${totalLessons}
-</div>
-<div class="text-lg font-bold text-purple-700 dark:text-purple-300 mb-4">
-بنسبة إنجاز ${percent}%
-</div>
-<div class="flex justify-between items-center mt-6 text-sm text-amber-800 dark:text-amber-300">
-<span>📅 ${today}</span>
-<span>🎓 منصة 4U</span>
-</div>
-</div>
-</div>
-<div class="flex gap-2 mx-4 mb-4">
-<button onclick="printCertificate()" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-bold transition flex items-center justify-center gap-2">
-<span>🖨️</span><span>طباعة</span>
-</button>
-<button onclick="closeModal()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-2 rounded-lg font-bold transition">
-إغلاق
-</button>
-</div>
-</div>
-`;
-openModal(content);
-}
-function printCertificate() {
-const cert = document.querySelector('.certificate');
-if (!cert) return;
-const printWindow = window.open('', '', 'width=800,height=600');
-printWindow.document.write(`
-<html><head><title>شهادة الإتمام</title>
-<style>
-body { font-family: 'Cairo', sans-serif; }
-.certificate { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 8px double #d97706; padding: 2rem; text-align: center; }
-</style></head><body>
-${cert.outerHTML}
-<script>window.onload = function() { window.print(); }<\/script>
-</body></html>
-`);
-printWindow.document.close();
-}
-// ═══════════════════════════════════════════════════
-// SHOW FAVORITES MODAL
-// ═══════════════════════════════════════════════════
-function showFavorites() {
-const favs = FavoritesManager.getAll();
-let favsHTML = '';
-if (favs.length === 0) {
-favsHTML = `
-<div class="text-center py-12">
-<div class="text-6xl mb-4">💔</div>
-<p class="text-gray-600 dark:text-gray-400">لا توجد دروس في المفضلة بعد</p>
-<p class="text-sm text-gray-500 dark:text-gray-500 mt-2">اضغط على ❤️ بجانب أي درس لإضافته</p>
-</div>
-`;
-} else {
-favsHTML = favs.map(f => `
-<div class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg mb-2">
-<div class="text-3xl">${f.icon || '📖'}</div>
-<div class="flex-1">
-<div class="font-semibold dark:text-white text-sm">${f.title}</div>
-<div class="text-xs text-gray-500 dark:text-gray-400">${f.unitName || ''}</div>
-</div>
-<button onclick="removeFavorite('${f.key}')" class="text-red-500 hover:text-red-700 p-2" title="إزالة">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3"></path></svg>
-</button>
-</div>
-`).join('');
-}
-const content = `
-<div class="modal-content p-8">
-<div class="flex justify-between items-center mb-6">
-<h2 class="text-2xl font-bold dark:text-white">❤️ المفضلة (${favs.length})</h2>
-<button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-2xl">×</button>
-</div>
-${favs.length > 0 ? `
-<button onclick="if(confirm('هل أنت متأكد من حذف كل المفضلة؟')){FavoritesManager.clear();showFavorites();}" class="mb-4 text-sm text-red-500 hover:text-red-700">
-🗑️ مسح الكل
-</button>
-` : ''}
-<div class="max-h-96 overflow-y-auto">${favsHTML}</div>
-</div>
-`;
-openModal(content);
-}
-function removeFavorite(key) {
-FavoritesManager.toggle(key, {});
-showFavorites();
-}
-// ═══════════════════════════════════════════════════
-// SHARE MODAL
-// ═══════════════════════════════════════════════════
-function showShareModal(lessonTitle, lessonUrl) {
-const url = lessonUrl || window.location.href;
-const text = `📚 ${lessonTitle}\nمنصة 4U التعليمية`;
-const content = `
-<div class="modal-content p-8">
-<div class="flex justify-between items-center mb-6">
-<h2 class="text-2xl font-bold dark:text-white">📤 مشاركة الدرس</h2>
-<button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-2xl">×</button>
-</div>
-<p class="text-gray-600 dark:text-gray-400 mb-4 text-center">شارك هذا الدرس مع أصدقائك</p>
-<div class="grid grid-cols-4 gap-3 mb-6">
-<button onclick="shareTo('whatsapp', '${encodeURIComponent(text)}', '${encodeURIComponent(url)}')" class="share-btn bg-green-500 hover:bg-green-600 text-white p-4 rounded-xl flex flex-col items-center gap-2">
-<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-<span class="text-xs">واتساب</span>
-</button>
-<button onclick="shareTo('twitter', '${encodeURIComponent(text)}', '${encodeURIComponent(url)}')" class="share-btn bg-sky-500 hover:bg-sky-600 text-white p-4 rounded-xl flex flex-col items-center gap-2">
-<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M23.643 4.937c-.835.37-1.732.62-2.675.733.962-.576 1.7-1.49 2.048-2.578-.9.534-1.897.922-2.958 1.13-.85-.904-2.06-1.47-3.4-1.47-2.572 0-4.658 2.086-4.658 4.66 0 .364.042.718.12 1.06-3.873-.195-7.304-2.05-9.602-4.868-.4.69-.63 1.49-.63 2.342 0 1.616.823 3.043 2.072 3.878-.764-.025-1.482-.234-2.11-.583v.06c0 2.257 1.605 4.14 3.737 4.568-.392.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.593 1.85 2.313 3.198 4.352 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.098 7.14 2.098 8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602.91-.658 1.7-1.477 2.323-2.41z"/></svg>
-<span class="text-xs">تويتر</span>
-</button>
-<button onclick="shareTo('facebook', '${encodeURIComponent(text)}', '${encodeURIComponent(url)}')" class="share-btn bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-xl flex flex-col items-center gap-2">
-<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-<span class="text-xs">فيسبوك</span>
-</button>
-<button onclick="shareTo('telegram', '${encodeURIComponent(text)}', '${encodeURIComponent(url)}')" class="share-btn bg-sky-600 hover:bg-sky-700 text-white p-4 rounded-xl flex flex-col items-center gap-2">
-<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-<span class="text-xs">تليجرام</span>
-</button>
-</div>
-<button onclick="copyLink('${url}')" class="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-white py-3 rounded-xl font-bold transition flex items-center justify-center gap-2 mb-2">
-<span>📋</span><span>نسخ الرابط</span>
-</button>
-<div class="text-center text-xs text-gray-500 dark:text-gray-400">
-💡 <span class="kbd">Esc</span> للإغلاق
-</div>
-</div>
-`;
-openModal(content);
-}
-function shareTo(platform, text, url) {
-let shareUrl = '';
-switch(platform) {
-case 'whatsapp': shareUrl = `https://wa.me/?text=${text}%20${url}`; break;
-case 'twitter': shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`; break;
-case 'facebook': shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`; break;
-case 'telegram': shareUrl = `https://t.me/share/url?url=${url}&text=${text}`; break;
-}
-window.open(shareUrl, '_blank');
-}
-function copyLink(url) {
-navigator.clipboard.writeText(url).then(() => {
-showToast('✅ تم نسخ الرابط');
-}).catch(() => {
-showToast('❌ فشل النسخ');
-});
-}
-// ══════════════════════════════════════════════════
-// BACK NAVIGATION + KEYBOARD SHORTCUTS
-// ═══════════════════════════════════════════════════
-const navigationHistory = [];
-function pushNavigation(level, id) {
-navigationHistory.push({ level, id });
-updateBackButton();
-}
-function updateBackButton() {
-const backBtn = document.getElementById('backBtn');
-if (backBtn) {
-if (navigationHistory.length > 0) {
-backBtn.classList.remove('hidden');
-} else {
-backBtn.classList.add('hidden');
-}
-}
-}
-function goBack() {
-if (navigationHistory.length > 0) {
-const prev = navigationHistory.pop();
-updateBackButton();
-switch(prev.level) {
-case 'term': selectTerm(prev.id, true); break;
-case 'stream': selectStream(prev.id, true); break;
-case 'program': selectProgram(prev.id, true); break;
-case 'grade': selectGrade(prev.id, true); break;
-case 'subject': selectSubject(prev.id, true); break;
-case 'unit': selectUnit(prev.id, true); break;
-case 'lesson': selectLesson(prev.id, true); break;
-default: showHome();
-}
-} else {
-showHome();
-}
-}
-// Keyboard shortcuts
-document.addEventListener('keydown', (e) => {
-if (e.key === 'Escape') {
-const modal = document.querySelector('.modal-overlay');
-if (modal) {
-closeModal();
-} else {
-goBack();
-}
-return;
-}
-if ((e.ctrlKey || e.metaKey) && e.key === 'd' && state.lesson) {
-e.preventDefault();
-toggleCurrentFavorite();
-return;
-}
-if ((e.ctrlKey || e.metaKey) && e.key === 's' && state.lesson) {
-e.preventDefault();
-const url = state.lesson.lessonUrl || window.location.href;
-showShareModal(state.lesson.title, url);
-return;
-}
-if (e.key === 'Home' && !e.ctrlKey && !e.metaKey) {
-if (document.activeElement.tagName !== 'INPUT') {
-showHome();
-}
-}
-});
-// ═══════════════════════════════════════════════════
-// TOGGLE FAVORITE FOR CURRENT LESSON
-// ═══════════════════════════════════════════════════
-function toggleCurrentFavorite() {
-if (!state.lesson || !state.unit) return;
-const key = getLessonKey();
-const info = {
-title: state.lesson.title,
-icon: state.lesson.icon,
-unitName: state.unit.name
-};
-FavoritesManager.toggle(key, info);
-const btn = document.querySelector(`[data-fav-key="${key}"]`);
-if (btn) {
-const isFav = FavoritesManager.isFavorite(key);
-btn.classList.toggle('active', isFav);
-btn.innerHTML = isFav ? '❤️' : '🤍';
-}
-}
-function getLessonKey() {
-if (!state.lesson || !state.unit) return null;
-const currKey = getCurriculumKey();
-return `${currKey}-U${state.unit.id}-L${state.lesson.id}`;
-}
-// ═══════════════════════════════════════════════════
-// DATABASE
-// ═══════════════════════════════════════════════════
+// Database
 const DB = {
 terms: [
 { id: 1, name: 'الترم الأول', icon: '📘' },
@@ -1096,8 +237,7 @@ subjects: [
 { id: 'math', name: 'الرياضيات', icon: '📐' },
 { id: 'chemistry', name: 'الكيمياء', icon: '🧪' },
 { id: 'biology', name: 'الأحياء', icon: '🧬' }
-],
-curriculum: {
+],curriculum: {
   // ═══════════════════════════════════════════════
 // PHYSICS 12 ADVANCED BRIDGE - TERM 1
 // الصف 12 متقدم بريدج - الفصل الأول (فيزياء)
@@ -7838,40 +6978,146 @@ sections: [
 }
 };
 
-// ═══════════════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════════════
+
+// State
 let state = { term: null, stream: null, program: null, grade: null, subject: null, unit: null, lesson: null };
-// ═══════════════════════════════════════════════════
-// KEY FUNCTIONS (FIXED)
-// ═══════════════════════════════════════════════════
+let navigationHistory = [];
+
+// Progress Manager
+const ProgressManager = {
+data: {},
+load() {
+const saved = localStorage.getItem('progress');
+if (saved) this.data = JSON.parse(saved);
+},
+save() {
+localStorage.setItem('progress', JSON.stringify(this.data));
+},
+markLessonRead(key) {
+if (!this.data[key]) this.data[key] = { read: false, examDone: false, timeSpent: 0 };
+this.data[key].read = true;
+this.save();
+this.updateUI();
+},
+markExamDone(key) {
+if (!this.data[key]) this.data[key] = { read: false, examDone: false, timeSpent: 0 };
+this.data[key].examDone = true;
+this.save();
+this.updateUI();
+},
+isRead(key) {
+return this.data[key] && this.data[key].read;
+},
+isExamDone(key) {
+return this.data[key] && this.data[key].examDone;
+},
+startTracking(key) {
+if (!this.data[key]) this.data[key] = { read: false, examDone: false, timeSpent: 0 };
+this.data[key].trackingInterval = setInterval(() => {
+this.data[key].timeSpent++;
+this.save();
+}, 1000);
+},
+stopTracking(key) {
+if (this.data[key] && this.data[key].trackingInterval) {
+clearInterval(this.data[key].trackingInterval);
+delete this.data[key].trackingInterval;
+}
+},
+getTimeSpent(key) {
+return this.data[key] ? this.data[key].timeSpent : 0;
+},
+getUnitProgress(unitKey, lessonCount) {
+if (lessonCount === 0) return 0;
+let done = 0;
+for (let i = 1; i <= lessonCount; i++) {
+const lessonKey = `${unitKey}-L${i}`;
+if (this.isExamDone(lessonKey)) done++;
+}
+return Math.round((done / lessonCount) * 100);
+},
+updateUI() {
+// Update UI elements if needed
+}
+};
+
+// Favorites Manager
+const FavoritesManager = {
+data: [],
+load() {
+const saved = localStorage.getItem('favorites');
+if (saved) this.data = JSON.parse(saved);
+},
+save() {
+localStorage.setItem('favorites', JSON.stringify(this.data));
+},
+toggle(key, lessonInfo) {
+const index = this.data.findIndex(f => f.key === key);
+if (index > -1) {
+this.data.splice(index, 1);
+showToast('❌ أزيل من المفضلة');
+} else {
+this.data.push({ key, ...lessonInfo, addedAt: new Date().toISOString() });
+showToast('✅ أضيف للمفضلة');
+}
+this.save();
+},
+isFavorite(key) {
+return this.data.some(f => f.key === key);
+},
+getAll() {
+return this.data;
+}
+};
+
+// Helper Functions
 function getCurriculumKey() {
 if (!state.subject || !state.grade || !state.term) return null;
 if (!state.stream) return null;
-// ✅ FIX: Handle null program safely
-const key = state.stream.id === 'advanced' ? (state.program ? state.program.id : 'inspire') : 'general';
+const key = state.stream.id === 'advanced' ? state.program.id : 'general';
 return `${state.subject.id}-${state.grade.id}-${key}-${state.term.id}`;
 }
+
 function getSubjectKey(subjectId) {
-// ✅ FIX: Use 'inspire' instead of 'advanced' as default
-const key = state.stream.id === 'advanced' ? (state.program ? state.program.id : 'inspire') : 'general';
+const key = state.stream.id === 'advanced' ? (state.program ? state.program.id : 'advanced') : 'general';
 return `${subjectId}-${state.grade.id}-${key}-${state.term.id}`;
 }
+
+function getLessonKey() {
+const currKey = getCurriculumKey();
+if (!currKey || !state.unit || !state.lesson) return null;
+return `${currKey}-U${state.unit.id}-L${state.lesson.id}`;
+}
+
 function isCurrentEnglish() {
 return state.program && state.program.isEnglish;
 }
-// ═══════════════════════════════════════════════════
-// NAVIGATION FUNCTIONS (FIXED)
-// ═══════════════════════════════════════════════════
+
+function showToast(message) {
+const toast = document.getElementById('toast');
+toast.textContent = message;
+toast.classList.add('show');
+setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+function pushNavigation(type, id) {
+navigationHistory.push({ type, id });
+}
+
+function updateBackButton() {
+// Update back button visibility based on history
+}
+
+// Navigation Functions
 function showHome() {
 state = { term: null, stream: null, program: null, grade: null, subject: null, unit: null, lesson: null };
-// ✅ FIX: Clear navigation history
 navigationHistory.length = 0;
 updateBackButton();
 updateBreadcrumbs();
 renderHome();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 function selectTerm(id, noHistory) {
 if (!noHistory && state.term) pushNavigation('term', state.term.id);
 state.term = DB.terms.find(t => t.id === id);
@@ -7881,6 +7127,7 @@ updateBreadcrumbs();
 renderStreams();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 function selectStream(id, noHistory) {
 if (!noHistory && state.stream) pushNavigation('stream', state.stream.id);
 state.stream = DB.streams.find(s => s.id === id);
@@ -7890,6 +7137,7 @@ updateBreadcrumbs();
 if (state.stream.id === 'advanced') { renderPrograms(); } else { renderGrades(); }
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 function selectProgram(id, noHistory) {
 if (!noHistory && state.program) pushNavigation('program', state.program.id);
 state.program = DB.programs.find(p => p.id === id);
@@ -7899,6 +7147,7 @@ updateBreadcrumbs();
 renderGrades();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 function selectGrade(id, noHistory) {
 if (!noHistory && state.grade) pushNavigation('grade', state.grade.id);
 state.grade = DB.grades.find(g => g.id === id);
@@ -7908,6 +7157,7 @@ updateBreadcrumbs();
 renderSubjects();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 function selectSubject(id, noHistory) {
 if (!noHistory && state.subject) pushNavigation('subject', state.subject.id);
 state.subject = DB.subjects.find(s => s.id === id);
@@ -7916,6 +7166,7 @@ updateBreadcrumbs();
 renderUnits();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 function selectUnit(unitId, noHistory) {
 const key = getCurriculumKey();
 const curriculum = DB.curriculum[key];
@@ -7927,6 +7178,7 @@ updateBreadcrumbs();
 renderLessons();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 function selectLesson(lessonId, noHistory) {
 if (!noHistory && state.lesson) pushNavigation('lesson', state.lesson.id);
 state.lesson = state.unit.lessons.find(l => l.id === lessonId);
@@ -7934,59 +7186,146 @@ updateBreadcrumbs();
 renderLessonDetails();
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-// ═══════════════════════════════════════════════════
-// LESSON FUNCTIONS
-// ═══════════════════════════════════════════════════
-function openExam() {
-if (state.lesson && state.lesson.examUrl && state.lesson.examUrl !== '#') {
-const key = getLessonKey();
-if (key) {
-ProgressManager.markExamDone(key);
-showToast('🎉 أحسنت! تم تسجيل إنجاز الاختبار');
-const currKey = getCurriculumKey();
-const curriculum = DB.curriculum[currKey];
-if (curriculum && state.unit) {
-let allDone = true;
-state.unit.lessons.forEach(l => {
-const lk = `${currKey}-U${state.unit.id}-L${l.id}`;
-if (!ProgressManager.isExamDone(lk)) allDone = false;
+
+// Modal Functions
+function showStatsModal() {
+const modal = document.getElementById('statsModal');
+const content = document.getElementById('statsContent');
+let totalLessons = 0, readLessons = 0, completedExams = 0;
+let totalTime = 0;
+
+Object.keys(ProgressManager.data).forEach(key => {
+const item = ProgressManager.data[key];
+totalLessons++;
+if (item.read) readLessons++;
+if (item.examDone) completedExams++;
+totalTime += item.timeSpent || 0;
 });
-if (allDone) {
-setTimeout(() => showCertificate(), 1500);
+
+const hours = Math.floor(totalTime / 3600);
+const minutes = Math.floor((totalTime % 3600) / 60);
+
+content.innerHTML = `
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-4 rounded-xl">
+<div class="text-3xl font-bold">${totalLessons}</div>
+<div class="text-sm opacity-90">إجمالي الدروس</div>
+</div>
+<div class="bg-gradient-to-br from-green-500 to-green-600 text-white p-4 rounded-xl">
+<div class="text-3xl font-bold">${readLessons}</div>
+<div class="text-sm opacity-90">الدروس المقروءة</div>
+</div>
+<div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-4 rounded-xl">
+<div class="text-3xl font-bold">${completedExams}</div>
+<div class="text-sm opacity-90">الاختبارات المكتملة</div>
+</div>
+<div class="bg-gradient-to-br from-orange-500 to-orange-600 text-white p-4 rounded-xl">
+<div class="text-3xl font-bold">${hours}س ${minutes}د</div>
+<div class="text-sm opacity-90">الوقت المستغرق</div>
+</div>
+</div>
+`;
+
+modal.classList.add('active');
 }
+
+function closeStatsModal() {
+document.getElementById('statsModal').classList.remove('active');
 }
-}
-window.open(state.lesson.examUrl, '_blank');
+
+function showFavoritesModal() {
+const modal = document.getElementById('favoritesModal');
+const content = document.getElementById('favoritesContent');
+const favorites = FavoritesManager.getAll();
+
+if (favorites.length === 0) {
+content.innerHTML = '<div class="text-center text-gray-500 dark:text-gray-400 py-8">لا توجد دروس مفضلة بعد</div>';
 } else {
-alert('الاختبار قيد التحضير! 🚧');
+content.innerHTML = `<div class="space-y-3">${favorites.map(f => `
+<div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-xl flex items-center gap-3">
+<span class="text-2xl">${f.icon}</span>
+<div class="flex-1">
+<div class="font-bold dark:text-white">${f.title}</div>
+<div class="text-sm text-gray-500 dark:text-gray-400">${f.unitName}</div>
+</div>
+<button onclick="removeFavorite('${f.key}')" class="text-red-500 hover:text-red-700">🗑️</button>
+</div>
+`).join('')}</div>`;
+}
+
+modal.classList.add('active');
+}
+
+function closeFavoritesModal() {
+document.getElementById('favoritesModal').classList.remove('active');
+}
+
+function removeFavorite(key) {
+const index = FavoritesManager.data.findIndex(f => f.key === key);
+if (index > -1) {
+FavoritesManager.data.splice(index, 1);
+FavoritesManager.save();
+showFavoritesModal();
+showToast('✅ أزيل من المفضلة');
 }
 }
-function openLesson() {
-if (state.lesson && state.lesson.lessonUrl && state.lesson.lessonUrl !== '#') {
-const key = getLessonKey();
-if (key) {
-ProgressManager.markLessonRead(key);
-ProgressManager.startTracking(key);
-const handleVisibility = () => {
-if (document.hidden) {
-ProgressManager.stopTracking(key);
-} else {
-ProgressManager.startTracking(key);
+
+function showShareModal(title, url) {
+const modal = document.getElementById('shareModal');
+const content = document.getElementById('shareContent');
+
+content.innerHTML = `
+<div class="space-y-4">
+<div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-xl">
+<div class="text-sm text-gray-500 dark:text-gray-400 mb-2">عنوان الدرس</div>
+<div class="font-bold dark:text-white">${title}</div>
+</div>
+<div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-xl">
+<div class="text-sm text-gray-500 dark:text-gray-400 mb-2">الرابط</div>
+<div class="font-mono text-sm dark:text-white break-all">${url}</div>
+</div>
+<button onclick="copyToClipboard('${url}')" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-lg font-bold transition">
+📋 نسخ الرابط
+</button>
+</div>
+`;
+
+modal.classList.add('active');
 }
-};
-document.addEventListener('visibilitychange', handleVisibility);
-window.addEventListener('beforeunload', () => {
-ProgressManager.stopTracking(key);
+
+function closeShareModal() {
+document.getElementById('shareModal').classList.remove('active');
+}
+
+function copyToClipboard(text) {
+navigator.clipboard.writeText(text).then(() => {
+showToast('✅ تم نسخ الرابط');
+closeShareModal();
 });
 }
-window.open(state.lesson.lessonUrl, '_blank');
-} else {
-alert('شرح الدرس قيد التحضير! 🚧');
+
+function showCertificate() {
+const modal = document.getElementById('certificateModal');
+const content = document.getElementById('certificateContent');
+
+content.innerHTML = `
+<div class="certificate">
+<h2>🏆 شهادة إنجاز</h2>
+<p class="text-xl mb-4">نشيد بجهودك المتميزة في إكمال</p>
+<div class="student-name">${state.unit ? state.unit.name : 'الوحدة'}</div>
+<p class="text-lg">من منصة 4U التعليمية</p>
+<p class="text-sm mt-4 opacity-80">${new Date().toLocaleDateString('ar-AE')}</p>
+</div>
+`;
+
+modal.classList.add('active');
 }
+
+function closeCertificateModal() {
+document.getElementById('certificateModal').classList.remove('active');
 }
-// ═══════════════════════════════════════════════════
-// BREADCRUMBS
-// ═══════════════════════════════════════════════════
+
+// Breadcrumbs
 function updateBreadcrumbs() {
 const bc = document.getElementById('breadcrumbs');
 bc.classList.remove('hidden');
@@ -8008,9 +7347,8 @@ setBC('bc-subject-sep', 'bc-subject-btn', state.subject ? `${state.subject.icon}
 setBC('bc-unit-sep', 'bc-unit-btn', state.unit ? state.unit.name : '', !state.unit, state.unit ? () => selectUnit(state.unit.id) : null);
 setBC('bc-lesson-sep', 'bc-lesson-btn', state.lesson ? state.lesson.title : '', !state.lesson, state.lesson ? () => selectLesson(state.lesson.id) : null);
 }
-// ═══════════════════════════════════════════════════
-// RENDER FUNCTIONS
-// ═══════════════════════════════════════════════════
+
+// Render Functions
 function renderHome() {
 document.getElementById('app').innerHTML = `
 <div class="gradient-primary rounded-3xl p-8 md:p-12 text-white mb-8 fade-in">
@@ -8040,6 +7378,7 @@ ${DB.terms.map(t => `
 </div>
 `;
 }
+
 function renderStreams() {
 document.getElementById('app').innerHTML = `
 <div class="gradient-secondary rounded-3xl p-8 text-white mb-8 fade-in">
@@ -8058,6 +7397,7 @@ ${DB.streams.map(s => `
 </div>
 `;
 }
+
 function renderPrograms() {
 document.getElementById('app').innerHTML = `
 <div class="gradient-warm rounded-3xl p-8 text-white mb-8 fade-in">
@@ -8067,7 +7407,7 @@ document.getElementById('app').innerHTML = `
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 fade-in">
 ${DB.programs.map(p => `
 <button onclick="selectProgram('${p.id}')" class="card-hover bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-md text-right border-2 border-transparent hover:border-amber-500 dark:hover:border-amber-400 relative overflow-hidden">
-${p.isEnglish ? '<div class="absolute top-3 left-3 bg-blue-500 text-white text-xs px-3 py-1 rounded-full font-bold">🇬 English</div>' : ''}
+${p.isEnglish ? '<div class="absolute top-3 left-3 bg-blue-500 text-white text-xs px-3 py-1 rounded-full font-bold">🇬🇧 English</div>' : ''}
 <div class="text-6xl mb-4">${p.icon}</div>
 <h3 class="font-bold text-2xl mb-2 dark:text-white">${p.name}</h3>
 <p class="text-gray-500 dark:text-gray-400 mb-4">${p.desc}</p>
@@ -8077,6 +7417,7 @@ ${p.isEnglish ? '<div class="absolute top-3 left-3 bg-blue-500 text-white text-x
 </div>
 `;
 }
+
 function renderGrades() {
 const title = state.stream.id === 'advanced' && state.program
 ? `${state.term.icon} ${state.term.name} - متقدم - ${state.program.name}`
@@ -8096,6 +7437,7 @@ ${DB.grades.map(g => `
 </div>
 `;
 }
+
 function renderSubjects() {
 const programInfo = state.program ? ` • ${state.program.name}` : '';
 document.getElementById('app').innerHTML = `
@@ -8118,12 +7460,14 @@ return `
 </div>
 `;
 }
+
 function renderUnits() {
 const key = getCurriculumKey();
 const curriculum = DB.curriculum[key];
 const programInfo = state.program ? ` • ${state.program.name}` : '';
 const isEnglish = isCurrentEnglish();
 const contentClass = isEnglish ? 'en-content' : '';
+
 if (!curriculum) {
 document.getElementById('app').innerHTML = `
 <div class="bg-gradient-to-br from-gray-500 to-gray-700 rounded-3xl p-8 text-white mb-8 fade-in">
@@ -8131,17 +7475,18 @@ document.getElementById('app').innerHTML = `
 <p class="opacity-90">${state.term.name} • ${state.stream.name}${programInfo} • ${state.grade.name}</p>
 </div>
 <div class="bg-yellow-50 border-2 border-yellow-200 rounded-2xl p-8 text-center fade-in">
-<div class="text-5xl mb-3"></div>
+<div class="text-5xl mb-3">🚧</div>
 <p class="text-gray-600">المحتوى قيد التحضير وسيتم إضافته قريباً</p>
 </div>
 `;
 return;
 }
+
 document.getElementById('app').innerHTML = `
 <div class="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-3xl p-8 text-white mb-8 fade-in">
 <h1 class="text-3xl md:text-4xl font-bold mb-2">${state.subject.icon} ${state.subject.name}</h1>
 <p class="opacity-90">${state.term.name} • ${state.stream.name}${programInfo} • ${state.grade.name}</p>
-${isEnglish ? '<div class="mt-3 inline-block bg-blue-500 text-white text-sm px-3 py-1 rounded-full">🇬🇧 Content in English</div>' : ''}
+${isEnglish ? '<div class="mt-3 inline-block bg-blue-500 text-white text-sm px-3 py-1 rounded-full">🇬 Content in English</div>' : ''}
 </div>
 <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">📚 اختر الوحدة</h2>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 fade-in">
@@ -8158,7 +7503,7 @@ return `
 ${progress === 100 ? '<span class="completed-badge">✓ مكتمل</span>' : ''}
 </div>
 ${u.description ? `<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">${u.description}</p>` : ''}
-<p class="text-xs text-indigo-600 dark:text-indigo-400 mt-2 font-semibold"> ${lessonCount} ${isEnglish ? 'lessons' : 'دروس'} ${progress > 0 ? `• ${progress}%` : ''}</p>
+<p class="text-xs text-indigo-600 dark:text-indigo-400 mt-2 font-semibold">📖 ${lessonCount} ${isEnglish ? 'lessons' : 'دروس'} ${progress > 0 ? `• ${progress}%` : ''}</p>
 ${progress > 0 ? `<div class="lesson-progress-bar"><div class="lesson-progress-fill" style="width: ${progress}%"></div></div>` : ''}
 </div>
 </div>
@@ -8169,15 +7514,12 @@ ${progress > 0 ? `<div class="lesson-progress-bar"><div class="lesson-progress-f
 </div>
 `;
 }
-// ✅ FIX: Define toggleFavoriteFromList BEFORE renderLessons
-function toggleFavoriteFromList(key, title, icon, unitName) {
-FavoritesManager.toggle(key, { title, icon, unitName });
-renderLessons();
-}
+
 function renderLessons() {
 const programInfo = state.program ? ` • ${state.program.name}` : '';
 const isEnglish = isCurrentEnglish();
 const contentClass = isEnglish ? 'en-content' : '';
+
 document.getElementById('app').innerHTML = `
 <div class="gradient-violet rounded-3xl p-8 text-white mb-8 fade-in">
 <h1 class="text-3xl md:text-4xl font-bold mb-2 ${contentClass}">${state.unit.icon} ${state.unit.name}</h1>
@@ -8216,6 +7558,12 @@ ${isFav ? '❤️' : '🤍'}
 </div>
 `;
 }
+
+function toggleFavoriteFromList(key, title, icon, unitName) {
+FavoritesManager.toggle(key, { title, icon, unitName });
+renderLessons();
+}
+
 function renderLessonDetails() {
 const c = state.lesson.content;
 const programInfo = state.program ? ` • ${state.program.name}` : '';
@@ -8227,6 +7575,7 @@ const isRead = ProgressManager.isRead(lessonKey);
 const isExamDone = ProgressManager.isExamDone(lessonKey);
 const timeSpent = ProgressManager.getTimeSpent(lessonKey);
 const minutes = Math.floor(timeSpent / 60);
+
 let sectionsHTML = '';
 if (c && c.sections) {
 sectionsHTML = c.sections.map(s => {
@@ -8255,13 +7604,15 @@ return `<div class="my-4"><h4 class="font-bold text-lg mb-2 text-gray-800 dark:t
 }
 }).join('');
 }
+
 const shareUrl = state.lesson.lessonUrl || window.location.href;
+
 document.getElementById('app').innerHTML = `
 <div class="gradient-teal rounded-3xl p-8 text-white mb-8 fade-in">
 <div class="flex items-center gap-4 mb-4 flex-wrap">
 <button onclick="selectUnit(${state.unit.id})" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition">${isEnglish ? '← Back to Unit' : '→ رجوع للوحدة'}</button>
 <button onclick="showShareModal('${state.lesson.title.replace(/'/g,"\\'")}','${shareUrl}')" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition flex items-center gap-2" title="مشاركة">
-<span></span><span class="hidden sm:inline">${isEnglish ? 'Share' : 'مشاركة'}</span>
+<span>📤</span><span class="hidden sm:inline">${isEnglish ? 'Share' : 'مشاركة'}</span>
 </button>
 <button onclick="toggleCurrentFavorite()" data-fav-key="${lessonKey}" class="favorite-btn ${isFav ? 'active' : ''} bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition flex items-center gap-2" title="المفضلة (Ctrl+D)">
 <span class="text-xl">${isFav ? '❤️' : '🤍'}</span><span class="hidden sm:inline">${isEnglish ? 'Favorite' : 'المفضلة'}</span>
@@ -8277,7 +7628,7 @@ ${isExamDone ? '<span class="bg-amber-500 text-white text-xs px-2 py-1 rounded-f
 </div>
 <p class="opacity-90">⏱️ ${state.lesson.duration} • ${state.subject.name}${programInfo}</p>
 ${timeSpent > 0 ? `<p class="opacity-90 text-xs mt-1">⏱️ الوقت المستغرق: ${minutes} دقيقة</p>` : ''}
-${isEnglish ? '<div class="mt-2 inline-block bg-blue-500 text-white text-xs px-3 py-1 rounded-full">🇬 English</div>' : ''}
+${isEnglish ? '<div class="mt-2 inline-block bg-blue-500 text-white text-xs px-3 py-1 rounded-full">🇬🇧 English</div>' : ''}
 </div>
 </div>
 </div>
@@ -8304,7 +7655,7 @@ ${sectionsHTML}
 ${isRead ? `<div class="bg-green-50 dark:bg-green-900/30 p-3 rounded-lg border border-green-200 dark:border-green-800"><span class="text-xs text-green-600 dark:text-green-400">✓ ${isEnglish ? 'Status' : 'الحالة'}</span><p class="font-semibold text-green-700 dark:text-green-300">${isEnglish ? 'Completed' : 'مكتمل'}</p></div>` : ''}
 </div>
 <button onclick="openLesson()" class="mt-6 w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white py-4 rounded-xl font-bold transition transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
-<span class="text-2xl"></span><span>${state.lesson.lessonTitle || (isEnglish ? 'Lesson Explanation' : 'شرح الدرس')}</span><span>↗</span>
+<span class="text-2xl">📖</span><span>${state.lesson.lessonTitle || (isEnglish ? 'Lesson Explanation' : 'شرح الدرس')}</span><span>↗</span>
 </button>
 <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">${isEnglish ? 'Opens in new tab' : 'سيفتح في نافذة جديدة'}</p>
 <button onclick="openExam()" class="mt-3 w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white py-4 rounded-xl font-bold transition transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
@@ -8331,16 +7682,119 @@ ${isRead ? `<div class="bg-green-50 dark:bg-green-900/30 p-3 rounded-lg border b
 </div>
 `;
 }
-// ═══════════════════════════════════════════════════
-// INITIALIZATION
-// ═══════════════════════════════════════════════════
+
+function toggleCurrentFavorite() {
+const key = getLessonKey();
+if (!key) return;
+FavoritesManager.toggle(key, {
+title: state.lesson.title,
+icon: state.lesson.icon,
+unitName: state.unit.name
+});
+renderLessonDetails();
+}
+
+function openExam() {
+if (state.lesson && state.lesson.examUrl && state.lesson.examUrl !== '#') {
+const key = getLessonKey();
+if (key) {
+ProgressManager.markExamDone(key);
+showToast('🎉 أحسنت! تم تسجيل إنجاز الاختبار');
+const currKey = getCurriculumKey();
+const curriculum = DB.curriculum[currKey];
+if (curriculum && state.unit) {
+let allDone = true;
+state.unit.lessons.forEach(l => {
+const lk = `${currKey}-U${state.unit.id}-L${l.id}`;
+if (!ProgressManager.isExamDone(lk)) allDone = false;
+});
+if (allDone) {
+setTimeout(() => showCertificate(), 1500);
+}
+}
+}
+window.open(state.lesson.examUrl, '_blank');
+} else {
+alert('الاختبار قيد التحضير! 🚧');
+}
+}
+
+function openLesson() {
+if (state.lesson && state.lesson.lessonUrl && state.lesson.lessonUrl !== '#') {
+const key = getLessonKey();
+if (key) {
+ProgressManager.markLessonRead(key);
+ProgressManager.startTracking(key);
+const handleVisibility = () => {
+if (document.hidden) {
+ProgressManager.stopTracking(key);
+} else {
+ProgressManager.startTracking(key);
+}
+};
+document.addEventListener('visibilitychange', handleVisibility);
+window.addEventListener('beforeunload', () => {
+ProgressManager.stopTracking(key);
+});
+}
+window.open(state.lesson.lessonUrl, '_blank');
+} else {
+alert('شرح الدرس قيد التحضير! 🚧');
+}
+}
+
+// Dark Mode
+const themeToggleBtn = document.getElementById('themeToggle');
+const sunIcon = document.getElementById('sunIcon');
+const moonIcon = document.getElementById('moonIcon');
+const htmlElement = document.documentElement;
+
+function applyTheme(isDark) {
+if (isDark) {
+htmlElement.classList.add('dark');
+sunIcon.classList.remove('hidden');
+moonIcon.classList.add('hidden');
+} else {
+htmlElement.classList.remove('dark');
+sunIcon.classList.add('hidden');
+moonIcon.classList.remove('hidden');
+}
+}
+
+const savedTheme = localStorage.getItem('theme');
+const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+let isDarkMode = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
+applyTheme(isDarkMode);
+
+themeToggleBtn.addEventListener('click', () => {
+isDarkMode = !isDarkMode;
+applyTheme(isDarkMode);
+localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+});
+
+// Keyboard Shortcuts
+document.addEventListener('keydown', (e) => {
+if (e.key === 'Escape') {
+if (state.lesson) selectUnit(state.unit.id);
+}
+if (e.ctrlKey && e.key === 'd') {
+e.preventDefault();
+toggleCurrentFavorite();
+}
+if (e.ctrlKey && e.key === 's') {
+e.preventDefault();
+const key = getLessonKey();
+if (key) showShareModal(state.lesson.title, state.lesson.lessonUrl || window.location.href);
+}
+});
+
+// Initialize
 showHome();
 ProgressManager.load();
 FavoritesManager.load();
 ProgressManager.updateUI();
-// ═══════════════════════════════════════════════════
-// SERVICE WORKER & INSTALL LOGIC
-// ═══════════════════════════════════════════════════
+
+// Service Worker & Install Logic
 if ('serviceWorker' in navigator) {
 window.addEventListener('load', () => {
 navigator.serviceWorker.register('./sw.js')
@@ -8348,29 +7802,17 @@ navigator.serviceWorker.register('./sw.js')
 .catch(err => console.log('❌ فشل التسجيل:', err));
 });
 }
+
 let deferredPrompt;
 const installButton = document.getElementById('installButton');
+
 window.addEventListener('beforeinstallprompt', (e) => {
 e.preventDefault();
 deferredPrompt = e;
-console.log('📥 حدث التثبيت متوفر');
 installButton.classList.remove('hidden');
 installButton.style.animation = 'fadeInUp 0.5s ease-out';
 });
-const style = document.createElement('style');
-style.textContent = `
-@keyframes fadeInUp {
-from {
-opacity: 0;
-transform: translateY(20px);
-}
-to {
-opacity: 1;
-transform: translateY(0);
-}
-}
-`;
-document.head.appendChild(style);
+
 function installApp() {
 if (deferredPrompt) {
 deferredPrompt.prompt();
@@ -8383,10 +7825,19 @@ installButton.classList.add('hidden');
 });
 }
 }
+
 window.addEventListener('appinstalled', () => {
 installButton.classList.add('hidden');
 deferredPrompt = null;
 console.log('🎉 تم تثبيت التطبيق بنجاح');
+});
+
+// Hide loader and show main content
+window.addEventListener('load', () => {
+setTimeout(() => {
+document.getElementById('page-loader').style.display = 'none';
+document.getElementById('main-content').style.display = 'block';
+}, 2500);
 });
 </script>
 </body>
