@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Grade 12 General Physics - Grade 12 Physics Exam - Unit 2 Lesson 2 (Applications & Capacitors) (12Jen-phy-T1-2.2-exam)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght=400;600;700;900&family=Inter:wght=400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        body.en-mode { font-family: 'Inter', sans-serif; }
+        .correct { background-color: #dcfce7 !important; border-color: #16a34a !important; }
+        .incorrect { background-color: #fee2e2 !important; border-color: #dc2626 !important; }
+        .formula { font-family: 'Times New Roman', serif; letter-spacing: 0.5px; direction: ltr; display: inline-block; font-style: italic; }
+        .timer-warning { color: #dc2626 !important; animation: pulse 1s infinite; }
+        @keyframes pulse { 50% { opacity: 0.7; } }
+        @media print { .no-print { display: none !important; } }
+        .success-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.875rem; }
+        .grade-excellent { background: #dcfce7; color: #166534; }
+        .grade-good { background: #fef3c7; color: #92400e; }
+        .grade-pass { background: #dbeafe; color: #1e40af; }
+        .grade-fail { background: #fee2e2; color: #991b1b; }
+        .lang-switch {
+            position: fixed; top: 16px; left: 16px; z-index: 100;
+            background: white; padding: 6px; border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; gap: 4px;
+            border: 2px solid #0d9488;
+        }
+        [dir="ltr"] .lang-switch { left: auto; right: 16px; }
+        .lang-btn {
+            padding: 6px 14px; border-radius: 20px; cursor: pointer; font-weight: bold;
+            transition: all 0.3s; border: none; font-size: 0.875rem;
+            background: transparent; color: #6b7280;
+        }
+        .lang-btn.active { background: #0d9488; color: white; box-shadow: 0 2px 6px rgba(13,148,136,0.4); }
+        .lang-btn:hover:not(.active) { background: #f0fdfa; color: #0d9488; }
+        .shuffle-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 md:p-8 min-h-screen">
+
+    <div class="lang-switch no-print">
+        <button class="lang-btn active" onclick="setLanguage('ar')" id="btn-ar">عربي</button>
+        <button class="lang-btn" onclick="setLanguage('en')" id="btn-en">EN</button>
+    </div>
+
+    <div id="timer-container" class="max-w-4xl mx-auto mb-4 text-center no-print">
+        <div class="bg-white p-4 rounded-xl shadow-md inline-block border-2 border-teal-100">
+            <span class="text-gray-600 ml-2" data-ar="⏱️ الوقت المتبقي:" data-en="⏱️ Time Remaining:">⏱️ الوقت المتبقي:</span>
+            <span id="timer" class="text-2xl font-bold text-teal-600 font-mono">60:00</span>
+            <span class="shuffle-badge" data-ar="🔀 أسئلة عشوائية" data-en="🔀 Random Questions">🔀 أسئلة عشوائية</span>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto mb-6 flex flex-wrap gap-3 justify-center no-print">
+        <button onclick="toggleAnswers()" class="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="👁️ إظهار / إخفاء الإجابات" data-en="👁️ Show / Hide Answers">👁️ إظهار / إخفاء الإجابات</button>
+        <button onclick="window.print()" class="bg-gray-800 hover:bg-gray-900 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="🖨️ طباعة / PDF" data-en="🖨️ Print / PDF">🖨️ طباعة / PDF</button>
+        <button onclick="reshuffleExam()" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="🔀 إعادة خلط الأسئلة" data-en="🔀 Reshuffle Questions">🔀 إعادة خلط الأسئلة</button>
+    </div>
+
+    <header class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-md mb-8 border-r-4 border-teal-600">
+        <div class="text-center">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2" data-ar="⚡ فيزياء الصف الثاني عشر عام" data-en="⚡ Grade 12 General Physicsematics">⚡ فيزياء الصف الثاني عشر عام</h1>
+            <h2 class="text-lg text-teal-600 font-semibold" data-ar="امتحان الفيزياء 12 عام - الوحدة 2 الدرس 2 (تطبيقات المجالات الكهربائية والمكثفات) (الفصل الدراسي الأول)" data-en="Grade 12 Physics Exam - Unit 2 Lesson 2 (Applications & Capacitors) (Term 1)">امتحان الفيزياء 12 عام - الوحدة 2 الدرس 2 (تطبيقات المجالات الكهربائية والمكثفات) (الفصل الدراسي الأول)</h2>
+            <p class="text-sm text-gray-600 mt-2" data-ar="اختبار تقييمي تفاعلي شامل يغطي المكثفات الكهربائية، السعة الكهربائية وتطبيقاتها الفنية، طاقة المكثف، العوامل المؤثرة، وتطبيقات الاستاتيكية الصناعية مثل الطلاء والبرق الجوي ومانعات الصواعق والمرسبات." data-en="Grade 12 Physics Exam - Unit 2 Lesson 2 (Applications & Capacitors) complete interactive test aligned with Ministry syllabus.">اختبار تقييمي تفاعلي شامل يغطي المكثفات الكهربائية، السعة الكهربائية وتطبيقاتها الفنية، طاقة المكثف، العوامل المؤثرة، وتطبيقات الاستاتيكية الصناعية مثل الطلاء والبرق الجوي ومانعات الصواعق والمرسبات.</p>
+            <p class="text-xs text-orange-600 mt-2 font-semibold" data-ar="⚠️ ملاحظة: يتم خلط ترتيب الأسئلة والخيارات تلقائياً مع كل تحديث للصفحة" data-en="⚠️ Note: Questions and options are randomly shuffled on every page refresh">⚠️ ملاحظة: يتم خلط ترتيب الأسئلة والخيارات تلقائياً مع كل تحديث للصفحة</p>
+        </div>
+        <div class="mt-4 flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+            <span><span data-ar="📅 التاريخ:" data-en="📅 Date:">📅 التاريخ:</span> <input type="text" class="border-b border-gray-400 bg-transparent w-28 text-center"></span>
+            <span><span data-ar="👤 الاسم:" data-en="👤 Name:">👤 الاسم:</span> <input type="text" id="studentName" class="border-b border-gray-400 bg-transparent w-32 text-center" placeholder="Enter name"></span>
+            <span><span data-ar="🏫 الشعبة:" data-en="🏫 Class:">🏫 الشعبة:</span> <input type="text" id="studentClass" class="border-b border-gray-400 bg-transparent w-28 text-center" placeholder="Class"></span>
+            <span><span data-ar="⏱️ المدة: 60 دقيقة" data-en="⏱️ Duration: 60 min">⏱️ المدة: 60 دقيقة</span></span>
+            <span><span data-ar="📊 המجموع: 100 درجة" data-en="📊 Total: 100 pts">📊 المجموع: 100 درجة</span></span>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto space-y-8" id="exam-content"></main>
+
+    <div class="text-center no-print pb-8 mt-8">
+        <button onclick="gradeExam()" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-lg px-10 py-4 rounded-xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer" data-ar="📝 تسليم وتصحيح الامتحان" data-en="📝 Submit & Grade Exam">📝 تسليم وتصحيح الامتحان</button>
+    </div>
+
+    <div id="results-panel" class="max-w-4xl mx-auto mt-8 bg-white p-8 rounded-2xl shadow-2xl border-t-4 border-emerald-500 hidden no-print">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center" data-ar="📊 نتائج الامتحان" data-en="📊 Exam Results">📊 نتائج الامتحان</h2>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div class="bg-blue-50 p-4 rounded-xl text-center"><p data-ar="اسم الطالب" data-en="Student Name">اسم الطالب</p><p id="res-name" class="font-bold text-xl text-teal-700">-</p></div>
+            <div class="bg-purple-50 p-4 rounded-xl text-center"><p data-ar="التاريخ" data-en="Date">التاريخ</p><p id="res-date" class="font-bold text-xl text-purple-700">-</p></div>
+            <div class="bg-emerald-50 p-4 rounded-xl text-center"><p data-ar="المجموع" data-en="Score">المجموع</p><p id="res-total" class="font-bold text-3xl text-emerald-600">0 / 100</p></div>
+        </div>
+        <div class="text-center mb-6">
+            <span id="success-badge" class="success-badge grade-excellent">-</span>
+            <p id="success-percent" class="text-4xl font-bold text-emerald-600 mt-2">100%</p>
+            <p class="text-sm text-gray-500" data-ar="نسبة النجاح" data-en="Success Rate">نسبة النجاح</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-xl mb-6">
+            <h3 class="font-bold text-lg mb-4 text-gray-800" data-ar="📈 تفصيل الأداء حسب القسم:" data-en="📈 Performance Breakdown:">📈 تفصيل الأداء حسب القسم:</h3>
+            <div class="space-y-3">
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="الجزء الأول: المفاهيم والقواعد الأساسية والتعريفات" data-en="Part 1: Basic Concepts, Rules, and Definitions">الجزء الأول: المفاهيم والقواعد الأساسية والتعريفات</span>
+                    <span id="sec1-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="الجزء الثاني: العمليات الحسابية والحلول العددية الدقيقة" data-en="Part 2: Calculations and Exact Numerical Solutions">الجزء الثاني: العمليات الحسابية والحلول العددية الدقيقة</span>
+                    <span id="sec2-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="الجزء الثالث: المهارات المتقدمة والتطبيقات والمسائل" data-en="Part 3: Advanced Skills, Applications, and Problems">الجزء الثالث: المهارات المتقدمة والتطبيقات والمسائل</span>
+                    <span id="sec3-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="الجزء الرابع: النمذجة الرياضية والتمثيل البياني والمسائل العملية" data-en="Part 4: Physicsematical Modeling, Graphing, and Practical Problems">الجزء الرابع: النمذجة الرياضية والتمثيل البياني والمسائل العملية</span>
+                    <span id="sec4-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="الجزء الخامس: مهارات التفكير العليا والتحليل والربط المنطقي" data-en="Part 5: Higher-Order Thinking, Analysis, and Logical Connections">الجزء الخامس: مهارات التفكير العليا والتحليل والربط المنطقي</span>
+                    <span id="sec5-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mb-6">
+            <button id="sendEmailBtn" onclick="sendResultsToEmail()" class="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white text-lg px-8 py-3 rounded-xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer" data-ar="📧 إرسال النتائج للمعلم" data-en="📧 Send Results to Teacher">📧 إرسال النتائج للمعلم</button>
+            <p id="emailStatus" class="text-sm mt-2 text-center font-medium"></p>
+        </div>
+        <div class="flex gap-3 justify-center">
+            <button onclick="window.print()" class="bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold" data-ar="🖨️ طباعة النتائج" data-en="🖨️ Print Results">🖨️ طباعة النتائج</button>
+        </div>
+    </div>
+
+    <footer class="max-w-4xl mx-auto mt-10 mb-8 text-center text-gray-500 text-sm no-print">
+        © <span data-ar="فيزياء الصف 12 عام | امتحان الفيزياء 12 عام - الوحدة 2 الدرس 2 (تطبيقات المجالات الكهربائية والمكثفات)" data-en="Grade 12 General Physics | Grade 12 Physics Exam - Unit 2 Lesson 2 (Applications & Capacitors)">فيزياء الصف 12 عام | امتحان الفيزياء 12 عام - الوحدة 2 الدرس 2 (تطبيقات المجالات الكهربائية والمكثفات)</span> | Platform 4U Education
+    </footer>
+
+<script>
+const PUBLIC_KEY = "Rb3Lq8tXaFmc5YHUH";
+const SERVICE_ID = "service_w15m64i";
+const TEMPLATE_ID = "template_5b0u2tq";
+const TARGET_EMAIL = "mohammedhesham872@gmail.com";
+
+emailjs.init(PUBLIC_KEY);
+
+const originalExamData = {
+    "title_ar": "امتحان الفيزياء 12 عام - الوحدة 2 الدرس 2 (تطبيقات المجالات الكهربائية والمكثفات)",
+    "title_en": "Grade 12 Physics Exam - Unit 2 Lesson 2 (Applications & Capacitors)",
+    "desc_ar": "اختبار تقييمي تفاعلي شامل يغطي المكثفات الكهربائية، السعة الكهربائية وتطبيقاتها الفنية، طاقة المكثف، العوامل المؤثرة، وتطبيقات الاستاتيكية الصناعية مثل الطلاء والبرق الجوي ومانعات الصواعق والمرسبات.",
+    "sections": [
+        {
+            "title": {
+                "ar": "🔹 الجزء الأول: المكثف الكهربائي وسعة المكثف والمفاهيم",
+                "en": "🔹 Part 1: Capacitor & Capacitance Concepts"
+            },
+            "questions": [
+                {
+                    "q": {
+                        "ar": "ما هي الوظيفة الأساسية للمكثف الكهربائي (Capacitor) في الدوائر الإلكترونية؟",
+                        "en": "What is the primary function of a capacitor in electronic circuits?"
+                    },
+                    "options": [
+                        {
+                            "ar": "تخزين الشحنات الكهربائية والطاقة الكهربائية في شكل مجال كهربائي",
+                            "en": "Storing electric charges and electrical energy in the form of an electric field"
+                        },
+                        {
+                            "ar": "توليد تيار كهربائي متردد AC مستمر من العدم",
+                            "en": "Generating alternating current AC continuously from nothing"
+                        },
+                        {
+                            "ar": "قياس فرق الجهد الكهربائي ومقاومة الموصلات بدقة",
+                            "en": "Measuring potential difference and conductor resistance accurately"
+                        },
+                        {
+                            "ar": "تحويل الطاقة الكهربائية إلى طاقة ميكانيكية دورانية",
+                            "en": "Converting electrical energy into rotational mechanical energy"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "المكثف هو جهاز يتكون من لوحين موصلين يفصل بينهما عازل، ووظيفته تخزين الشحنات والطاقة الكهربائية.",
+                        "en": "A capacitor is a device consisting of two conducting plates separated by an insulator, used to store electric charge and energy."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "ما هي المعادلة الرياضية المعرفة لسعة المكثف (Capacitance C) بدلالة الشحنة Q وفرق الجهد V؟",
+                        "en": "What is the mathematical formula defining capacitance (C) in terms of charge Q and potential difference V?"
+                    },
+                    "options": [
+                        {
+                            "ar": "C = Q / V",
+                            "en": "C = Q / V"
+                        },
+                        {
+                            "ar": "C = Q · V",
+                            "en": "C = Q · V"
+                        },
+                        {
+                            "ar": "C = V / Q",
+                            "en": "C = V / Q"
+                        },
+                        {
+                            "ar": "C = Q² · V",
+                            "en": "C = Q² · V"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "السعة الكهربائية C هي نسبة الشحنة المتراكمة على أحد اللوحين إلى فرق الجهد المتولد بينهما: C = Q / V.",
+                        "en": "Capacitance C is defined as the ratio of charge on one plate to the potential difference between them: C = Q / V."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "ما هي وحدة قياس السعة الكهربائية في النظام الدولي (SI)؟",
+                        "en": "What is the SI unit for measuring electrical capacitance?"
+                    },
+                    "options": [
+                        {
+                            "ar": "الفاراد (Farad, F) وتكافئ كولوم لكل فولت (C/V)",
+                            "en": "Farad (F), which is equivalent to Coulomb per Volt (C/V)"
+                        },
+                        {
+                            "ar": "الأوم (Ohm, Ω) وتكافئ فولت لكل أمبير",
+                            "en": "Ohm (Ω), which is equivalent to Volt per Ampere"
+                        },
+                        {
+                            "ar": "الهنري (Henry, H) وتكافئ ويبر لكل أمبير",
+                            "en": "Henry (H), which is equivalent to Weber per Ampere"
+                        },
+                        {
+                            "ar": "التسلا (Tesla, T) وتكافئ نيوتن لكل أمبير متر",
+                            "en": "Tesla (T), which is equivalent to Newton per Ampere meter"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "الفاراد هو الوحدة الدولية لقياس السعة، ونظراً لكبر قيمته العملية، نستخدم وحدات أصغر مثل الميكروفاراد (μF) والبيكوفاراد (pF).",
+                        "en": "The Farad is the SI unit of capacitance. Because a Farad is very large, practical values are in microfarads (μF) or picofarads (pF)."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "ماذا يمثل الكولوم لكل فولت (C/V) في الدوائر الكهربائية؟",
+                        "en": "What does Coulomb per Volt (C/V) represent in electrical circuits?"
+                    },
+                    "options": [
+                        {
+                            "ar": "سعة المكثف (الفاراد)",
+                            "en": "Capacitance (Farad)"
+                        },
+                        {
+                            "ar": "مقاومة الموصل (الأوم)",
+                            "en": "Resistance (Ohm)"
+                        },
+                        {
+                            "ar": "القدرة الكهربائية (الواط)",
+                            "en": "Electric Power (Watt)"
+                        },
+                        {
+                            "ar": "شدة المجال (نيوتن لكل كولوم)",
+                            "en": "Field Strength (Newton per Coulomb)"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "بما أن C = Q / V، فإن وحدة السعة هي كولوم (C) مقسوماً على فولت (V) وهو ما يعادل الفاراد (F).",
+                        "en": "Since C = Q / V, the unit is Coulomb (C) divided by Volt (V), which is equivalent to the Farad (F)."
+                    }
+                }
+            ]
+        },
+        {
+            "title": {
+                "ar": "🔹 الجزء الثاني: العوامل المؤثرة وطاقة المكثف المخزنة",
+                "en": "🔹 Part 2: Factors Affecting Capacitance & Stored Energy"
+            },
+            "questions": [
+                {
+                    "q": {
+                        "ar": "ما هي صيغة حساب سعة مكثف ذي لوحين متوازيين تفصلهما مسافة d ومساحة كل منهما A؟",
+                        "en": "What is the formula for the capacitance of a parallel-plate capacitor with plate area A and separation d?"
+                    },
+                    "options": [
+                        {
+                            "ar": "C = ε₀ · A / d",
+                            "en": "C = ε₀ · A / d"
+                        },
+                        {
+                            "ar": "C = ε₀ · d / A",
+                            "en": "C = ε₀ · d / A"
+                        },
+                        {
+                            "ar": "C = ε₀ · A · d",
+                            "en": "C = ε₀ · A · d"
+                        },
+                        {
+                            "ar": "C = A / (ε₀ · d)",
+                            "en": "C = A / (ε₀ · d)"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "سعة المكثف ذي اللوحين المتوازيين في الفراغ تُحسب بالعلاقة: C = ε₀ · A / d. وتزداد بزيادة المساحة وتقليل المسافة.",
+                        "en": "Capacitance of a parallel-plate capacitor in vacuum is: C = ε₀ · A / d. It increases with larger area and smaller separation."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "أي من التغييرات التالية تؤدي إلى زيادة سعة مكثف ذي لوحين متوازيين؟",
+                        "en": "Which of the following changes would increase the capacitance of a parallel-plate capacitor?"
+                    },
+                    "options": [
+                        {
+                            "ar": "زيادة مساحة اللوحين وتقليل المسافة بينهما",
+                            "en": "Increasing plate area and decreasing the distance between them"
+                        },
+                        {
+                            "ar": "تقليل مساحة اللوحين وزيادة المسافة بينهما",
+                            "en": "Decreasing plate area and increasing the distance between them"
+                        },
+                        {
+                            "ar": "تقليل مساحة اللوحين وتقليل المسافة بينهما",
+                            "en": "Decreasing plate area and decreasing the distance between them"
+                        },
+                        {
+                            "ar": "زيادة المسافة بشكل هائل مع ترك المساحة ثابتة",
+                            "en": "Increasing distance enormously while leaving area constant"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "السعة تتناسب طردياً مع المساحة (A) وعكسياً مع المسافة الفاصلة (d). لذا زيادة المساحة وتقريب اللوحين يزيدان السعة.",
+                        "en": "Capacitance is directly proportional to area (A) and inversely proportional to separation distance (d). Thus, more area and less distance raise C."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "ما تأثير وضع مادة عازلة (مثل الزجاج أو الورق أو الميكا) بدلاً من الهواء بين لوحي مكثف مشحون ومعزول؟",
+                        "en": "What is the effect of inserting a dielectric material (like glass, paper, or mica) instead of air between plates?"
+                    },
+                    "options": [
+                        {
+                            "ar": "تزداد سعة المكثف بمقدار معامل ثابت العزل κ (κ > 1)",
+                            "en": "The capacitance increases by the dielectric constant κ (κ > 1)"
+                        },
+                        {
+                            "ar": "تقل سعة المكثف وتتلاشى طاقة التخزين كلياً",
+                            "en": "The capacitance decreases and stored energy vanishes completely"
+                        },
+                        {
+                            "ar": "يبقى المكثف ثابتاً وتتحول الشحنات إلى بروتونات حرة",
+                            "en": "The capacitor remains constant and charges turn to free protons"
+                        },
+                        {
+                            "ar": "يحدث انفجار بسبب انعدام المجال بين اللوحين",
+                            "en": "An explosion occurs due to zero field between the plates"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "المادة العازلة تضعف المجال الكهربائي الفعلي بين اللوحين مما يقلل فرق الجهد لنفس الشحنة، وبالتالي تزيد السعة بمعامل ثابت العزل κ: C = κ · C₀.",
+                        "en": "A dielectric weakens the effective electric field between the plates, reducing potential difference for the same charge, increasing capacitance: C = κ · C₀."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "ما هي إحدى العلاقات الصحيحة لحساب الطاقة الكهربائية المخزنة (U) في مكثف مشحون؟",
+                        "en": "What is one of the correct formulas to calculate the stored electrical energy (U) in a charged capacitor?"
+                    },
+                    "options": [
+                        {
+                            "ar": "U = ½ · C · V²",
+                            "en": "U = ½ · C · V²"
+                        },
+                        {
+                            "ar": "U = ½ · C² · V",
+                            "en": "U = ½ · C² · V"
+                        },
+                        {
+                            "ar": "U = C · V",
+                            "en": "U = C · V"
+                        },
+                        {
+                            "ar": "U = Q · V²",
+                            "en": "U = Q · V²"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "الطاقة المخزنة في المكثف تُحسب من العلاقات المتكافئة: U = ½ C V² = ½ Q V = ½ Q²/C.",
+                        "en": "The energy stored in a capacitor is calculated using: U = ½ C V² = ½ Q V = ½ Q²/C."
+                    }
+                }
+            ]
+        },
+        {
+            "title": {
+                "ar": "🔹 الجزء الثالث: تفريغ المكثفات وتطبيقاتها التقنية والطبية",
+                "en": "🔹 Part 3: Capacitor Discharge & Technical/Medical Applications"
+            },
+            "questions": [
+                {
+                    "q": {
+                        "ar": "ما الميزة الأساسية لطريقة تفريغ الطاقة في المكثف مقارنة بتفريغها من البطارية الكيميائية؟",
+                        "en": "What is the primary advantage of energy discharge in a capacitor compared to a chemical battery?"
+                    },
+                    "options": [
+                        {
+                            "ar": "المكثف يفرغ طاقته المخزنة بسرعة هائلة ولحظية (أجزاء من الثانية) مما يعطي قدرة عالية جداً",
+                            "en": "The capacitor discharges its stored energy extremely fast (fractions of a second), providing very high power"
+                        },
+                        {
+                            "ar": "المكثف يفرغ طاقته ببطء شديد يمتد لسنوات طويلة",
+                            "en": "The capacitor discharges very slowly over many years"
+                        },
+                        {
+                            "ar": "المكثف لا يفرغ طاقته إلا إذا تعرض لدرجة حرارة الغليان",
+                            "en": "The capacitor only discharges when exposed to boiling temperatures"
+                        },
+                        {
+                            "ar": "البطارية تعطي جهداً استاتيكياً متغيراً بينما المكثف جهده ثابت للأبد",
+                            "en": "The battery gives alternating static voltage while the capacitor's voltage is constant forever"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "البطارية الكيميائية تنتج طاقة ببطء عبر تفاعلات كيميائية، بينما المكثف يطلق شحنته بالكامل بشكل فوري ولحظي، مما يجعله مثالياً للتطبيقات التي تتطلب دفعات طاقة سريعة.",
+                        "en": "Batteries release energy slowly via chemical reactions, while capacitors release their stored charge almost instantly, ideal for high burst-power applications."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "أي من الأجهزة الطبية التالية يعتمد كلياً على تفريغ المكثفات لإنقاذ حياة المرضى؟",
+                        "en": "Which of the following medical devices relies entirely on capacitor discharge to save patients' lives?"
+                    },
+                    "options": [
+                        {
+                            "ar": "جهاز تنظيم ضربات القلب وإزالة الرجفان الصدري (Defibrillator)",
+                            "en": "Cardiac pacemaker and defibrillator (Defibrillator)"
+                        },
+                        {
+                            "ar": "جهاز غسيل الكلى الاصطناعية المتقدم",
+                            "en": "Advanced artificial kidney dialysis machine"
+                        },
+                        {
+                            "ar": "مقياس ضغط الدم الزئبقي التقليدي",
+                            "en": "Traditional mercury blood pressure monitor"
+                        },
+                        {
+                            "ar": "المجهر الإلكتروني الماسح للعين",
+                            "en": "Scanning electron microscope for the eye"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "جهاز الصدمات الكهربائية للقلب (إزالة الرجفان) يشحن مكثفاً داخلياً بجهد عالٍ ثم يفرغ هذه الطاقة بسرعة عبر صدر المريض لإعادة تنظيم نبضات القلب.",
+                        "en": "A cardiac defibrillator charges an internal capacitor to a high voltage, then discharges this energy rapidly through the chest to restore normal heart rhythm."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "كيف يتم الاستفادة من المكثفات في وميض كاميرا الفلاش (Camera Flash)؟",
+                        "en": "How are capacitors utilized in camera flash units?"
+                    },
+                    "options": [
+                        {
+                            "ar": "يشحن المكثف ببطء من البطارية ثم يفرغ شحنته بسرعة فائقة في المصباح لينتج ضوءاً ساطعاً للحظة",
+                            "en": "The capacitor charges slowly from the battery then discharges extremely fast into the lamp for a bright instant flash"
+                        },
+                        {
+                            "ar": "يستخدم المكثف كعدسة عاكسة للضوء والظلال",
+                            "en": "The capacitor is used as a reflective lens for light and shadows"
+                        },
+                        {
+                            "ar": "يقوم بتبريد الكاميرا لمنع سخونة المصباح",
+                            "en": "It cools the camera to prevent lamp overheating"
+                        },
+                        {
+                            "ar": "يقوم بتحويل الضوء الخارجي إلى طاقة كيميائية مخزنة",
+                            "en": "It converts external light into stored chemical energy"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "بطارية الكاميرا جهدها صغير لا يكفي لتشغيل الفلاش بكفاءة، فيقوم مكثف بتجميع الشحنة ببطء ثم ضخها دفعة واحدة بجهد مرتفع لإحداث الوميض الساطع.",
+                        "en": "The camera battery voltage is too low to power the flash directly. A capacitor accumulates charge slowly and discharges it in a fraction of a second to produce the flash."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "في لوحات المفاتيح الخاصة بأجهزة الحاسوب (Keyboards)، ما الآلية التي يعمل بها المفتاح؟",
+                        "en": "In computer keyboards, how does a capacitive key switch operate?"
+                    },
+                    "options": [
+                        {
+                            "ar": "الضغط على المفتاح يقلل المسافة d بين لوحين معدنيين فتزداد السعة الكهربائية ويرصدها الجهاز كحرف مضغوط",
+                            "en": "Pressing the key decreases distance d between two plates, raising capacitance, registered as a keystroke"
+                        },
+                        {
+                            "ar": "الضغط على المفتاح يؤدي إلى صهر وصلة السيليكون بالحرارة",
+                            "en": "Pressing the key melts the silicon joint with heat"
+                        },
+                        {
+                            "ar": "يعتمد على حث مغناطيسي للمغناطيس الدائم في القاعدة",
+                            "en": "Relies on magnetic induction of a permanent magnet at the base"
+                        },
+                        {
+                            "ar": "يقوم المفتاح بقطع سلك التوصيل لتعطيل التيار تماماً",
+                            "en": "The key cuts the connection wire to completely disable current"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "تحت كل مفتاح لوح مكثف مرن. عند الضغط عليه، تقترب الألواح (تقل d) فتزداد السعة الكهربائية C، وتتعرف الدائرة الإلكترونية للوحة المفاتيح على هذا التغيير وتحدده كحرف مكتوب.",
+                        "en": "Under each key is a flexible capacitor. Pressing the key decreases plate spacing (d), increasing capacitance C, which the computer detects as a keystroke."
+                    }
+                }
+            ]
+        },
+        {
+            "title": {
+                "ar": "🔹 الجزء الرابع: تطبيقات الكهرباء الساكنة الصناعية والبرق",
+                "en": "🔹 Part 4: Industrial Electrostatic Applications & Lightning"
+            },
+            "questions": [
+                {
+                    "q": {
+                        "ar": "كيف يساعد شحن قطيرات الدهان استاتيكياً في عملية الطلاء الكهربائي (Electrostatic Painting) للسيارات؟",
+                        "en": "How does charging paint droplets electrostatically assist in car manufacturing (Electrostatic Painting)?"
+                    },
+                    "options": [
+                        {
+                            "ar": "تشحن قطرات الدهان بشحنة مماثلة لتتنافر وتتوزع بانتظام، ويشحن هيكل السيارة بشحنة مخالفة لتنجذب القطرات وتلتصق بقوة",
+                            "en": "Paint droplets are similarly charged to repel and distribute evenly, while the car frame is oppositely charged to attract them strongly"
+                        },
+                        {
+                            "ar": "تمنع قطرات الطلاء من الاقتراب من السيارة لحمايتها من الخدوش",
+                            "en": "Prevents paint droplets from reaching the car to protect it from scratches"
+                        },
+                        {
+                            "ar": "تجعل قطرات الطلاء سائلة جداً مثل الماء المغلي",
+                            "en": "Makes paint droplets extremely liquid like boiling water"
+                        },
+                        {
+                            "ar": "تقوم بتحويل لون الدهان تلقائياً حسب رطوبة المصنع",
+                            "en": "Automatically converts paint color based on factory humidity"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "تنافر قطيرات الدهان المشحونة بنفس الشحنة يجعلها تنتشر كرذاذ ناعم ومنتظم، وانجذابها لهيكل السيارة ذي الشحنة المخالفة يضمن تغطية كاملة ومتساوية لجميع الزوايا ويقلل هدر الدهان.",
+                        "en": "Like-charged paint droplets repel to form a fine, uniform mist, and are attracted to the oppositely charged car frame, ensuring even coverage and reducing waste."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "ما هي فكرة عمل 'المرسبات الكهروستاتيكية' (Electrostatic Precipitators) المستخدمة في مداخن المصانع؟",
+                        "en": "What is the working principle of 'Electrostatic Precipitators' used in industrial chimneys?"
+                    },
+                    "options": [
+                        {
+                            "ar": "شحن جزيئات الغبار والدخان المتصاعد ثم جذبها باستخدام ألواح معدنية ذات شحنة مخالفة لتصفية الغازات وحماية البيئة",
+                            "en": "Charging dust and soot particles, then attracting them with oppositely charged plates to filter gases and protect the environment"
+                        },
+                        {
+                            "ar": "تبريد الغازات الساخنة لتحويلها إلى ثلج صلب",
+                            "en": "Cooling hot gases to turn them into solid ice"
+                        },
+                        {
+                            "ar": "حرق جزيئات الهواء بالأكسجين لتوليد شعلة ضخمة",
+                            "en": "Burning air particles with oxygen to generate a massive flame"
+                        },
+                        {
+                            "ar": "زيادة سرعة تصاعد الدخان لمنع تراكمه في المداخن",
+                            "en": "Increasing smoke emission speed to prevent chimney build-up"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "المرسبات الكهروستاتيكية تشحن جزيئات الفحم والغبار العالقة بالدخان، ثم تسحبها الألواح المشحونة بالمخالف، فتزيل أكثر من 99% من الملوثات قبل خروج الغازات للهواء.",
+                        "en": "Electrostatic precipitators charge fly ash and soot particles, which are then collected on oppositely charged plates, removing over 99% of pollutants from emissions."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "يحدث البرق (Lightning) كشكل من أشكال التفريغ الكهربائي الهائل في الغلاف الجوي عندما يتجاوز المجال الكهربائي بين السحابة والأرض:",
+                        "en": "Lightning occurs as a massive electrostatic discharge in the atmosphere when the electric field between clouds and the ground exceeds:"
+                    },
+                    "options": [
+                        {
+                            "ar": "قوة العزل الكهربائي للهواء (حوالي 3 × 10⁶ V/m)",
+                            "en": "The dielectric strength of air (about 3 × 10⁶ V/m)"
+                        },
+                        {
+                            "ar": "ثابت كولوم القياسي في الفراغ الجوي",
+                            "en": "The standard Coulomb constant in the atmospheric vacuum"
+                        },
+                        {
+                            "ar": "سرعة الصوت في الهواء الجاف عند درجة الصفر",
+                            "en": "The speed of sound in dry air at zero degrees celsius"
+                        },
+                        {
+                            "ar": "الوزن النوعي لبخار الماء المشبع",
+                            "en": "The specific weight of saturated water vapor"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "الهواء عازل ممتاز، لكن عندما يتخطى المجال الكهربي قيمة (3 × 10⁶ V/m)، يتأين الهواء ويصبح موصلاً، مما يؤدي للتفريغ العنيف الفوري على شكل برق.",
+                        "en": "Air is a good insulator, but when the electric field exceeds (3 × 10⁶ V/m), air ionizes and conducts, leading to the sudden discharge known as lightning."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "ما وظيفة مانعات الصواعق (Lightning Rods) المثبتة أعلى المباني الشاهقة؟",
+                        "en": "What is the function of lightning rods installed on top of tall buildings?"
+                    },
+                    "options": [
+                        {
+                            "ar": "توفير مسار آمن منخفض المقاومة لتفريغ شحنة الصاعقة مباشرة إلى الأرض دون إلحاق ضرر بالمبنى",
+                            "en": "Providing a safe, low-resistance path to discharge lightning directly to the Earth without harming the building"
+                        },
+                        {
+                            "ar": "جذب الصواعق واستخدام طاقة البرق لتشغيل أجهزة التكييف بالكامل",
+                            "en": "Attracting lightning and using its energy to power the building's air conditioners"
+                        },
+                        {
+                            "ar": "عزل المبنى مغناطيسياً لمنع وصول شبكات الهاتف الجوال",
+                            "en": "Magnetically insulating the building to prevent mobile network access"
+                        },
+                        {
+                            "ar": "طرد السحب المشحونة بعيداً عن سماء المدينة باستخدام موجات حرارية",
+                            "en": "Repelling charged clouds away from the city sky using thermal waves"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "مانعات الصواعق هي قضبان معدنية مدببة وموصلة بسلك سميك إلى باطن الأرض (التأريض)، تقوم بسحب الشحنات وتوجيهها بسلام للأرض حماية للمباني وسكانها.",
+                        "en": "Lightning rods are pointed metal rods grounded with thick wires, routing lightning safely to the ground to protect the building from fire or structural damage."
+                    }
+                }
+            ]
+        },
+        {
+            "title": {
+                "ar": "🔹 الجزء الخامس: مهارات التفكير المسائل الحسابية المتقدمة",
+                "en": "🔹 Part 5: Higher Order Thinking & Advanced Physics Problems"
+            },
+            "questions": [
+                {
+                    "q": {
+                        "ar": "مكثف سعتة C = 5.0 μF تم شحنه بفرق جهد V = 12.0 V. كم تبلغ الشحنة Q المتراكمة على أحد لوحيه؟",
+                        "en": "A capacitor has capacitance C = 5.0 μF and is charged with potential difference V = 12.0 V. What is the charge Q stored?"
+                    },
+                    "options": [
+                        {
+                            "ar": "6.0 × 10⁻⁵ C (أو 60 μC)",
+                            "en": "6.0 × 10⁻⁵ C (or 60 μC)"
+                        },
+                        {
+                            "ar": "2.4 × 10⁻⁶ C (أو 2.4 μC)",
+                            "en": "2.4 × 10⁻⁶ C (or 2.4 μC)"
+                        },
+                        {
+                            "ar": "6.0 × 10⁻⁶ C (أو 6 μC)",
+                            "en": "6.0 × 10⁻⁶ C (or 6 μC)"
+                        },
+                        {
+                            "ar": "4.17 × 10⁻¹ C (أو 0.417 C)",
+                            "en": "4.17 × 10⁻¹ C (or 0.417 C)"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "Q = C · V = (5.0 × 10⁻⁶ F) · (12.0 V) = 60.0 × 10⁻⁶ C = 6.0 × 10⁻⁵ C.",
+                        "en": "Q = C · V = (5.0 × 10⁻⁶ F) · (12.0 V) = 60.0 × 10⁻⁶ C = 6.0 × 10⁻⁵ C."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "كم تبلغ طاقة الوضع الكهربائية المخزنة في المكثف الموصوف في السؤال السابق؟",
+                        "en": "What is the electric potential energy stored in the capacitor described in the previous question?"
+                    },
+                    "options": [
+                        {
+                            "ar": "3.6 × 10⁻⁴ J",
+                            "en": "3.6 × 10⁻⁴ J"
+                        },
+                        {
+                            "ar": "7.2 × 10⁻⁴ J",
+                            "en": "7.2 × 10⁻⁴ J"
+                        },
+                        {
+                            "ar": "3.6 × 10⁻⁶ J",
+                            "en": "3.6 × 10⁻⁶ J"
+                        },
+                        {
+                            "ar": "1.2 × 10⁻³ J",
+                            "en": "1.2 × 10⁻³ J"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "U = ½ C V² = 0.5 · (5.0 × 10⁻⁶ F) · (12.0 V)² = 2.5 × 10⁻⁶ · 144 = 360 × 10⁻⁶ J = 3.6 × 10⁻⁴ J.",
+                        "en": "U = ½ C V² = 0.5 · (5.0 × 10⁻⁶ F) · (12.0 V)² = 2.5 × 10⁻⁶ · 144 = 3.6 × 10⁻⁴ J."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "مكثف هوائي ذو لوحين متوازيين، مساحة لوحيه A والمسافة بينهما d. تم شحنه ببطارية ثم فُصل عنها (الشحنة Q بقيت ثابتة). إذا قمنا بمضاعفة المسافة بين اللوحين إلى الضعف (2d)، فماذا يحدث لفرق الجهد V بين اللوحين والطاقة الكهربائية المخزنة؟",
+                        "en": "A parallel-plate air capacitor of area A and distance d is charged and then disconnected from the battery (charge Q remains constant). If the distance is doubled (2d), what happens to V and the stored energy?"
+                    },
+                    "options": [
+                        {
+                            "ar": "يتضاعف فرق الجهد وتتضاعف الطاقة المخزنة أيضاً إلى الضعف",
+                            "en": "The potential difference doubles and the stored energy also doubles"
+                        },
+                        {
+                            "ar": "يقل فرق الجهد إلى النصف وتقل الطاقة المخزنة إلى النصف",
+                            "en": "The potential difference decreases to half and the stored energy decreases to half"
+                        },
+                        {
+                            "ar": "يبقى فرق الجهد ثابتاً وتتلاشى الطاقة كلياً",
+                            "en": "The potential difference remains constant and energy vanishes completely"
+                        },
+                        {
+                            "ar": "يتضاعف فرق الجهد وتقل الطاقة إلى النصف",
+                            "en": "The potential difference doubles and energy decreases to half"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "بما أن المسافة تضاعفت، السعة تقل للنصف (C' = C/2). وحيث الشحنة ثابتة، فإن فرق الجهد يتضاعف (V = Q/C). والطاقة U = ½ Q²/C، وبما أن C قلّت للنصف فإن الطاقة تتضاعف أيضاً. (تم بذل شغل خارجي لإبعاد اللوحين تخزن كطاقة وضع إضافية).",
+                        "en": "As distance doubles, C drops to half (C' = C/2). Since Q is constant, potential difference doubles (V = Q/C). Stored energy U = ½ Q²/C also doubles due to the external work done separating the plates."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "في تجربة قطرة الزيت لمليكان (Millikan's Oil Drop Experiment)، ما الشرط الفيزيائي اللازم لكي تظل قطرة الزيت المشحونة معلقة في الهواء بوضعية اتزان وسكون تام بين اللوحين؟",
+                        "en": "In Millikan's Oil Drop Experiment, what is the physical condition required for a charged oil drop to remain suspended in stationary equilibrium between the plates?"
+                    },
+                    "options": [
+                        {
+                            "ar": "أن تكون القوة الكهربية لأعلى مساوية تماماً لقوة الجاذبية (الوزن) لأسفل (Fe = Fg)",
+                            "en": "The upward electric force must exactly equal the downward gravitational force (Fe = Fg)"
+                        },
+                        {
+                            "ar": "أن يكون المجال الكهربائي مساوياً تماماً لسرعة الضوء الجوية",
+                            "en": "The electric field must exactly equal the speed of light"
+                        },
+                        {
+                            "ar": "أن تتبخر قطرة الزيت بالكامل وتتحول إلى غاز الهيليوم",
+                            "en": "The oil drop must evaporate completely and turn to helium gas"
+                        },
+                        {
+                            "ar": "أن يكون الضغط الجوي مساوياً لثابت كولوم ومعدوماً",
+                            "en": "The atmospheric pressure must equal Coulomb's constant and be zero"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "تتزن قطرة الزيت عندما تتساوى القوة الكهربائية المؤثرة لأعلى (q·E) مع قوة الجاذبية لأسفل (m·g)، أي q·E = m·g، ومنها تمكن مليكان من حساب شحنة الإلكترون.",
+                        "en": "The oil drop is suspended when the upward electric force (q·E) balances the downward gravitational force (m·g): q·E = m·g. This allowed Millikan to calculate the electron's charge."
+                    }
+                }
+            ]
+        }
+    ]
+};
+
+function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Physics.floor(Physics.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+let examData;
+let correctAnswersMap = {};
+let currentLang = 'ar';
+let timeRemaining = 3600;
+let timerInterval;
+
+function prepareShuffledExam() {
+    examData = JSON.parse(JSON.stringify(originalExamData));
+    correctAnswersMap = {};
+    let globalIdx = 0;
+    
+    examData.sections.forEach((section) => {
+        section.questions = shuffleArray(section.questions);
+        
+        section.questions.forEach((q) => {
+            const optionsWithCorrect = q.options.map((opt, idx) => ({
+                option: opt,
+                isCorrect: idx === q.correct
+            }));
+            
+            const shuffledOptions = shuffleArray(optionsWithCorrect);
+            q.options = shuffledOptions.map(o => o.option);
+            
+            const newCorrectIndex = shuffledOptions.findIndex(o => o.isCorrect);
+            q.correct = newCorrectIndex;
+            
+            correctAnswersMap[globalIdx] = String.fromCharCode(97 + newCorrectIndex);
+            globalIdx++;
+        });
+    });
+}
+
+function reshuffleExam() {
+    prepareShuffledExam();
+    renderExam();
+    document.querySelectorAll('input[type="radio"]:checked').forEach(r => r.checked = false);
+    document.getElementById('results-panel').classList.add('hidden');
+    document.querySelectorAll('.correct, .incorrect').forEach(el => {
+        el.classList.remove('correct', 'incorrect');
+    });
+    alert(currentLang === 'ar' 
+        ? '🔀 تم إعادة خلط الأسئلة والخيارات بنجاح!' 
+        : '🔀 Questions and options have been reshuffled successfully!');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    
+    document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    
+    document.body.classList.toggle('en-mode', lang === 'en');
+    
+    document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+    });
+    
+    renderExam();
+}
+
+function renderExam() {
+    const container = document.getElementById('exam-content');
+    const labels = {
+        ar: { option: ['أ', 'ب', 'ج', 'د'], answer: '✅ الإجابة الصحيحة:' },
+        en: { option: ['A', 'B', 'C', 'D'], answer: '✅ Correct Answer:' }
+    };
+    const lbl = labels[currentLang];
+    const isRTL = currentLang === 'ar';
+    
+    let html = '';
+    let globalIdx = 0;
+    
+    examData.sections.forEach((section) => {
+        html += `
+        <section class="bg-white p-6 rounded-xl shadow-lg">
+            <h2 class="text-xl font-bold mb-4 text-teal-700">${section.title[currentLang]}</h2>
+            <ol class="space-y-4 text-sm">`;
+            
+        section.questions.forEach((q) => {
+            const borderSide = isRTL ? 'border-r-4 pr-4' : 'border-l-4 pl-4';
+            html += `
+                <li class="${borderSide} border-teal-500 py-2" id="q-${globalIdx}">
+                    <strong>${globalIdx + 1}.</strong> ${q.q[currentLang]}<br>`;
+                    
+            q.options.forEach((opt, oIdx) => {
+                const radioSide = isRTL ? 'mr-4 ml-2' : 'ml-4 mr-2';
+                html += `
+                    <label class="cursor-pointer block mt-1 ${isRTL ? 'mr-4' : 'ml-4'}">
+                        <input type="radio" name="q${globalIdx}" value="${String.fromCharCode(97 + oIdx)}" class="${radioSide}"> 
+                        ${lbl.option[oIdx]}) ${opt[currentLang]}
+                    </label>`;
+            });
+            
+            html += `
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">
+                        ${lbl.answer} ${lbl.option[q.correct]}) ${q.options[q.correct][currentLang]} — ${q.answer[currentLang]}
+                    </div>
+                </li>`;
+            globalIdx++;
+        });
+        
+        html += `
+            </ol>
+        </section>`;
+    });
+    
+    container.innerHTML = html;
+}
+
+function startTimer() {
+    document.getElementById('timer-container').style.display = 'block';
+    timerInterval = setInterval(() => {
+        timeRemaining--;
+        const minutes = Physics.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+        const timerEl = document.getElementById('timer');
+        timerEl.textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+        if (timeRemaining <= 300) timerEl.classList.add('timer-warning');
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            alert(currentLang === 'ar' ? "انتهى الوقت! سيتم تسليم الامتحان تلقائياً." : "Time's up! Exam will be submitted automatically.");
+            gradeExam();
+        }
+    }, 1000);
+}
+
+function toggleAnswers() {
+    document.querySelectorAll('.answer-box').forEach(el => el.classList.toggle('hidden'));
+}
+
+function gradeExam() {
+    let correctCount = 0;
+    let sec1 = 0, sec2 = 0, sec3 = 0, sec4 = 0, sec5 = 0;
+    
+    for (let i = 0; i < 20; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        const li = document.getElementById(`q-${i}`);
+        const correctAnswer = correctAnswersMap[i];
+        
+        if (li) {
+            const isCorrect = selected && selected.value === correctAnswer;
+            
+            if (isCorrect) {
+                correctCount++;
+                li.classList.add('correct');
+                li.classList.remove('incorrect');
+            } else {
+                li.classList.add('incorrect');
+                li.classList.remove('correct');
+            }
+
+            if (isCorrect) {
+                if (i < 4) sec1++;
+                else if (i < 8) sec2++;
+                else if (i < 12) sec3++;
+                else if (i < 16) sec4++;
+                else sec5++;
+            }
+        }
+    }
+
+    const score = (correctCount / 20) * 100;
+    const successRate = Physics.round(score);
+    
+    document.getElementById('res-total').textContent = `${successRate} / 100`;
+    document.getElementById('res-name').textContent = document.getElementById('studentName').value || (currentLang === 'ar' ? 'طالب' : 'Student');
+    document.getElementById('res-date').textContent = new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-AE' : 'en-US');
+    
+    document.getElementById('sec1-score').textContent = `${sec1}/4`;
+    document.getElementById('sec2-score').textContent = `${sec2}/4`;
+    document.getElementById('sec3-score').textContent = `${sec3}/4`;
+    document.getElementById('sec4-score').textContent = `${sec4}/4`;
+    document.getElementById('sec5-score').textContent = `${sec5}/4`;
+    
+    const badge = document.getElementById('success-badge');
+    const percent = document.getElementById('success-percent');
+    percent.textContent = `${successRate}%`;
+    
+    if (currentLang === 'ar') {
+        if (successRate >= 90) { badge.textContent = 'ممتاز'; badge.className = 'success-badge grade-excellent'; }
+        else if (successRate >= 75) { badge.textContent = 'جيد جداً'; badge.className = 'success-badge grade-good'; }
+        else if (successRate >= 50) { badge.textContent = 'جيد'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = 'يحتاج تحسين'; badge.className = 'success-badge grade-fail'; }
+    } else {
+        if (successRate >= 90) { badge.textContent = 'Excellent'; badge.className = 'success-badge grade-excellent'; }
+        else if (successRate >= 75) { badge.textContent = 'Very Good'; badge.className = 'success-badge grade-good'; }
+        else if (successRate >= 50) { badge.textContent = 'Good'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = 'Needs Improvement'; badge.className = 'success-badge grade-fail'; }
+    }
+    
+    document.getElementById('results-panel').classList.remove('hidden');
+    document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('sendEmailBtn').classList.remove('hidden');
+}
+
+function sendResultsToEmail() {
+    const btn = document.getElementById('sendEmailBtn');
+    const status = document.getElementById('emailStatus');
+    btn.disabled = true;
+    btn.textContent = currentLang === 'ar' ? '⏳ جاري الإرسال...' : '📤 Sending...';
+
+    const name = document.getElementById('studentName').value || 'N/A';
+    const studentClass = document.getElementById('studentClass').value || 'N/A';
+    const date = document.querySelector('input[type="text"]').value || new Date().toLocaleDateString();
+    const score = document.getElementById('res-total').textContent;
+    const successRate = document.getElementById('success-percent').textContent;
+    const badge = document.getElementById('success-badge').textContent;
+
+    const sectionNames = {
+        ar: [
+            "الجزء الأول: المفاهيم والقواعد الأساسية والتعريفات",
+            "الجزء الثاني: العمليات الحسابية والحلول العددية الدقيقة",
+            "الجزء الثالث: المهارات المتقدمة والتطبيقات والمسائل",
+            "الجزء الرابع: النمذجة الرياضية والتمثيل البياني والمسائل العملية",
+            "الجزء الخامس: مهارات التفكير العليا والتحليل والربط المنطقي"
+        ],
+        en: [
+            "Part 1: Basic Concepts, Rules, and Definitions",
+            "Part 2: Calculations and Exact Numerical Solutions",
+            "Part 3: Advanced Skills, Applications, and Problems",
+            "Part 4: Physicsematical Modeling, Graphing, and Practical Problems",
+            "Part 5: Higher-Order Thinking, Analysis, and Logical Connections"
+        ]
+    };
+    const currentSectionNames = sectionNames[currentLang];
+
+    let answersHTML = `
+        <div style="font-family: 'Segoe UI', Tahoma, Arial, sans-serif; direction: \${currentLang === 'ar' ? 'rtl' : 'ltr'}; text-align: \${currentLang === 'ar' ? 'right' : 'left'};">
+            <div style="background: linear-gradient(135deg, #0d9488, #0891b2); color: white; padding: 20px; border-radius: 10px 10px 0 0; text-align: center;">
+                <h2 style="margin: 0; font-size: 22px;">⚡ \${currentLang === 'ar' ? 'نتيجة امتحان الفيزياء والتحليل التفاعلي' : 'Physics Interactive Exam Result'}</h2>
+                <p style="margin: 5px 0 0 0; opacity: 0.9;">\${currentLang === 'ar' ? 'فيزياء الصف الثاني عشر عام | الفصل الدراسي الأول' : 'Grade 12 General Physics | Term 1'}</p>
+                <p style="margin: 5px 0 0 0; font-size: 12px; opacity: 0.8;">🔀 \${currentLang === 'ar' ? 'تم خلط الأسئلة تلقائياً' : 'Questions were randomly shuffled'}</p>
+            </div>
+            
+            <div style="background: #f0fdfa; padding: 15px; border: 1px solid #99f6e4;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">\${currentLang === 'ar' ? '👤 الاسم:' : '👤 Name:'}</td>
+                        <td style="padding: 8px;">\${name}</td>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">\${currentLang === 'ar' ? '🏫 الشعبة:' : '🏫 Class:'}</td>
+                        <td style="padding: 8px;">\${studentClass}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">\${currentLang === 'ar' ? '📅 التاريخ:' : '📅 Date:'}</td>
+                        <td style="padding: 8px;">\${date}</td>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">\${currentLang === 'ar' ? '🏆 التقدير:' : '🏆 Grade:'}</td>
+                        <td style="padding: 8px;">\${badge}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="background: white; padding: 20px; text-align: center; border-bottom: 2px solid #e5e7eb;">
+                <div style="display: inline-block; margin: 0 15px;">
+                    <div style="font-size: 32px; font-weight: bold; color: #0d9488;">\${score}</div>
+                    <div style="color: #6b7280; font-size: 13px;">\${currentLang === 'ar' ? 'الدرجة الكلية' : 'Total Score'}</div>
+                </div>
+                <div style="display: inline-block; margin: 0 15px;">
+                    <div style="font-size: 32px; font-weight: bold; color: #059669;">\${successRate}%</div>
+                    <div style="color: #6b7280; font-size: 13px;">\${currentLang === 'ar' ? 'نسبة النجاح' : 'Success Rate'}</div>
+                </div>
+            </div>
+
+            <h3 style="background: #f3f4f6; padding: 12px; margin: 0; color: #1f2937; border-bottom: 2px solid #d1d5db;">
+                \${currentLang === 'ar' ? '📝 تفاصيل الإجابات' : '📝 Answer Details'}
+            </h3>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="background: #0d9488; color: white;">
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 8%;">#</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 32%;">\${currentLang === 'ar' ? 'القسم' : 'Section'}</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 15%;">\${currentLang === 'ar' ? 'الإجابة' : 'Answer'}</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 15%;">\${currentLang === 'ar' ? 'الصحيحة' : 'Correct'}</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 15%;">\${currentLang === 'ar' ? 'النتيجة' : 'Status'}</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    let sectionScores = [sec1, sec2, sec3, sec4, sec5];
+    let sectionTotals = [4, 4, 4, 4, 4];
+
+    for (let i = 0; i < 20; i++) {
+        const selected = document.querySelector(`input[name="q\${i}"]:checked`);
+        const selectedValue = selected ? selected.value : '-';
+        const correctValue = correctAnswersMap[i];
+        const isCorrect = selectedValue === correctValue;
+        
+        const sectionIndex = Physics.floor(i / 4);
+
+        const rowBg = i % 2 === 0 ? '#f9fafb' : '#ffffff';
+        const statusBg = isCorrect ? '#dcfce7' : '#fee2e2';
+        const statusColor = isCorrect ? '#166534' : '#991b1b';
+        const statusIcon = isCorrect ? '✅' : '❌';
+        const statusText = isCorrect 
+            ? (currentLang === 'ar' ? 'صحيح' : 'Correct') 
+            : (currentLang === 'ar' ? 'خطأ' : 'Wrong');
+
+        answersHTML += `
+            <tr style="background: \${rowBg};">
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold;">\${i + 1}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb;">\${currentSectionNames[sectionIndex]}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold;">\${selectedValue.toUpperCase()}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold; color: #059669;">\${correctValue.toUpperCase()}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; background: \${statusBg}; color: \${statusColor}; font-weight: bold;">
+                    \${statusIcon} \${statusText}
+                </td>
+            </tr>
+        `;
+    }
+
+    answersHTML += `
+                </tbody>
+            </table>
+
+            <h3 style="background: #f3f4f6; padding: 12px; margin: 0; color: #1f2937; border-bottom: 2px solid #d1d5db; border-top: 3px solid #0d9488;">
+                📊 \${currentLang === 'ar' ? 'تفصيل الأداء' : 'Performance Breakdown'}
+            </h3>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="background: #7c3aed; color: white;">
+                        <th style="padding: 10px; border: 1px solid #6d28d9;">\${currentLang === 'ar' ? 'القسم' : 'Section'}</th>
+                        <th style="padding: 10px; border: 1px solid #6d28d9; width: 20%;">\${currentLang === 'ar' ? 'النتيجة' : 'Score'}</th>
+                        <th style="padding: 10px; border: 1px solid #6d28d9; width: 20%;">\${currentLang === 'ar' ? 'النسبة' : 'Percentage'}</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    for (let i = 0; i < 5; i++) {
+        const percentage = Physics.round((sectionScores[i] / sectionTotals[i]) * 100);
+        const barColor = percentage >= 75 ? '#10b981' : percentage >= 50 ? '#f59e0b' : '#ef4444';
+        const rowBg = i % 2 === 0 ? '#f9fafb' : '#ffffff';
+        
+        answersHTML += `
+            <tr style="background: \${rowBg};">
+                <td style="padding: 10px; border: 1px solid #e5e7eb; font-weight: 600;">\${currentSectionNames[i]}</td>
+                <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold; color: #0d9488;">
+                    \${sectionScores[i]} / \${sectionTotals[i]}
+                </td>
+                <td style="padding: 10px; border: 1px solid #e5e7eb;">
+                    <div style="background: #e5e7eb; border-radius: 10px; overflow: hidden; height: 20px; position: relative;">
+                        <div style="background: \${barColor}; width: \${percentage}%; height: 100%;"></div>
+                        <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 12px; font-weight: bold; color: #1f2937;">
+                            \${percentage}%
+                        </span>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }
+
+    answersHTML += `
+                </tbody>
+            </table>
+
+            <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 15px; border-radius: 0 0 10px 10px; border-top: 2px solid #f59e0b;">
+                <p style="margin: 0; color: #78350f; text-align: center; font-size: 13px;">
+                    💡 <strong>\${currentLang === 'ar' ? 'ملاحظة:' : 'Note:'}</strong> 
+                    \${currentLang === 'ar' 
+                        ? 'تم إرسال هذا التقرير تلقائياً من منصة 4U التعليمية | Mr. Mohammed Hesham' 
+                        : 'This report was automatically sent from 4U Educational Platform | Mr. Mohammed Hesham'}
+                </p>
+            </div>
+        </div>
+    `;
+
+    const templateParams = {
+        to_email: TARGET_EMAIL,
+        student_name: name,
+        student_class: studentClass,
+        exam_date: date,
+        total_score: score,
+        success_rate: successRate,
+        grade: badge,
+        answers_table: answersHTML
+    };
+
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
+        .then(() => {
+            status.textContent = currentLang === 'ar' 
+                ? '✅ تم إرسال النتائج بنجاح!' 
+                : '✅ Results sent successfully!';
+            status.style.color = '#059669';
+            btn.textContent = currentLang === 'ar' ? '✓ تم الإرسال' : '✓ Sent';
+        })
+        .catch(err => {
+            status.textContent = currentLang === 'ar' 
+                ? '❌ فشل الإرسال، حاول مرة أخرى' 
+                : '❌ Failed to send, try again';
+            status.style.color = '#dc2626';
+            btn.disabled = false;
+            btn.textContent = currentLang === 'ar' ? '📧 إعادة المحاولة' : '📧 Retry Send';
+            console.error('EmailJS Error:', err);
+        });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    prepareShuffledExam();
+    renderExam();
+    startTimer();
+    console.log('🔀 تم خلط الأسئلة والخيارات عشوائياً!');
+});
+</script>
+</body>
+</html>

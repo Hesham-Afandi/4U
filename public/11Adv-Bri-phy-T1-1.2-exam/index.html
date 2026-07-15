@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Grade 11 Advanced Physics - Units & Measurement (Unit 1 - Lesson 2)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        body.en-mode { font-family: 'Inter', sans-serif; }
+        .correct { background-color: #dcfce7 !important; border-color: #16a34a !important; }
+        .incorrect { background-color: #fee2e2 !important; border-color: #dc2626 !important; }
+        .formula { font-family: 'Times New Roman', serif; letter-spacing: 0.5px; direction: ltr; display: inline-block; font-style: italic; }
+        .timer-warning { color: #dc2626 !important; animation: pulse 1s infinite; }
+        @keyframes pulse { 50% { opacity: 0.7; } }
+        @media print { .no-print { display: none !important; } }
+        .success-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.875rem; }
+        .grade-excellent { background: #dcfce7; color: #166534; }
+        .grade-good { background: #fef3c7; color: #92400e; }
+        .grade-pass { background: #dbeafe; color: #1e40af; }
+        .grade-fail { background: #fee2e2; color: #991b1b; }
+        .lang-switch {
+            position: fixed; top: 16px; left: 16px; z-index: 100;
+            background: white; padding: 6px; border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; gap: 4px;
+            border: 2px solid #0d9488;
+        }
+        [dir="ltr"] .lang-switch { left: auto; right: 16px; }
+        .lang-btn {
+            padding: 6px 14px; border-radius: 20px; cursor: pointer; font-weight: bold;
+            transition: all 0.3s; border: none; font-size: 0.875rem;
+            background: transparent; color: #6b7280;
+        }
+        .lang-btn.active { background: #0d9488; color: white; box-shadow: 0 2px 6px rgba(13,148,136,0.4); }
+        .lang-btn:hover:not(.active) { background: #f0fdfa; color: #0d9488; }
+        .shuffle-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 md:p-8 min-h-screen">
+
+    <div class="lang-switch no-print">
+        <button class="lang-btn active" onclick="setLanguage('ar')" id="btn-ar">عربي</button>
+        <button class="lang-btn" onclick="setLanguage('en')" id="btn-en">EN</button>
+    </div>
+
+    <div id="timer-container" class="max-w-4xl mx-auto mb-4 text-center no-print">
+        <div class="bg-white p-4 rounded-xl shadow-md inline-block border-2 border-teal-100">
+            <span class="text-gray-600 ml-2" data-ar="⏱️ الوقت المتبقي:" data-en="⏱️ Time Remaining:">⏱️ الوقت المتبقي:</span>
+            <span id="timer" class="text-2xl font-bold text-teal-600 font-mono">60:00</span>
+            <span class="shuffle-badge" data-ar="🔀 أسئلة عشوائية" data-en="🔀 Random Questions">🔀 أسئلة عشوائية</span>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto mb-6 flex flex-wrap gap-3 justify-center no-print">
+        <button onclick="toggleAnswers()" class="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="👁️ إظهار / إخفاء الإجابات" data-en="👁️ Show / Hide Answers">👁️ إظهار / إخفاء الإجابات</button>
+        <button onclick="window.print()" class="bg-gray-800 hover:bg-gray-900 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="🖨️ طباعة / PDF" data-en="🖨️ Print / PDF">🖨️ طباعة / PDF</button>
+        <button onclick="reshuffleExam()" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="🔀 إعادة خلط الأسئلة" data-en="🔀 Reshuffle Questions">🔀 إعادة خلط الأسئلة</button>
+    </div>
+
+    <header class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-md mb-8 border-r-4 border-teal-600">
+        <div class="text-center">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2" data-ar="⚡ فيزياء الصف الحادي عشر متقدم (بريدج)" data-en="⚡ Grade 11 Advanced Physics (Bridge)">⚡ فيزياء الصف الحادي عشر متقدم (بريدج)</h1>
+            <h2 class="text-lg text-teal-600 font-semibold" data-ar="الدرس الثاني: الوحدات والقياس (الوحدة الأولى)" data-en="Lesson 2: Units & Measurement (Unit 1)">الدرس الثاني: الوحدات والقياس (الوحدة الأولى)</h2>
+            <p class="text-sm text-gray-600 mt-2" data-ar="النظام الدولي للوحدات SI، الوحدات الأساسية والمشتقة، أخطاء القياس، الدقة والضبط" data-en="SI System of Units, Base & Derived Units, Measurement Errors, Precision & Accuracy">النظام الدولي للوحدات SI، الوحدات الأساسية والمشتقة، أخطاء القياس، الدقة والضبط</p>
+            <p class="text-xs text-orange-600 mt-2 font-semibold" data-ar="⚠️ ملاحظة: يتم خلط ترتيب الأسئلة والخيارات تلقائياً مع كل تحديث للصفحة" data-en="⚠️ Note: Questions and options are randomly shuffled on every page refresh">⚠️ ملاحظة: يتم خلط ترتيب الأسئلة والخيارات تلقائياً مع كل تحديث للصفحة</p>
+        </div>
+        <div class="mt-4 flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+            <span><span data-ar="📅 التاريخ:" data-en="📅 Date:">📅 التاريخ:</span> <input type="text" class="border-b border-gray-400 bg-transparent w-28 text-center"></span>
+            <span><span data-ar="👤 الاسم:" data-en="👤 Name:">👤 الاسم:</span> <input type="text" id="studentName" class="border-b border-gray-400 bg-transparent w-32 text-center" placeholder="Enter name"></span>
+            <span><span data-ar="🏫 الشعبة:" data-en="🏫 Class:">🏫 الشعبة:</span> <input type="text" id="studentClass" class="border-b border-gray-400 bg-transparent w-28 text-center" placeholder="Class"></span>
+            <span><span data-ar="⏱️ المدة: 60 دقيقة" data-en="⏱️ Duration: 60 min">⏱️ المدة: 60 دقيقة</span></span>
+            <span><span data-ar="📊 المجموع: 100 درجة" data-en="📊 Total: 100 pts">📊 المجموع: 100 درجة</span></span>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto space-y-8" id="exam-content"></main>
+
+    <div class="text-center no-print pb-8 mt-8">
+        <button onclick="gradeExam()" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-lg px-10 py-4 rounded-xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer" data-ar="📝 تسليم وتصحيح الامتحان" data-en="📝 Submit & Grade Exam">📝 تسليم وتصحيح الامتحان</button>
+    </div>
+
+    <div id="results-panel" class="max-w-4xl mx-auto mt-8 bg-white p-8 rounded-2xl shadow-2xl border-t-4 border-emerald-500 hidden no-print">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center" data-ar="📊 نتائج الامتحان" data-en="📊 Exam Results">📊 نتائج الامتحان</h2>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div class="bg-blue-50 p-4 rounded-xl text-center"><p data-ar="اسم الطالب" data-en="Student Name">اسم الطالب</p><p id="res-name" class="font-bold text-xl text-teal-700">-</p></div>
+            <div class="bg-purple-50 p-4 rounded-xl text-center"><p data-ar="التاريخ" data-en="Date">التاريخ</p><p id="res-date" class="font-bold text-xl text-purple-700">-</p></div>
+            <div class="bg-emerald-50 p-4 rounded-xl text-center"><p data-ar="المجموع" data-en="Score">المجموع</p><p id="res-total" class="font-bold text-3xl text-emerald-600">0 / 100</p></div>
+        </div>
+        <div class="text-center mb-6">
+            <span id="success-badge" class="success-badge grade-excellent">-</span>
+            <p id="success-percent" class="text-4xl font-bold text-emerald-600 mt-2">100%</p>
+            <p class="text-sm text-gray-500" data-ar="نسبة النجاح" data-en="Success Rate">نسبة النجاح</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-xl mb-6">
+            <h3 class="font-bold text-lg mb-4 text-gray-800" data-ar="📈 تفصيل الأداء حسب القسم:" data-en="📈 Performance Breakdown:">📈 تفصيل الأداء حسب القسم:</h3>
+            <div class="space-y-3">
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="النظام الدولي للوحدات والبادئات" data-en="SI System of Units & Prefixes">النظام الدولي للوحدات والبادئات</span>
+                    <span id="sec1-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="الوحدات الأساسية والمشتقة" data-en="Base & Derived Units">الوحدات الأساسية والمشتقة</span>
+                    <span id="sec2-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="الدقة والضبط في القياس" data-en="Precision & Accuracy in Measurement">الدقة والضبط في القياس</span>
+                    <span id="sec3-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="مصادر الأخطاء وقراءة الأجهزة" data-en="Sources of Errors & Instrument Reading">مصادر الأخطاء وقراءة الأجهزة</span>
+                    <span id="sec4-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="مسائل حسابية وتطبيقات عملية" data-en="Calculations & Practical Applications">مسائل حسابية وتطبيقات عملية</span>
+                    <span id="sec5-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mb-6">
+            <button id="sendEmailBtn" onclick="sendResultsToEmail()" class="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white text-lg px-8 py-3 rounded-xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer" data-ar="📧 إرسال النتائج للمعلم" data-en="📧 Send Results to Teacher">📧 إرسال النتائج للمعلم</button>
+            <p id="emailStatus" class="text-sm mt-2 text-center font-medium"></p>
+        </div>
+        <div class="flex gap-3 justify-center">
+            <button onclick="window.print()" class="bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold" data-ar="🖨️ طباعة النتائج" data-en="🖨️ Print Results">🖨️ طباعة النتائج</button>
+        </div>
+    </div>
+
+    <footer class="max-w-4xl mx-auto mt-10 mb-8 text-center text-gray-500 text-sm no-print">
+        © <span data-ar="فيزياء الصف 11 متقدم بريدج | الدرس الثاني: الوحدات والقياس" data-en="Grade 11 Advanced Bridge Physics | Lesson 2: Units & Measurement">فيزياء الصف 11 متقدم بريدج | الدرس الثاني: الوحدات والقياس</span> | Mr. Mohammed Hesham
+    </footer>
+
+<script>
+const PUBLIC_KEY = "Rb3Lq8tXaFmc5YHUH";
+const SERVICE_ID = "service_w15m64i";
+const TEMPLATE_ID = "template_5b0u2tq";
+const TARGET_EMAIL = "mohammedhesham872@gmail.com";
+
+emailjs.init(PUBLIC_KEY);
+
+const originalExamData = {
+    sections: [
+        {
+            id: 'sec1',
+            title: { ar: '🔹 الجزء الأول: النظام الدولي للوحدات SI والبادئات', en: '🔹 Part 1: SI System of Units & Prefixes' },
+            questions: [
+                {
+                    q: { ar: 'أي مما يلي يمثل الوحدات السبع الأساسية المعتمدة في النظام الدولي للوحدات (SI)؟', en: 'Which of the following represents the seven fundamental units in the SI system?' },
+                    options: [
+                        { ar: 'المتر، الكيلوجرام، الثانية، الكلفن، الأمبير، المول، الشمعة', en: 'Meter, Kilogram, Second, Kelvin, Ampere, Mole, Candela' },
+                        { ar: 'المتر، الجرام، الثانية، السيليسيوس، الأمبير، النيوتن، الجول', en: 'Meter, Gram, Second, Celsius, Ampere, Newton, Joule' },
+                        { ar: 'الكيلومتر، الطن، الساعة، الكلفن، الفولت، المول، الوات', en: 'Kilometer, Ton, Hour, Kelvin, Volt, Mole, Watt' },
+                        { ar: 'المتر، الكيلوجرام، الدقيقة، الكلفن، الكولوم، اللتر، الشمعة', en: 'Meter, Kilogram, Minute, Kelvin, Coulomb, Liter, Candela' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الوحدات السبع الأساسية هي المتر (الطول)، الكيلوجرام (الكتلة)، الثانية (الزمن)، الكلفن (درجة الحرارة)، الأمبير (التيار)، المول (كمية المادة)، الشمعة (شدة الإضاءة).', en: 'The seven base units are: Meter (length), Kilogram (mass), Second (time), Kelvin (temperature), Ampere (current), Mole (amount of substance), and Candela (luminous intensity).' }
+                },
+                {
+                    q: { ar: 'ما القيمة العددية المقابلة للبادئة العلمية "ميكرو" (µ)؟', en: 'What is the numerical value corresponding to the scientific prefix "micro" (µ)?' },
+                    options: [
+                        { ar: '<span class="formula">10⁻⁶</span>', en: '<span class="formula">10⁻⁶</span>' },
+                        { ar: '<span class="formula">10⁻³</span>', en: '<span class="formula">10⁻³</span>' },
+                        { ar: '<span class="formula">10⁻⁹</span>', en: '<span class="formula">10⁻⁹</span>' },
+                        { ar: '<span class="formula">10⁶</span>', en: '<span class="formula">10⁶</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'البادئة ميكرو ترمز إلى جزء من مليون، وهي تساوي <span class="formula">10⁻⁶</span>.', en: 'The prefix micro denotes one-millionth, which is equal to <span class="formula">10⁻⁶</span>.' }
+                },
+                {
+                    q: { ar: 'تريد تحويل قياس طول يبلغ <span class="formula">450 nm</span> إلى وحدة المتر (m)، فما هي النتيجة الصحيحة بالصيغة العلمية؟', en: 'You want to convert a length of 450 nm into meters (m). What is the correct value in scientific notation?' },
+                    options: [
+                        { ar: '<span class="formula">4.5 × 10⁻⁷ m</span>', en: '<span class="formula">4.5 × 10⁻⁷ m</span>' },
+                        { ar: '<span class="formula">4.5 × 10⁻⁹ m</span>', en: '<span class="formula">4.5 × 10⁻⁹ m</span>' },
+                        { ar: '<span class="formula">4.5 × 10⁻⁵ m</span>', en: '<span class="formula">4.5 × 10⁻⁵ m</span>' },
+                        { ar: '<span class="formula">4.5 × 10⁹ m</span>', en: '<span class="formula">4.5 × 10⁹ m</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'النانومتر يساوي <span class="formula">10⁻⁹ m</span>، لذا <span class="formula">450 nm = 450 × 10⁻⁹ m = 4.5 × 10⁻⁷ m</span>.', en: 'One nanometer is <span class="formula">10⁻⁹ m</span>. Thus, <span class="formula">450 nm = 450 × 10⁻⁹ m = 4.5 × 10⁻⁷ m</span>.' }
+                },
+                {
+                    q: { ar: 'أي من البادئات التالية يمثل الترتيب التصاعدي الصحيح للقيم؟', en: 'Which of the following prefixes represents the correct ascending order of values?' },
+                    options: [
+                        { ar: 'بيكو (p) < نانو (n) < ميكرو (µ) < ميجا (M)', en: 'pico (p) < nano (n) < micro (µ) < mega (M)' },
+                        { ar: 'ملي (m) < بيكو (p) < كيلو (k) < جيجا (G)', en: 'milli (m) < pico (p) < kilo (k) < giga (G)' },
+                        { ar: 'نانو (n) < ميكرو (µ) < سنتي (c) < فيمتو (f)', en: 'nano (n) < micro (µ) < centi (c) < femto (f)' },
+                        { ar: 'ديسي (d) < كيلو (k) < ميجا (M) < ملي (m)', en: 'deci (d) < kilo (k) < mega (M) < milli (m)' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الترتيب التصاعدي الصحيح: بيكو (<span class="formula">10⁻¹²</span>) < نانو (<span class="formula">10⁻⁹</span>) < ميكرو (<span class="formula">10⁻⁶</span>) < ميجا (<span class="formula">10⁶</span>).', en: 'The correct ascending order is: pico (<span class="formula">10⁻¹²</span>) < nano (<span class="formula">10⁻⁹</span>) < micro (<span class="formula">10⁻⁶</span>) < mega (<span class="formula">10⁶</span>).' }
+                }
+            ]
+        },
+        {
+            id: 'sec2',
+            title: { ar: '🔹 الجزء الثاني: الوحدات الأساسية والمشتقة والتحويل', en: '🔹 Part 2: Base & Derived Units & Conversion' },
+            questions: [
+                {
+                    q: { ar: 'ما الفرق الأساسي بين الوحدات الأساسية والوحدات المشتقة؟', en: 'What is the fundamental difference between base units and derived units?' },
+                    options: [
+                        { ar: 'الاساسية تُقاس مباشرة ومستقلة، والمشتقة تُشتق رياضياً من دمج الوحدات الأساسية', en: 'Base units are measured directly and independent, while derived units are mathematically obtained by combining base units' },
+                        { ar: 'الاساسية مخصصة للأجهزة الإلكترونية فقط، والمشتقة تستخدم للظواهر الميكانيكية التقليدية', en: 'Base units are for electronic devices only, while derived units are used for traditional mechanical phenomena' },
+                        { ar: 'الاساسية متغيرة بتغير درجات الحرارة، والمشتقة ثابتة في كل الظروف الكونية الطبيعية', en: 'Base units vary with temperature, while derived units are absolute constants under all physical conditions' },
+                        { ar: 'الاساسية لا يمكن التعبير عنها بأي رمز رياضي، والمشتقة تحتاج لمعامل تكامل تفاضلي دائم', en: 'Base units cannot be represented mathematically, while derived units always require a differential integration coefficient' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الوحدات الأساسية معرفة بشكل مستقل كالمتر وال كيلوجرام، بينما المشتقة مثل النيوتن (<span class="formula">kg·m/s²</span>) تشتق منها.', en: 'Base units are defined independently, while derived units like Newton (<span class="formula">kg·m/s²</span>) are mathematically derived from them.' }
+                },
+                {
+                    q: { ar: 'وحدة قياس الكثافة هي <span class="formula">g/cm³</span>. لتحويلها إلى الوحدة القياسية الدولية <span class="formula">kg/m³</span>، نضرب القيمة في المعامل المناسب وهو:', en: 'The unit of density is <span class="formula">g/cm³</span>. To convert it to the SI unit <span class="formula">kg/m³</span>, we multiply the value by:' },
+                    options: [
+                        { ar: '<span class="formula">1000</span>', en: '<span class="formula">1000</span>' },
+                        { ar: '<span class="formula">0.001</span>', en: '<span class="formula">0.001</span>' },
+                        { ar: '<span class="formula">10⁶</span>', en: '<span class="formula">10⁶</span>' },
+                        { ar: '<span class="formula">0.1</span>', en: '<span class="formula">0.1</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'للتحويل من <span class="formula">g/cm³</span> إلى <span class="formula">kg/m³</span>: نضرب في <span class="formula">(10⁻³ kg) / (10⁻⁶ m³) = 10³ = 1000</span>.', en: 'To convert from <span class="formula">g/cm³</span> to <span class="formula">kg/m³</span>: multiply by <span class="formula">(10⁻³ kg) / (10⁻⁶ m³) = 10³ = 1000</span>.' }
+                },
+                {
+                    q: { ar: 'أي من الوحدات الفيزيائية التالية يُعد وحدة مشتقة في النظام الدولي؟', en: 'Which of the following units is a derived unit in the SI system?' },
+                    options: [
+                        { ar: 'الجول (J)', en: 'Joule (J)' },
+                        { ar: 'الكلفن (K)', en: 'Kelvin (K)' },
+                        { ar: 'المول (mol)', en: 'Mole (mol)' },
+                        { ar: 'الأمبير (A)', en: 'Ampere (A)' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الجول هو وحدة مشتقة لقياس الطاقة والشغل ويساوي <span class="formula">kg·m²/s²</span>، بينما كلفن ومول وأمبير وحدات أساسية.', en: 'The Joule is a derived unit representing energy and work (<span class="formula">kg·m²/s²</span>), while Kelvin, Mole, and Ampere are base units.' }
+                },
+                {
+                    q: { ar: 'عبر عن سرعة سيارة تبلغ <span class="formula">90.0 km/h</span> بوحدة المتر لكل ثانية (<span class="formula">m/s</span>):', en: 'Express a car speed of 90.0 km/h in meters per second (m/s):' },
+                    options: [
+                        { ar: '<span class="formula">25.0 m/s</span>', en: '<span class="formula">25.0 m/s</span>' },
+                        { ar: '<span class="formula">324 m/s</span>', en: '<span class="formula">324 m/s</span>' },
+                        { ar: '<span class="formula">15.0 m/s</span>', en: '<span class="formula">15.0 m/s</span>' },
+                        { ar: '<span class="formula">250 m/s</span>', en: '<span class="formula">250 m/s</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'للتحويل من <span class="formula">km/h</span> إلى <span class="formula">m/s</span> نقسم على <span class="formula">3.6</span>: <span class="formula">90.0 / 3.6 = 25.0 m/s</span>.', en: 'To convert from km/h to m/s, divide by 3.6: <span class="formula">90.0 / 3.6 = 25.0 m/s</span>.' }
+                }
+            ]
+        },
+        {
+            id: 'sec3',
+            title: { ar: '🔹 الجزء الثالث: الدقة والضبط في أدوات القياس', en: '🔹 Part 3: Precision & Accuracy in Measurement' },
+            questions: [
+                {
+                    q: { ar: 'ما التعريف العلمي الدقيق لمصطلح "الضبط" (Accuracy) في الفيزياء؟', en: 'What is the precise scientific definition of "Accuracy" in physics?' },
+                    options: [
+                        { ar: 'مدى اقتراب القيمة المقاسة تجريبياً من القيمة الحقيقية أو المقبولة علمياً', en: 'How close a measured value is to the true or accepted standard value' },
+                        { ar: 'درجة التوافق والاتساق بين قراءات متعددة ومتكررة لنفس الكمية الفيزيائية', en: 'The degree of agreement and consistency among multiple repeated measurements of the same physical quantity' },
+                        { ar: 'أصغر تدريج يمكن قراءته بوضوح تام على أداة القياس المستخدمة', en: 'The smallest division that can be clearly read on the measurement tool used' },
+                        { ar: 'نسبة الخطأ المئوية الناتجة عن التغير المفاجئ في عوامل البيئة المحيطة', en: 'The percentage of error resulting from sudden changes in environmental conditions' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الضبط يعبر عن قرب القيمة من القيمة الحقيقية، بينما الدقة (Precision) تعبر عن مدى تقارب القياسات المتكررة بغض النظر عن قربها من الحقيقة.', en: 'Accuracy is how close a measurement is to the true value, whereas precision refers to how close repeated measurements are to each other.' }
+                },
+                {
+                    q: { ar: 'قام أربعة طلاب بقياس قيمة الجاذبية الأرضية المعيارية (<span class="formula">9.80 m/s²</span>) وكرروا القياس ثلاث مرات. أي من مجموعات القياس التالية تعتبر "دقيقة ولكنها غير مضبوطة"؟', en: 'Four students measured gravity (true value 9.80 m/s²) three times. Which measurement group is "precise but not accurate"?' },
+                    options: [
+                        { ar: '<span class="formula">{7.12, 7.13, 7.11} m/s²</span>', en: '<span class="formula">{7.12, 7.13, 7.11} m/s²</span>' },
+                        { ar: '<span class="formula">{9.79, 9.81, 9.80} m/s²</span>', en: '<span class="formula">{9.79, 9.81, 9.80} m/s²</span>' },
+                        { ar: '<span class="formula">{8.50, 9.80, 11.10} m/s²</span>', en: '<span class="formula">{8.50, 9.80, 11.10} m/s²</span>' },
+                        { ar: '<span class="formula">{6.20, 9.10, 12.30} m/s²</span>', en: '<span class="formula">{6.20, 9.10, 12.30} m/s²</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'المجموعة <span class="formula">{7.12, 7.13, 7.11}</span> متقاربة جداً من بعضها البعض (دقة عالية)، ولكنها بعيدة تماماً عن القيمة الحقيقية 9.80 (غير مضبوطة).', en: 'The values <span class="formula">{7.12, 7.13, 7.11}</span> are very close to each other (highly precise), but far from the true value of 9.80 (inaccurate).' }
+                },
+                {
+                    q: { ar: 'كيف نحدد "دقة القياس" (Precision) لأي أداة قياس ذات تدريج خطي؟', en: 'How do we determine the precision of a linear analog measurement instrument?' },
+                    options: [
+                        { ar: 'تساوي نصف قيمة أصغر تدريج ظاهر على الأداة', en: 'It is equal to one-half of the smallest division marked on the instrument' },
+                        { ar: 'تساوي القيمة الكاملة لأصغر تدريج دون أي قسمة', en: 'It is equal to the full value of the smallest division without any division' },
+                        { ar: 'تساوي حاصل ضرب أصغر تدريج في معامل طول المؤشر', en: 'It is equal to the product of the smallest division and the pointer length coefficient' },
+                        { ar: 'تساوي دائماً نسبة ثابتة لا تتعدى 0.01 من الطول الكلي', en: 'It is always a constant ratio not exceeding 0.01 of the total length' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'دقة أداة القياس التناظرية (الخطيّة) تساوي نصف قيمة أصغر تدريج عليها.', en: 'The precision of an analog instrument is defined as half of its smallest scale division.' }
+                },
+                {
+                    q: { ar: 'مسطرة مترية أصغر تدريج بها هو المليمتر (<span class="formula">1 mm</span>). ما هي دقة القياس لهذه المسطرة بوحدة المتر؟', en: 'A meter rule has a smallest division of 1 mm. What is the precision of this ruler in meters?' },
+                    options: [
+                        { ar: '<span class="formula">0.0005 m</span>', en: '<span class="formula">0.0005 m</span>' },
+                        { ar: '<span class="formula">0.001 m</span>', en: '<span class="formula">0.001 m</span>' },
+                        { ar: '<span class="formula">0.005 m</span>', en: '<span class="formula">0.005 m</span>' },
+                        { ar: '<span class="formula">0.0001 m</span>', en: '<span class="formula">0.0001 m</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'أصغر تدريج هو <span class="formula">1 mm = 0.001 m</span>. دقة القياس تساوي نصف أصغر تدريج: <span class="formula">0.001 / 2 = 0.0005 m</span>.', en: 'The smallest division is 1 mm (0.001 m). Precision is half of this smallest division: <span class="formula">0.001 / 2 = 0.0005 m</span>.' }
+                }
+            ]
+        },
+        {
+            id: 'sec4',
+            title: { ar: '🔹 الجزء الرابع: مصادر أخطاء القياس وقراءة الأجهزة', en: '🔹 Part 4: Sources of Errors & Instrument Reading' },
+            questions: [
+                {
+                    q: { ar: 'ما هو "خطأ اختلاف الزاوية" (Parallax Error) وكيف يمكن تجنبه عند القراءة؟', en: 'What is "Parallax Error" and how can it be avoided when reading an instrument?' },
+                    options: [
+                        { ar: 'خطأ ينتج عن النظر إلى التدريج بميل؛ ويتجنب بالنظر عمودياً ومباشرة على مستوى القراءة', en: 'An error caused by looking at the scale from an angle; avoided by viewing vertically and directly perpendicular to the scale' },
+                        { ar: 'خطأ ينتج عن التمدد الحراري للمسطرة؛ ويتجنب بوضعها في غرف مبردة دائماً', en: 'An error caused by thermal expansion of the scale; avoided by keeping it in cooled rooms' },
+                        { ar: 'خطأ ناتج عن عدم تصفير الجهاز قبل الاستخدام؛ ويتجنب بضبط برغي المعايرة الصفرية', en: 'An error caused by not zeroing the device before use; avoided by adjusting the zero-calibration screw' },
+                        { ar: 'خطأ متعلق بضعف البصر لدى المجرب؛ ويتجنب بالاستعانة بمجاهر الكترونية عملاقة', en: 'An error related to the visual impairment of the experimenter; avoided by using giant electron microscopes' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'ينتج خطأ اختلاف الرؤية (الزاوية) من النظر الجانبي للتدريج، ولتفاديه يجب أن يكون مستوى العين عمودياً تماماً فوق العلامة المراد قراءتها.', en: 'Parallax error occurs when looking at a scale from an oblique angle. To avoid it, one should read the scale with the line of sight strictly perpendicular to the instrument.' }
+                },
+                {
+                    q: { ar: 'أي مما يلي يصف بدقة "خطأ الصفر" (Zero Error) في أجهزة القياس؟', en: 'Which of the following accurately describes "Zero Error" in measurement instruments?' },
+                    options: [
+                        { ar: 'خطأ نظامي يحدث عندما لا يشير مؤشر الجهاز إلى الصفر عند انعدام الكمية المقاسة', en: 'A systematic error occurring when the instrument pointer does not align with zero when the measured quantity is zero' },
+                        { ar: 'خطأ عشوائي ينجم عن الاهتزازات المفاجئة لسطح المختبر أثناء إجراء التجربة', en: 'A random error caused by sudden laboratory surface vibrations during the experiment' },
+                        { ar: 'تلف كامل في الدائرة الكهربية يمنع الجهاز من العمل والتشغيل كلياً', en: 'Complete failure of the electrical circuit that prevents the device from starting or working entirely' },
+                        { ar: 'مستوى الدقة القصوى التي لا يمكن لأي أداة قياس تجاوزها في الظروف المعيارية', en: 'The level of maximum precision that no measurement tool can exceed under standard conditions' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'خطأ الصفر هو خطأ نظامي (Systematic Error) يزيح جميع القراءات بمقدار ثابت عندما لا يتم ضبط نقطة البداية على الصفر تماماً.', en: 'Zero error is a systematic error that shifts all measurements by a constant value because the initial starting point was not properly calibrated to zero.' }
+                },
+                {
+                    q: { ar: 'عند قياس سمك ورقة رقيقة جداً، أي من الأدوات التالية توفر أعلى دقة قياس ممكنة؟', en: 'When measuring the thickness of an extremely thin paper, which tool provides the highest precision?' },
+                    options: [
+                        { ar: 'الميكرومتر (Micrometer)', en: 'Micrometer' },
+                        { ar: 'الورنية ذات المقياس المنزلق (Vernier Caliper)', en: 'Vernier Caliper' },
+                        { ar: 'المسطرة المترية الخشبية (Wooden Meter Rule)', en: 'Wooden Meter Rule' },
+                        { ar: 'الشريط القياسي المرن (Flexible Measuring Tape)', en: 'Flexible Measuring Tape' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'يتميز الميكرومتر بقدرة قياس تصل لدقة <span class="formula">0.01 mm</span> أو أقل، مما يجعله الخيار الأمثل لقياس الأبعاد البالغة الصغر كسمك الأسلاك والورق.', en: 'A micrometer has a resolution of up to 0.01 mm or better, making it the ideal choice for extremely small dimensions such as wire or paper thickness.' }
+                },
+                {
+                    q: { ar: 'ما الإجراء الصحيح الذي يتبعه المهندس لتقليل تأثير "الأخطاء العشوائية" (Random Errors) في تجاربه؟', en: 'What is the correct procedure a engineer should follow to minimize the effect of "Random Errors" in experiments?' },
+                    options: [
+                        { ar: 'تكرار القياسات عدة مرات وحساب المتوسط الحسابي لها', en: 'Repeating the measurements multiple times and calculating their arithmetic mean' },
+                        { ar: 'استخدام أداة قياس ذات نطاق أوسع وتدريج أكبر دون معايرة', en: 'Using a tool with a broader range and larger scale divisions without calibration' },
+                        { ar: 'تغيير موقع المختبر والارتفاع عن سطح البحر باستمرار', en: 'Constantly changing the laboratory location and altitude above sea level' },
+                        { ar: 'الاعتماد على التخمين النظري وتجاهل القيم المتطرفة من الحسابات مباشرة', en: 'Relying on theoretical guesses and directly discarding extreme values from calculations' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'تكرار القياسات وأخذ المتوسط الحسابي يلغي أثر التذبذبات العشوائية السلبية والإيجابية مما يحسن من دقة النتيجة وضبطها.', en: 'Repeating measurements and taking the average helps cancel out random positive and negative fluctuations, improving the precision of the final result.' }
+                }
+            ]
+        },
+        {
+            id: 'sec5',
+            title: { ar: '🔹 الجزء الخامس: مسائل حسابية وتطبيقات عملية', en: '🔹 Part 5: Calculations & Practical Applications' },
+            questions: [
+                {
+                    q: { ar: 'سجل طالب قياس طول قضيب معدني فكان <span class="formula">15.42 cm</span> مع نسبة خطأ في الأداة تبلغ <span class="formula">± 0.05 cm</span>. ما هو المدى المتوقع للطول الحقيقي للقضيب؟', en: 'A student recorded a rod length as 15.42 cm with an uncertainty of ± 0.05 cm. What is the expected range of the true length?' },
+                    options: [
+                        { ar: 'بين <span class="formula">15.37 cm</span> و <span class="formula">15.47 cm</span>', en: 'Between <span class="formula">15.37 cm</span> and <span class="formula">15.47 cm</span>' },
+                        { ar: 'بين <span class="formula">15.40 cm</span> و <span class="formula">15.45 cm</span>', en: 'Between <span class="formula">15.40 cm</span> and <span class="formula">15.45 cm</span>' },
+                        { ar: 'بين <span class="formula">15.00 cm</span> و <span class="formula">15.92 cm</span>', en: 'Between <span class="formula">15.00 cm</span> and <span class="formula">15.92 cm</span>' },
+                        { ar: 'بين <span class="formula">15.35 cm</span> و <span class="formula">15.49 cm</span>', en: 'Between <span class="formula">15.35 cm</span> and <span class="formula">15.49 cm</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'المدى يتم حسابه بطرح وجمع قيمة عدم اليقين (الخطأ): <span class="formula">15.42 - 0.05 = 15.37 cm</span> و <span class="formula">15.42 + 0.05 = 15.47 cm</span>.', en: 'The range is calculated by adding and subtracting the uncertainty: <span class="formula">15.42 - 0.05 = 15.37 cm</span> and <span class="formula">15.42 + 0.05 = 15.47 cm</span>.' }
+                },
+                {
+                    q: { ar: 'إذا كان التعبير الرياضي لحجم صندوق هو الطول × العرض × الارتفاع. وكانت النسبة المئوية للخطأ في قياس كل من الأبعاد الثلاثة هي <span class="formula">1.5%</span>. ما هي نسبة الخطأ المئوية التقريبية في حساب الحجم الكلي؟', en: 'If the volume of a box is length × width × height, and the percentage uncertainty in each dimension is 1.5%. What is the approximate percentage uncertainty in the total volume?' },
+                    options: [
+                        { ar: '<span class="formula">4.5%</span>', en: '<span class="formula">4.5%</span>' },
+                        { ar: '<span class="formula">1.5%</span>', en: '<span class="formula">1.5%</span>' },
+                        { ar: '<span class="formula">3.375%</span>', en: '<span class="formula">3.375%</span>' },
+                        { ar: '<span class="formula">0.5%</span>', en: '<span class="formula">0.5%</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'عند ضرب كميات فيزيائية، تُجمع نسب الخطأ المئوية الخاصة بها تقريبياً: <span class="formula">1.5% + 1.5% + 1.5% = 4.5%</span>.', en: 'When multiplying quantities, their percentage uncertainties are added: <span class="formula">1.5% + 1.5% + 1.5% = 4.5%</span>.' }
+                },
+                {
+                    q: { ar: 'إذا كان قطر سلك أسطواني مقاس بالورنية هو <span class="formula">d = 2.00 ± 0.02 mm</span>. فما مقدار المساحة المقطعية للسلك بالنسبة المئوية للخطأ؟', en: 'If the diameter of a cylindrical wire measured is <span class="formula">d = 2.00 ± 0.02 mm</span>, what is the percentage uncertainty in the wire\'s cross-sectional area?' },
+                    options: [
+                        { ar: '<span class="formula">2.0%</span>', en: '<span class="formula">2.0%</span>' },
+                        { ar: '<span class="formula">1.0%</span>', en: '<span class="formula">1.0%</span>' },
+                        { ar: '<span class="formula">4.0%</span>', en: '<span class="formula">4.0%</span>' },
+                        { ar: '<span class="formula">0.5%</span>', en: '<span class="formula">0.5%</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'نسبة الخطأ في القطر هي <span class="formula">(0.02 / 2.00) × 100 = 1.0%</span>. بما أن مساحة المقطع تتناسب مع مربع القطر (<span class="formula">d²</span>)، فإن نسبة خطأ المساحة تضاعف نسبة خطأ القطر: <span class="formula">2 × 1.0% = 2.0%</span>.', en: 'The percentage uncertainty of the diameter is <span class="formula">(0.02 / 2.00) × 100 = 1%</span>. Since cross-sectional area depends on <span class="formula">d²</span>, its percentage uncertainty is doubled: <span class="formula">2 × 1% = 2%</span>.' }
+                },
+                {
+                    q: { ar: 'تحتوي مخابير مدرجة لقياس السوائل على دقة قياس مختلفة. مخبار (أ) تدرجه بالمليلتر ومخبار (ب) بنصف المليلتر. إذا قمت بقياس نفس كمية الماء، أي المخبارين سيعطيك قياساً أكثر دقة؟', en: 'Measuring cylinder A has graduations of 1 mL, while B has 0.5 mL. If you measure the same water volume, which cylinder provides more precise measurement?' },
+                    options: [
+                        { ar: 'المخبار (ب) لأن أصغر تدريج له أصغر، وبالتالي فإن دقة القياس (نصف أصغر تدريج) تكون أدق وتساوي <span class="formula">± 0.25 mL</span>', en: 'Cylinder B because its smallest scale division is smaller, meaning its precision (half the smallest division) is smaller and equals ±0.25 mL' },
+                        { ar: 'المخبار (أ) لأن سعة التدريج المتباعد تمنع الخطأ البصري تماماً للمجرب', en: 'Cylinder A because wider divisions prevent visual parallax errors completely for the experimenter' },
+                        { ar: 'كلاهما يعطي نفس النتيجة التجريبية الدقيقة تماماً طالما أن المجرب نفسه', en: 'Both give the exact same precise experimental result as long as the experimenter is the same' },
+                        { ar: 'المخبار (أ) لأن الخطأ المنهجي فيه يقترب دائماً من الصفر تحت وطأة الجاذبية', en: 'Cylinder A because its systematic error always approaches zero under gravity' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'كلما صغر التدريج المتاح على الأداة، كلما صغر حد الخطأ المطلق (<span class="formula">± ½ التدريج</span>) مما يزيد من دقة القراءة بشكل مباشر.', en: 'The smaller the scale divisions of an instrument, the lower its uncertainty limit (<span class="formula">± ½ division</span>), which directly increases its precision.' }
+                }
+            ]
+        }
+    ]
+};
+
+function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+let examData;
+let correctAnswersMap = {};
+let currentLang = 'ar';
+let timeRemaining = 3600;
+let timerInterval;
+
+function prepareShuffledExam() {
+    examData = JSON.parse(JSON.stringify(originalExamData));
+    correctAnswersMap = {};
+    let globalIdx = 0;
+    
+    examData.sections.forEach((section) => {
+        section.questions = shuffleArray(section.questions);
+        
+        section.questions.forEach((q) => {
+            const optionsWithCorrect = q.options.map((opt, idx) => ({
+                option: opt,
+                isCorrect: idx === q.correct
+            }));
+            
+            const shuffledOptions = shuffleArray(optionsWithCorrect);
+            q.options = shuffledOptions.map(o => o.option);
+            
+            const newCorrectIndex = shuffledOptions.findIndex(o => o.isCorrect);
+            q.correct = newCorrectIndex;
+            
+            correctAnswersMap[globalIdx] = String.fromCharCode(97 + newCorrectIndex);
+            globalIdx++;
+        });
+    });
+}
+
+function reshuffleExam() {
+    prepareShuffledExam();
+    renderExam();
+    document.querySelectorAll('input[type="radio"]:checked').forEach(r => r.checked = false);
+    document.getElementById('results-panel').classList.add('hidden');
+    document.querySelectorAll('.correct, .incorrect').forEach(el => {
+        el.classList.remove('correct', 'incorrect');
+    });
+    alert(currentLang === 'ar' 
+        ? '🔀 تم إعادة خلط الأسئلة والخيارات بنجاح!' 
+        : '🔀 Questions and options have been reshuffled successfully!');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    
+    document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    
+    document.body.classList.toggle('en-mode', lang === 'en');
+    
+    document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+    });
+    
+    renderExam();
+}
+
+function renderExam() {
+    const container = document.getElementById('exam-content');
+    const labels = {
+        ar: { option: ['أ', 'ب', 'ج', 'د'], answer: '✅ الإجابة الصحيحة:' },
+        en: { option: ['A', 'B', 'C', 'D'], answer: '✅ Correct Answer:' }
+    };
+    const lbl = labels[currentLang];
+    const isRTL = currentLang === 'ar';
+    
+    let html = '';
+    let globalIdx = 0;
+    
+    examData.sections.forEach((section) => {
+        html += `
+        <section class="bg-white p-6 rounded-xl shadow-lg">
+            <h2 class="text-xl font-bold mb-4 text-teal-700">${section.title[currentLang]}</h2>
+            <ol class="space-y-4 text-sm">`;
+            
+        section.questions.forEach((q) => {
+            const borderSide = isRTL ? 'border-r-4 pr-4' : 'border-l-4 pl-4';
+            html += `
+                <li class="${borderSide} border-teal-500 py-2" id="q-${globalIdx}">
+                    <strong>${globalIdx + 1}.</strong> ${q.q[currentLang]}<br>`;
+                    
+            q.options.forEach((opt, oIdx) => {
+                const radioSide = isRTL ? 'mr-4 ml-2' : 'ml-4 mr-2';
+                html += `
+                    <label class="cursor-pointer block mt-1 ${isRTL ? 'mr-4' : 'ml-4'}">
+                        <input type="radio" name="q${globalIdx}" value="${String.fromCharCode(97 + oIdx)}" class="${radioSide}"> 
+                        ${lbl.option[oIdx]}) ${opt[currentLang]}
+                    </label>`;
+            });
+            
+            html += `
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">
+                        ${lbl.answer} ${lbl.option[q.correct]} ${q.options[q.correct][currentLang]} — ${q.answer[currentLang]}
+                    </div>
+                </li>`;
+            globalIdx++;
+        });
+        
+        html += `
+            </ol>
+        </section>`;
+    });
+    
+    container.innerHTML = html;
+}
+
+function startTimer() {
+    document.getElementById('timer-container').style.display = 'block';
+    timerInterval = setInterval(() => {
+        timeRemaining--;
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+        const timerEl = document.getElementById('timer');
+        timerEl.textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+        if (timeRemaining <= 300) timerEl.classList.add('timer-warning');
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            alert(currentLang === 'ar' ? "انتهى الوقت! سيتم تسليم الامتحان تلقائياً." : "Time's up! Exam will be submitted automatically.");
+            gradeExam();
+        }
+    }, 1000);
+}
+
+function toggleAnswers() {
+    document.querySelectorAll('.answer-box').forEach(el => el.classList.toggle('hidden'));
+}
+
+function gradeExam() {
+    let correctCount = 0;
+    let sec1 = 0, sec2 = 0, sec3 = 0, sec4 = 0, sec5 = 0;
+    
+    for (let i = 0; i < 20; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        const li = document.getElementById(`q-${i}`);
+        const correctAnswer = correctAnswersMap[i];
+        
+        if (li) {
+            const isCorrect = selected && selected.value === correctAnswer;
+            
+            if (isCorrect) {
+                correctCount++;
+                li.classList.add('correct');
+                li.classList.remove('incorrect');
+            } else {
+                li.classList.add('incorrect');
+                li.classList.remove('correct');
+            }
+
+            const isReallyCorrect = isCorrect;
+            if (isReallyCorrect) {
+                if (i < 4) sec1++;
+                else if (i < 8) sec2++;
+                else if (i < 12) sec3++;
+                else if (i < 16) sec4++;
+                else sec5++;
+            }
+        }
+    }
+
+    const score = (correctCount / 20) * 100;
+    const successRate = Math.round(score);
+    
+    document.getElementById('res-total').textContent = `${Math.round(score)} / 100`;
+    document.getElementById('res-name').textContent = document.getElementById('studentName').value || (currentLang === 'ar' ? 'طالب' : 'Student');
+    document.getElementById('res-date').textContent = new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-AE' : 'en-US');
+    
+    document.getElementById('sec1-score').textContent = `${sec1}/4`;
+    document.getElementById('sec2-score').textContent = `${sec2}/4`;
+    document.getElementById('sec3-score').textContent = `${sec3}/4`;
+    document.getElementById('sec4-score').textContent = `${sec4}/4`;
+    document.getElementById('sec5-score').textContent = `${sec5}/4`;
+    
+    const badge = document.getElementById('success-badge');
+    const percent = document.getElementById('success-percent');
+    percent.textContent = `${successRate}%`;
+    
+    if (currentLang === 'ar') {
+        if (successRate >= 90) { badge.textContent = 'ممتاز'; badge.className = 'success-badge grade-excellent'; }
+        else if (successRate >= 75) { badge.textContent = 'جيد جداً'; badge.className = 'success-badge grade-good'; }
+        else if (successRate >= 50) { badge.textContent = 'جيد'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = 'يحتاج تحسين'; badge.className = 'success-badge grade-fail'; }
+    } else {
+        if (successRate >= 90) { badge.textContent = 'Excellent'; badge.className = 'success-badge grade-excellent'; }
+        else if (successRate >= 75) { badge.textContent = 'Very Good'; badge.className = 'success-badge grade-good'; }
+        else if (successRate >= 50) { badge.textContent = 'Good'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = 'Needs Improvement'; badge.className = 'success-badge grade-fail'; }
+    }
+    
+    document.getElementById('results-panel').classList.remove('hidden');
+    document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth');
+    document.getElementById('sendEmailBtn').classList.remove('hidden');
+}
+
+function sendResultsToEmail() {
+    const btn = document.getElementById('sendEmailBtn');
+    const status = document.getElementById('emailStatus');
+    btn.disabled = true;
+    btn.textContent = currentLang === 'ar' ? '⏳ جاري الإرسال...' : '📤 Sending...';
+
+    const name = document.getElementById('studentName').value || 'N/A';
+    const studentClass = document.getElementById('studentClass').value || 'N/A';
+    const date = document.querySelector('input[type="text"]').value || new Date().toLocaleDateString();
+    const score = document.getElementById('res-total').textContent;
+    const successRate = document.getElementById('success-percent').textContent;
+    const badge = document.getElementById('success-badge').textContent;
+
+    const sectionNames = {
+        ar: ['النظام الدولي للوحدات والبادئات', 'الوحدات الأساسية والمشتقة', 'الدقة والضبط في القياس', 'مصادر الأخطاء وقراءة الأجهزة', 'مسائل حسابية وتطبيقات عملية'],
+        en: ['SI System of Units & Prefixes', 'Base & Derived Units', 'Precision & Accuracy in Measurement', 'Sources of Errors & Instrument Reading', 'Calculations & Practical Applications']
+    };
+    const currentSectionNames = sectionNames[currentLang];
+
+    let answersHTML = `
+        <div style="font-family: 'Segoe UI', Tahoma, Arial, sans-serif; direction: ${currentLang === 'ar' ? 'rtl' : 'ltr'};">
+            <div style="background: linear-gradient(135deg, #0d9488, #0891b2); color: white; padding: 20px; border-radius: 10px 10px 0 0; text-align: center;">
+                <h2 style="margin: 0; font-size: 22px;">⚡ ${currentLang === 'ar' ? 'نتيجة امتحان الوحدات والقياس' : 'Units & Measurement Exam Result'}</h2>
+                <p style="margin: 5px 0 0 0; opacity: 0.9;">${currentLang === 'ar' ? 'فيزياء الصف الحادي عشر متقدم (بريدج) | الفصل الدراسي الأول' : 'Grade 11 Advanced Physics (Bridge) | Term 1'}</p>
+                <p style="margin: 5px 0 0 0; font-size: 12px; opacity: 0.8;">🔀 ${currentLang === 'ar' ? 'تم خلط الأسئلة تلقائياً' : 'Questions were randomly shuffled'}</p>
+            </div>
+            
+            <div style="background: #f0fdfa; padding: 15px; border: 1px solid #99f6e4;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">${currentLang === 'ar' ? '👤 الاسم:' : '👤 Name:'}</td>
+                        <td style="padding: 8px;">${name}</td>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">${currentLang === 'ar' ? '🏫 الشعبة:' : '🏫 Class:'}</td>
+                        <td style="padding: 8px;">${studentClass}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">${currentLang === 'ar' ? '📅 التاريخ:' : '📅 Date:'}</td>
+                        <td style="padding: 8px;">${date}</td>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">${currentLang === 'ar' ? '🏆 التقدير:' : '🏆 Grade:'}</td>
+                        <td style="padding: 8px;">${badge}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="background: white; padding: 20px; text-align: center; border-bottom: 2px solid #e5e7eb;">
+                <div style="display: inline-block; margin: 0 15px;">
+                    <div style="font-size: 32px; font-weight: bold; color: #0d9488;">${score}</div>
+                    <div style="color: #6b7280; font-size: 13px;">${currentLang === 'ar' ? 'الدرجة الكلية' : 'Total Score'}</div>
+                </div>
+                <div style="display: inline-block; margin: 0 15px;">
+                    <div style="font-size: 32px; font-weight: bold; color: #059669;">${successRate}</div>
+                    <div style="color: #6b7280; font-size: 13px;">${currentLang === 'ar' ? 'نسبة النجاح' : 'Success Rate'}</div>
+                </div>
+            </div>
+
+            <h3 style="background: #f3f4f6; padding: 12px; margin: 0; color: #1f2937; border-bottom: 2px solid #d1d5db;">
+                ** ${currentLang === 'ar' ? 'تفاصيل الإجابات' : 'Answer Details'}
+            </h3>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="background: #0d9488; color: white;">
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 8%;">#</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 32%;">${currentLang === 'ar' ? 'القسم' : 'Section'}</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 15%;">${currentLang === 'ar' ? 'الإجابة' : 'Answer'}</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 15%;">${currentLang === 'ar' ? 'الصحيحة' : 'Correct'}</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 15%;">${currentLang === 'ar' ? 'النتيجة' : 'Status'}</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    let sectionScores = [0, 0, 0, 0, 0];
+    let sectionTotals = [4, 4, 4, 4, 4];
+
+    for (let i = 0; i < 20; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        const selectedValue = selected ? selected.value : '-';
+        const correctValue = correctAnswersMap[i];
+        const isCorrect = selectedValue === correctValue;
+        
+        const sectionIndex = Math.floor(i / 4);
+        if (isCorrect) sectionScores[sectionIndex]++;
+
+        const rowBg = i % 2 === 0 ? '#f9fafb' : '#ffffff';
+        const statusBg = isCorrect ? '#dcfce7' : '#fee2e2';
+        const statusColor = isCorrect ? '#166534' : '#991b1b';
+        const statusIcon = isCorrect ? '✅' : '❌';
+        const statusText = isCorrect 
+            ? (currentLang === 'ar' ? 'صحيح' : 'Correct') 
+            : (currentLang === 'ar' ? 'خطأ' : 'Wrong');
+
+        answersHTML += `
+            <tr style="background: ${rowBg};">
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold;">${i + 1}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb;">${currentSectionNames[sectionIndex]}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold;">${selectedValue.toUpperCase()}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold; color: #059669;">${correctValue.toUpperCase()}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; background: ${statusBg}; color: ${statusColor}; font-weight: bold;">
+                    ${statusIcon} ${statusText}
+                </td>
+            </tr>
+        `;
+    }
+
+    answersHTML += `
+                </tbody>
+            </table>
+
+            <h3 style="background: #f3f4f6; padding: 12px; margin: 0; color: #1f2937; border-bottom: 2px solid #d1d5db; border-top: 3px solid #0d9488;">
+                📊 ${currentLang === 'ar' ? 'تفصيل الأداء' : 'Performance Breakdown'}
+            </h3>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="background: #7c3aed; color: white;">
+                        <th style="padding: 10px; border: 1px solid #6d28d9;">${currentLang === 'ar' ? 'القسم' : 'Section'}</th>
+                        <th style="padding: 10px; border: 1px solid #6d28d9; width: 20%;">${currentLang === 'ar' ? 'النتيجة' : 'Score'}</th>
+                        <th style="padding: 10px; border: 1px solid #6d28d9; width: 20%;">${currentLang === 'ar' ? 'النسبة' : 'Percentage'}</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    for (let i = 0; i < 5; i++) {
+        const percentage = Math.round((sectionScores[i] / sectionTotals[i]) * 100);
+        const barColor = percentage >= 75 ? '#10b981' : percentage >= 50 ? '#f59e0b' : '#ef4444';
+        const rowBg = i % 2 === 0 ? '#f9fafb' : '#ffffff';
+        
+        answersHTML += `
+            <tr style="background: ${rowBg};">
+                <td style="padding: 10px; border: 1px solid #e5e7eb; font-weight: 600;">${currentSectionNames[i]}</td>
+                <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold; color: #0d9488;">
+                    ${sectionScores[i]} / ${sectionTotals[i]}
+                </td>
+                <td style="padding: 10px; border: 1px solid #e5e7eb;">
+                    <div style="background: #e5e7eb; border-radius: 10px; overflow: hidden; height: 20px; position: relative;">
+                        <div style="background: ${barColor}; width: ${percentage}%; height: 100%;"></div>
+                        <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 11px; font-weight: bold; color: #1f2937;">
+                            ${percentage}%
+                        </span>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }
+
+    answersHTML += `
+                </tbody>
+            </table>
+
+            <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 15px; border-radius: 0 0 10px 10px; border-top: 2px solid #f59e0b;">
+                <p style="margin: 0; color: #78350f; text-align: center; font-size: 13px;">
+                    💡 <strong>${currentLang === 'ar' ? 'ملاحظة:' : 'Note:'}</strong> 
+                    ${currentLang === 'ar' 
+                        ? 'تم إرسال هذا التقرير تلقائياً من منصة 4U التعليمية | Mr. Mohammed Hesham' 
+                        : 'This report was automatically sent from 4U Educational Platform | Mr. Mohammed Hesham'}
+                </p>
+            </div>
+        </div>
+    `;
+
+    const templateParams = {
+        to_email: TARGET_EMAIL,
+        student_name: name,
+        student_class: studentClass,
+        exam_date: date,
+        total_score: score,
+        success_rate: successRate,
+        grade: badge,
+        answers_table: answersHTML
+    };
+
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
+        .then(() => {
+            status.textContent = currentLang === 'ar' 
+                ? '✅ تم إرسال النتائج بنجاح!' 
+                : '✅ Results sent successfully!';
+            status.style.color = '#059669';
+            btn.textContent = currentLang === 'ar' ? '✓ تم الإرسال' : '✓ Sent';
+        })
+        .catch(err => {
+            status.textContent = currentLang === 'ar' 
+                ? '❌ فشل الإرسال، حاول مرة أخرى' 
+                : '❌ Failed to send, try again';
+            status.style.color = '#dc2626';
+            btn.disabled = false;
+            btn.textContent = currentLang === 'ar' ? '📧 إعادة المحاولة' : '📧 Retry Send';
+            console.error('EmailJS Error:', err);
+        });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    prepareShuffledExam();
+    renderExam();
+    startTimer();
+    console.log('🔀 تم خلط الأسئلة والخيارات عشوائياً!');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Grade 11 Advanced Physics - Picturing Motion (Unit 2 - Lesson 1)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        body.en-mode { font-family: 'Inter', sans-serif; }
+        .correct { background-color: #dcfce7 !important; border-color: #16a34a !important; }
+        .incorrect { background-color: #fee2e2 !important; border-color: #dc2626 !important; }
+        .formula { font-family: 'Times New Roman', serif; letter-spacing: 0.5px; direction: ltr; display: inline-block; font-style: italic; }
+        .timer-warning { color: #dc2626 !important; animation: pulse 1s infinite; }
+        @keyframes pulse { 50% { opacity: 0.7; } }
+        @media print { .no-print { display: none !important; } }
+        .success-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.875rem; }
+        .grade-excellent { background: #dcfce7; color: #166534; }
+        .grade-good { background: #fef3c7; color: #92400e; }
+        .grade-pass { background: #dbeafe; color: #1e40af; }
+        .grade-fail { background: #fee2e2; color: #991b1b; }
+        .lang-switch {
+            position: fixed; top: 16px; left: 16px; z-index: 100;
+            background: white; padding: 6px; border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; gap: 4px;
+            border: 2px solid #0d9488;
+        }
+        [dir="ltr"] .lang-switch { left: auto; right: 16px; }
+        .lang-btn {
+            padding: 6px 14px; border-radius: 20px; cursor: pointer; font-weight: bold;
+            transition: all 0.3s; border: none; font-size: 0.875rem;
+            background: transparent; color: #6b7280;
+        }
+        .lang-btn.active { background: #0d9488; color: white; box-shadow: 0 2px 6px rgba(13,148,136,0.4); }
+        .lang-btn:hover:not(.active) { background: #f0fdfa; color: #0d9488; }
+        .shuffle-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 md:p-8 min-h-screen">
+
+    <div class="lang-switch no-print">
+        <button class="lang-btn active" onclick="setLanguage('ar')" id="btn-ar">عربي</button>
+        <button class="lang-btn" onclick="setLanguage('en')" id="btn-en">EN</button>
+    </div>
+
+    <div id="timer-container" class="max-w-4xl mx-auto mb-4 text-center no-print">
+        <div class="bg-white p-4 rounded-xl shadow-md inline-block border-2 border-teal-100">
+            <span class="text-gray-600 ml-2" data-ar="⏱️ الوقت المتبقي:" data-en="⏱️ Time Remaining:">⏱️ الوقت المتبقي:</span>
+            <span id="timer" class="text-2xl font-bold text-teal-600 font-mono">60:00</span>
+            <span class="shuffle-badge" data-ar="🔀 أسئلة عشوائية" data-en="🔀 Random Questions">🔀 أسئلة عشوائية</span>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto mb-6 flex flex-wrap gap-3 justify-center no-print">
+        <button onclick="toggleAnswers()" class="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="👁️ إظهار / إخفاء الإجابات" data-en="👁️ Show / Hide Answers">👁️ إظهار / إخفاء الإجابات</button>
+        <button onclick="window.print()" class="bg-gray-800 hover:bg-gray-900 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="🖨️ طباعة / PDF" data-en="🖨️ Print / PDF">🖨️ طباعة / PDF</button>
+        <button onclick="reshuffleExam()" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="🔀 إعادة خلط الأسئلة" data-en="🔀 Reshuffle Questions">🔀 إعادة خلط الأسئلة</button>
+    </div>
+
+    <header class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-md mb-8 border-r-4 border-teal-600">
+        <div class="text-center">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2" data-ar="⚡ فيزياء الصف الحادي عشر متقدم (بريدج)" data-en="⚡ Grade 11 Advanced Physics (Bridge)">⚡ فيزياء الصف الحادي عشر متقدم (بريدج)</h1>
+            <h2 class="text-lg text-teal-600 font-semibold" data-ar="الدرس الأول: تصوير الحركة (الوحدة الثانية)" data-en="Lesson 1: Picturing Motion (Unit 2)">الدرس الأول: تصوير الحركة (الوحدة الثانية)</h2>
+            <p class="text-sm text-gray-600 mt-2" data-ar="أنواع الحركة، مخططات الحركة، نموذج الجسيم النقطي، وتفسير المسافات الزمنية" data-en="Types of Motion, Motion Diagrams, Particle Models, & Interpreting Inter-dot Spaces">أنواع الحركة، مخططات الحركة، نموذج الجسيم النقطي، وتفسير المسافات الزمنية</p>
+            <p class="text-xs text-orange-600 mt-2 font-semibold" data-ar="⚠️ ملاحظة: يتم خلط ترتيب الأسئلة والخيارات تلقائياً مع كل تحديث للصفحة" data-en="⚠️ Note: Questions and options are randomly shuffled on every page refresh">⚠️ Note: Questions and options are randomly shuffled on every page refresh</p>
+        </div>
+        <div class="mt-4 flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+            <span><span data-ar="📅 التاريخ:" data-en="📅 Date:">📅 التاريخ:</span> <input type="text" class="border-b border-gray-400 bg-transparent w-28 text-center"></span>
+            <span><span data-ar="👤 الاسم:" data-en="👤 Name:">👤 الاسم:</span> <input type="text" id="studentName" class="border-b border-gray-400 bg-transparent w-32 text-center" placeholder="Enter name"></span>
+            <span><span data-ar="🏫 الشعبة:" data-en="🏫 Class:">🏫 الشعبة:</span> <input type="text" id="studentClass" class="border-b border-gray-400 bg-transparent w-28 text-center" placeholder="Class"></span>
+            <span><span data-ar="⏱️ المدة: 60 دقيقة" data-en="⏱️ Duration: 60 min">⏱️ المدة: 60 دقيقة</span></span>
+            <span><span data-ar="📊 المجموع: 100 درجة" data-en="📊 Total: 100 pts">📊 المجموع: 100 درجة</span></span>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto space-y-8" id="exam-content"></main>
+
+    <div class="text-center no-print pb-8 mt-8">
+        <button onclick="gradeExam()" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-lg px-10 py-4 rounded-xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer" data-ar="📝 تسليم وتصحيح الامتحان" data-en="📝 Submit & Grade Exam">📝 تسليم وتصحيح الامتحان</button>
+    </div>
+
+    <div id="results-panel" class="max-w-4xl mx-auto mt-8 bg-white p-8 rounded-2xl shadow-2xl border-t-4 border-emerald-500 hidden no-print">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center" data-ar="📊 نتائج الامتحان" data-en="📊 Exam Results">📊 نتائج الامتحان</h2>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div class="bg-blue-50 p-4 rounded-xl text-center"><p data-ar="اسم الطالب" data-en="Student Name">اسم الطالب</p><p id="res-name" class="font-bold text-xl text-teal-700">-</p></div>
+            <div class="bg-purple-50 p-4 rounded-xl text-center"><p data-ar="التاريخ" data-en="Date">التاريخ</p><p id="res-date" class="font-bold text-xl text-purple-700">-</p></div>
+            <div class="bg-emerald-50 p-4 rounded-xl text-center"><p data-ar="المجموع" data-en="Score">المجموع</p><p id="res-total" class="font-bold text-3xl text-emerald-600">0 / 100</p></div>
+        </div>
+        <div class="text-center mb-6">
+            <span id="success-badge" class="success-badge grade-excellent">-</span>
+            <p id="success-percent" class="text-4xl font-bold text-emerald-600 mt-2">100%</p>
+            <p class="text-sm text-gray-500" data-ar="نسبة النجاح" data-en="Success Rate">نسبة النجاح</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-xl mb-6">
+            <h3 class="font-bold text-lg mb-4 text-gray-800" data-ar="📈 تفصيل الأداء حسب القسم:" data-en="📈 Performance Breakdown:">📈 تفصيل الأداء حسب القسم:</h3>
+            <div class="space-y-3">
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="أنواع الحركة وتصنيفاتها" data-en="Types of Motion & Classifications">أنواع الحركة وتصنيفاتها</span>
+                    <span id="sec1-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="مخططات الحركة في الفيزياء" data-en="Motion Diagrams in Physics">مخططات الحركة في الفيزياء</span>
+                    <span id="sec2-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="نموذج الجسيم النقطي" data-en="The Particle Model">نموذج الجسيم النقطي</span>
+                    <span id="sec3-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="مقارنة وتفسير مسافات النقاط" data-en="Comparing & Interpreting Dot Spaces">مقارنة وتفسير مسافات النقاط</span>
+                    <span id="sec4-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="مسائل حسابية وتطبيقات عملية" data-en="Calculations & Practical Applications">مسائل حسابية وتطبيقات عملية</span>
+                    <span id="sec5-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mb-6">
+            <button id="sendEmailBtn" onclick="sendResultsToEmail()" class="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white text-lg px-8 py-3 rounded-xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer" data-ar="📧 إرسال النتائج للمعلم" data-en="📧 Send Results to Teacher">📧 إرسال النتائج للمعلم</button>
+            <p id="emailStatus" class="text-sm mt-2 text-center font-medium"></p>
+        </div>
+        <div class="flex gap-3 justify-center">
+            <button onclick="window.print()" class="bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold" data-ar="🖨️ طباعة النتائج" data-en="🖨️ Print Results">🖨️ طباعة النتائج</button>
+        </div>
+    </div>
+
+    <footer class="max-w-4xl mx-auto mt-10 mb-8 text-center text-gray-500 text-sm no-print">
+        © <span data-ar="فيزياء الصف 11 متقدم بريدج | الدرس الأول: تصوير الحركة" data-en="Grade 11 Advanced Bridge Physics | Lesson 1: Picturing Motion">فيزياء الصف 11 متقدم بريدج | الدرس الأول: تصوير الحركة</span> | Mr. Mohammed Hesham
+    </footer>
+
+<script>
+const PUBLIC_KEY = "Rb3Lq8tXaFmc5YHUH";
+const SERVICE_ID = "service_w15m64i";
+const TEMPLATE_ID = "template_5b0u2tq";
+const TARGET_EMAIL = "mohammedhesham872@gmail.com";
+
+emailjs.init(PUBLIC_KEY);
+
+const originalExamData = {
+    sections: [
+        {
+            id: 'sec1',
+            title: { ar: '🔹 الجزء الأول: أنواع الحركة وتصنيفاتها', en: '🔹 Part 1: Types of Motion & Classifications' },
+            questions: [
+                {
+                    q: { ar: 'كيف يمكن تصنيف الحركة الفيزيائية للأجسام بشكل عام؟', en: 'How can physical motion of objects be generally classified?' },
+                    options: [
+                        { ar: 'حركة مستقيمة، حركة دائرية، حركة منحنية، حركة اهتزازية', en: 'Straight-line motion, circular motion, curved motion, vibrational motion' },
+                        { ar: 'حركة أفقية ثابتة، حركة كيميائية، حركة ضوئية حيوية', en: 'Constant horizontal motion, chemical motion, bio-optical motion' },
+                        { ar: 'حركة ذرية كمية لا يمكن قياسها إلا تحت تأثير المجاهر النفقية', en: 'Quantum atomic motion measurable only under scanning tunneling microscopes' },
+                        { ar: 'حركة حرارية تعتمد كلياً على تفكك روابط الغاز الخامل', en: 'Thermal motion depending entirely on inert gas bond dissociation' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'تتحرك الأجسام بأشكال مختلفة: في خط مستقيم، أو مسار دائري، أو مسار منحني (مقذوف)، أو حركة اهتزازية دورية.', en: 'Objects can move in various ways: in a straight line, in a circular path, in a curved path (projectiles), or in a periodic vibrational manner.' }
+                },
+                {
+                    q: { ar: 'أي من الحركات الفيزيائية التالية يمثل "الحركة في اتجاه واحد" (One-Dimensional Motion)؟', en: 'Which of the following physical motions represents "Motion in One Dimension"?' },
+                    options: [
+                        { ar: 'سيارة تسير على طريق مستقيم وسريع', en: 'A car driving on a straight highway' },
+                        { ar: 'حجر يُقذف بزاوية مائلة في الهواء (مقذوف)', en: 'A stone thrown at an oblique angle in the air (projectile)' },
+                        { ar: 'دوران كوكب الأرض حول الشمس بمدار بيضاوي', en: 'Earth rotating around the sun in an elliptical orbit' },
+                        { ar: 'حركة أرجوحة في حديقة الأطفال يميناً ويساراً', en: 'A swing moving left and right in a playground' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'حركة السيارة في خط مستقيم تعبر عن الحركة في بعد واحد، حيث نحتاج لإحداثي واحد فقط لتحديد موقعها.', en: 'A car moving on a straight road represents one-dimensional motion, requiring only a single coordinate to track its position.' }
+                },
+                {
+                    q: { ar: 'ما الوصف الرياضي والفيزيائي الأنسب للحركة؟', en: 'What is the most suitable physical and mathematical description of motion?' },
+                    options: [
+                        { ar: 'تغير موقع الجسم المستمر بالنسبة للزمن ومقارنةً بنقطة مرجعية ثابتة', en: 'The continuous change of an object\'s position over time relative to a fixed reference point' },
+                        { ar: 'بقاء الجسم في موضعه دون أي تغير مع تدفق الساعات الزمنية', en: 'An object remaining in its position unchanged as time flows' },
+                        { ar: 'مربع كتلة الجسم مضروباً في ثابت تسارع الجاذبية في الفراغ', en: 'The square of an object\'s mass multiplied by the gravitational acceleration constant in a vacuum' },
+                        { ar: 'السرعة القياسية التي يتحرك بها الصوت في الأوساط المادية الصلبة فقط', en: 'The speed at which sound travels in solid physical media only' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الحركة هي تغير في الموقع بمرور الزمن بالنسبة لنقطة مرجعية (إسناد) ثابتة.', en: 'Motion is defined as the change in position over time relative to a fixed reference (frame) point.' }
+                },
+                {
+                    q: { ar: 'ما هي "النقطة المرجعية" أو "نظام الإسناد" (Frame of Reference) في دراسة الحركة؟', en: 'What is a "Frame of Reference" in the study of motion?' },
+                    options: [
+                        { ar: 'نقطة نختارها لتحديد موقع الأجسام وقياس التغيرات الحركية بالنسبة إليها', en: 'A chosen point used to define object positions and measure motion changes relative to it' },
+                        { ar: 'النهاية المطلقة للكون والتي تنعدم عندها قوى الجاذبية والحركة كلياً', en: 'The absolute end of the universe where gravity and motion completely vanish' },
+                        { ar: 'الزمن الكلي المستغرق لإنهاء تجربة السقوط الحر في غرف مفرغة', en: 'The total time elapsed to complete a free fall experiment in vacuum chambers' },
+                        { ar: 'أداة القياس البصرية المستخدمة لتتبع مسار الكواكب الخارجية', en: 'The optical measurement instrument used to track exoplanets' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'نظام الإسناد هو نقطة أو نظام إحداثيات نختاره لتحديد ووصف حركة الأجسام وسرعتها.', en: 'A frame of reference is a coordinate system or chosen point used to specify and describe the position and speed of moving objects.' }
+                }
+            ]
+        },
+        {
+            id: 'sec2',
+            title: { ar: '🔹 الجزء الثاني: مخططات الحركة في الفيزياء', en: '🔹 Part 2: Motion Diagrams in Physics' },
+            questions: [
+                {
+                    q: { ar: 'ما هو "مخطط الحركة" (Motion Diagram)؟', en: 'What is a "Motion Diagram"?' },
+                    options: [
+                        { ar: 'سلسلة من الصور المتعاقبة تظهر مواقع جسم متحرك خلال فترات زمنية متساوية', en: 'A series of successive images showing the positions of a moving object at equal time intervals' },
+                        { ar: 'رسم بياني يربط بين كتلة الجسم المتحرك وحجم طاقته المتبقية', en: 'A graph linking a moving object\'s mass to its remaining energy level' },
+                        { ar: 'خريطة طبوغرافية توضح الارتفاعات والانخفاضات على مسار الحركة الوعر', en: 'A topographic map showing elevations and depressions on a rugged motion path' },
+                        { ar: 'مخطط هندسي يُستخدم لحساب كمية الحرارة المفقودة بسبب الاحتكاك', en: 'An engineering blueprint used to calculate heat loss due to friction' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'مخطط الحركة يعرض لقطات متتالية ملتقطة في أوقات تفصل بينها أزمنة متساوية لإظهار سلوك الحركة.', en: 'A motion diagram displays successive snapshots taken at equal time intervals to demonstrate motion behavior.' }
+                },
+                {
+                    q: { ar: 'كيف يمكن الحصول على مخطط الحركة في التجارب الفيزيائية المعاصرة؟', en: 'How is a motion diagram obtained in contemporary physics experiments?' },
+                    options: [
+                        { ar: 'باستخدام تقنية التصوير المتعاقب (Strobe Photography) أو تسجيل الفيديو بمعدل إطارات ثابت', en: 'Using stroboscopic photography or recording video at a constant frame rate' },
+                        { ar: 'عبر استخدام موازين رقمية بالغة الدقة لقياس كتل الأجسام أثناء الحركة', en: 'By using highly sensitive digital balances to measure object masses during motion' },
+                        { ar: 'من خلال حل المعادلات التفاضلية من الدرجة الثانية رياضياً دون رصد مباشر', en: 'By mathematically solving second-order differential equations without direct observation' },
+                        { ar: 'باستخدام أشعة إكس الحرارية لقياس الروابط الذرية الداخلية للجسم', en: 'Using thermal X-rays to measure internal atomic bonds of the object' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'يتم التقاط صور متعاقبة بكاميرا وميضية تطلق ومضات في أزمنة متساوية لتصوير مواقع الجسم بدقة.', en: 'Stroboscopic (strobe) photography takes shots at constant time intervals, displaying multiple positions of an object in a single image.' }
+                },
+                {
+                    q: { ar: 'إذا كان مخطط حركة لعداء يظهر صوراً تفصل بينها مسافات متساوية تماماً، فما طبيعة حركته؟', en: 'If a runner\'s motion diagram shows images separated by strictly equal distances, what is the nature of their motion?' },
+                    options: [
+                        { ar: 'يتحرك بسرعة ثابتة (Constant Speed)', en: 'Moving at a constant speed' },
+                        { ar: 'يتحرك بتسارع متزايد (Increasing Acceleration)', en: 'Moving with increasing acceleration' },
+                        { ar: 'يتحرك بتباطؤ منتظم (Constant Deceleration)', en: 'Moving with constant deceleration' },
+                        { ar: 'جسم ساكن لا يتحرك مطلقاً بمرور الزمن', en: 'A stationary object not moving at all over time' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'بما أن المسافات المقطوعة متساوية في فترات زمنية متساوية، فإن السرعة ثابتة والتسارع يساوي صفر.', en: 'Since the distances covered are equal during equal time intervals, the speed is constant (acceleration is zero).' }
+                },
+                {
+                    q: { ar: 'عند تمثيل حركة جسم يتباطأ تدريجياً، كيف تظهر لقطات مخطط الحركة بمرور الزمن؟', en: 'When representing a gradually slowing object, how do the snapshots on the motion diagram appear over time?' },
+                    options: [
+                        { ar: 'تقترب اللقطات من بعضها البعض وتصبح المسافات بينها أصغر فأصغر', en: 'The snapshots get closer to each other, and the spaces between them become smaller and smaller' },
+                        { ar: 'تتباعد اللقطات وتصبح المسافات بينها أكبر فأكثـر بمرور الزمن', en: 'The snapshots drift apart, and the spaces between them become larger and larger' },
+                        { ar: 'تظل المسافات بين اللقطات ثابتة ومتطابقة تماماً دون أي تغيير', en: 'The spaces between snapshots remain constant and identical without change' },
+                        { ar: 'تتداخل الصور فوق بعضها البعض بشكل عشوائي دون مسار خطي', en: 'The images overlap randomly on top of each other without a linear path' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'في حالة التباطؤ، يقطع الجسم مسافات أصغر في كل فترة زمنية متتالية، لذا تتقارب الصور في المخطط.', en: 'When slowing down, the distance traveled in each consecutive time interval decreases, causing the images to get closer.' }
+                }
+            ]
+        },
+        {
+            id: 'sec3',
+            title: { ar: '🔹 الجزء الثالث: نموذج الجسيم النقطي', en: '🔹 Part 3: The Particle Model' },
+            questions: [
+                {
+                    q: { ar: 'ما هو "نموذج الجسيم النقطي" (Particle Model) في تبسيط دراسة الحركة؟', en: 'What is the "Particle Model" in simplifying the study of motion?' },
+                    options: [
+                        { ar: 'تمثيل حركة الجسم بنقاط مفردة متتالية تعبر عن مركزه بقطع النظر عن تفاصيل شكله وحجمه', en: 'Representing an object\'s motion as a series of single consecutive dots at its center, ignoring its shape and size' },
+                        { ar: 'نموذج كيميائي يدرس الروابط الجزيئية للجسيمات تحت المجهر الإلكتروني', en: 'A chemical model studying molecular bonds of particles under an electron microscope' },
+                        { ar: 'نموذج رياضي يفترض أن كتلة الجسم تساوي صفراً لتسهيل حسابات الطاقة', en: 'A mathematical model assuming the object\'s mass is zero to simplify energy calculations' },
+                        { ar: 'رسم هندسي يحدد اتجاه قوى الاحتكاك المغناطيسي للجسم فقط', en: 'An engineering sketch defining only the magnetic friction forces of an object' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'نموذج الجسيم النقطي يبسط الجسم (مهما كان كبيراً كسيارة أو قطار) إلى نقطة واحدة عند مركزه تملك كتلته بالكامل لتسهيل التتبع والتحليل.', en: 'The particle model simplifies a moving object (regardless of its actual size) into a single dot representing its center of mass, making motion tracking easier.' }
+                },
+                {
+                    q: { ar: 'متى يكون استخدام نموذج الجسيم النقطي مناسباً ومقبولاً علمياً؟', en: 'When is using the particle model scientifically appropriate and acceptable?' },
+                    options: [
+                        { ar: 'عندما تكون أبعاد وحجم الجسم صغيرة جداً مقارنة بالمسافات التي يقطعها', en: 'When the size and dimensions of the object are very small compared to the distances it travels' },
+                        { ar: 'عند دراسة دوران الأجزاء الداخلية للتروس والآلات الدقيقة بالتفصيل', en: 'When studying the detailed rotation of internal gears and precision machinery' },
+                        { ar: 'عندما يتغير شكل وحجم الجسم أثناء الحركة مثل انفجار قذيفة في الهواء', en: 'When the object changes its shape and size during motion, like a shell exploding in mid-air' },
+                        { ar: 'في الحالات التي تنعدم فيها كتل الأجسام تماماً ولا تؤثر عليها أي جاذبية', en: 'In cases where object masses are completely zero and unaffected by any gravity' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'نستطيع إهمال أبعاد الجسم واعتباره جسيماً نقطياً عندما تكون المسافة المقطوعة أكبر بكثير من حجم الجسم نفسه.', en: 'An object can be treated as a point particle if its size is negligible compared to the total distance of travel.' }
+                },
+                {
+                    q: { ar: 'عند تحويل مخطط حركة لسيارة إلى نموذج جسيم نقطي، ماذا نضع بدلاً من صور السيارة المتتالية؟', en: 'When converting a car\'s motion diagram into a particle model, what replaces the successive images of the car?' },
+                    options: [
+                        { ar: 'نقاطاً مفردة صغيرة متتالية ومتباعدة تعبر عن مركز كتلة السيارة', en: 'Single small successive dots representing the car\'s center of mass' },
+                        { ar: 'أرقاماً معنوية مصفوفة تعكس اتجاه السرعة والضغط الهوائي', en: 'Significant figures representing speed and air pressure' },
+                        { ar: 'أسهم متقاطعة تعبر عن الزوايا العمودية لمركز الجاذبية فقط', en: 'Intersecting arrows indicating perpendicular angles of gravity only' },
+                        { ar: 'مربعات فارغة تحاكي حجم خزان الوقود المتبقي في كل ثانية', en: 'Empty boxes simulating the remaining fuel tank volume at each second' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'في نموذج الجسيم النقطي، يتم استبدال صورة الجسم بنقطة صغيرة تقع في مركزه الهندسي.', en: 'In the particle model, consecutive pictures of the moving object are replaced by single, distinct dots.' }
+                },
+                {
+                    q: { ar: 'أي من الأجسام التالية لا يمكن معاملته كجسيم نقطي عند دراسة الحركة الموضحة؟', en: 'Which of the following objects CANNOT be treated as a point particle in the specified motion?' },
+                    options: [
+                        { ar: 'لاعب جمباز يدور ويلتف حول عارضة أفقية في صالة الألعاب الرياضية', en: 'A gymnast spinning and rotating around a horizontal bar in a gym' },
+                        { ar: 'كوكب الأرض أثناء دورانه في مداره السنوي حول الشمس', en: 'The Earth orbiting in its annual path around the Sun' },
+                        { ar: 'طائرة ركاب تحلق على ارتفاع شاهق بين قارتين', en: 'A passenger airplane flying at a high altitude between two continents' },
+                        { ar: 'قطار سريع يقطع مسافة <span class="formula">500 km</span> عبر الصحراء', en: 'A high-speed train traveling 500 km across a desert' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'لاعب الجمباز يدور حول نفسه وتتغير وضعية أجزاء جسمه؛ وحجم حركته الدورانية يقارب حجم جسمه، لذا لا يمكن إهمال أبعاده وتفاصيل حركته.', en: 'The gymnast\'s spinning involves complex rotational parts close to their body size; thus, treating them as a single point is inadequate for analyzing this rotational motion.' }
+                }
+            ]
+        },
+        {
+            id: 'sec4',
+            title: { ar: '🔹 الجزء الرابع: مقارنة وتفسير مسافات النقاط', en: '🔹 Part 4: Comparing & Interpreting Dot Spaces' },
+            questions: [
+                {
+                    q: { ar: 'إذا كان نموذج الجسيم النقطي لجسم يعطي نقاطاً تتباعد عن بعضها بشكل متزايد بمرور الزمن، فماذا نستنتج؟', en: 'If a particle model shows dots getting further apart over time, what do we conclude?' },
+                    options: [
+                        { ar: 'الجسم يتسارع (سرعته تزداد بمرور الزمن)', en: 'The object is accelerating (its speed is increasing over time)' },
+                        { ar: 'الجسم يتباطأ (سرعته تقل بمرور الزمن)', en: 'The object is decelerating (its speed is decreasing over time)' },
+                        { ar: 'الجسم يتحرك بسرعة ثابتة ومنتظمة تماماً', en: 'The object is moving at a strictly constant and uniform speed' },
+                        { ar: 'الجسم توقف عن الحركة وأصبح في حالة سكون مطلق', en: 'The object has stopped moving and is in absolute rest' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'تزايد المسافات بين النقاط في أزمنة متساوية يعني قطع مسافات أكبر لكل وحدة زمن، وهو دليل مباشر على زيادة السرعة (التسارع).', en: 'Increasing spaces between dots indicate that the object covers more distance in each subsequent time interval, proving acceleration.' }
+                },
+                {
+                    q: { ar: 'نموذج جسيم نقطي لجسمين (أ) و (ب) تم تصويرهما معاً. نقاط الجسم (أ) متباعدة جداً بينما نقاط الجسم (ب) متقاربة جداً. ماذا يعني ذلك؟', en: 'Particle models for objects A and B are recorded. Dots for A are widely spaced, while dots for B are closely spaced. What does this mean?' },
+                    options: [
+                        { ar: 'سرعة الجسم (أ) أكبر بكثير من سرعة الجسم (ب)', en: 'The speed of object A is much greater than the speed of object B' },
+                        { ar: 'سرعة الجسم (ب) أكبر بكثير من سرعة الجسم (أ)', en: 'The speed of object B is much greater than the speed of object A' },
+                        { ar: 'كتلة الجسم (أ) أكبر من كتلة الجسم (ب) بالضرورة', en: 'The mass of object A is necessarily greater than the mass of object B' },
+                        { ar: 'كلا الجسمين يتحركان بنفس السرعة ولكن باتجاهين متعاكسين', en: 'Both objects move at the same speed but in opposite directions' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'التباعد الكبير بين النقاط يعني قطع مسافة أكبر في نفس الزمن، وهو ما يدل على سرعة أكبر للجسم (أ).', en: 'Larger spacing between dots represents a greater distance covered in the same time frame, which means object A has a higher speed.' }
+                },
+                {
+                    q: { ar: 'أي من النماذج النقطية التالية يمثل حركة جسم يقف ببطء عند إشارة المرور الحمراء؟', en: 'Which of the following particle models represents an object slowing down to a stop at a red light?' },
+                    options: [
+                        { ar: 'نقاط تبدأ متباعدة جداً ثم تقترب من بعضها تدريجياً حتى تتركز في نقطة واحدة بالنهاية', en: 'Dots starting far apart, then gradually getting closer until they merge into a single final spot' },
+                        { ar: 'نقاط تبدأ متقاربة جداً ثم تتباعد بشكل متزايد ولانهائي جهة اليمين', en: 'Dots starting very close, then getting increasingly further apart to the right' },
+                        { ar: 'نقاط تفصل بينها مسافات ثابتة ومطابقة على طول مسار الحركة الخطية', en: 'Dots separated by constant, uniform spaces along the entire linear path' },
+                        { ar: 'نقاط عشوائية تظهر وتختفي في اتجاهات متعامدة وغير منتظمة', en: 'Random dots appearing and disappearing in irregular, perpendicular directions' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'التباطؤ حتى الوقوف يظهر بيانياً بتقارب التدريج النقطي تدريجياً حتى الثبات (نقطة نهاية متكررة).', en: 'Slowing down to a stop is shown by dots getting closer and closer, ending in closely clustered or overlapping dots representing zero velocity.' }
+                },
+                {
+                    q: { ar: 'إذا كان التغير في المسافة بين نقاط نموذج الجسيم النقطي ثابتاً، فما مقدار تسارع هذا الجسم؟', en: 'If the change in spacing between dots on a particle model is constant (zero change in distance), what is the acceleration of the object?' },
+                    options: [
+                        { ar: 'يساوي صفراً (Zero Acceleration)', en: 'Zero acceleration' },
+                        { ar: 'قيمة موجبة ثابتة ومساوية لعجلة الجاذبية الكونية', en: 'A constant positive value equal to the universal gravitational acceleration' },
+                        { ar: 'قيمة متغيرة تزداد طردياً مع مربع سرعة الجسم الكلية', en: 'A variable value increasing proportionally with the square of the object\'s total speed' },
+                        { ar: 'قيمة سالبة تسبب السقوط الحر للجسم في مساره المنحني', en: 'A negative value causing the object to fall freely in its curved path' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'بما أن المسافات متساوية وثابتة، فإن السرعة ثابتة، وبالتالي يكون التسارع (معدل تغير السرعة) مساوياً للصفر.', en: 'Since the dot spacing is strictly constant, the velocity is constant, and therefore the acceleration (rate of change of velocity) is zero.' }
+                }
+            ]
+        },
+        {
+            id: 'sec5',
+            title: { ar: '🔹 الجزء الخامس: مسائل حسابية وتطبيقات عملية', en: '🔹 Part 5: Calculations & Practical Applications' },
+            questions: [
+                {
+                    q: { ar: 'تم تصوير كرة تتدحرج على منصة مائلة بآلة تصوير ومضية تطلق <span class="formula">10.0</span> ومضات في الثانية. إذا كانت المسافة بين النقطة الأولى والثانية <span class="formula">2.0 cm</span>، فما هي الفترة الزمنية <span class="formula">Δt</span> بين كل نقطتين متتاليتين؟', en: 'A rolling ball was captured with a strobe camera flashing 10.0 times per second. What is the time interval Δt between two consecutive dots?' },
+                    options: [
+                        { ar: '<span class="formula">0.10 s</span>', en: '<span class="formula">0.10 s</span>' },
+                        { ar: '<span class="formula">10.0 s</span>', en: '<span class="formula">10.0 s</span>' },
+                        { ar: '<span class="formula">1.0 s</span>', en: '<span class="formula">1.0 s</span>' },
+                        { ar: '<span class="formula">0.20 s</span>', en: '<span class="formula">0.20 s</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الفترة الزمنية بين الومضات هي مقلوب التردد: <span class="formula">Δt = 1 / f = 1 / 10.0 = 0.10 s</span>.', en: 'The time interval between successive flashes is the reciprocal of the frequency: <span class="formula">Δt = 1 / f = 1 / 10.0 = 0.10 s</span>.' }
+                },
+                {
+                    q: { ar: 'بالاعتماد على السؤال السابق، إذا قطعت الكرة مسافة <span class="formula">3.0 cm</span> بين النقطة الثانية والثالثة في نفس المخطط، فما متوسط سرعة الكرة في هذه الفترة؟', en: 'Based on the previous question, if the ball covers 3.0 cm between the 2nd and 3rd dots, what is the average speed of the ball in this interval?' },
+                    options: [
+                        { ar: '<span class="formula">30.0 cm/s</span>', en: '<span class="formula">30.0 cm/s</span>' },
+                        { ar: '<span class="formula">3.0 cm/s</span>', en: '<span class="formula">3.0 cm/s</span>' },
+                        { ar: '<span class="formula">0.30 cm/s</span>', en: '<span class="formula">0.30 cm/s</span>' },
+                        { ar: '<span class="formula">15.0 cm/s</span>', en: '<span class="formula">15.0 cm/s</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'السرعة المتوسطة تساوي المسافة مقسومة على الزمن: <span class="formula">v = Δd / Δt = 3.0 cm / 0.10 s = 30.0 cm/s</span>.', en: 'The average speed is distance divided by time: <span class="formula">v = Δd / Δt = 3.0 cm / 0.10 s = 30.0 cm/s</span>.' }
+                },
+                {
+                    q: { ar: 'سيارة تتحرك بسرعة ثابتة مقدارها <span class="formula">20.0 m/s</span>. إذا كان المخطط النقطي لها يلتقط نقاطاً كل <span class="formula">0.50 s</span>، فما مقدار المسافة بين كل نقطتين متتاليتين في النموذج؟', en: 'A car moves at a constant speed of 20.0 m/s. If the dot diagram records dots every 0.50 s, what is the distance between consecutive dots?' },
+                    options: [
+                        { ar: '<span class="formula">10.0 m</span>', en: '<span class="formula">10.0 m</span>' },
+                        { ar: '<span class="formula">40.0 m</span>', en: '<span class="formula">40.0 m</span>' },
+                        { ar: '<span class="formula">5.0 m</span>', en: '<span class="formula">5.0 m</span>' },
+                        { ar: '<span class="formula">20.0 m</span>', en: '<span class="formula">20.0 m</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'المسافة تساوي السرعة مضروبة في الزمن: <span class="formula">Δd = v · Δt = 20.0 m/s × 0.50 s = 10.0 m</span>.', en: 'Distance is speed multiplied by time: <span class="formula">Δd = v · Δt = 20.0 m/s × 0.50 s = 10.0 m</span>.' }
+                },
+                {
+                    q: { ar: 'سقوط حر لكرة حديدية تم رصده ومضياً. وجد أن المسافات المتتالية المقطوعة تزداد بمقدار ثابت في كل فترة زمنية. ماذا نستنتج عن العجلة؟', en: 'A free-falling iron ball is recorded stroboscopically. The consecutive distances increase by a constant difference in each time interval. What do we conclude about its acceleration?' },
+                    options: [
+                        { ar: 'تتحرك الكرة بتسارع ثابت (عجلة الجاذبية الأرضية)', en: 'The ball moves with a constant acceleration (acceleration due to gravity)' },
+                        { ar: 'تتحرك الكرة بتسارع متزايد باستمرار نحو الأسفل', en: 'The ball moves with an exponentially increasing acceleration downward' },
+                        { ar: 'سرعة الكرة ثابتة والتسارع الكلي منعدم تماماً', en: 'The ball\'s velocity is constant and its net acceleration is completely zero' },
+                        { ar: 'الكرة تتحرك بحركة عشوائية لا تحكمها قوانين ميكانيكية', en: 'The ball moves in a random motion not governed by mechanical laws' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الزيادة الثابتة في المسافات المتتالية تعبر عن تزايد السرعة بمعدل ثابت، مما يعني حركة بتسارع ثابت ومساوٍ تقريباً لـ <span class="formula">9.8 m/s²</span>.', en: 'A uniform increase in successive displacement intervals indicates that velocity increases at a constant rate, denoting a motion with constant acceleration (g ≈ 9.8 m/s²).' }
+                }
+            ]
+        }
+    ]
+};
+
+function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+let examData;
+let correctAnswersMap = {};
+let currentLang = 'ar';
+let timeRemaining = 3600;
+let timerInterval;
+
+function prepareShuffledExam() {
+    examData = JSON.parse(JSON.stringify(originalExamData));
+    correctAnswersMap = {};
+    let globalIdx = 0;
+    
+    examData.sections.forEach((section) => {
+        section.questions = shuffleArray(section.questions);
+        
+        section.questions.forEach((q) => {
+            const optionsWithCorrect = q.options.map((opt, idx) => ({
+                option: opt,
+                isCorrect: idx === q.correct
+            }));
+            
+            const shuffledOptions = shuffleArray(optionsWithCorrect);
+            q.options = shuffledOptions.map(o => o.option);
+            
+            const newCorrectIndex = shuffledOptions.findIndex(o => o.isCorrect);
+            q.correct = newCorrectIndex;
+            
+            correctAnswersMap[globalIdx] = String.fromCharCode(97 + newCorrectIndex);
+            globalIdx++;
+        });
+    });
+}
+
+function reshuffleExam() {
+    prepareShuffledExam();
+    renderExam();
+    document.querySelectorAll('input[type="radio"]:checked').forEach(r => r.checked = false);
+    document.getElementById('results-panel').classList.add('hidden');
+    document.querySelectorAll('.correct, .incorrect').forEach(el => {
+        el.classList.remove('correct', 'incorrect');
+    });
+    alert(currentLang === 'ar' 
+        ? '🔀 تم إعادة خلط الأسئلة والخيارات بنجاح!' 
+        : '🔀 Questions and options have been reshuffled successfully!');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    
+    document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    
+    document.body.classList.toggle('en-mode', lang === 'en');
+    
+    document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+    });
+    
+    renderExam();
+}
+
+function renderExam() {
+    const container = document.getElementById('exam-content');
+    const labels = {
+        ar: { option: ['أ', 'ب', 'ج', 'د'], answer: '✅ الإجابة الصحيحة:' },
+        en: { option: ['A', 'B', 'C', 'D'], answer: '✅ Correct Answer:' }
+    };
+    const lbl = labels[currentLang];
+    const isRTL = currentLang === 'ar';
+    
+    let html = '';
+    let globalIdx = 0;
+    
+    examData.sections.forEach((section) => {
+        html += `
+        <section class="bg-white p-6 rounded-xl shadow-lg">
+            <h2 class="text-xl font-bold mb-4 text-teal-700">${section.title[currentLang]}</h2>
+            <ol class="space-y-4 text-sm">`;
+            
+        section.questions.forEach((q) => {
+            const borderSide = isRTL ? 'border-r-4 pr-4' : 'border-l-4 pl-4';
+            html += `
+                <li class="${borderSide} border-teal-500 py-2" id="q-${globalIdx}">
+                    <strong>${globalIdx + 1}.</strong> ${q.q[currentLang]}<br>`;
+                    
+            q.options.forEach((opt, oIdx) => {
+                const radioSide = isRTL ? 'mr-4 ml-2' : 'ml-4 mr-2';
+                html += `
+                    <label class="cursor-pointer block mt-1 ${isRTL ? 'mr-4' : 'ml-4'}">
+                        <input type="radio" name="q${globalIdx}" value="${String.fromCharCode(97 + oIdx)}" class="${radioSide}"> 
+                        ${lbl.option[oIdx]}) ${opt[currentLang]}
+                    </label>`;
+            });
+            
+            html += `
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">
+                        ${lbl.answer} ${lbl.option[q.correct]} ${q.options[q.correct][currentLang]} — ${q.answer[currentLang]}
+                    </div>
+                </li>`;
+            globalIdx++;
+        });
+        
+        html += `
+            </ol>
+        </section>`;
+    });
+    
+    container.innerHTML = html;
+}
+
+function startTimer() {
+    document.getElementById('timer-container').style.display = 'block';
+    timerInterval = setInterval(() => {
+        timeRemaining--;
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+        const timerEl = document.getElementById('timer');
+        timerEl.textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+        if (timeRemaining <= 300) timerEl.classList.add('timer-warning');
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            alert(currentLang === 'ar' ? "انتهى الوقت! سيتم تسليم الامتحان تلقائياً." : "Time's up! Exam will be submitted automatically.");
+            gradeExam();
+        }
+    }, 1000);
+}
+
+function toggleAnswers() {
+    document.querySelectorAll('.answer-box').forEach(el => el.classList.toggle('hidden'));
+}
+
+function gradeExam() {
+    let correctCount = 0;
+    let sec1 = 0, sec2 = 0, sec3 = 0, sec4 = 0, sec5 = 0;
+    
+    for (let i = 0; i < 20; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        const li = document.getElementById(`q-${i}`);
+        const correctAnswer = correctAnswersMap[i];
+        
+        if (li) {
+            const isCorrect = selected && selected.value === correctAnswer;
+            
+            if (isCorrect) {
+                correctCount++;
+                li.classList.add('correct');
+                li.classList.remove('incorrect');
+            } else {
+                li.classList.add('incorrect');
+                li.classList.remove('correct');
+            }
+
+            const isReallyCorrect = isCorrect;
+            if (isReallyCorrect) {
+                if (i < 4) sec1++;
+                else if (i < 8) sec2++;
+                else if (i < 12) sec3++;
+                else if (i < 16) sec4++;
+                else sec5++;
+            }
+        }
+    }
+
+    const score = (correctCount / 20) * 100;
+    const successRate = Math.round(score);
+    
+    document.getElementById('res-total').textContent = `${Math.round(score)} / 100`;
+    document.getElementById('res-name').textContent = document.getElementById('studentName').value || (currentLang === 'ar' ? 'طالب' : 'Student');
+    document.getElementById('res-date').textContent = new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-AE' : 'en-US');
+    
+    document.getElementById('sec1-score').textContent = `${sec1}/4`;
+    document.getElementById('sec2-score').textContent = `${sec2}/4`;
+    document.getElementById('sec3-score').textContent = `${sec3}/4`;
+    document.getElementById('sec4-score').textContent = `${sec4}/4`;
+    document.getElementById('sec5-score').textContent = `${sec5}/4`;
+    
+    const badge = document.getElementById('success-badge');
+    const percent = document.getElementById('success-percent');
+    percent.textContent = `${successRate}%`;
+    
+    if (currentLang === 'ar') {
+        if (successRate >= 90) { badge.textContent = 'ممتاز'; badge.className = 'success-badge grade-excellent'; }
+        else if (successRate >= 75) { badge.textContent = 'جيد جداً'; badge.className = 'success-badge grade-good'; }
+        else if (successRate >= 50) { badge.textContent = 'جيد'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = 'يحتاج تحسين'; badge.className = 'success-badge grade-fail'; }
+    } else {
+        if (successRate >= 90) { badge.textContent = 'Excellent'; badge.className = 'success-badge grade-excellent'; }
+        else if (successRate >= 75) { badge.textContent = 'Very Good'; badge.className = 'success-badge grade-good'; }
+        else if (successRate >= 50) { badge.textContent = 'Good'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = 'Needs Improvement'; badge.className = 'success-badge grade-fail'; }
+    }
+    
+    document.getElementById('results-panel').classList.remove('hidden');
+    document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('sendEmailBtn').classList.remove('hidden');
+}
+
+function sendResultsToEmail() {
+    const btn = document.getElementById('sendEmailBtn');
+    const status = document.getElementById('emailStatus');
+    btn.disabled = true;
+    btn.textContent = currentLang === 'ar' ? '⏳ جاري الإرسال...' : '📤 Sending...';
+
+    const name = document.getElementById('studentName').value || 'N/A';
+    const studentClass = document.getElementById('studentClass').value || 'N/A';
+    const date = document.querySelector('input[type="text"]').value || new Date().toLocaleDateString();
+    const score = document.getElementById('res-total').textContent;
+    const successRate = document.getElementById('success-percent').textContent;
+    const badge = document.getElementById('success-badge').textContent;
+
+    const sectionNames = {
+        ar: ['أنواع الحركة وتصنيفاتها', 'مخططات الحركة في الفيزياء', 'نموذج الجسيم النقطي', 'مقارنة وتفسير مسافات النقاط', 'مسائل حسابية وتطبيقات عملية'],
+        en: ['Types of Motion & Classifications', 'Motion Diagrams in Physics', 'The Particle Model', 'Comparing & Interpreting Dot Spaces', 'Calculations & Practical Applications']
+    };
+    const currentSectionNames = sectionNames[currentLang];
+
+    let answersHTML = `
+        <div style="font-family: 'Segoe UI', Tahoma, Arial, sans-serif; direction: ${currentLang === 'ar' ? 'rtl' : 'ltr'};">
+            <div style="background: linear-gradient(135deg, #0d9488, #0891b2); color: white; padding: 20px; border-radius: 10px 10px 0 0; text-align: center;">
+                <h2 style="margin: 0; font-size: 22px;">⚡ ${currentLang === 'ar' ? 'نتيجة امتحان تصوير الحركة' : 'Picturing Motion Exam Result'}</h2>
+                <p style="margin: 5px 0 0 0; opacity: 0.9;">${currentLang === 'ar' ? 'فيزياء الصف الحادي عشر متقدم (بريدج) | الفصل الدراسي الأول' : 'Grade 11 Advanced Physics (Bridge) | Term 1'}</p>
+                <p style="margin: 5px 0 0 0; font-size: 12px; opacity: 0.8;">🔀 ${currentLang === 'ar' ? 'تم خلط الأسئلة تلقائياً' : 'Questions were randomly shuffled'}</p>
+            </div>
+            
+            <div style="background: #f0fdfa; padding: 15px; border: 1px solid #99f6e4;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">${currentLang === 'ar' ? '👤 الاسم:' : '👤 Name:'}</td>
+                        <td style="padding: 8px;">${name}</td>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">${currentLang === 'ar' ? '🏫 الشعبة:' : '🏫 Class:'}</td>
+                        <td style="padding: 8px;">${studentClass}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">${currentLang === 'ar' ? '📅 التاريخ:' : '📅 Date:'}</td>
+                        <td style="padding: 8px;">${date}</td>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">${currentLang === 'ar' ? '🏆 التقدير:' : '🏆 Grade:'}</td>
+                        <td style="padding: 8px;">${badge}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="background: white; padding: 20px; text-align: center; border-bottom: 2px solid #e5e7eb;">
+                <div style="display: inline-block; margin: 0 15px;">
+                    <div style="font-size: 32px; font-weight: bold; color: #0d9488;">${score}</div>
+                    <div style="color: #6b7280; font-size: 13px;">${currentLang === 'ar' ? 'الدرجة الكلية' : 'Total Score'}</div>
+                </div>
+                <div style="display: inline-block; margin: 0 15px;">
+                    <div style="font-size: 32px; font-weight: bold; color: #059669;">${successRate}</div>
+                    <div style="color: #6b7280; font-size: 13px;">${currentLang === 'ar' ? 'نسبة النجاح' : 'Success Rate'}</div>
+                </div>
+            </div>
+
+            <h3 style="background: #f3f4f6; padding: 12px; margin: 0; color: #1f2937; border-bottom: 2px solid #d1d5db;">
+                ** ${currentLang === 'ar' ? 'تفاصيل الإجابات' : 'Answer Details'}
+            </h3>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="background: #0d9488; color: white;">
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 8%;">#</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 32%;">${currentLang === 'ar' ? 'القسم' : 'Section'}</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 15%;">${currentLang === 'ar' ? 'الإجابة' : 'Answer'}</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 15%;">${currentLang === 'ar' ? 'الصحيحة' : 'Correct'}</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 15%;">${currentLang === 'ar' ? 'النتيجة' : 'Status'}</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    let sectionScores = [0, 0, 0, 0, 0];
+    let sectionTotals = [4, 4, 4, 4, 4];
+
+    for (let i = 0; i < 20; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        const selectedValue = selected ? selected.value : '-';
+        const correctValue = correctAnswersMap[i];
+        const isCorrect = selectedValue === correctValue;
+        
+        const sectionIndex = Math.floor(i / 4);
+        if (isCorrect) sectionScores[sectionIndex]++;
+
+        const rowBg = i % 2 === 0 ? '#f9fafb' : '#ffffff';
+        const statusBg = isCorrect ? '#dcfce7' : '#fee2e2';
+        const statusColor = isCorrect ? '#166534' : '#991b1b';
+        const statusIcon = isCorrect ? '✅' : '❌';
+        const statusText = isCorrect 
+            ? (currentLang === 'ar' ? 'صحيح' : 'Correct') 
+            : (currentLang === 'ar' ? 'خطأ' : 'Wrong');
+
+        answersHTML += `
+            <tr style="background: ${rowBg};">
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold;">${i + 1}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb;">${currentSectionNames[sectionIndex]}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold;">${selectedValue.toUpperCase()}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold; color: #059669;">${correctValue.toUpperCase()}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; background: ${statusBg}; color: ${statusColor}; font-weight: bold;">
+                    ${statusIcon} ${statusText}
+                </td>
+            </tr>
+        `;
+    }
+
+    answersHTML += `
+                </tbody>
+            </table>
+
+            <h3 style="background: #f3f4f6; padding: 12px; margin: 0; color: #1f2937; border-bottom: 2px solid #d1d5db; border-top: 3px solid #0d9488;">
+                📊 ${currentLang === 'ar' ? 'تفصيل الأداء' : 'Performance Breakdown'}
+            </h3>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="background: #7c3aed; color: white;">
+                        <th style="padding: 10px; border: 1px solid #6d28d9;">${currentLang === 'ar' ? 'القسم' : 'Section'}</th>
+                        <th style="padding: 10px; border: 1px solid #6d28d9; width: 20%;">${currentLang === 'ar' ? 'النتيجة' : 'Score'}</th>
+                        <th style="padding: 10px; border: 1px solid #6d28d9; width: 20%;">${currentLang === 'ar' ? 'النسبة' : 'Percentage'}</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    for (let i = 0; i < 5; i++) {
+        const percentage = Math.round((sectionScores[i] / sectionTotals[i]) * 100);
+        const barColor = percentage >= 75 ? '#10b981' : percentage >= 50 ? '#f59e0b' : '#ef4444';
+        const rowBg = i % 2 === 0 ? '#f9fafb' : '#ffffff';
+        
+        answersHTML += `
+            <tr style="background: ${rowBg};">
+                <td style="padding: 10px; border: 1px solid #e5e7eb; font-weight: 600;">${currentSectionNames[i]}</td>
+                <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold; color: #0d9488;">
+                    ${sectionScores[i]} / ${sectionTotals[i]}
+                </td>
+                <td style="padding: 10px; border: 1px solid #e5e7eb;">
+                    <div style="background: #e5e7eb; border-radius: 10px; overflow: hidden; height: 20px; position: relative;">
+                        <div style="background: ${barColor}; width: ${percentage}%; height: 100%;"></div>
+                        <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 11px; font-weight: bold; color: #1f2937;">
+                            ${percentage}%
+                        </span>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }
+
+    answersHTML += `
+                </tbody>
+            </table>
+
+            <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 15px; border-radius: 0 0 10px 10px; border-top: 2px solid #f59e0b;">
+                <p style="margin: 0; color: #78350f; text-align: center; font-size: 13px;">
+                    💡 <strong>${currentLang === 'ar' ? 'ملاحظة:' : 'Note:'}</strong> 
+                    ${currentLang === 'ar' 
+                        ? 'تم إرسال هذا التقرير تلقائياً من منصة 4U التعليمية | Mr. Mohammed Hesham' 
+                        : 'This report was automatically sent from 4U Educational Platform | Mr. Mohammed Hesham'}
+                </p>
+            </div>
+        </div>
+    `;
+
+    const templateParams = {
+        to_email: TARGET_EMAIL,
+        student_name: name,
+        student_class: studentClass,
+        exam_date: date,
+        total_score: score,
+        success_rate: successRate,
+        grade: badge,
+        answers_table: answersHTML
+    };
+
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
+        .then(() => {
+            status.textContent = currentLang === 'ar' 
+                ? '✅ تم إرسال النتائج بنجاح!' 
+                : '✅ Results sent successfully!';
+            status.style.color = '#059669';
+            btn.textContent = currentLang === 'ar' ? '✓ تم الإرسال' : '✓ Sent';
+        })
+        .catch(err => {
+            status.textContent = currentLang === 'ar' 
+                ? '❌ فشل الإرسال، حاول مرة أخرى' 
+                : '❌ Failed to send, try again';
+            status.style.color = '#dc2626';
+            btn.disabled = false;
+            btn.textContent = currentLang === 'ar' ? '📧 إعادة المحاولة' : '📧 Retry Send';
+            console.error('EmailJS Error:', err);
+        });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    prepareShuffledExam();
+    renderExam();
+    startTimer();
+    console.log('🔀 تم خلط الأسئلة والخيارات عشوائياً!');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Grade 11 Advanced Physics - Using Newton's Laws (Unit 4 - Lesson 2)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        body.en-mode { font-family: 'Inter', sans-serif; }
+        .correct { background-color: #dcfce7 !important; border-color: #16a34a !important; }
+        .incorrect { background-color: #fee2e2 !important; border-color: #dc2626 !important; }
+        .formula { font-family: 'Times New Roman', serif; letter-spacing: 0.5px; direction: ltr; display: inline-block; font-style: italic; }
+        .timer-warning { color: #dc2626 !important; animation: pulse 1s infinite; }
+        @keyframes pulse { 50% { opacity: 0.7; } }
+        @media print { .no-print { display: none !important; } }
+        .success-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.875rem; }
+        .grade-excellent { background: #dcfce7; color: #166534; }
+        .grade-good { background: #fef3c7; color: #92400e; }
+        .grade-pass { background: #dbeafe; color: #1e40af; }
+        .grade-fail { background: #fee2e2; color: #991b1b; }
+        .lang-switch {
+            position: fixed; top: 16px; left: 16px; z-index: 100;
+            background: white; padding: 6px; border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; gap: 4px;
+            border: 2px solid #0d9488;
+        }
+        [dir="ltr"] .lang-switch { left: auto; right: 16px; }
+        .lang-btn {
+            padding: 6px 14px; border-radius: 20px; cursor: pointer; font-weight: bold;
+            transition: all 0.3s; border: none; font-size: 0.875rem;
+            background: transparent; color: #6b7280;
+        }
+        .lang-btn.active { background: #0d9488; color: white; box-shadow: 0 2px 6px rgba(13,148,136,0.4); }
+        .lang-btn:hover:not(.active) { background: #f0fdfa; color: #0d9488; }
+        .shuffle-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 md:p-8 min-h-screen">
+
+    <div class="lang-switch no-print">
+        <button class="lang-btn active" onclick="setLanguage('ar')" id="btn-ar">عربي</button>
+        <button class="lang-btn" onclick="setLanguage('en')" id="btn-en">EN</button>
+    </div>
+
+    <div id="timer-container" class="max-w-4xl mx-auto mb-4 text-center no-print">
+        <div class="bg-white p-4 rounded-xl shadow-md inline-block border-2 border-teal-100">
+            <span class="text-gray-600 ml-2" data-ar="⏱️ الوقت المتبقي:" data-en="⏱️ Time Remaining:">⏱️ الوقت المتبقي:</span>
+            <span id="timer" class="text-2xl font-bold text-teal-600 font-mono">60:00</span>
+            <span class="shuffle-badge" data-ar="🔀 أسئلة عشوائية" data-en="🔀 Random Questions">🔀 أسئلة عشوائية</span>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto mb-6 flex flex-wrap gap-3 justify-center no-print">
+        <button onclick="toggleAnswers()" class="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="👁️ إظهار / إخفاء الإجابات" data-en="👁️ Show / Hide Answers">👁️ إظهار / إخفاء الإجابات</button>
+        <button onclick="window.print()" class="bg-gray-800 hover:bg-gray-900 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="🖨️ طباعة / PDF" data-en="🖨️ Print / PDF">🖨️ طباعة / PDF</button>
+        <button onclick="reshuffleExam()" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="🔀 إعادة خلط الأسئلة" data-en="🔀 Reshuffle Questions">🔀 إعادة خلط الأسئلة</button>
+    </div>
+
+    <header class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-md mb-8 border-r-4 border-teal-600">
+        <div class="text-center">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2" data-ar="⚡ فيزياء الصف الحادي عشر متقدم (بريدج)" data-en="⚡ Grade 11 Advanced Physics (Bridge)">⚡ فيزياء الصف الحادي عشر متقدم (بريدج)</h1>
+            <h2 class="text-lg text-teal-600 font-semibold" data-ar="الدرس الثاني: استخدام قوانين نيوتن (الوحدة الرابعة)" data-en="Lesson 2: Using Newton's Laws (Unit 4)">الدرس الثاني: استخدام قوانين نيوتن (الوحدة الرابعة)</h2>
+            <p class="text-sm text-gray-600 mt-2" data-ar="قانون نيوتن الثاني، الوزن الحقيقي والوزن الظاهري، حركة المصاعد، قوة الممانعة والسرعة الحدية" data-en="Newton's second law, real vs apparent weight, elevator motion, drag force, and terminal velocity">قانون نيوتن الثاني، الوزن الحقيقي والوزن الظاهري، حركة المصاعد، قوة الممانعة والسرعة الحدية</p>
+            <p class="text-xs text-orange-600 mt-2 font-semibold" data-ar="⚠️ ملاحظة: يتم خلط ترتيب الأسئلة والخيارات تلقائياً مع كل تحديث للصفحة" data-en="⚠️ Note: Questions and options are randomly shuffled on every page refresh">⚠️ ملاحظة: يتم خلط ترتيب الأسئلة والخيارات تلقائياً مع كل تحديث للصفحة</p>
+        </div>
+        <div class="mt-4 flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+            <span><span data-ar="📅 التاريخ:" data-en="📅 Date:">📅 التاريخ:</span> <input type="text" class="border-b border-gray-400 bg-transparent w-28 text-center"></span>
+            <span><span data-ar="👤 الاسم:" data-en="👤 Name:">👤 الاسم:</span> <input type="text" id="studentName" class="border-b border-gray-400 bg-transparent w-32 text-center" placeholder="Enter name"></span>
+            <span><span data-ar="🏫 الشعبة:" data-en="🏫 Class:">🏫 الشعبة:</span> <input type="text" id="studentClass" class="border-b border-gray-400 bg-transparent w-28 text-center" placeholder="Class"></span>
+            <span><span data-ar="⏱️ المدة: 60 دقيقة" data-en="⏱️ Duration: 60 min">⏱️ المدة: 60 دقيقة</span></span>
+            <span><span data-ar="📊 المجموع: 100 درجة" data-en="📊 Total: 100 pts">📊 المجموع: 100 درجة</span></span>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto space-y-8" id="exam-content"></main>
+
+    <div class="text-center no-print pb-8 mt-8">
+        <button onclick="gradeExam()" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-lg px-10 py-4 rounded-xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer" data-ar="📝 تسليم وتصحيح الامتحان" data-en="📝 Submit & Grade Exam">📝 تسليم وتصحيح الامتحان</button>
+    </div>
+
+    <div id="results-panel" class="max-w-4xl mx-auto mt-8 bg-white p-8 rounded-2xl shadow-2xl border-t-4 border-emerald-500 hidden no-print">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center" data-ar="📊 نتائج الامتحان" data-en="📊 Exam Results">📊 نتائج الامتحان</h2>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div class="bg-blue-50 p-4 rounded-xl text-center"><p data-ar="اسم الطالب" data-en="Student Name">اسم الطالب</p><p id="res-name" class="font-bold text-xl text-teal-700">-</p></div>
+            <div class="bg-purple-50 p-4 rounded-xl text-center"><p data-ar="التاريخ" data-en="Date">التاريخ</p><p id="res-date" class="font-bold text-xl text-purple-700">-</p></div>
+            <div class="bg-emerald-50 p-4 rounded-xl text-center"><p data-ar="المجموع" data-en="Score">المجموع</p><p id="res-total" class="font-bold text-3xl text-emerald-600">0 / 100</p></div>
+        </div>
+        <div class="text-center mb-6">
+            <span id="success-badge" class="success-badge grade-excellent">-</span>
+            <p id="success-percent" class="text-4xl font-bold text-emerald-600 mt-2">100%</p>
+            <p class="text-sm text-gray-500" data-ar="نسبة النجاح" data-en="Success Rate">نسبة النجاح</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-xl mb-6">
+            <h3 class="font-bold text-lg mb-4 text-gray-800" data-ar="📈 تفصيل الأداء حسب القسم:" data-en="📈 Performance Breakdown:">📈 تفصيل الأداء حسب القسم:</h3>
+            <div class="space-y-3">
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="قانون نيوتن الثاني والتسارع" data-en="Newton's Second Law & Acceleration">قانون نيوتن الثاني والتسارع</span>
+                    <span id="sec1-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="الوزن الحقيقي والوزن الظاهري" data-en="Real vs Apparent Weight">الوزن الحقيقي والوزن الظاهري</span>
+                    <span id="sec2-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="حركة المصاعد وحسابات الوزن الظاهري" data-en="Elevator Motion & Apparent Weight">حركة المصاعد وحسابات الوزن الظاهري</span>
+                    <span id="sec3-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="قوة الممانعة والسرعة الحدية" data-en="Drag Force & Terminal Velocity">قوة الممانعة والسرعة الحدية</span>
+                    <span id="sec4-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="تطبيقات الحركة المتسارعة وحل المسائل" data-en="Accelerated Motion Applications">تطبيقات الحركة المتسارعة وحل المسائل</span>
+                    <span id="sec5-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mb-6">
+            <button id="sendEmailBtn" onclick="sendResultsToEmail()" class="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white text-lg px-8 py-3 rounded-xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer" data-ar="📧 إرسال النتائج للمعلم" data-en="📧 Send Results to Teacher">📧 إرسال النتائج للمعلم</button>
+            <p id="emailStatus" class="text-sm mt-2 text-center font-medium"></p>
+        </div>
+        <div class="flex gap-3 justify-center">
+            <button onclick="window.print()" class="bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold" data-ar="🖨️ طباعة النتائج" data-en="🖨️ Print Results">🖨️ طباعة النتائج</button>
+        </div>
+    </div>
+
+    <footer class="max-w-4xl mx-auto mt-10 mb-8 text-center text-gray-500 text-sm no-print">
+        © <span data-ar="فيزياء الصف 11 متقدم بريدج | الدرس الثاني: استخدام قوانين نيوتن" data-en="Grade 11 Advanced Bridge Physics | Lesson 2: Using Newton's Laws">فيزياء الصف 11 متقدم بريدج | الدرس الثاني: استخدام قوانين نيوتن</span> | Mr. Mohammed Hesham
+    </footer>
+
+<script>
+// ==================== إعدادات EmailJS ====================
+const PUBLIC_KEY = "Rb3Lq8tXaFmc5YHUH";
+const SERVICE_ID = "service_w15m64i";
+const TEMPLATE_ID = "template_5b0u2tq";
+const TARGET_EMAIL = "mohammedhesham872@gmail.com";
+
+// تهيئة EmailJS عند تحميل الصفحة
+emailjs.init(PUBLIC_KEY);
+
+const originalExamData = {
+    sections: [
+        {
+            id: 'sec1',
+            title: { ar: '🔹 الجزء الأول: قانون نيوتن الثاني والتسارع', en: '🔹 Part 1: Newton\'s Second Law & Acceleration' },
+            questions: [
+                {
+                    q: { ar: 'كيف يربط قانون نيوتن الثاني بين القوة المحصلة والتسارع والكتلة؟', en: 'How does Newton\'s Second Law relate net force, acceleration, and mass?' },
+                    options: [
+                        { ar: 'التسارع يتناسب طردياً مع القوة المحصلة وعكسياً مع الكتلة', en: 'Acceleration is directly proportional to net force and inversely proportional to mass' },
+                        { ar: 'التسارع يتناسب عكسياً مع القوة المحصلة وطردياً مع الكتلة', en: 'Acceleration is inversely proportional to net force and directly proportional to mass' },
+                        { ar: 'القوة المحصلة تتناسب عكسياً مع كل من الكتلة والتسارع', en: 'Net force is inversely proportional to both mass and acceleration' },
+                        { ar: 'التسارع مستقل تماماً عن كتلة الجسم ويعتمد على القوة فقط', en: 'Acceleration is completely independent of mass and depends on force only' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'ينص قانون نيوتن الثاني على أن تسارع الجسم يساوي القوة المحصلة المؤثرة عليه مقسومة على كتلته (<span class="formula">a = F_net / m</span>).', en: 'Newton\'s Second Law states that acceleration is net force divided by mass (<span class="formula">a = F_net / m</span>).' }
+                },
+                {
+                    q: { ar: 'إذا تضاعفت القوة المحصلة المؤثرة على جسم كتلته ثابتة بمقدار مرتين، فإن تسارع هذا الجسم:', en: 'If the net force acting on an object of constant mass is doubled, its acceleration:' },
+                    options: [
+                        { ar: 'يتضاعف بمقدار مرتين', en: 'Doubles' },
+                        { ar: 'يقل إلى النصف', en: 'Decreases to half' },
+                        { ar: 'يزداد بمقدار أربعة أضعاف', en: 'Increases fourfold' },
+                        { ar: 'يبقى ثابتاً دون أي تغيير', en: 'Remains constant' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'التسارع يتناسب طردياً مع القوة المحصلة عند ثبات الكتلة، لذا تضاعف القوة يؤدي مباشرة لتضاعف التسارع.', en: 'Acceleration is directly proportional to net force for a constant mass; doubling the force doubles the acceleration.' }
+                },
+                {
+                    q: { ar: 'تؤثر قوة محصلة مقدارها <span class="formula">24 N</span> على جسم كتلته <span class="formula">6.0 kg</span>. ما مقدار تسارع هذا الجسم؟', en: 'A net force of 24 N acts on a body of mass 6.0 kg. What is its acceleration?' },
+                    options: [
+                        { ar: '<span class="formula">4.0 m/s²</span>', en: '4.0 m/s²' },
+                        { ar: '<span class="formula">144.0 m/s²</span>', en: '144.0 m/s²' },
+                        { ar: '<span class="formula">0.25 m/s²</span>', en: '0.25 m/s²' },
+                        { ar: '<span class="formula">18.0 m/s²</span>', en: '18.0 m/s²' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'بتطبيق القانون الثاني لنيوتن: <span class="formula">a = F_net / m = 24 / 6.0 = 4.0 m/s²</span>.', en: 'Applying Newton\'s Second Law: a = F_net / m = 24 / 6.0 = 4.0 m/s².' }
+                },
+                {
+                    q: { ar: 'جسم كتلته <span class="formula">10 kg</span> يسقط بتسارع مقداره <span class="formula">3.0 m/s²</span> في مائع. ما مقدار القوة المحصلة المؤثرة عليه؟', en: 'A body of mass 10 kg falls with an acceleration of 3.0 m/s² in a fluid. What is the net force acting on it?' },
+                    options: [
+                        { ar: '<span class="formula">30 N</span>', en: '30 N' },
+                        { ar: '<span class="formula">3.3 N</span>', en: '3.3 N' },
+                        { ar: '<span class="formula">98 N</span>', en: '98 N' },
+                        { ar: '<span class="formula">130 N</span>', en: '130 N' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'القوة المحصلة تساوي الكتلة × التسارع: <span class="formula">F_net = m · a = 30 N</span>.', en: 'Net force equals mass times acceleration: F_net = m · a = 10 × 3.0 = 30 N.' }
+                }
+            ]
+        },
+        {
+            id: 'sec2',
+            title: { ar: '🔹 الجزء الثاني: الوزن الحقيقي والوزن الظاهري', en: '🔹 Part 2: Real vs Apparent Weight' },
+            questions: [
+                {
+                    q: { ar: 'ما هو الفرق الفيزيائي بين كتلة الجسم (Mass) ووزنه الحقيقي (Weight)؟', en: 'What is the physical difference between an object\'s mass and its real weight?' },
+                    options: [
+                        { ar: 'الكتلة مقدار ثابت يعبر عن قصور الجسم، بينما الوزن قوة تعتمد على تسارع الجاذبية', en: 'Mass is constant representing inertia, while weight is a force depending on gravity' },
+                        { ar: 'الوزن مقدار ثابت لا يتغير في أي مكان بالكون، بينما الكتلة تتغير بتغير الموقع', en: 'Weight is a constant quantity that does not change, while mass changes depending on location' },
+                        { ar: 'الكتلة كمية متجهة تقاس بالنيوتن، والوزن كمية قياسية يقاس بالكيلوجرام', en: 'Mass is a vector quantity in Newtons, and weight is a scalar quantity in kilograms' },
+                        { ar: 'الكتلة والوزن كميتان متطابقتان تماماً في الطبيعة والتعريف الفيزيائي', en: 'Mass and weight are completely identical in nature and physical definition' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الكتلة خاصية ذاتية للجسم وتقيس ممانعته للتسارع ووحدتها الكيلوجرام، أما الوزن فهو قوة جذب الجاذبية للجسم ووحدتها النيوتن وتتغير بتغير المكان.', en: 'Mass is an intrinsic property in kg, while weight is the gravitational force in Newtons which varies with location.' }
+                },
+                {
+                    q: { ar: 'ما هو "الوزن الظاهري" (Apparent Weight) لجسم ما؟', en: 'What is the "apparent weight" of an object?' },
+                    options: [
+                        { ar: 'القوة التي تؤثر بها موازين القراءة أو أسطح الدعم على الجسم وتحدد شعوره بالثقل', en: 'The force exerted by reading scales or supporting surfaces on the object, determining its sensation of heaviness' },
+                        { ar: 'الوزن الفعلي المقاس للجسم في غياب تام للغلاف الجوي', en: 'The actual measured weight of the object in the complete absence of atmosphere' },
+                        { ar: 'الوزن التقديري للجسم عند مقارنته بحجمه الكلي', en: 'The estimated weight of the object when compared to its total volume' },
+                        { ar: 'قوة الجاذبية التي تؤثر بها الشمس على الجسم', en: 'The gravitational force exerted by the sun on the object' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الوزن الظاهري هو القوة المحسوسة الداعمة للجسم، مثل قراءة الميزان الذي يقف عليه الشخص داخل مصعد متحرك.', en: 'Apparent weight is the supporting force acting on an object, such as the scale reading in a moving elevator.' }
+                },
+                {
+                    q: { ar: 'متى يتساوى الوزن الظاهري للشخص تماماً مع وزنه الحقيقي؟', en: 'When does a person\'s apparent weight exactly equal their real weight?' },
+                    options: [
+                        { ar: 'عندما يكون المصعد ساكناً أو يتحرك بسرعة متجهة ثابتة (العجلة تساوي صفراً)', en: 'When the elevator is stationary or moving with a constant velocity (acceleration is zero)' },
+                        { ar: 'عندما يتسارع المصعد لأعلى بمقدار ثابت', en: 'When the elevator accelerates upward at a constant rate' },
+                        { ar: 'عندما يتسارع المصعد لأسفل بمقدار ثابت', en: 'When the elevator accelerates downward at a constant rate' },
+                        { ar: 'عندما يسقط المصعد سقوطاً حراً نتيجة انقطاع الحبل', en: 'When the elevator falls freely due to a cable break' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'عندما تكون العجلة صفراً (<span class="formula">a = 0</span>)، فإن القوة الداعمة (العمودية أو قراءة الميزان) تساوي قوة الجاذبية تماماً: <span class="formula">F_apparent = m·g</span>.', en: 'When acceleration is zero (a = 0), the scale support force matches gravity exactly: F_apparent = mg.' }
+                },
+                {
+                    q: { ar: 'ماذا يحدث للوزن الظاهري لشخص داخل مصعد يمر بحالة سقوط حر (Free Fall)؟', en: 'What happens to the apparent weight of a person in an elevator in free fall?' },
+                    options: [
+                        { ar: 'يصبح صفراً تماماً (انعدام الوزن)', en: 'It becomes exactly zero (weightlessness)' },
+                        { ar: 'يتضاعف ليصبح ضعف الوزن الحقيقي للشخص', en: 'It doubles to become twice the person\'s real weight' },
+                        { ar: 'يقل بمقدار النصف فقط مقارنة بوزنه الطبيعي', en: 'It decreases by half only compared to their normal weight' },
+                        { ar: 'يزداد تدريجياً مع زيادة سرعة الهبوط', en: 'It increases gradually with the increase of descent speed' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'في السقوط الحر، يتسارع المصعد والشخص معاً بمعدل تسارع الجاذبية <span class="formula">g</span>، مما يلغي القوة الداعمة للميزان، فيصبح الوزن الظاهري صفراً.', en: 'In free fall, the scale accelerates downward at g along with the person, removing any contact support force, so apparent weight is zero.' }
+                }
+            ]
+        },
+        {
+            id: 'sec3',
+            title: { ar: '🔹 الجزء الثالث: حركة المصاعد وحسابات الوزن الظاهري', en: '🔹 Part 3: Elevator Motion & Apparent Weight' },
+            questions: [
+                {
+                    q: { ar: 'يقف طفل كتلته <span class="formula">50.0 kg</span> على ميزان داخل مصعد يتسارع لأعلى بمقدار <span class="formula">2.0 m/s²</span>. ما هي قراءة الميزان بالنيوتن؟ (بفرض <span class="formula">g = 10 m/s²</span>)', en: 'A child of mass 50.0 kg stands on a scale inside an elevator accelerating upward at 2.0 m/s². What is the scale reading? (Assume g = 10 m/s²)' },
+                    options: [
+                        { ar: '<span class="formula">600 N</span>', en: '600 N' },
+                        { ar: '<span class="formula">400 N</span>', en: '400 N' },
+                        { ar: '<span class="formula">500 N</span>', en: '500 N' },
+                        { ar: '<span class="formula">100 N</span>', en: '100 N' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'عند التسارع لأعلى، يزداد الوزن الظاهري: <span class="formula">F_apparent = m(g + a) = 50.0 × (10 + 2) = 600 N</span>.', en: 'When accelerating upward, apparent weight increases: F_apparent = m(g + a) = 50.0 × (10 + 2) = 600 N.' }
+                },
+                {
+                    q: { ar: 'في السؤال السابق، إذا كان المصعد يتباطأ أثناء صعوده لأعلى بمقدار <span class="formula">2.0 m/s²</span> (أي أن تسارعه لأسفل)، فكم تكون قراءة الميزان؟', en: 'In the previous question, if the elevator decelerates while moving upward at 2.0 m/s² (acceleration is downward), what is the scale reading?' },
+                    options: [
+                        { ar: '<span class="formula">400 N</span>', en: '400 N' },
+                        { ar: '<span class="formula">600 N</span>', en: '600 N' },
+                        { ar: '<span class="formula">500 N</span>', en: '500 N' },
+                        { ar: '<span class="formula">0 N</span>', en: '0 N' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'التباطؤ أثناء الصعود للأعلى يعني أن اتجاه التسارع لأسفل، وبالتالي يقل الوزن الظاهري: <span class="formula">F_apparent = m(g - a) = 50.0 × (10 - 2) = 400 N</span>.', en: 'Decelerating upward means downward acceleration, decreasing apparent weight: F_apparent = m(g - a) = 50.0 × (10 - 2) = 400 N.' }
+                },
+                {
+                    q: { ar: 'يقف رجل كتلته <span class="formula">80 kg</span> في مصعد يهبط لأسفل ويتسارع بمقدار <span class="formula">1.5 m/s²</span>. ما مقدار الوزن الظاهري للرجل؟ (بفرض <span class="formula">g = 9.8 m/s²</span>)', en: 'A man of mass 80 kg is in an elevator accelerating downward at 1.5 m/s². What is his apparent weight? (Assume g = 9.8 m/s²)' },
+                    options: [
+                        { ar: '<span class="formula">664 N</span>', en: '664 N' },
+                        { ar: '<span class="formula">904 N</span>', en: '904 N' },
+                        { ar: '<span class="formula">784 N</span>', en: '784 N' },
+                        { ar: '<span class="formula">120 N</span>', en: '120 N' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'عند التسارع لأسفل، يقل الوزن الظاهري: <span class="formula">F_apparent = m(g - a) = 80 × (9.8 - 1.5) = 664 N</span>.', en: 'When accelerating downward, apparent weight decreases: F_apparent = m(g - a) = 80 × (9.8 - 1.5) = 664 N.' }
+                },
+                {
+                    q: { ar: 'متى يشعر الشخص داخل مصعد بثقل أكبر من ثقله الحقيقي (الوزن الظاهري > الوزن الحقيقي)؟', en: 'When does a person inside an elevator feel heavier than their real weight (apparent weight > real weight)?' },
+                    options: [
+                        { ar: 'عندما يتسارع المصعد لأعلى، أو يتباطأ لأسفل', en: 'When the elevator accelerates upward, or decelerates downward' },
+                        { ar: 'عندما يتسارع المصعد لأسفل، أو يتباطأ لأعلى', en: 'When the elevator accelerates downward, or decelerates upward' },
+                        { ar: 'عندما يتحرك المصعد بسرعة ثابتة لأسفل', en: 'When the elevator moves at constant speed downward' },
+                        { ar: 'عندما يكون المصعد متوقفاً تماماً', en: 'When the elevator is completely stationary' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'يشعر الشخص بالثقل الزائد عندما يكون اتجاه التسارع للأعلى (سواء صعود متسارع أو هبوط متباطئ).', en: 'A person feels heavier when the acceleration is upward (either accelerating upward or decelerating downward).' }
+                }
+            ]
+        },
+        {
+            id: 'sec4',
+            title: { ar: '🔹 الجزء الرابع: قوة الممانعة والسرعة الحدية', en: '🔹 Part 4: Drag Force & Terminal Velocity' },
+            questions: [
+                {
+                    q: { ar: 'ما هي قوة الممانعة (Drag Force) المؤثرة على جسم يتحرك في مائع؟', en: 'What is the drag force acting on an object moving through a fluid?' },
+                    options: [
+                        { ar: 'قوة احتكاك يؤثر بها مائع على الأجسام المتحركة فيه وتزداد بزيادة سرعة الجسم', en: 'A friction force exerted by a fluid on moving objects that increases with velocity' },
+                        { ar: 'قوة جذب يؤثر بها الهواء على الأجسام الهابطة لأسفل وتكون ثابتة دائماً', en: 'A gravity-like pull exerted by air on falling objects which is always constant' },
+                        { ar: 'قوة طرد للأعلى تعتمد فقط على كتلة الجسم الساقط', en: 'An upward buoyancy force depending only on the mass of the falling object' },
+                        { ar: 'قوة مغناطيسية تؤثر في المعادن أثناء حركتها في الماء', en: 'A magnetic force acting on metals during their movement in water' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'قوة الممانعة هي قوة مقاومة يبذلها المائع ضد حركة الجسم، وتزداد طردياً مع زيادة سرعة الجسم وخصائصه الهندسية وكثافة المائع.', en: 'Drag force is a resisting force exerted by a fluid on a moving object, increasing with velocity, cross-sectional area, and fluid density.' }
+                },
+                {
+                    q: { ar: 'ما هي العوامل الفيزيائية الأساسية التي تعتمد عليها قوة الممانعة للهواء؟', en: 'What are the main physical factors that drag force depends on?' },
+                    options: [
+                        { ar: 'سرعة الجسم، مساحة مقطعه، وشكله، بالإضافة لكثافة المائع ولزوجته', en: 'The speed, cross-sectional area, shape of the object, and fluid density/viscosity' },
+                        { ar: 'كتلة الجسم الساقط ووزنه الحقيقي وتأثير الجاذبية', en: 'The mass of the falling object, its real weight, and gravity' },
+                        { ar: 'الحجم الداخلي للجسم والمجال المغناطيسي المحيط به', en: 'The internal volume of the object and the surrounding magnetic field' },
+                        { ar: 'زمن سقوط الجسم والارتفاع الذي سقط منه فقط', en: 'The time of fall and the height from which it was released only' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'تعتمد الممانعة على مربع السرعة (<span class="formula">v²</span>)، ومساحة المقطع العرضي (<span class="formula">A</span>)، وشكل الجسم (معامل السحب <span class="formula">C_d</span>)، وكثافة الهواء (<span class="formula">ρ</span>).', en: 'Drag force depends on velocity squared (v²), cross-sectional area (A), shape (drag coefficient C_d), and fluid density (ρ).' }
+                },
+                {
+                    q: { ar: 'عندما يصل جسم ساقط في الهواء إلى سرعته الحدية (Terminal Velocity)، فكم تكون عجلته وقوته المحصلة؟', en: 'When a falling object reaches its terminal velocity, what are its acceleration and net force?' },
+                    options: [
+                        { ar: 'العجلة تساوي صفراً والقوة المحصلة تساوي صفراً', en: 'Acceleration is zero and net force is zero' },
+                        { ar: 'العجلة تساوي <span class="formula">9.8 m/s²</span> والقوة المحصلة تساوي وزنه', en: 'Acceleration is 9.8 m/s² and net force equals its weight' },
+                        { ar: 'العجلة تصل لأقصى قيمة لها والقوة المحصلة تساوي وزنه الظاهري', en: 'Acceleration reaches its maximum value and net force equals its apparent weight' },
+                        { ar: 'العجلة تقل تدريجياً وتكون القوة المحصلة موجهة للأعلى دائماً', en: 'Acceleration decreases gradually and net force is always directed upward' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'عند السرعة الحدية، تتساوى قوة ممانعة الهواء للأعلى مع وزن الجسم للأسفل، فتصبح القوة المحصلة صفراً، وبالتالي تصبح العجلة صفراً وتثبت السرعة.', en: 'At terminal velocity, upward drag balances downward weight, resulting in zero net force and zero acceleration.' }
+                },
+                {
+                    q: { ar: 'يسقط جسمان متطابقان في الحجم والشكل من الارتفاع نفسه في الهواء، لكن الجسم الأول أثقل وزناً (أكبر كتلة) من الثاني. أي منهما يصل للأرض أولاً؟', en: 'Two objects of identical shape and size fall from the same height, but the first is heavier (has more mass). Which one reaches the ground first?' },
+                    options: [
+                        { ar: 'الجسم الأثقل وزناً لأنه يحتاج لسرعة حدية أعلى حتى تعادل ممانعة الهواء وزنه الأكبر', en: 'The heavier object because it requires a higher terminal velocity to balance drag with its larger weight' },
+                        { ar: 'الجسم الأخف وزناً لأن مقاومة الهواء المؤثرة عليه تكون أصغر بكثير', en: 'The lighter object because the air resistance acting on it is much smaller' },
+                        { ar: 'يصلان معاً في الوقت نفسه لأن الهواء يؤثر عليهما بالتساوي تماماً', en: 'They arrive at the same time because air affects them equally' },
+                        { ar: 'لا يصل أي منهما بل يظلان معلقين في الهواء بسبب مقاومة الهواء الثابتة', en: 'Neither arrives; they remain suspended due to constant air resistance' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الجسم الأثقل يحتاج لقوة ممانعة أكبر لتعادل وزنه، وبما أن قوة الممانعة تزيد بزيادة السرعة، فإن الجسم الأثقل يصل لسرعة حدية أعلى ويهبط أسرع.', en: 'The heavier object requires a larger drag force to balance its weight, meaning it accelerates to a higher terminal velocity and falls faster.' }
+                }
+            ]
+        },
+        {
+            id: 'sec5',
+            title: { ar: '🔹 الجزء الخامس: تطبيقات الحركة المتسارعة وحل المسائل', en: '🔹 Part 5: Accelerated Motion Applications' },
+            questions: [
+                {
+                    q: { ar: 'يسحب عامل صندوقاً كتلته <span class="formula">40 kg</span> بقوة أفقية مقدارها <span class="formula">180 N</span> على سطح جليدي عديم الاحتكاك. ما هو تسارع الصندوق؟', en: 'A worker pulls a 40 kg box with a horizontal force of 180 N on frictionless ice. What is the acceleration?' },
+                    options: [
+                        { ar: '<span class="formula">4.5 m/s²</span>', en: '4.5 m/s²' },
+                        { ar: '<span class="formula">0.22 m/s²</span>', en: '0.22 m/s²' },
+                        { ar: '<span class="formula">7200 m/s²</span>', en: '7200 m/s²' },
+                        { ar: '<span class="formula">9.8 m/s²</span>', en: '9.8 m/s²' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'التسارع يساوي القوة مقسومة على الكتلة: <span class="formula">a = F / m = 180 / 40 = 4.5 m/s²</span>.', en: 'Acceleration is force divided by mass: a = F / m = 180 / 40 = 4.5 m/s².' }
+                },
+                {
+                    q: { ar: 'سيارة سباق كتلتها <span class="formula">800 kg</span> تتسارع من السكون بمعدل <span class="formula">5.0 m/s²</span>. ما مقدار القوة المحصلة المؤثرة عليها؟', en: 'A race car of mass 800 kg accelerates from rest at 5.0 m/s². What is the net force acting on it?' },
+                    options: [
+                        { ar: '<span class="formula">4000 N</span>', en: '4000 N' },
+                        { ar: '<span class="formula">160 N</span>', en: '160 N' },
+                        { ar: '<span class="formula">800 N</span>', en: '800 N' },
+                        { ar: '<span class="formula">0.006 N</span>', en: '0.006 N' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'بتطبيق قانون نيوتن الثاني: <span class="formula">F_net = m·a = 800 × 5.0 = 4000 N</span>.', en: 'Applying Newton\'s Second Law: F_net = m · a = 800 × 5.0 = 4000 N.' }
+                },
+                {
+                    q: { ar: 'مظلي كتلته <span class="formula">70 kg</span> يهبط في الهواء بسرعة حدية. ما مقدار قوة مقاومة الهواء المؤثرة عليه للأعلى في هذه اللحظة؟ (بفرض <span class="formula">g = 9.8 m/s²</span>)', en: 'A skydiver of mass 70 kg descends at terminal velocity. What is the upward air drag force acting on them? (Assume g = 9.8 m/s²)' },
+                    options: [
+                        { ar: '<span class="formula">686 N</span>', en: '686 N' },
+                        { ar: '<span class="formula">70 N</span>', en: '70 N' },
+                        { ar: '<span class="formula">0 N</span>', en: '0 N' },
+                        { ar: '<span class="formula">1400 N</span>', en: '1400 N' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'عند السرعة الحدية، تتعادل قوة الممانعة للأعلى مع الوزن للأسفل تماماً: <span class="formula">F_drag = Fg = m·g = 70 × 9.8 = 686 N</span>.', en: 'At terminal velocity, upward drag equals downward weight: F_drag = Fg = mg = 70 × 9.8 = 686 N.' }
+                },
+                {
+                    q: { ar: 'ما الذي يحدث لتسارع جسم يسقط في غلاف جوي حقيقي من لحظة سقوطه حتى لحظة وصوله للسرعة الحدية؟', en: 'What happens to the acceleration of an object falling in a real atmosphere from release until it reaches terminal velocity?' },
+                    options: [
+                        { ar: 'يقل التسارع تدريجياً من <span class="formula">g</span> حتى يصل إلى الصفر عند السرعة الحدية', en: 'Acceleration decreases gradually from g to zero at terminal velocity' },
+                        { ar: 'يزداد التسارع تدريجياً بزيادة السرعة ومقاومة الهواء', en: 'Acceleration increases gradually with increasing speed and air resistance' },
+                        { ar: 'يبقى التسارع ثابتاً ومساوياً لـ <span class="formula">g</span> طوال مسار الحركة', en: 'Acceleration remains constant and equal to g throughout the path of motion' },
+                        { ar: 'يصبح التسارع سالباً مباشرة بمجرد تأثير مقاومة الهواء للأعلى', en: 'Acceleration becomes negative immediately as upward air resistance acts' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'عند البدء تكون السرعة صفراً والممانعة صفراً فيكون التسارع <span class="formula">g</span>. مع السقوط وزيادة السرعة تزداد الممانعة فتقل القوة المحصلة ويقل التسارع تدريجياً حتى يصبح صفراً عند تساوي الممانعة مع الوزن.', en: 'Initially, velocity is zero, drag is zero, so acceleration is g. As drag increases, net force and acceleration decrease to zero.' }
+                }
+            ]
+        }
+    ]
+};
+
+// خلط مصفوفة
+function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+let examData;
+let correctAnswersMap = {};
+let currentLang = 'ar';
+let timeRemaining = 3600;
+let timerInterval;
+
+function prepareShuffledExam() {
+    examData = JSON.parse(JSON.stringify(originalExamData));
+    correctAnswersMap = {};
+    let globalIdx = 0;
+    
+    examData.sections.forEach((section) => {
+        section.questions = shuffleArray(section.questions);
+        
+        section.questions.forEach((q) => {
+            const optionsWithCorrect = q.options.map((opt, idx) => ({
+                option: opt,
+                isCorrect: idx === q.correct
+            }));
+            
+            const shuffledOptions = shuffleArray(optionsWithCorrect);
+            q.options = shuffledOptions.map(o => o.option);
+            
+            const newCorrectIndex = shuffledOptions.findIndex(o => o.isCorrect);
+            q.correct = newCorrectIndex;
+            
+            correctAnswersMap[globalIdx] = String.fromCharCode(97 + newCorrectIndex);
+            globalIdx++;
+        });
+    });
+}
+
+function reshuffleExam() {
+    prepareShuffledExam();
+    renderExam();
+    document.querySelectorAll('input[type="radio"]:checked').forEach(r => r.checked = false);
+    document.getElementById('results-panel').classList.add('hidden');
+    document.querySelectorAll('.correct, .incorrect').forEach(el => {
+        el.classList.remove('correct', 'incorrect');
+    });
+    alert(currentLang === 'ar' 
+        ? '🔀 تم إعادة خلط الأسئلة والخيارات بنجاح!' 
+        : '🔀 Questions and options have been reshuffled successfully!');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    
+    document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    
+    document.body.classList.toggle('en-mode', lang === 'en');
+    
+    document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+    });
+    
+    renderExam();
+}
+
+function renderExam() {
+    const container = document.getElementById('exam-content');
+    const labels = {
+        ar: { option: ['أ', 'ب', 'ج', 'د'], answer: '✅ الإجابة الصحيحة:' },
+        en: { option: ['A', 'B', 'C', 'D'], answer: '✅ Correct Answer:' }
+    };
+    const lbl = labels[currentLang];
+    const isRTL = currentLang === 'ar';
+    
+    let html = '';
+    let globalIdx = 0;
+    
+    examData.sections.forEach((section) => {
+        html += `
+        <section class="bg-white p-6 rounded-xl shadow-lg">
+            <h2 class="text-xl font-bold mb-4 text-teal-700">${section.title[currentLang]}</h2>
+            <ol class="space-y-4 text-sm">`;
+            
+        section.questions.forEach((q) => {
+            const borderSide = isRTL ? 'border-r-4 pr-4' : 'border-l-4 pl-4';
+            html += `
+                <li class="${borderSide} border-teal-500 py-2" id="q-${globalIdx}">
+                    <strong>${globalIdx + 1}.</strong> ${q.q[currentLang]}<br>`;
+                    
+            q.options.forEach((opt, oIdx) => {
+                const radioSide = isRTL ? 'mr-4 ml-2' : 'ml-4 mr-2';
+                html += `
+                    <label class="cursor-pointer block mt-1 ${isRTL ? 'mr-4' : 'ml-4'}">
+                        <input type="radio" name="q${globalIdx}" value="${String.fromCharCode(97 + oIdx)}" class="${radioSide}"> 
+                        ${lbl.option[oIdx]}) ${opt[currentLang]}
+                    </label>`;
+            });
+            
+            html += `
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">
+                        ${lbl.answer} ${lbl.option[q.correct]}) ${q.options[q.correct][currentLang]} — ${q.answer[currentLang]}
+                    </div>
+                </li>`;
+            globalIdx++;
+        });
+        
+        html += `
+            </ol>
+        </section>`;
+    });
+    
+    container.innerHTML = html;
+}
+
+function startTimer() {
+    document.getElementById('timer-container').style.display = 'block';
+    timerInterval = setInterval(() => {
+        timeRemaining--;
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+        const timerEl = document.getElementById('timer');
+        timerEl.textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+        if (timeRemaining <= 300) timerEl.classList.add('timer-warning');
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            alert(currentLang === 'ar' ? "انتهى الوقت! سيتم تسليم الامتحان تلقائياً." : "Time's up! Exam will be submitted automatically.");
+            gradeExam();
+        }
+    }, 1000);
+}
+
+function toggleAnswers() {
+    document.querySelectorAll('.answer-box').forEach(el => el.classList.toggle('hidden'));
+}
+
+function gradeExam() {
+    let correctCount = 0;
+    let sec1 = 0, sec2 = 0, sec3 = 0, sec4 = 0, sec5 = 0;
+    
+    for (let i = 0; i < 20; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        const li = document.getElementById(`q-${i}`);
+        const correctAnswer = correctAnswersMap[i];
+        
+        if (li) {
+            const isCorrect = selected && selected.value === correctAnswer;
+            
+            if (isCorrect) {
+                correctCount++;
+                li.classList.add('correct');
+                li.classList.remove('incorrect');
+            } else {
+                li.classList.add('incorrect');
+                li.classList.remove('correct');
+            }
+
+            // تتبع أقسام الأسئلة بالتفصيل
+            const isReallyCorrect = isCorrect;
+            if (isReallyCorrect) {
+                if (i < 4) sec1++;
+                else if (i < 8) sec2++;
+                else if (i < 12) sec3++;
+                else if (i < 16) sec4++;
+                else sec5++;
+            }
+        }
+    }
+
+    const score = (correctCount / 20) * 100;
+    const successRate = Math.round(score);
+    
+    document.getElementById('res-total').textContent = `${Math.round(score)} / 100`;
+    document.getElementById('res-name').textContent = document.getElementById('studentName').value || (currentLang === 'ar' ? 'طالب' : 'Student');
+    document.getElementById('res-date').textContent = new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-AE' : 'en-US');
+    
+    document.getElementById('sec1-score').textContent = `${sec1}/4`;
+    document.getElementById('sec2-score').textContent = `${sec2}/4`;
+    document.getElementById('sec3-score').textContent = `${sec3}/4`;
+    document.getElementById('sec4-score').textContent = `${sec4}/4`;
+    document.getElementById('sec5-score').textContent = `${sec5}/4`;
+    
+    const badge = document.getElementById('success-badge');
+    const percent = document.getElementById('success-percent');
+    percent.textContent = `${successRate}%`;
+    
+    if (currentLang === 'ar') {
+        if (successRate >= 90) { badge.textContent = 'ممتاز'; badge.className = 'success-badge grade-excellent'; }
+        else if (successRate >= 75) { badge.textContent = 'جيد جداً'; badge.className = 'success-badge grade-good'; }
+        else if (successRate >= 50) { badge.textContent = 'جيد'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = 'يحتاج تحسين'; badge.className = 'success-badge grade-fail'; }
+    } else {
+        if (successRate >= 90) { badge.textContent = 'Excellent'; badge.className = 'success-badge grade-excellent'; }
+        else if (successRate >= 75) { badge.textContent = 'Very Good'; badge.className = 'success-badge grade-good'; }
+        else if (successRate >= 50) { badge.textContent = 'Good'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = 'Needs Improvement'; badge.className = 'success-badge grade-fail'; }
+    }
+    
+    document.getElementById('results-panel').classList.remove('hidden');
+    document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('sendEmailBtn').classList.remove('hidden');
+}
+
+function sendResultsToEmail() {
+    const btn = document.getElementById('sendEmailBtn');
+    const status = document.getElementById('emailStatus');
+    btn.disabled = true;
+    btn.textContent = currentLang === 'ar' ? '⏳ جاري الإرسال...' : '📤 Sending...';
+
+    const name = document.getElementById('studentName').value || 'N/A';
+    const studentClass = document.getElementById('studentClass').value || 'N/A';
+    const date = document.querySelector('input[type="text"]').value || new Date().toLocaleDateString();
+    const score = document.getElementById('res-total').textContent;
+    const successRate = document.getElementById('success-percent').textContent;
+    const badge = document.getElementById('success-badge').textContent;
+
+    const sectionNames = {
+        ar: ['قانون نيوتن الثاني والتسارع', 'الوزن الحقيقي والوزن الظاهري', 'حركة المصاعد وحسابات الوزن الظاهري', 'قوة الممانعة والسرعة الحدية', 'تطبيقات الحركة المتسارعة وحل المسائل'],
+        en: ['Newton\'s Second Law & Acceleration', 'Real vs Apparent Weight', 'Elevator Motion & Apparent Weight', 'Drag Force & Terminal Velocity', 'Accelerated Motion Applications']
+    };
+    const currentSectionNames = sectionNames[currentLang];
+
+    let answersHTML = `
+        <div style="font-family: 'Segoe UI', Tahoma, Arial, sans-serif; direction: ${currentLang === 'ar' ? 'rtl' : 'ltr'};">
+            <div style="background: linear-gradient(135deg, #0d9488, #0891b2); color: white; padding: 20px; border-radius: 10px 10px 0 0; text-align: center;">
+                <h2 style="margin: 0; font-size: 22px;">⚡ ${currentLang === 'ar' ? 'نتيجة امتحان استخدام قوانين نيوتن' : 'Using Newton\'s Laws Exam Result'}</h2>
+                <p style="margin: 5px 0 0 0; opacity: 0.9;">${currentLang === 'ar' ? 'فيزياء الصف الحادي عشر متقدم (بريدج) | الفصل الدراسي الأول' : 'Grade 11 Advanced Physics (Bridge) | Term 1'}</p>
+                <p style="margin: 5px 0 0 0; font-size: 12px; opacity: 0.8;">🔀 ${currentLang === 'ar' ? 'تم خلط الأسئلة تلقائياً' : 'Questions were randomly shuffled'}</p>
+            </div>
+            
+            <div style="background: #f0fdfa; padding: 15px; border: 1px solid #99f6e4;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">${currentLang === 'ar' ? '👤 الاسم:' : '👤 Name:'}</td>
+                        <td style="padding: 8px;">${name}</td>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">${currentLang === 'ar' ? '🏫 الشعبة:' : '🏫 Class:'}</td>
+                        <td style="padding: 8px;">${studentClass}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">${currentLang === 'ar' ? '📅 التاريخ:' : '📅 Date:'}</td>
+                        <td style="padding: 8px;">${date}</td>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">${currentLang === 'ar' ? '🏆 التقدير:' : '🏆 Grade:'}</td>
+                        <td style="padding: 8px;">${badge}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="background: white; padding: 20px; text-align: center; border-bottom: 2px solid #e5e7eb;">
+                <div style="display: inline-block; margin: 0 15px;">
+                    <div style="font-size: 32px; font-weight: bold; color: #0d9488;">${score}</div>
+                    <div style="color: #6b7280; font-size: 13px;">${currentLang === 'ar' ? 'الدرجة الكلية' : 'Total Score'}</div>
+                </div>
+                <div style="display: inline-block; margin: 0 15px;">
+                    <div style="font-size: 32px; font-weight: bold; color: #059669;">${successRate}</div>
+                    <div style="color: #6b7280; font-size: 13px;">${currentLang === 'ar' ? 'نسبة النجاح' : 'Success Rate'}</div>
+                </div>
+            </div>
+
+            <h3 style="background: #f3f4f6; padding: 12px; margin: 0; color: #1f2937; border-bottom: 2px solid #d1d5db;">
+                ** ${currentLang === 'ar' ? 'تفاصيل الإجابات' : 'Answer Details'}
+            </h3>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="background: #0d9488; color: white;">
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 8%;">#</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 32%;">${currentLang === 'ar' ? 'القسم' : 'Section'}</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 15%;">${currentLang === 'ar' ? 'الإجابة' : 'Answer'}</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 15%;">${currentLang === 'ar' ? 'الصحيحة' : 'Correct'}</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 15%;">${currentLang === 'ar' ? 'النتيجة' : 'Status'}</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    let sectionScores = [0, 0, 0, 0, 0];
+    let sectionTotals = [4, 4, 4, 4, 4];
+
+    for (let i = 0; i < 20; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        const selectedValue = selected ? selected.value : '-';
+        const correctValue = correctAnswersMap[i];
+        const isCorrect = selectedValue === correctValue;
+        
+        const sectionIndex = Math.floor(i / 4);
+        if (isCorrect) sectionScores[sectionIndex]++;
+
+        const rowBg = i % 2 === 0 ? '#f9fafb' : '#ffffff';
+        const statusBg = isCorrect ? '#dcfce7' : '#fee2e2';
+        const statusColor = isCorrect ? '#166534' : '#991b1b';
+        const statusIcon = isCorrect ? '✅' : '❌';
+        const statusText = isCorrect 
+            ? (currentLang === 'ar' ? 'صحيح' : 'Correct') 
+            : (currentLang === 'ar' ? 'خطأ' : 'Wrong');
+
+        answersHTML += `
+            <tr style="background: ${rowBg};">
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold;">${i + 1}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb;">${currentSectionNames[sectionIndex]}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold;">${selectedValue.toUpperCase()}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold; color: #059669;">${correctValue.toUpperCase()}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; background: ${statusBg}; color: ${statusColor}; font-weight: bold;">
+                    ${statusIcon} ${statusText}
+                </td>
+            </tr>
+        `;
+    }
+
+    answersHTML += `
+                </tbody>
+            </table>
+
+            <h3 style="background: #f3f4f6; padding: 12px; margin: 0; color: #1f2937; border-bottom: 2px solid #d1d5db; border-top: 3px solid #0d9488;">
+                📊 ${currentLang === 'ar' ? 'تفصيل الأداء' : 'Performance Breakdown'}
+            </h3>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="background: #7c3aed; color: white;">
+                        <th style="padding: 10px; border: 1px solid #6d28d9;">${currentLang === 'ar' ? 'القسم' : 'Section'}</th>
+                        <th style="padding: 10px; border: 1px solid #6d28d9; width: 20%;">${currentLang === 'ar' ? 'النتيجة' : 'Score'}</th>
+                        <th style="padding: 10px; border: 1px solid #6d28d9; width: 20%;">${currentLang === 'ar' ? 'النسبة' : 'Percentage'}</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    for (let i = 0; i < 5; i++) {
+        const percentage = Math.round((sectionScores[i] / sectionTotals[i]) * 100);
+        const barColor = percentage >= 75 ? '#10b981' : percentage >= 50 ? '#f59e0b' : '#ef4444';
+        const rowBg = i % 2 === 0 ? '#f9fafb' : '#ffffff';
+        
+        answersHTML += `
+            <tr style="background: ${rowBg};">
+                <td style="padding: 10px; border: 1px solid #e5e7eb; font-weight: 600;">${currentSectionNames[i]}</td>
+                <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold; color: #0d9488;">
+                    ${sectionScores[i]} / ${sectionTotals[i]}
+                </td>
+                <td style="padding: 10px; border: 1px solid #e5e7eb;">
+                    <div style="background: #e5e7eb; border-radius: 10px; overflow: hidden; height: 20px; position: relative;">
+                        <div style="background: ${barColor}; width: ${percentage}%; height: 100%;"></div>
+                        <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 11px; font-weight: bold; color: #1f2937;">
+                            ${percentage}%
+                        </span>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }
+
+    answersHTML += `
+                </tbody>
+            </table>
+
+            <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 15px; border-radius: 0 0 10px 10px; border-top: 2px solid #f59e0b;">
+                <p style="margin: 0; color: #78350f; text-align: center; font-size: 13px;">
+                    💡 <strong>${currentLang === 'ar' ? 'ملاحظة:' : 'Note:'}</strong> 
+                    ${currentLang === 'ar' 
+                        ? 'تم إرسال هذا التقرير تلقائياً من منصة 4U التعليمية | Mr. Mohammed Hesham' 
+                        : 'This report was automatically sent from 4U Educational Platform | Mr. Mohammed Hesham'}
+                </p>
+            </div>
+        </div>
+    `;
+
+    const templateParams = {
+        to_email: TARGET_EMAIL,
+        student_name: name,
+        student_class: studentClass,
+        exam_date: date,
+        total_score: score,
+        success_rate: successRate,
+        grade: badge,
+        answers_table: answersHTML
+    };
+
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
+        .then(() => {
+            status.textContent = currentLang === 'ar' 
+                ? '✅ تم إرسال النتائج بنجاح!' 
+                : '✅ Results sent successfully!';
+            status.style.color = '#059669';
+            btn.textContent = currentLang === 'ar' ? '✓ تم الإرسال' : '✓ Sent';
+        })
+        .catch(err => {
+            status.textContent = currentLang === 'ar' 
+                ? '❌ فشل الإرسال، حاول مرة أخرى' 
+                : '❌ Failed to send, try again';
+            status.style.color = '#dc2626';
+            btn.disabled = false;
+            btn.textContent = currentLang === 'ar' ? '📧 إعادة المحاولة' : '📧 Retry Send';
+            console.error('EmailJS Error:', err);
+        });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    prepareShuffledExam();
+    renderExam();
+    startTimer();
+    console.log('🔀 تم خلط الأسئلة والخيارات عشوائياً!');
+});
+</script>
+</body>
+</html>
