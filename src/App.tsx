@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   BookOpen, Search, RotateCcw, Heart, BarChart2, Sun, Moon, 
   Home, ChevronRight, Share2, Clipboard, Award, Printer, CheckCircle, Clock,
-  Download, Mic, Sparkles, Megaphone
+  Download, Mic, Sparkles, Megaphone, Radio, Pause, Play, Volume2, VolumeX
 } from 'lucide-react';
 import { DB, countries } from './data';
 import { Term, Stream, Program, Grade, Subject, Unit, Lesson, AppState } from './types';
@@ -112,6 +112,14 @@ export default function App() {
   const [showReminderSettingModal, setShowReminderSettingModal] = useState(false);
   const [showAlarmTriggeredModal, setShowAlarmTriggeredModal] = useState(false);
 
+  // Quran Radio States (Sheikh Abdulbasit Abdulsamad)
+  const [isRadioPlaying, setIsRadioPlaying] = useState(false);
+  const [radioVolume, setRadioVolume] = useState(0.5);
+  const [isRadioMuted, setIsRadioMuted] = useState(false);
+  const [showRadioPanel, setShowRadioPanel] = useState(false);
+  const radioAudioRef = useRef<HTMLAudioElement | null>(null);
+  const isRadioIntentPlayingRef = useRef(false);
+
   // Pomodoro Timer States (Inside Active Lesson)
   const [pomodoroSeconds, setPomodoroSeconds] = useState(1500); // 25 mins = 1500 secs
   const [pomodoroIsActive, setPomodoroIsActive] = useState(false);
@@ -120,6 +128,10 @@ export default function App() {
 
   // Time tracker ref
   const lessonStartTimeRef = useRef<number | null>(null);
+
+  const prevHistoryLengthRef = useRef(0);
+  const isPopStateRef = useRef(false);
+  const isProgrammaticGoRef = useRef(false);
 
   // 1. Initial Setup: Load theme, favorites, progress, and handle PWA install prompt
   useEffect(() => {
@@ -156,6 +168,30 @@ export default function App() {
       setStudyPlan(plan);
     } catch {
       setStudyPlan([]);
+    }
+
+    // Student Name
+    try {
+      const name = localStorage.getItem('4u_student_name') || '';
+      setStudentName(name);
+    } catch {
+      setStudentName('');
+    }
+
+    // Restore Navigation State
+    try {
+      const savedAppState = localStorage.getItem('4u_app_state');
+      const savedHistory = localStorage.getItem('4u_history');
+      if (savedAppState) {
+        setAppState(JSON.parse(savedAppState));
+      }
+      if (savedHistory) {
+        const parsedHistory = JSON.parse(savedHistory);
+        setHistory(parsedHistory);
+        prevHistoryLengthRef.current = parsedHistory.length;
+      }
+    } catch (e) {
+      console.error("Failed to restore navigation state:", e);
     }
 
     // Loader fadeout
@@ -277,6 +313,80 @@ export default function App() {
       return updated;
     });
   };
+
+  // Exit Confirmation Dialog ("هل تريد إغلاق المنصة؟")
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = 'هل تريد إغلاق المنصة؟';
+      return 'هل تريد إغلاق المنصة؟';
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
+  // Synchronize browser history with custom appState history
+  useEffect(() => {
+    const handlePopState = (e: PopStateEvent) => {
+      if (isProgrammaticGoRef.current) {
+        isProgrammaticGoRef.current = false;
+        return;
+      }
+
+      isPopStateRef.current = true;
+      if (history.length > 0) {
+        const lastState = history[history.length - 1];
+        setHistory(prev => prev.slice(0, -1));
+        setAppState(lastState);
+        setSearchQuery('');
+      }
+      
+      setTimeout(() => {
+        isPopStateRef.current = false;
+      }, 0);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [history]);
+
+  useEffect(() => {
+    const currentLength = history.length;
+    const prevLength = prevHistoryLengthRef.current;
+    prevHistoryLengthRef.current = currentLength;
+
+    if (isPopStateRef.current) {
+      return;
+    }
+
+    if (currentLength > prevLength) {
+      const diff = currentLength - prevLength;
+      for (let i = 0; i < diff; i++) {
+        window.history.pushState({ appNav: true }, '');
+      }
+    } else if (currentLength < prevLength) {
+      const diff = prevLength - currentLength;
+      isProgrammaticGoRef.current = true;
+      window.history.go(-diff);
+    }
+  }, [history]);
+
+  // Auto-Save appState, history and studentName when they change
+  useEffect(() => {
+    localStorage.setItem('4u_app_state', JSON.stringify(appState));
+  }, [appState]);
+
+  useEffect(() => {
+    localStorage.setItem('4u_history', JSON.stringify(history));
+  }, [history]);
+
+  useEffect(() => {
+    localStorage.setItem('4u_student_name', studentName);
+  }, [studentName]);
 
   // Daily Reminder & Notes Load effect
   useEffect(() => {
@@ -419,6 +529,195 @@ export default function App() {
     setDailyReminderMsg(msg);
     localStorage.setItem('4u_daily_reminder', JSON.stringify({ time, active, msg }));
     showToastMsg('💾 تم حفظ إعدادات التذكير اليومي');
+  };
+
+  // Helper to manually save all progress
+  const handleManualSaveProgress = () => {
+    localStorage.setItem('4u_progress', JSON.stringify(progress));
+    localStorage.setItem('4u_favorites', JSON.stringify(favorites));
+    localStorage.setItem('4u_study_plan', JSON.stringify(studyPlan));
+    localStorage.setItem('4u_student_notes', JSON.stringify(studentNotes));
+    localStorage.setItem('4u_student_name', studentName);
+    localStorage.setItem('4u_daily_reminder', JSON.stringify({
+      time: dailyReminderTime,
+      active: dailyReminderActive,
+      msg: dailyReminderMsg
+    }));
+    showToastMsg('💾 تم حفظ جميع بيانات تقدمك ودراستك بنجاح في ذاكرة المتصفح!');
+  };
+
+  // Quran Radio URLs & Fallbacks
+  const RADIO_URLS = [
+    'https://radio.mp3islam.com/listen/abdulbasit/radio.mp3',
+    'https://backup.qurango.net/radio/tarteel_abdulbasit/;stream.mp3',
+    'https://backup.qurango.net/radio/tarteel_abdulbasit',
+    'https://qurango.net/radio/tarteel_abdulbasit/;stream.mp3',
+    'https://qurango.net/radio/tarteel_abdulbasit',
+    'https://live.mp3quran.net/radio/tarteel_abdulbasit',
+    'https://server11.mp3quran.net/basit/055.mp3', // Surah Ar-Rahman (Static Backup 1)
+    'https://server11.mp3quran.net/basit/018.mp3', // Surah Al-Kahf (Static Backup 2)
+    'https://server11.mp3quran.net/basit/036.mp3', // Surah Ya-Sin (Static Backup 3)
+    'https://server11.mp3quran.net/basit/056.mp3', // Surah Al-Waqi'ah (Static Backup 4)
+    'https://server11.mp3quran.net/basit/067.mp3'  // Surah Al-Mulk (Static Backup 5)
+  ];
+
+  const currentRadioUrlIndexRef = useRef(0);
+
+  // Cleanup radio on unmount
+  useEffect(() => {
+    return () => {
+      isRadioIntentPlayingRef.current = false;
+      if (radioAudioRef.current) {
+        radioAudioRef.current.onended = null;
+        radioAudioRef.current.onerror = null;
+        radioAudioRef.current.pause();
+        radioAudioRef.current = null;
+      }
+    };
+  }, []);
+
+  const playStreamAtIndex = (index: number, forcePlay = true, overrideVolume?: number, overrideMuted?: boolean) => {
+    // Clean up existing audio instance
+    if (radioAudioRef.current) {
+      radioAudioRef.current.pause();
+      radioAudioRef.current.onended = null;
+      radioAudioRef.current.onerror = null;
+      radioAudioRef.current.src = "";
+      radioAudioRef.current.load();
+    }
+
+    // Check bounds
+    if (index >= RADIO_URLS.length) {
+      setIsRadioPlaying(false);
+      if (isRadioIntentPlayingRef.current) {
+        showToastMsg("⚠️ تعذر تشغيل الإذاعة حالياً بسبب جدار الحماية بالشبكة أو قيود المتصفح.");
+      }
+      return;
+    }
+
+    currentRadioUrlIndexRef.current = index;
+    const currentUrl = RADIO_URLS[index];
+    console.log(`[Quran Radio] Loading stream ${index}: ${currentUrl}`);
+
+    const finalMuted = overrideMuted !== undefined ? overrideMuted : isRadioMuted;
+    const finalVolume = overrideVolume !== undefined ? overrideVolume : radioVolume;
+
+    // Create a new Audio object
+    const audio = new Audio();
+    // Do NOT set audio.crossOrigin to avoid CORS blocking on standard streams
+    audio.src = currentUrl;
+    audio.volume = finalMuted ? 0 : finalVolume;
+    audio.preload = "auto";
+
+    // Track if this instance has already triggered a fallback to avoid double-handling
+    let hasFallbackTriggered = false;
+
+    const triggerFallback = () => {
+      if (hasFallbackTriggered) return;
+      hasFallbackTriggered = true;
+
+      // Ensure this audio is still the active reference AND the user actually wants to play the radio before triggering fallback
+      if (radioAudioRef.current === audio && isRadioIntentPlayingRef.current) {
+        const nextIndex = index + 1;
+        if (nextIndex === 6) {
+          showToastMsg("📻 تم الانتقال لتشغيل تلاوة مسجلة لضمان جودة الصوت واستقرار البث ✨");
+        } else if (nextIndex < 6) {
+          showToastMsg("📻 جاري الانتقال لموجة بث بديلة لتفادي الانقطاع...");
+        }
+        playStreamAtIndex(nextIndex, forcePlay, finalVolume, finalMuted);
+      }
+    };
+
+    audio.onerror = (e) => {
+      console.warn(`[Quran Radio] Error event on stream ${index}:`, e);
+      if (isRadioIntentPlayingRef.current) {
+        triggerFallback();
+      }
+    };
+
+    audio.onended = () => {
+      if (!isRadioIntentPlayingRef.current) return;
+      // Loop or proceed with static recitations
+      if (index >= 6) {
+        console.log("[Quran Radio] Static track ended, playing next...");
+        let nextIndex = index + 1;
+        if (nextIndex >= RADIO_URLS.length) {
+          nextIndex = 6; // Loop back to the first static recitation
+        }
+        playStreamAtIndex(nextIndex, true, finalVolume, finalMuted);
+      }
+    };
+
+    radioAudioRef.current = audio;
+
+    if (forcePlay) {
+      audio.play()
+        .then(() => {
+          if (radioAudioRef.current === audio && isRadioIntentPlayingRef.current) {
+            setIsRadioPlaying(true);
+          }
+        })
+        .catch(err => {
+          // Playback failed. Check if it was aborted intentionally or stopped by user
+          if (!isRadioIntentPlayingRef.current || err.name === 'AbortError') {
+            console.log(`[Quran Radio] Playback of stream ${index} was aborted intentionally or stopped by user.`);
+            return;
+          }
+          console.warn(`[Quran Radio] play() promise rejected for stream ${index}:`, err);
+          triggerFallback();
+        });
+    }
+  };
+
+  const toggleRadioPlay = () => {
+    if (isRadioPlaying) {
+      isRadioIntentPlayingRef.current = false;
+      // Release live stream bandwidth on stop
+      if (radioAudioRef.current) {
+        radioAudioRef.current.onended = null;
+        radioAudioRef.current.onerror = null;
+        radioAudioRef.current.pause();
+        radioAudioRef.current.src = "";
+        radioAudioRef.current.load();
+      }
+      setIsRadioPlaying(false);
+    } else {
+      isRadioIntentPlayingRef.current = true;
+      // Unlock AudioContext for sandboxed iframes / modern browser autoplay policy
+      try {
+        const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+      } catch (e) {
+        console.warn("[Quran Radio] AudioContext unlock skipped or failed:", e);
+      }
+
+      // Ensure sound is fully unmuted and audible when playing in the platform
+      const newMute = false;
+      const newVol = radioVolume < 0.2 ? 0.8 : radioVolume;
+
+      setIsRadioMuted(newMute);
+      setRadioVolume(newVol);
+
+      // Start with the best primary stream first with unmuted overrides
+      playStreamAtIndex(0, true, newVol, newMute);
+    }
+  };
+
+  const handleVolumeChange = (newVol: number) => {
+    setRadioVolume(newVol);
+    if (radioAudioRef.current) {
+      radioAudioRef.current.volume = isRadioMuted ? 0 : newVol;
+    }
+  };
+
+  const toggleRadioMute = () => {
+    const nextMute = !isRadioMuted;
+    setIsRadioMuted(nextMute);
+    if (radioAudioRef.current) {
+      radioAudioRef.current.volume = nextMute ? 0 : radioVolume;
+    }
   };
 
   // Keys helper
@@ -1168,6 +1467,33 @@ export default function App() {
               title="تبديل الوضع"
             >
               {isDarkMode ? <Sun className="w-4 h-4 text-amber-300" /> : <Moon className="w-4 h-4 text-slate-200" />}
+            </button>
+
+            {/* Quran Radio Toggle Button */}
+            <button 
+              onClick={() => setShowRadioPanel(!showRadioPanel)}
+              className={`p-2 rounded-xl backdrop-blur-sm border transition flex items-center gap-1.5 text-sm font-bold cursor-pointer ${
+                isRadioPlaying 
+                  ? 'bg-emerald-600 text-white border-emerald-500 shadow-lg shadow-emerald-500/20' 
+                  : 'bg-white/10 hover:bg-white/20 text-emerald-100 border-white/15'
+              }`}
+              title="إذاعة الشيخ عبدالباسط عبدالصمد"
+            >
+              <Radio className={`w-4 h-4 ${isRadioPlaying ? 'animate-pulse text-emerald-400' : ''}`} />
+              <span className="hidden md:inline">إذاعة عبدالباسط</span>
+              {isRadioPlaying && (
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-ping" />
+              )}
+            </button>
+
+            {/* Manual Save Progress Button */}
+            <button 
+              onClick={handleManualSaveProgress}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-3.5 rounded-xl transition flex items-center gap-1.5 text-sm font-bold shadow-md cursor-pointer"
+              title="حفظ التقدم يدوياً"
+            >
+              <span>💾</span>
+              <span>حفظ التقدم</span>
             </button>
 
             {/* Home button */}
@@ -2501,6 +2827,121 @@ export default function App() {
           </button>
         </div>
       )}
+
+      {/* ========================================== */}
+      {/* 📻 QURAN RADIO FLOATING CONTROL WIDGET */}
+      {/* ========================================== */}
+      <AnimatePresence>
+        {showRadioPanel && (
+          <motion.div
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+            className="fixed top-24 left-4 md:left-10 z-50 w-80 bg-white dark:bg-gray-950/95 border-2 border-emerald-500/30 rounded-3xl p-5 shadow-2xl text-right font-sans backdrop-blur-md"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-emerald-500/10 pb-3 mb-4">
+              <button 
+                onClick={() => setShowRadioPanel(false)}
+                className="text-gray-400 hover:text-rose-500 transition text-sm font-bold cursor-pointer bg-slate-100 dark:bg-slate-900 w-7 h-7 rounded-full flex items-center justify-center"
+              >
+                ✕
+              </button>
+              <div className="flex items-center gap-2">
+                <div className="text-right">
+                  <h4 className="font-extrabold text-slate-800 dark:text-emerald-400 text-sm">
+                    إذاعة عبد الباسط عبد الصمد
+                  </h4>
+                  <p className="text-[10px] text-gray-500 dark:text-emerald-500/80 font-bold">
+                    البث المباشر (تلاوات خاشعة) 📻
+                  </p>
+                </div>
+                <div className="p-2 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-xl">
+                  <Radio className={`w-5 h-5 ${isRadioPlaying ? 'animate-pulse' : ''}`} />
+                </div>
+              </div>
+            </div>
+
+            {/* Visualizer & Playing Status */}
+            <div className="bg-slate-50 dark:bg-emerald-950/15 rounded-2xl p-4 flex flex-col items-center justify-center gap-3 mb-4 border border-slate-100 dark:border-emerald-500/5">
+              {isRadioPlaying ? (
+                <div className="flex items-end gap-1 h-8">
+                  <span className="w-1.5 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s', animationDuration: '0.8s' }} />
+                  <span className="w-1.5 bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: '0.3s', animationDuration: '0.5s' }} />
+                  <span className="w-1.5 bg-emerald-600 rounded-full animate-bounce" style={{ animationDelay: '0s', animationDuration: '0.7s' }} />
+                  <span className="w-1.5 bg-emerald-300 rounded-full animate-bounce" style={{ animationDelay: '0.4s', animationDuration: '0.6s' }} />
+                  <span className="w-1.5 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s', animationDuration: '0.9s' }} />
+                </div>
+              ) : (
+                <div className="flex items-end gap-1 h-8 opacity-40">
+                  <span className="w-1.5 h-2 bg-slate-400 dark:bg-emerald-700 rounded-full" />
+                  <span className="w-1.5 h-1 bg-slate-400 dark:bg-emerald-700 rounded-full" />
+                  <span className="w-1.5 h-3 bg-slate-400 dark:bg-emerald-700 rounded-full" />
+                  <span className="w-1.5 h-1 bg-slate-400 dark:bg-emerald-700 rounded-full" />
+                  <span className="w-1.5 h-2 bg-slate-400 dark:bg-emerald-700 rounded-full" />
+                </div>
+              )}
+              
+              <span className={`text-xs font-bold text-center leading-relaxed ${isRadioPlaying ? 'text-emerald-600 dark:text-emerald-400 animate-pulse' : 'text-gray-500 dark:text-gray-400'}`}>
+                {isRadioPlaying ? 'جاري التشغيل الآن... استمع بقلبك ✨' : 'انقر لتشغيل إذاعة القرآن الكريم'}
+              </span>
+            </div>
+
+            {/* Controls */}
+            <div className="flex flex-col gap-4">
+              {/* Play Button */}
+              <button
+                onClick={toggleRadioPlay}
+                className={`w-full py-3 rounded-2xl font-black text-xs transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                  isRadioPlaying
+                    ? 'bg-amber-500 hover:bg-amber-600 text-slate-950 shadow-md'
+                    : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-600/20'
+                }`}
+              >
+                {isRadioPlaying ? (
+                  <>
+                    <Pause className="w-4 h-4 fill-current" />
+                    <span>إيقاف مؤقت للإذاعة</span>
+                  </>
+                ) : (
+                  <>
+                    <Play className="w-4 h-4 fill-current" />
+                    <span>تشغيل البث المباشر</span>
+                  </>
+                )}
+              </button>
+
+              {/* Volume Slider & Mute Toggle */}
+              <div className="flex items-center gap-3 bg-slate-100/50 dark:bg-slate-900/50 p-2.5 rounded-xl border border-slate-100 dark:border-slate-900">
+                <button
+                  onClick={toggleRadioMute}
+                  className="text-gray-600 dark:text-gray-400 hover:text-emerald-500 transition cursor-pointer"
+                  title={isRadioMuted ? "إلغاء الكتم" : "كتم الصوت"}
+                >
+                  {isRadioMuted || radioVolume === 0 ? (
+                    <VolumeX className="w-4 h-4" />
+                  ) : (
+                    <Volume2 className="w-4 h-4" />
+                  )}
+                </button>
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  value={isRadioMuted ? 0 : radioVolume}
+                  onChange={(e) => handleVolumeChange(parseFloat(e.target.value))}
+                  className="flex-1 accent-emerald-600 dark:accent-emerald-400 cursor-pointer h-1.5 rounded-lg bg-gray-200 dark:bg-gray-800"
+                />
+                <span className="text-[10px] font-mono font-bold text-gray-500 dark:text-gray-400 w-8 text-center">
+                  {Math.round((isRadioMuted ? 0 : radioVolume) * 100)}%
+                </span>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* 6. TOAST BANNER OVERLAY */}
       <AnimatePresence>
