@@ -2854,21 +2854,23 @@ export default function App() {
       </footer>
 
       {/* 5. FLOATING INSTALL BUTTON */}
-      <div className="fixed bottom-6 left-6 z-40 animate-bounce group">
-        <button 
-          onClick={handleInstallApp}
-          className="bg-gradient-to-br from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-white w-14 h-14 rounded-2xl shadow-2xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 relative"
-          title="تثبيت المنصة على جهازك"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-          </svg>
-          {/* Tooltip on hover */}
-          <span className="absolute left-16 top-1/2 -translate-y-1/2 bg-slate-900 text-white text-xs py-1.5 px-3 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap shadow-xl pointer-events-none">
-            تثبيت التطبيق 📲
-          </span>
-        </button>
-      </div>
+      {installPrompt && (
+        <div className="fixed bottom-6 left-6 z-40 animate-bounce group">
+          <button 
+            onClick={handleInstallPWA}
+            className="bg-gradient-to-br from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-white w-14 h-14 rounded-2xl shadow-2xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 relative"
+            title="تثبيت المنصة على جهازك"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            {/* Tooltip on hover */}
+            <span className="absolute left-16 top-1/2 -translate-y-1/2 bg-slate-900 text-white text-xs py-1.5 px-3 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap shadow-xl pointer-events-none">
+              تثبيت التطبيق 📲
+            </span>
+          </button>
+        </div>
+      )}
 
       {/* ========================================== */}
       {/* 📻 QURAN RADIO FLOATING CONTROL WIDGET */}
