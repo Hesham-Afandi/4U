@@ -11,6 +11,16 @@
       "src": "/4U/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml"
+    },
+    {
+      "src": "/4U/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/4U/favicon_192.png",
+      "sizes": "192x192",
+      "type": "image/png"
     }
   ]
 }
