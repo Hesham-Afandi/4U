@@ -97,6 +97,7 @@ export default function App() {
   const [toast, setToast] = useState<string | null>(null);
   const [installPrompt, setInstallPrompt] = useState<any>(null);
   const [showInstallModal, setShowInstallModal] = useState(false);
+  const [showExitConfirmModal, setShowExitConfirmModal] = useState(false);
   const [activeVideoLesson, setActiveVideoLesson] = useState<Lesson | null>(null);
   const [activeQuote, setActiveQuote] = useState('');
 
@@ -327,6 +328,13 @@ export default function App() {
     };
   }, []);
 
+  // Push initial base state so we can catch popstate even when history is empty
+  useEffect(() => {
+    if (!window.history.state || !window.history.state.appNav) {
+      window.history.pushState({ appNav: 'base' }, '');
+    }
+  }, []);
+
   // Synchronize browser history with custom appState history
   useEffect(() => {
     const handlePopState = (e: PopStateEvent) => {
@@ -341,6 +349,11 @@ export default function App() {
         setHistory(prev => prev.slice(0, -1));
         setAppState(lastState);
         setSearchQuery('');
+      } else {
+        // history.length is 0. Going back now will exit.
+        // We re-push the base state so they stay on the page.
+        window.history.pushState({ appNav: 'base' }, '');
+        setShowExitConfirmModal(true);
       }
       
       setTimeout(() => {
@@ -812,7 +825,34 @@ export default function App() {
   };
 
   const handleInstallApp = () => {
-    setShowInstallModal(true);
+    if (installPrompt) {
+      handleInstallPWA();
+    } else {
+      setShowInstallModal(true);
+    }
+  };
+
+  const handleExitApp = () => {
+    // Force Save all progress
+    localStorage.setItem('4u_progress', JSON.stringify(progress));
+    localStorage.setItem('4u_favorites', JSON.stringify(favorites));
+    localStorage.setItem('4u_study_plan', JSON.stringify(studyPlan));
+    localStorage.setItem('4u_student_notes', JSON.stringify(studentNotes));
+    localStorage.setItem('4u_student_name', studentName);
+    localStorage.setItem('4u_daily_reminder', JSON.stringify({
+      time: dailyReminderTime,
+      active: dailyReminderActive,
+      msg: dailyReminderMsg
+    }));
+    
+    setShowExitConfirmModal(false);
+    showToastMsg('💾 تم حفظ جميع بيانات تقدمك ودراستك بنجاح! جاري الخروج...');
+
+    // Programmatically go back past base state
+    setTimeout(() => {
+      isProgrammaticGoRef.current = true;
+      window.history.go(-2);
+    }, 600);
   };
 
   // Keyboard Shortcuts handler
@@ -2814,19 +2854,21 @@ export default function App() {
       </footer>
 
       {/* 5. FLOATING INSTALL BUTTON */}
-      {installPrompt && (
-        <div className="fixed bottom-6 left-6 z-40 animate-bounce">
-          <button 
-            onClick={handleInstallApp}
-            className="bg-gradient-to-br from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-white w-14 h-14 rounded-2xl shadow-2xl flex items-center justify-center transition-all duration-300 transform hover:scale-110"
-            title="تثبيت التطبيق على جهازك"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-            </svg>
-          </button>
-        </div>
-      )}
+      <div className="fixed bottom-6 left-6 z-40 animate-bounce group">
+        <button 
+          onClick={handleInstallApp}
+          className="bg-gradient-to-br from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-white w-14 h-14 rounded-2xl shadow-2xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 relative"
+          title="تثبيت المنصة على جهازك"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          {/* Tooltip on hover */}
+          <span className="absolute left-16 top-1/2 -translate-y-1/2 bg-slate-900 text-white text-xs py-1.5 px-3 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap shadow-xl pointer-events-none">
+            تثبيت التطبيق 📲
+          </span>
+        </button>
+      </div>
 
       {/* ========================================== */}
       {/* 📻 QURAN RADIO FLOATING CONTROL WIDGET */}
@@ -3065,6 +3107,48 @@ export default function App() {
         onClose={() => setShowExamCodesModal(false)}
         showToastMsg={showToastMsg}
       />
+
+      {/* MODAL 12: EXIT CONFIRMATION DIALOG */}
+      {showExitConfirmModal && (
+        <div 
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md"
+          onClick={() => setShowExitConfirmModal(false)}
+        >
+          <div 
+            className="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 md:p-8 shadow-2xl border border-slate-100 dark:border-slate-800 text-right overflow-hidden flex flex-col gap-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-end gap-2.5 text-xl font-black text-rose-600 dark:text-rose-400">
+              <span>هل تريد الخروج من المنصة؟</span>
+              <span className="text-2xl">⚠️</span>
+            </div>
+            
+            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              سيتم حفظ كامل تقدمك الحالي، وملاحظاتك المكتوبة، وجدول خطتك الدراسية بنجاح لتبدأ فوراً من حيث توقفت عند عودتك في المرة القادمة.
+            </p>
+
+            <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-500/20 rounded-2xl p-3 flex items-center justify-end gap-2 text-emerald-600 dark:text-emerald-400 text-xs font-semibold">
+              <span>تم حفظ وتأمين جميع بيانات دراستك تلقائياً</span>
+              <span>💾</span>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3 mt-4">
+              <button
+                onClick={handleExitApp}
+                className="w-full bg-rose-500 hover:bg-rose-600 text-white font-black py-3.5 px-6 rounded-2xl transition-all duration-200 shadow-md text-sm cursor-pointer"
+              >
+                نعم، خروج من المنصة
+              </button>
+              <button
+                onClick={() => setShowExitConfirmModal(false)}
+                className="w-full bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-white font-black py-3.5 px-6 rounded-2xl transition-all duration-200 shadow-md text-sm cursor-pointer"
+              >
+                إلغاء ومتابعة الدراسة 📚
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
