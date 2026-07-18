@@ -10,7 +10,7 @@ import { Term, Stream, Program, Grade, Subject, Unit, Lesson, AppState } from '.
 import { 
   FavoritesModal, StatsModal, CertificateModal, ShareModal, 
   PlannerModal, SummaryNotesModal, ReminderSettingModal, AlarmTriggeredModal,
-  InstallAppModal, VideoPlayerModal, ExamCodesModal
+  VideoPlayerModal, ExamCodesModal
 } from './components/modals';
 import { WeeklyStudyPlanner } from './components/layout';
 import { STUDY_QUOTES } from './data/quotes';
@@ -806,24 +806,6 @@ export default function App() {
   };
 
   // Install App Action
-  const handleInstallPWA = async () => {
-    if (installPrompt) {
-      try {
-        await installPrompt.prompt();
-        const { outcome } = await installPrompt.userChoice;
-        if (outcome === 'accepted') {
-          showToastMsg('🎉 شكراً لتثبيت التطبيق! نتمنى لك دراسة ممتعة.');
-          setInstallPrompt(null);
-        } else {
-          showToastMsg('⚠️ تم إلغاء عملية التثبيت.');
-        }
-      } catch (e) {
-        console.error(e);
-        showToastMsg('📥 لتثبيت التطبيق: اضغط على زر التثبيت المباشر في شريط العنوان العلوي للمتصفح.');
-      }
-    }
-  };
-
   const handleInstallApp = async () => {
     const promptEvent = installPrompt || (window as any).deferredPrompt;
     if (promptEvent) {
@@ -838,11 +820,11 @@ export default function App() {
           showToastMsg('⚠️ تم إلغاء عملية التثبيت.');
         }
       } catch (e) {
-        console.error(e);
-        showToastMsg('📥 لتثبيت التطبيق: اضغط على زر التثبيت المباشر في شريط العنوان العلوي للمتصفح.');
+        console.error("Install prompt error:", e);
+        showToastMsg('📥 للتثبيت: يرجى فتح التطبيق خارج المعاينة والضغط على زر التثبيت من قائمة خيارات المتصفح.');
       }
     } else {
-      setShowInstallModal(true);
+      showToastMsg('📥 للتثبيت المباشر: يرجى فتح التطبيق في علامة تبويب جديدة (خارج المعاينة المباشرة) لتفعيل التثبيت بنقرة واحدة.');
     }
   };
 
@@ -3099,13 +3081,7 @@ export default function App() {
         showToastMsg={showToastMsg}
       />
 
-      {/* MODAL 9: INSTALL APP SHORTCUT GUIDE */}
-      <InstallAppModal
-        isOpen={showInstallModal}
-        onClose={() => setShowInstallModal(false)}
-        installPrompt={installPrompt}
-        handleInstallPWA={handleInstallPWA}
-      />
+
 
       {/* MODAL 10: VIDEO EXPLANATION PLAYER */}
       <VideoPlayerModal
