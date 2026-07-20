@@ -4,7 +4,7 @@ import {
   BookOpen, Search, RotateCcw, Heart, BarChart2, Sun, Moon, 
   Home, ChevronRight, Share2, Clipboard, Award, Printer, CheckCircle, Clock,
   Download, Mic, Sparkles, Megaphone, Radio, Pause, Play, Volume2, VolumeX,
-  MessageSquare, Send, X, Flame
+  MessageSquare, Send, X, Flame, Sliders, Settings
 } from 'lucide-react';
 import { DB, countries } from './data';
 import { Term, Stream, Program, Grade, Subject, Unit, Lesson, AppState } from './types';
@@ -191,6 +191,12 @@ export default function App() {
   const [chatInput, setChatInput] = useState('');
   const [isChatLoading, setIsChatLoading] = useState(false);
   const chatEndRef = useRef<HTMLDivElement | null>(null);
+
+  // --- ⚙️ Chat Server & Connection States ---
+  const [showChatSettings, setShowChatSettings] = useState(false);
+  const [chatGeminiKey, setChatGeminiKey] = useState(() => {
+    return localStorage.getItem('4u_chat_gemini_key') || '';
+  });
 
   // --- 🔊 Text-To-Speech (TTS) States ---
   const [ttsState, setTtsState] = useState<'idle' | 'playing' | 'paused'>('idle');
@@ -454,64 +460,82 @@ export default function App() {
     setChatMessages(newMessages);
     setIsChatLoading(true);
 
-    // Determine the API endpoints to try:
-    // If running locally or on Cloud Run directly, try relative endpoint first.
-    // Otherwise (on external static environments like GitHub Pages), try the main Shared/Pre URL, then fall back to the Dev URL.
-    const apiEndpoints: string[] = [];
-    if (
-      window.location.hostname === 'localhost' || 
-      window.location.hostname === '127.0.0.1' || 
-      window.location.hostname.includes('run.app')
-    ) {
-      apiEndpoints.push('/api/chat');
-    }
-    apiEndpoints.push('https://ais-pre-t5z4xmcbcttqdwgdadfuls-72955753475.europe-west2.run.app/api/chat');
-    apiEndpoints.push('https://ais-dev-t5z4xmcbcttqdwgdadfuls-72955753475.europe-west2.run.app/api/chat');
-
     try {
-      let success = false;
       let replyText = '';
 
-      for (const endpoint of apiEndpoints) {
-        try {
-          console.log(`[Chat API] Trying endpoint: ${endpoint}`);
-          const response = await fetch(endpoint, {
-            method: 'POST',
-            mode: 'cors', // Explicitly specify CORS mode for cross-domain requests (like GitHub Pages)
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              message: textToSend,
-              history: newMessages.slice(0, -1),
-            }),
-          });
+      if (!chatGeminiKey.trim()) {
+        throw new Error('KEY_MISSING');
+      }
+      
+      // Call Gemini directly from browser using public API endpoint
+      const systemInstruction = `
+أنت "المعلم الافتراضي" الحكيم والودود على "المنصة التعليمية المتكاملة 4U".
+مهمتك هي مساعدة الطالب ومراجعته في دروسه، والإجابة على استفساراته العامة المتعلقة بالمنهج الدراسي (سواء لبلدان الخليج مثل الإمارات، السعودية، قطر، عمان، البحرين أو مصر).
+- ممنوع تماماً ذكر أسماء "جيمني" (Gemini) أو "شات جي بي تي" (ChatGPT) أو "جوجل" (Google) أو أي أداة ذكاء اصطناعي أخرى. إذا سألك الطالب من أنت، أخبره بكل حب: "أنا معلمك الافتراضي ومستشارك الدراسي على منصة 4U، متواجد دائماً هنا لأساعدك في رحلتك التعليمية وسحق الامتحانات! يلا نراجع مع بعض ✨".
+- تفاعل مع الطالب بأسلوب المعلم الحنون، الدافئ والمشجع. استخدم عبارات إيجابية مثل "يا بطل"، "يا متميزة"، "يا بطلة المستقبل"، "أحسنت"، "سؤال ذكي جداً!"، "فخور بك وباهتمامك".
+- بسّط المفاهيم المعقدة، واستخدم الترتيب النقطي أو الجداول التوضيحية البسيطة عند الحاجة.
+- استخدم الرموز التعبيرية بحكمة ومرح لتسهيل القراءة وزيادة التفاعل (مثل: 🔥, 📚, ✨, 🚀, 🎓, 💡, 📝).
+- تواصل باللغة العربية بلهجة بيضاء أو فصحى مبسطة وواضحة جداً، وإذا سألك الطالب بالإنجليزية أجب بالإنجليزية بأسلوب مشجع وبسيط ومناسب لطلاب المدارس.
+- ركز على تعزيز ثقته بنفسه وذكّره بأهمية المذاكرة والاستمرارية لتحقيق أحلامه.
+`;
 
-          if (response.ok) {
-            const data = await response.json();
-            replyText = data.reply;
-            success = true;
-            break; // Exit loop on success
-          } else {
-            console.warn(`[Chat API] Endpoint returned status ${response.status}: ${endpoint}`);
+      const formattedContents = newMessages.map(msg => ({
+        role: msg.role === 'user' ? 'user' : 'model',
+        parts: [{ text: msg.text }]
+      }));
+
+      const modelName = 'gemini-2.5-flash';
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${chatGeminiKey.trim()}`;
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: formattedContents,
+          systemInstruction: {
+            parts: [{ text: systemInstruction }]
+          },
+          generationConfig: {
+            temperature: 0.7,
           }
-        } catch (err) {
-          console.warn(`[Chat API] Failed to connect to: ${endpoint}`, err);
-        }
+        })
+      });
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData?.error?.message || `API Error ${response.status}`);
       }
 
-      if (success) {
-        setChatMessages((prev) => [...prev, { role: 'model' as const, text: replyText }]);
-      } else {
-        throw new Error('فشل الاتصال بجميع خوادم المعلم الافتراضي.');
+      const data = await response.json();
+      const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!reply) {
+        throw new Error('لم يرجع نموذج الذكاء الاصطناعي رداً صالحاً.');
       }
-    } catch (error) {
+      replyText = reply;
+
+      setChatMessages((prev) => [...prev, { role: 'model' as const, text: replyText }]);
+
+    } catch (error: any) {
       console.error('Chat error:', error);
+      let errorMsg = 'عذراً يا بطل! لم أتمكن من الاتصال بـ Gemini API. يرجى مراجعة الاتصال ومحاولة إرسال الرسالة مجدداً.';
+      
+      if (error.message === 'KEY_MISSING') {
+        errorMsg = '⚠️ يرجى إدخال مفتاح Gemini API الخاص بك لتفعيل الاتصال المباشر بالذكاء الاصطناعي على GitHub Pages! اضغط على أيقونة الإعدادات ⚙️ في أعلى الشات لإدخاله الآن.';
+      } else if (error.message && error.message.includes('API key not valid')) {
+        errorMsg = '❌ مفتاح Gemini API الذي أدخلته غير صالح. يرجى التحقق منه وتحديثه في لوحة إعدادات الشات ⚙️.';
+      } else if (error.message && error.message.includes('API_KEY_INVALID')) {
+        errorMsg = '❌ مفتاح Gemini API غير صالح أو غير نشط. يرجى مراجعة المفتاح وإعادة إدخاله.';
+      } else {
+        errorMsg = `❌ حدث خطأ أثناء الاتصال بـ Gemini API: ${error.message || 'يرجى التحقق من المفتاح واتصالك بالإنترنت.'}`;
+      }
+
       setChatMessages((prev) => [
         ...prev,
         {
           role: 'model' as const,
-          text: 'عذراً يا بطل! لم أتمكن من الاتصال بخادمي التعليمي حالياً. يرجى الانتظار لحظات وإعادة إرسال رسالتك (قد يستغرق الخادم المخصص حوالي 10 ثوانٍ للاستيقاظ وتفعيل الذكاء الاصطناعي بنجاح عند التشغيل لأول مرة من GitHub Pages) ⏳✨'
+          text: errorMsg
         }
       ]);
     } finally {
@@ -759,6 +783,10 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('4u_student_name', studentName);
   }, [studentName]);
+
+  useEffect(() => {
+    localStorage.setItem('4u_chat_gemini_key', chatGeminiKey);
+  }, [chatGeminiKey]);
 
   // Scroll to the top of the page whenever the page state changes
   useEffect(() => {
@@ -3705,12 +3733,22 @@ export default function App() {
           >
             {/* Header */}
             <div className="bg-gradient-to-r from-indigo-600 to-violet-700 p-4 text-white flex items-center justify-between shadow-md">
-              <button 
-                onClick={() => setIsChatOpen(false)}
-                className="hover:bg-white/10 p-1.5 rounded-lg text-white transition cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
+              <div className="flex items-center gap-1">
+                <button 
+                  onClick={() => setIsChatOpen(false)}
+                  className="hover:bg-white/10 p-1.5 rounded-lg text-white transition cursor-pointer"
+                  title="إغلاق الشات"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+                <button 
+                  onClick={() => setShowChatSettings(!showChatSettings)}
+                  className={`p-1.5 rounded-lg transition cursor-pointer ${showChatSettings ? 'bg-white/20 text-yellow-300' : 'hover:bg-white/10 text-white'}`}
+                  title="إعدادات الاتصال بالمعلم الافتراضي"
+                >
+                  <Settings className={`w-5 h-5 ${showChatSettings ? 'animate-spin' : ''}`} />
+                </button>
+              </div>
               
               <div className="flex items-center gap-2.5">
                 <div className="text-right">
@@ -3722,6 +3760,58 @@ export default function App() {
                 </div>
               </div>
             </div>
+
+            {/* Connection Settings Overlay */}
+            {showChatSettings && (
+              <div className="absolute top-[68px] left-0 right-0 bottom-0 bg-slate-900/95 text-white p-5 flex flex-col z-30 overflow-y-auto">
+                <div className="flex items-center justify-between mb-4 border-b border-slate-800 pb-2.5">
+                  <span className="text-[10px] text-slate-400">تفعيل المعلم الافتراضي على جيت هب</span>
+                  <h5 className="font-black text-sm text-indigo-400">🔑 مفتاح الاتصال الذكي</h5>
+                </div>
+
+                <div className="space-y-4 flex-1 text-right" dir="rtl">
+                  <div className="bg-indigo-950/40 border border-indigo-900/60 rounded-xl p-3 text-[10px] leading-relaxed text-indigo-200">
+                    💡 لكي يعمل المعلم الافتراضي بنجاح وبسرعة فائقة (100%) على <b>GitHub Pages</b> بدون قيود الخادم أو أخطاء CORS، يتصل التطبيق بذكاء جوجل مباشرة من متصفحك عبر مفتاح API الخاص بك.
+                  </div>
+
+                  <div className="space-y-1.5 pt-1">
+                    <label className="block text-xs font-bold text-slate-300">أدخل مفتاح Gemini API الخاص بك:</label>
+                    <input
+                      type="password"
+                      value={chatGeminiKey}
+                      onChange={(e) => setChatGeminiKey(e.target.value)}
+                      placeholder="AIzaSy..."
+                      className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-xs text-left text-slate-100 placeholder-slate-700 focus:outline-none focus:border-indigo-500 font-mono"
+                    />
+                    
+                    <div className="flex justify-between items-center pt-1 text-[9px]">
+                      <a 
+                        href="https://aistudio.google.com/app/apikey" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-yellow-400 hover:underline font-bold"
+                      >
+                        🔗 اضغط هنا للحصول على مفتاح مجاني في 5 ثوانٍ 🚀
+                      </a>
+                      <span className="text-slate-400">احصل على مفتاحك المجاني</span>
+                    </div>
+
+                    <span className="block text-[9px] text-emerald-400 leading-relaxed text-right pt-2">
+                      🔐 يتم حفظ المفتاح بشكل آمن تماماً داخل متصفحك الخاص فقط (localStorage)، ولا يتم حفظه أو إرساله لأي خوادم خارجية إطلاقاً.
+                    </span>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-slate-800 flex gap-2 justify-end mt-4">
+                  <button
+                    onClick={() => setShowChatSettings(false)}
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-xl text-xs cursor-pointer shadow transition"
+                  >
+                    حفظ وتفعيل الاتصال
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* Chat Body */}
             <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-50/50 dark:bg-slate-950/20 text-right">
