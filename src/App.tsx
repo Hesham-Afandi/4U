@@ -190,6 +190,7 @@ export default function App() {
   ]);
   const [chatInput, setChatInput] = useState('');
   const [isChatLoading, setIsChatLoading] = useState(false);
+  const chatEndRef = useRef<HTMLDivElement | null>(null);
 
   // --- 🔊 Text-To-Speech (TTS) States ---
   const [ttsState, setTtsState] = useState<'idle' | 'playing' | 'paused'>('idle');
@@ -757,6 +758,21 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('4u_student_name', studentName);
   }, [studentName]);
+
+  // Scroll to the top of the page whenever the page state changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [appState]);
+
+  // Auto-scroll chat to the bottom on new messages or when chat is opened
+  useEffect(() => {
+    if (isChatOpen && chatEndRef.current) {
+      const timer = setTimeout(() => {
+        chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [chatMessages, isChatOpen]);
 
   // Daily Reminder & Notes Load effect
   useEffect(() => {
@@ -3743,6 +3759,7 @@ export default function App() {
                   </div>
                 </div>
               )}
+              <div ref={chatEndRef} />
             </div>
 
             {/* Quick Questions suggestion */}
