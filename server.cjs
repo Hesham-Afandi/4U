@@ -31,9 +31,12 @@ import_dotenv.default.config();
 var app = (0, import_express.default)();
 var PORT = 3e3;
 app.use((0, import_cors.default)({
-  origin: "*",
+  origin: true,
+  // Dynamically mirrors the requesting origin (e.g. GitHub Pages), bypassing browser wildcard restrictions
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"],
+  credentials: true,
+  // Supports credentials and complex headers from cross-origin requests
   preflightContinue: false,
   optionsSuccessStatus: 200
 }));
