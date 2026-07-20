@@ -3,10 +3,21 @@ import path from "path";
 import dotenv from "dotenv";
 import { GoogleGenAI } from "@google/genai";
 
+import cors from "cors";
+
 dotenv.config();
 
 const app = express();
 const PORT = 3000;
+
+// Highly robust standard CORS middleware for cross-origin environments (like GitHub Pages)
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"],
+  preflightContinue: false,
+  optionsSuccessStatus: 200
+}));
 
 app.use(express.json());
 
@@ -29,6 +40,48 @@ function getAiClient(): GoogleGenAI {
     });
   }
   return aiClient;
+}
+
+// Robust content generator with automatic retry (exponential backoff) and model fallback
+async function generateContentWithFallbackAndRetry(
+  ai: GoogleGenAI,
+  contents: any[],
+  systemInstruction: string
+): Promise<any> {
+  const modelsToTry = ["gemini-3.5-flash", "gemini-3.1-flash-lite"];
+  let lastError: any = null;
+
+  for (const model of modelsToTry) {
+    const maxRetries = 3;
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        console.log(`[Gemini API] Attempt ${attempt} using model: ${model}`);
+        const response = await ai.models.generateContent({
+          model: model,
+          contents: contents,
+          config: {
+            systemInstruction: systemInstruction,
+            temperature: 0.7,
+          },
+        });
+        return response;
+      } catch (err: any) {
+        lastError = err;
+        console.warn(`[Gemini API] Error on attempt ${attempt} with model ${model}:`, err.message || err);
+        
+        if (model === modelsToTry[modelsToTry.length - 1] && attempt === maxRetries) {
+          break;
+        }
+
+        // Exponential backoff delay (e.g. 600ms, 1200ms, 2400ms)
+        const delay = Math.pow(2, attempt - 1) * 600;
+        await new Promise((resolve) => setTimeout(resolve, delay));
+      }
+    }
+    console.warn(`[Gemini API] Model ${model} failed after all retries. Trying fallback model...`);
+  }
+
+  throw lastError || new Error("Failed to generate content with all models and retries");
 }
 
 // 👨‍🏫 Personal Teacher System Instruction
@@ -72,14 +125,7 @@ app.post("/api/chat", async (req, res) => {
       parts: [{ text: message }]
     });
 
-    const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
-      contents: contents,
-      config: {
-        systemInstruction: SYSTEM_INSTRUCTION,
-        temperature: 0.7,
-      },
-    });
+    const response = await generateContentWithFallbackAndRetry(ai, contents, SYSTEM_INSTRUCTION);
 
     const reply = response.text || "عذراً يا بطل، لم أستطع صياغة رد مناسب حالياً. حاول طرح سؤالك مرة أخرى!";
     res.json({ reply });

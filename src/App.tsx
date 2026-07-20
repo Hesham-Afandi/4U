@@ -387,7 +387,7 @@ export default function App() {
   const startVoiceSearch = () => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SpeechRecognition) {
-      setToast('⚠️ عذراً، متصفحك الحالي لا يدعم ميزة البحث الصوتي.');
+      showToastMsg('⚠️ عذراً، متصفحك الحالي لا يدعم ميزة البحث الصوتي.');
       return;
     }
 
@@ -405,18 +405,19 @@ export default function App() {
       const speechToText = event.results[0][0].transcript;
       if (speechToText) {
         setSearchQuery(speechToText);
-        setToast(`🔍 تم التقاط: "${speechToText}"`);
+        showToastMsg(`🔍 تم التقاط: "${speechToText}"`);
       }
     };
 
     recognition.onerror = (event: any) => {
       console.error(event.error);
       setIsListening(false);
-      setToast('❌ حدث خطأ في التقاط الصوت. حاول مرة أخرى.');
+      showToastMsg('❌ حدث خطأ في التقاط الصوت. حاول مرة أخرى.');
     };
 
     recognition.onend = () => {
       setIsListening(false);
+      setToast((prev) => (prev === '🎙️ جاري الاستماع صوتياً... تحدث الآن' ? null : prev));
     };
 
     recognition.start();
@@ -452,24 +453,56 @@ export default function App() {
     setChatMessages(newMessages);
     setIsChatLoading(true);
 
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: textToSend,
-          history: newMessages.slice(0, -1),
-        }),
-      });
+    // Determine the API endpoints to try:
+    // If running locally or on Cloud Run directly, try relative endpoint first.
+    // Otherwise (on external static environments like GitHub Pages), try the main Shared/Pre URL, then fall back to the Dev URL.
+    const apiEndpoints: string[] = [];
+    if (
+      window.location.hostname === 'localhost' || 
+      window.location.hostname === '127.0.0.1' || 
+      window.location.hostname.includes('run.app')
+    ) {
+      apiEndpoints.push('/api/chat');
+    }
+    apiEndpoints.push('https://ais-pre-t5z4xmcbcttqdwgdadfuls-72955753475.europe-west2.run.app/api/chat');
+    apiEndpoints.push('https://ais-dev-t5z4xmcbcttqdwgdadfuls-72955753475.europe-west2.run.app/api/chat');
 
-      if (!response.ok) {
-        throw new Error('فشل الاتصال بالمعلم الافتراضي.');
+    try {
+      let success = false;
+      let replyText = '';
+
+      for (const endpoint of apiEndpoints) {
+        try {
+          console.log(`[Chat API] Trying endpoint: ${endpoint}`);
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              message: textToSend,
+              history: newMessages.slice(0, -1),
+            }),
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            replyText = data.reply;
+            success = true;
+            break; // Exit loop on success
+          } else {
+            console.warn(`[Chat API] Endpoint returned status ${response.status}: ${endpoint}`);
+          }
+        } catch (err) {
+          console.warn(`[Chat API] Failed to connect to: ${endpoint}`, err);
+        }
       }
 
-      const data = await response.json();
-      setChatMessages((prev) => [...prev, { role: 'model' as const, text: data.reply }]);
+      if (success) {
+        setChatMessages((prev) => [...prev, { role: 'model' as const, text: replyText }]);
+      } else {
+        throw new Error('فشل الاتصال بجميع خوادم المعلم الافتراضي.');
+      }
     } catch (error) {
       console.error('Chat error:', error);
       setChatMessages((prev) => [
@@ -527,7 +560,7 @@ export default function App() {
 
     const textToRead = getLessonTextToRead(appState.lesson);
     if (!textToRead) {
-      setToast('⚠️ لا يوجد محتوى نصي متاح للقراءة في هذا الدرس حالياً.');
+      showToastMsg('⚠️ لا يوجد محتوى نصي متاح للقراءة في هذا الدرس حالياً.');
       return;
     }
 
@@ -561,7 +594,7 @@ export default function App() {
     window.speechSynthesis.speak(utterance);
     setTtsState('playing');
     setTtsCurrentParagraph(appState.lesson.title);
-    setToast('🔊 تم بدء الشرح الصوتي للدرس بصوت المعلم.');
+    showToastMsg('🔊 تم بدء الشرح الصوتي للدرس بصوت المعلم.');
   };
 
   const handleStopTts = () => {
@@ -1133,7 +1166,7 @@ export default function App() {
     setToast(msg);
     setTimeout(() => {
       setToast(null);
-    }, 2500);
+    }, 3000);
   };
 
   // Install App Action
