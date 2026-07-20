@@ -26,9 +26,17 @@ var import_express = __toESM(require("express"), 1);
 var import_path = __toESM(require("path"), 1);
 var import_dotenv = __toESM(require("dotenv"), 1);
 var import_genai = require("@google/genai");
+var import_cors = __toESM(require("cors"), 1);
 import_dotenv.default.config();
 var app = (0, import_express.default)();
 var PORT = 3e3;
+app.use((0, import_cors.default)({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"],
+  preflightContinue: false,
+  optionsSuccessStatus: 200
+}));
 app.use(import_express.default.json());
 var aiClient = null;
 function getAiClient() {
@@ -47,6 +55,37 @@ function getAiClient() {
     });
   }
   return aiClient;
+}
+async function generateContentWithFallbackAndRetry(ai, contents, systemInstruction) {
+  const modelsToTry = ["gemini-3.5-flash", "gemini-3.1-flash-lite"];
+  let lastError = null;
+  for (const model of modelsToTry) {
+    const maxRetries = 3;
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        console.log(`[Gemini API] Attempt ${attempt} using model: ${model}`);
+        const response = await ai.models.generateContent({
+          model,
+          contents,
+          config: {
+            systemInstruction,
+            temperature: 0.7
+          }
+        });
+        return response;
+      } catch (err) {
+        lastError = err;
+        console.warn(`[Gemini API] Error on attempt ${attempt} with model ${model}:`, err.message || err);
+        if (model === modelsToTry[modelsToTry.length - 1] && attempt === maxRetries) {
+          break;
+        }
+        const delay = Math.pow(2, attempt - 1) * 600;
+        await new Promise((resolve) => setTimeout(resolve, delay));
+      }
+    }
+    console.warn(`[Gemini API] Model ${model} failed after all retries. Trying fallback model...`);
+  }
+  throw lastError || new Error("Failed to generate content with all models and retries");
 }
 var SYSTEM_INSTRUCTION = `
 \u0623\u0646\u062A "\u0627\u0644\u0645\u0639\u0644\u0645 \u0627\u0644\u0627\u0641\u062A\u0631\u0627\u0636\u064A" \u0627\u0644\u062D\u0643\u064A\u0645 \u0648\u0627\u0644\u0648\u062F\u0648\u062F \u0639\u0644\u0649 "\u0627\u0644\u0645\u0646\u0635\u0629 \u0627\u0644\u062A\u0639\u0644\u064A\u0645\u064A\u0629 \u0627\u0644\u0645\u062A\u0643\u0627\u0645\u0644\u0629 4U".
@@ -78,14 +117,7 @@ app.post("/api/chat", async (req, res) => {
       role: "user",
       parts: [{ text: message }]
     });
-    const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
-      contents,
-      config: {
-        systemInstruction: SYSTEM_INSTRUCTION,
-        temperature: 0.7
-      }
-    });
+    const response = await generateContentWithFallbackAndRetry(ai, contents, SYSTEM_INSTRUCTION);
     const reply = response.text || "\u0639\u0630\u0631\u0627\u064B \u064A\u0627 \u0628\u0637\u0644\u060C \u0644\u0645 \u0623\u0633\u062A\u0637\u0639 \u0635\u064A\u0627\u063A\u0629 \u0631\u062F \u0645\u0646\u0627\u0633\u0628 \u062D\u0627\u0644\u064A\u0627\u064B. \u062D\u0627\u0648\u0644 \u0637\u0631\u062D \u0633\u0624\u0627\u0644\u0643 \u0645\u0631\u0629 \u0623\u062E\u0631\u0649!";
     res.json({ reply });
   } catch (error) {
