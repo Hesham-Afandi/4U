@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   BookOpen, Search, RotateCcw, Heart, BarChart2, Sun, Moon, 
   Home, ChevronRight, Share2, Clipboard, Award, Printer, CheckCircle, Clock,
-  Download, Mic, Sparkles, Megaphone, Radio, Pause, Play, Volume2, VolumeX
+  Download, Mic, Sparkles, Megaphone, Radio, Pause, Play, Volume2, VolumeX,
+  MessageSquare, Send, X, Flame
 } from 'lucide-react';
 import { DB, countries } from './data';
 import { Term, Stream, Program, Grade, Subject, Unit, Lesson, AppState } from './types';
@@ -48,6 +49,79 @@ const COUNTRY_INFO: Record<string, { name: string; flag: string }> = {
   Qatar: { name: 'دولة قطر', flag: '🇶🇦' },
   Bahrain: { name: 'مملكة البحرين', flag: '🇧🇭' },
 };
+
+interface Reciter {
+  id: string;
+  name: string;
+  description: string;
+  urls: string[];
+}
+
+const QURAN_RECITERS: Reciter[] = [
+  {
+    id: 'abdulbasit',
+    name: 'الشيخ عبدالباسط عبدالصمد',
+    description: 'تلاوات خاشعة ومجودة 📖',
+    urls: [
+      'https://radio.mp3islam.com/listen/abdulbasit/radio.mp3',
+      'https://backup.qurango.net/radio/tarteel_abdulbasit/;stream.mp3',
+      'https://backup.qurango.net/radio/tarteel_abdulbasit',
+      'https://qurango.net/radio/tarteel_abdulbasit/;stream.mp3',
+      'https://qurango.net/radio/tarteel_abdulbasit',
+      'https://live.mp3quran.net/radio/tarteel_abdulbasit',
+      'https://server11.mp3quran.net/basit/055.mp3', // Surah Ar-Rahman (Static Backup 1)
+      'https://server11.mp3quran.net/basit/018.mp3', // Surah Al-Kahf (Static Backup 2)
+      'https://server11.mp3quran.net/basit/036.mp3', // Surah Ya-Sin (Static Backup 3)
+      'https://server11.mp3quran.net/basit/056.mp3', // Surah Al-Waqi'ah (Static Backup 4)
+      'https://server11.mp3quran.net/basit/067.mp3'  // Surah Al-Mulk (Static Backup 5)
+    ]
+  },
+  {
+    id: 'minshawi',
+    name: 'الشيخ محمد صديق المنشاوي',
+    description: 'صوت المصحف المرتل والمجود 🎧',
+    urls: [
+      'https://serverkw.quran-uni.com:8230/;*.mp3',
+      'https://backup.qurango.net/radio/mohammad_siddiq_alminshawi'
+    ]
+  },
+  {
+    id: 'husary',
+    name: 'الشيخ محمود خليل الحصري',
+    description: 'المعلم المتقن بقراءاته العذبة 📜',
+    urls: [
+      'https://serverkw.quran-uni.com:8018/;*.mp3',
+      'https://backup.qurango.net/radio/mahmoud_khalil_alhussary'
+    ]
+  },
+  {
+    id: 'tablawi',
+    name: 'الشيخ محمد محمود الطبلاوي',
+    description: 'قراءة مصرية أصيلة ذات شجن 💡',
+    urls: [
+      'https://serverkw.quran-uni.com:8078/;*.mp3',
+      'https://backup.qurango.net/radio/mohammad_al_tablaway'
+    ]
+  },
+  {
+    id: 'banna',
+    name: 'الشيخ محمود علي البنا',
+    description: 'تلاوة نادرة وخاشعة من قيثارة السماء ✨',
+    urls: [
+      'https://serverkw.quran-uni.com:8024/;*.mp3',
+      'https://backup.qurango.net/radio/mahmoud_ali__al_banna'
+    ]
+  },
+  {
+    id: 'mustafa_ismail',
+    name: 'الشيخ مصطفى إسماعيل',
+    description: 'عبقري التلاوة والمقامات القرآنية 🌟',
+    urls: [
+      'https://serverkw.quran-uni.com:8224/;*.mp3',
+      'https://backup.qurango.net/radio/mustafa_ismail'
+    ]
+  }
+];
 
 const platformLogo = new URL('./assets/images/platform_logo_transparent.svg', import.meta.url).href;
 const teacherLoader = new URL('./assets/images/teacher_loader_1783347042138.jpg', import.meta.url).href;
@@ -101,6 +175,28 @@ export default function App() {
   const [activeVideoLesson, setActiveVideoLesson] = useState<Lesson | null>(null);
   const [activeQuote, setActiveQuote] = useState('');
 
+  // --- Visit Streak & Platform Active Session Timer ---
+  const [visitStreak, setVisitStreak] = useState(1);
+  const [streakMessage, setStreakMessage] = useState('');
+  const [platformSeconds, setPlatformSeconds] = useState(0);
+
+  // --- 👨‍🏫 Chatbot States (المعلم الافتراضي) ---
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [chatMessages, setChatMessages] = useState<Array<{ role: 'user' | 'model'; text: string }>>([
+    {
+      role: 'model',
+      text: 'مرحباً بك يا بطل في منصة 4U التعليمية! 👨‍🏫\n\nأنا معلمك الافتراضي ومساعدك الشخصي لمراجعة دروسك وتسهيل الصعب عليك في كل المواد والامتحانات.\n\nيلا نراجع مع بعض! اسألني عن أي موضوع أو قانون حابب تفهمه اليوم 👇✨'
+    }
+  ]);
+  const [chatInput, setChatInput] = useState('');
+  const [isChatLoading, setIsChatLoading] = useState(false);
+
+  // --- 🔊 Text-To-Speech (TTS) States ---
+  const [ttsState, setTtsState] = useState<'idle' | 'playing' | 'paused'>('idle');
+  const [ttsRate, setTtsRate] = useState(1);
+  const ttsUtteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const [ttsCurrentParagraph, setTtsCurrentParagraph] = useState('');
+
   // Focus Mode & Personal Student Notes
   const [isFocusMode, setIsFocusMode] = useState(false);
   const [studentNotes, setStudentNotes] = useState<Record<string, string>>({});
@@ -113,7 +209,8 @@ export default function App() {
   const [showReminderSettingModal, setShowReminderSettingModal] = useState(false);
   const [showAlarmTriggeredModal, setShowAlarmTriggeredModal] = useState(false);
 
-  // Quran Radio States (Sheikh Abdulbasit Abdulsamad)
+  // Quran Radio States (Sheikh Abdulbasit Abdulsamad & Others)
+  const [activeReciterId, setActiveReciterId] = useState('abdulbasit');
   const [isRadioPlaying, setIsRadioPlaying] = useState(false);
   const [radioVolume, setRadioVolume] = useState(0.5);
   const [isRadioMuted, setIsRadioMuted] = useState(false);
@@ -177,6 +274,51 @@ export default function App() {
       setStudentName(name);
     } catch {
       setStudentName('');
+    }
+
+    // Load & Calculate Visit Streak
+    try {
+      const todayStr = new Date().toISOString().split('T')[0];
+      const lastVisit = localStorage.getItem('4u_last_visit_date');
+      const savedStreak = parseInt(localStorage.getItem('4u_visit_streak') || '0', 10);
+      
+      let currentStreak = savedStreak;
+
+      if (!lastVisit) {
+        // First time ever visiting
+        currentStreak = 1;
+      } else {
+        const lastVisitDate = new Date(lastVisit);
+        // Reset hours/minutes/seconds to compare days purely
+        const todayDate = new Date(todayStr);
+        const diffTime = Math.abs(todayDate.getTime() - lastVisitDate.getTime());
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays === 1) {
+          // Visited yesterday, increment streak!
+          currentStreak = savedStreak + 1;
+        } else if (diffDays > 1) {
+          // Missed one or more days, reset streak to 1
+          currentStreak = 1;
+        }
+      }
+
+      localStorage.setItem('4u_last_visit_date', todayStr);
+      localStorage.setItem('4u_visit_streak', currentStreak.toString());
+      setVisitStreak(currentStreak);
+
+      // Set motivating streak messages in Arabic based on the number of days
+      if (currentStreak === 1) {
+        setStreakMessage('بداية ممتازة يا بطل! استمر في الحضور اليومي لبناء شعلة تفوقك وسحق الامتحانات! 🚀');
+      } else if (currentStreak === 2) {
+        setStreakMessage('رائع جداً! يومان متتاليان من التحصيل والمذاكرة. أنت تسير بخطى الواثق! 🌟');
+      } else if (currentStreak >= 3 && currentStreak <= 5) {
+        setStreakMessage(`مذهل! شعلتك بدأت تتوهج! ${currentStreak} أيام متتالية من المثابرة والتميز اليومي! 🔥📚`);
+      } else {
+        setStreakMessage(`عبقري متألق! ${currentStreak} أيام متتالية من العمل الدؤوب! شعلة علمية حارقة تقودك للقمة! 🏆🔥🎓`);
+      }
+    } catch (e) {
+      console.error("Failed to track visit streak:", e);
     }
 
     // Restore Navigation State
@@ -279,6 +421,188 @@ export default function App() {
 
     recognition.start();
   };
+
+  // --- ⏱️ Real-time Platform Session Active Timer ---
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPlatformSeconds((prev) => prev + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const formatPlatformTime = (totalSeconds: number) => {
+    const hrs = Math.floor(totalSeconds / 3600);
+    const mins = Math.floor((totalSeconds % 3600) / 60);
+    const secs = totalSeconds % 60;
+    return [
+      hrs.toString().padStart(2, '0'),
+      mins.toString().padStart(2, '0'),
+      secs.toString().padStart(2, '0')
+    ].join(':');
+  };
+
+  // --- 👨‍🏫 Chatbot Communication (المعلم الافتراضي) ---
+  const handleSendChatMessage = async (customMessage?: string) => {
+    const textToSend = customMessage || chatInput;
+    if (!textToSend.trim() || isChatLoading) return;
+
+    if (!customMessage) setChatInput('');
+
+    const newMessages = [...chatMessages, { role: 'user' as const, text: textToSend }];
+    setChatMessages(newMessages);
+    setIsChatLoading(true);
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: textToSend,
+          history: newMessages.slice(0, -1),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('فشل الاتصال بالمعلم الافتراضي.');
+      }
+
+      const data = await response.json();
+      setChatMessages((prev) => [...prev, { role: 'model' as const, text: data.reply }]);
+    } catch (error) {
+      console.error('Chat error:', error);
+      setChatMessages((prev) => [
+        ...prev,
+        {
+          role: 'model' as const,
+          text: 'عذراً يا بطل! واجهت مشكلة بسيطة في الاتصال. سأكون جاهزاً فور تفعيل الاتصال بالذكاء الاصطناعي ⏳✨'
+        }
+      ]);
+    } finally {
+      setIsChatLoading(false);
+    }
+  };
+
+  // --- 🔊 Text-To-Speech (TTS) Engine ---
+  const getLessonTextToRead = (lesson: any) => {
+    if (!lesson || !lesson.content) return '';
+    const parts = [];
+    parts.push(lesson.title || '');
+    const c = lesson.content;
+    if (c.intro) parts.push(c.intro);
+    if (c.sections) {
+      c.sections.forEach((s: any) => {
+        if (s.title) parts.push(s.title);
+        if (typeof s.content === 'string') {
+          parts.push(s.content);
+        } else if (Array.isArray(s.content)) {
+          parts.push(s.content.join('، '));
+        }
+        if (s.rows) {
+          s.rows.forEach((row: any) => {
+            parts.push(row.join('، '));
+          });
+        }
+      });
+    }
+    return parts.join('\n\n');
+  };
+
+  const handleStartTts = () => {
+    if (!appState.lesson) return;
+
+    if (ttsState === 'playing') {
+      window.speechSynthesis.pause();
+      setTtsState('paused');
+      return;
+    }
+    if (ttsState === 'paused') {
+      window.speechSynthesis.resume();
+      setTtsState('playing');
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    const textToRead = getLessonTextToRead(appState.lesson);
+    if (!textToRead) {
+      setToast('⚠️ لا يوجد محتوى نصي متاح للقراءة في هذا الدرس حالياً.');
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(textToRead);
+    
+    const isEnglish = DB.curriculum[getCurriculumKey() || '']?.isEnglish;
+    utterance.lang = isEnglish ? 'en-US' : 'ar-SA';
+    utterance.rate = ttsRate;
+
+    const voices = window.speechSynthesis.getVoices();
+    const voice = voices.find((v) => 
+      isEnglish 
+        ? v.lang.startsWith('en') 
+        : v.lang.startsWith('ar')
+    );
+    if (voice) {
+      utterance.voice = voice;
+    }
+
+    utterance.onend = () => {
+      setTtsState('idle');
+      setTtsCurrentParagraph('');
+    };
+
+    utterance.onerror = () => {
+      setTtsState('idle');
+      setTtsCurrentParagraph('');
+    };
+
+    ttsUtteranceRef.current = utterance;
+    window.speechSynthesis.speak(utterance);
+    setTtsState('playing');
+    setTtsCurrentParagraph(appState.lesson.title);
+    setToast('🔊 تم بدء الشرح الصوتي للدرس بصوت المعلم.');
+  };
+
+  const handleStopTts = () => {
+    window.speechSynthesis.cancel();
+    setTtsState('idle');
+    setTtsCurrentParagraph('');
+  };
+
+  const handleTtsRateChange = (rate: number) => {
+    setTtsRate(rate);
+    if (ttsState === 'playing') {
+      window.speechSynthesis.cancel();
+      const textToRead = getLessonTextToRead(appState.lesson);
+      const utterance = new SpeechSynthesisUtterance(textToRead);
+      const isEnglish = DB.curriculum[getCurriculumKey() || '']?.isEnglish;
+      utterance.lang = isEnglish ? 'en-US' : 'ar-SA';
+      utterance.rate = rate;
+      const voices = window.speechSynthesis.getVoices();
+      const voice = voices.find((v) => isEnglish ? v.lang.startsWith('en') : v.lang.startsWith('ar'));
+      if (voice) utterance.voice = voice;
+      
+      utterance.onend = () => {
+        setTtsState('idle');
+        setTtsCurrentParagraph('');
+      };
+      utterance.onerror = () => {
+        setTtsState('idle');
+        setTtsCurrentParagraph('');
+      };
+      
+      ttsUtteranceRef.current = utterance;
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  // Stop Speech synthesis if user leaves the active lesson
+  useEffect(() => {
+    return () => {
+      window.speechSynthesis.cancel();
+    };
+  }, [appState.lesson]);
 
   // 2. Track Study Time for Active Lesson
   useEffect(() => {
@@ -559,21 +883,6 @@ export default function App() {
     showToastMsg('💾 تم حفظ جميع بيانات تقدمك ودراستك بنجاح في ذاكرة المتصفح!');
   };
 
-  // Quran Radio URLs & Fallbacks
-  const RADIO_URLS = [
-    'https://radio.mp3islam.com/listen/abdulbasit/radio.mp3',
-    'https://backup.qurango.net/radio/tarteel_abdulbasit/;stream.mp3',
-    'https://backup.qurango.net/radio/tarteel_abdulbasit',
-    'https://qurango.net/radio/tarteel_abdulbasit/;stream.mp3',
-    'https://qurango.net/radio/tarteel_abdulbasit',
-    'https://live.mp3quran.net/radio/tarteel_abdulbasit',
-    'https://server11.mp3quran.net/basit/055.mp3', // Surah Ar-Rahman (Static Backup 1)
-    'https://server11.mp3quran.net/basit/018.mp3', // Surah Al-Kahf (Static Backup 2)
-    'https://server11.mp3quran.net/basit/036.mp3', // Surah Ya-Sin (Static Backup 3)
-    'https://server11.mp3quran.net/basit/056.mp3', // Surah Al-Waqi'ah (Static Backup 4)
-    'https://server11.mp3quran.net/basit/067.mp3'  // Surah Al-Mulk (Static Backup 5)
-  ];
-
   const currentRadioUrlIndexRef = useRef(0);
 
   // Cleanup radio on unmount
@@ -589,7 +898,17 @@ export default function App() {
     };
   }, []);
 
-  const playStreamAtIndex = (index: number, forcePlay = true, overrideVolume?: number, overrideMuted?: boolean) => {
+  const playStreamAtIndex = (
+    index: number, 
+    forcePlay = true, 
+    overrideVolume?: number, 
+    overrideMuted?: boolean,
+    targetReciterId?: string
+  ) => {
+    const reciterId = targetReciterId || activeReciterId;
+    const reciter = QURAN_RECITERS.find((r) => r.id === reciterId) || QURAN_RECITERS[0];
+    const reciterUrls = reciter.urls;
+
     // Clean up existing audio instance
     if (radioAudioRef.current) {
       radioAudioRef.current.pause();
@@ -600,7 +919,7 @@ export default function App() {
     }
 
     // Check bounds
-    if (index >= RADIO_URLS.length) {
+    if (index >= reciterUrls.length) {
       setIsRadioPlaying(false);
       if (isRadioIntentPlayingRef.current) {
         showToastMsg("⚠️ تعذر تشغيل الإذاعة حالياً بسبب جدار الحماية بالشبكة أو قيود المتصفح.");
@@ -609,15 +928,14 @@ export default function App() {
     }
 
     currentRadioUrlIndexRef.current = index;
-    const currentUrl = RADIO_URLS[index];
-    console.log(`[Quran Radio] Loading stream ${index}: ${currentUrl}`);
+    const currentUrl = reciterUrls[index];
+    console.log(`[Quran Radio - ${reciter.name}] Loading stream ${index}: ${currentUrl}`);
 
     const finalMuted = overrideMuted !== undefined ? overrideMuted : isRadioMuted;
     const finalVolume = overrideVolume !== undefined ? overrideVolume : radioVolume;
 
     // Create a new Audio object
     const audio = new Audio();
-    // Do NOT set audio.crossOrigin to avoid CORS blocking on standard streams
     audio.src = currentUrl;
     audio.volume = finalMuted ? 0 : finalVolume;
     audio.preload = "auto";
@@ -632,17 +950,17 @@ export default function App() {
       // Ensure this audio is still the active reference AND the user actually wants to play the radio before triggering fallback
       if (radioAudioRef.current === audio && isRadioIntentPlayingRef.current) {
         const nextIndex = index + 1;
-        if (nextIndex === 6) {
+        if (reciterId === 'abdulbasit' && nextIndex === 6) {
           showToastMsg("📻 تم الانتقال لتشغيل تلاوة مسجلة لضمان جودة الصوت واستقرار البث ✨");
-        } else if (nextIndex < 6) {
+        } else if (nextIndex < reciterUrls.length) {
           showToastMsg("📻 جاري الانتقال لموجة بث بديلة لتفادي الانقطاع...");
         }
-        playStreamAtIndex(nextIndex, forcePlay, finalVolume, finalMuted);
+        playStreamAtIndex(nextIndex, forcePlay, finalVolume, finalMuted, reciterId);
       }
     };
 
     audio.onerror = (e) => {
-      console.warn(`[Quran Radio] Error event on stream ${index}:`, e);
+      console.warn(`[Quran Radio - ${reciter.name}] Error event on stream ${index}:`, e);
       if (isRadioIntentPlayingRef.current) {
         triggerFallback();
       }
@@ -651,14 +969,17 @@ export default function App() {
     audio.onended = () => {
       if (!isRadioIntentPlayingRef.current) return;
       // Loop or proceed with static recitations
-      if (index >= 6) {
-        console.log("[Quran Radio] Static track ended, playing next...");
-        let nextIndex = index + 1;
-        if (nextIndex >= RADIO_URLS.length) {
+      let nextIndex = index + 1;
+      if (reciterId === 'abdulbasit' && index >= 6) {
+        if (nextIndex >= reciterUrls.length) {
           nextIndex = 6; // Loop back to the first static recitation
         }
-        playStreamAtIndex(nextIndex, true, finalVolume, finalMuted);
+      } else {
+        if (nextIndex >= reciterUrls.length) {
+          nextIndex = 0; // Loop back to live stream
+        }
       }
+      playStreamAtIndex(nextIndex, true, finalVolume, finalMuted, reciterId);
     };
 
     radioAudioRef.current = audio;
@@ -676,7 +997,7 @@ export default function App() {
             console.log(`[Quran Radio] Playback of stream ${index} was aborted intentionally or stopped by user.`);
             return;
           }
-          console.warn(`[Quran Radio] play() promise rejected for stream ${index}:`, err);
+          console.warn(`[Quran Radio - ${reciter.name}] play() promise rejected for stream ${index}:`, err);
           triggerFallback();
         });
     }
@@ -715,6 +1036,16 @@ export default function App() {
 
       // Start with the best primary stream first with unmuted overrides
       playStreamAtIndex(0, true, newVol, newMute);
+    }
+  };
+
+  const handleReciterChange = (reciterId: string) => {
+    setActiveReciterId(reciterId);
+    const reciter = QURAN_RECITERS.find((r) => r.id === reciterId) || QURAN_RECITERS[0];
+    showToastMsg(`📻 تم الانتقال لإذاعة ${reciter.name}`);
+    if (isRadioPlaying || isRadioIntentPlayingRef.current) {
+      isRadioIntentPlayingRef.current = true;
+      playStreamAtIndex(0, true, radioVolume, isRadioMuted, reciterId);
     }
   };
 
@@ -1513,10 +1844,14 @@ export default function App() {
                   ? 'bg-emerald-600 text-white border-emerald-500 shadow-lg shadow-emerald-500/20' 
                   : 'bg-white/10 hover:bg-white/20 text-emerald-100 border-white/15'
               }`}
-              title="إذاعة الشيخ عبدالباسط عبدالصمد"
+              title="راديو القرآن الكريم المباشر"
             >
               <Radio className={`w-4 h-4 ${isRadioPlaying ? 'animate-pulse text-emerald-400' : ''}`} />
-              <span className="hidden md:inline">إذاعة عبدالباسط</span>
+              <span className="hidden md:inline">
+                {isRadioPlaying 
+                  ? `إذاعة ${QURAN_RECITERS.find(r => r.id === activeReciterId)?.name.split(' ')[1] || 'القرآن'}`
+                  : 'إذاعة القرآن'}
+              </span>
               {isRadioPlaying && (
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-ping" />
               )}
@@ -1573,6 +1908,36 @@ export default function App() {
           ></div>
         </div>
       </header>
+
+      {/* ⏱️ VISIT STREAK & PLATFORM ACTIVE SESSION TIMER BAR */}
+      <div className="bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/10 dark:from-amber-950/20 dark:via-orange-950/20 dark:to-amber-950/20 border-b border-amber-100 dark:border-amber-950/40 py-2.5 px-4 md:px-8 text-right font-sans">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
+          
+          {/* Active Platform Timer */}
+          <div className="flex items-center gap-2 justify-end text-slate-700 dark:text-slate-300 font-extrabold order-1 md:order-2">
+            <span className="flex h-2 w-2 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span>⏱️ مدة تصفحك للمنصة اليوم:</span>
+            <span className="font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 px-2 py-0.5 rounded-md border border-slate-200/50 dark:border-slate-700/50 shadow-inner">
+              {formatPlatformTime(platformSeconds)}
+            </span>
+          </div>
+
+          {/* Visit Streak */}
+          <div className="flex items-center gap-2 justify-end md:justify-start order-2 md:order-1 flex-wrap">
+            <div className="flex items-center gap-1 bg-amber-100 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-500/30 px-2.5 py-0.5 rounded-full shadow-sm text-amber-800 dark:text-amber-400 font-black">
+              <span className="text-sm inline-block animate-pulse transform hover:scale-125 transition duration-300 origin-bottom select-none">🔥</span>
+              <span>{visitStreak} أيام متتالية</span>
+            </div>
+            <p className="text-[11px] text-gray-600 dark:text-gray-300 font-bold leading-relaxed">
+              {streakMessage}
+            </p>
+          </div>
+
+        </div>
+      </div>
 
       {/* Breadcrumbs */}
       {(appState.country || appState.term || appState.stream || appState.grade || appState.subject || appState.unit || appState.lesson) && (
@@ -2585,6 +2950,89 @@ export default function App() {
                               )}
                             </div>
 
+                            {/* 🔊 LISTEN TO LESSON AUDIO PLAYER */}
+                            <div className="bg-slate-50 dark:bg-slate-800/40 p-4 rounded-2xl border border-slate-100 dark:border-slate-800/60 space-y-3 text-right">
+                              <div className="flex items-center justify-between">
+                                <span className="text-[10px] bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 font-extrabold px-2.5 py-1 rounded-full">
+                                  {ttsState === 'playing' ? '🟢 مستمع نشط' : '🔊 الشرح الصوتي'}
+                                </span>
+                                <h4 className="font-extrabold text-xs text-gray-700 dark:text-slate-300 flex items-center gap-1">
+                                  <span>الاستماع إلى الدرس</span>
+                                  <span>🎙️</span>
+                                </h4>
+                              </div>
+
+                              <div className="flex items-center gap-2 justify-center py-1">
+                                {ttsState === 'playing' ? (
+                                  <>
+                                    <button
+                                      onClick={handleStartTts}
+                                      className="bg-amber-500 hover:bg-amber-600 text-white p-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1 cursor-pointer"
+                                      title="إيقاف مؤقت"
+                                    >
+                                      <Pause className="w-4 h-4" />
+                                      <span>إيقاف مؤقت</span>
+                                    </button>
+                                    <button
+                                      onClick={handleStopTts}
+                                      className="bg-rose-600 hover:bg-rose-700 text-white p-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1 cursor-pointer"
+                                      title="إيقاف"
+                                    >
+                                      <VolumeX className="w-4 h-4" />
+                                      <span>إنهاء</span>
+                                    </button>
+                                  </>
+                                ) : ttsState === 'paused' ? (
+                                  <>
+                                    <button
+                                      onClick={handleStartTts}
+                                      className="bg-emerald-600 hover:bg-emerald-700 text-white p-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1 cursor-pointer"
+                                      title="استئناف"
+                                    >
+                                      <Play className="w-4 h-4" />
+                                      <span>استئناف القراءة</span>
+                                    </button>
+                                    <button
+                                      onClick={handleStopTts}
+                                      className="bg-rose-600 hover:bg-rose-700 text-white p-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1 cursor-pointer"
+                                      title="إيقاف"
+                                    >
+                                      <VolumeX className="w-4 h-4" />
+                                      <span>إنهاء</span>
+                                    </button>
+                                  </>
+                                ) : (
+                                  <button
+                                    onClick={handleStartTts}
+                                    className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white py-3.5 rounded-xl font-bold transition flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+                                  >
+                                    <Volume2 className="w-5 h-5 animate-pulse" />
+                                    <span>استمع للدرس (صوت المعلم)</span>
+                                  </button>
+                                )}
+                              </div>
+
+                              {/* Reading Speed control */}
+                              <div className="flex items-center justify-between text-[11px] text-gray-500 dark:text-gray-400 border-t border-slate-200/50 dark:border-slate-800/50 pt-2 flex-wrap gap-2">
+                                <div className="flex items-center gap-1.5">
+                                  {[0.8, 1, 1.25, 1.5].map((rate) => (
+                                    <button
+                                      key={rate}
+                                      onClick={() => handleTtsRateChange(rate)}
+                                      className={`px-1.5 py-0.5 rounded transition ${
+                                        ttsRate === rate 
+                                          ? 'bg-indigo-600 text-white font-extrabold' 
+                                          : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200'
+                                      }`}
+                                    >
+                                      {rate}x
+                                    </button>
+                                  ))}
+                                </div>
+                                <span className="font-bold">سرعة القراءة:</span>
+                              </div>
+                            </div>
+
                             {/* Video Explanation Button */}
                             <div>
                               <button
@@ -2879,7 +3327,7 @@ export default function App() {
             className="fixed top-24 left-4 md:left-10 z-50 w-80 bg-white dark:bg-gray-950/95 border-2 border-emerald-500/30 rounded-3xl p-5 shadow-2xl text-right font-sans backdrop-blur-md"
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-emerald-500/10 pb-3 mb-4">
+            <div className="flex items-center justify-between border-b border-emerald-500/10 pb-3 mb-3">
               <button 
                 onClick={() => setShowRadioPanel(false)}
                 className="text-gray-400 hover:text-rose-500 transition text-sm font-bold cursor-pointer bg-slate-100 dark:bg-slate-900 w-7 h-7 rounded-full flex items-center justify-center"
@@ -2888,17 +3336,40 @@ export default function App() {
               </button>
               <div className="flex items-center gap-2">
                 <div className="text-right">
-                  <h4 className="font-extrabold text-slate-800 dark:text-emerald-400 text-sm">
-                    إذاعة عبد الباسط عبد الصمد
+                  <h4 className="font-extrabold text-slate-800 dark:text-emerald-400 text-xs">
+                    {QURAN_RECITERS.find(r => r.id === activeReciterId)?.name || 'إذاعة القرآن الكريم'}
                   </h4>
                   <p className="text-[10px] text-gray-500 dark:text-emerald-500/80 font-bold">
-                    البث المباشر (تلاوات خاشعة) 📻
+                    {QURAN_RECITERS.find(r => r.id === activeReciterId)?.description || 'البث المباشر (تلاوات خاشعة) 📻'}
                   </p>
                 </div>
                 <div className="p-2 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-xl">
                   <Radio className={`w-5 h-5 ${isRadioPlaying ? 'animate-pulse' : ''}`} />
                 </div>
               </div>
+            </div>
+
+            {/* Reciter Selector */}
+            <div className="mb-4 text-right">
+              <label className="block text-[11px] font-extrabold text-gray-600 dark:text-slate-300 mb-1.5">
+                اختر القارئ أو إذاعة الشيخ: 🎙️
+              </label>
+              <select
+                value={activeReciterId}
+                onChange={(e) => handleReciterChange(e.target.value)}
+                className="w-full bg-slate-100 dark:bg-slate-900 border-2 border-emerald-500/10 dark:border-emerald-500/20 rounded-xl px-3 py-2 text-xs font-bold text-slate-800 dark:text-slate-100 outline-none focus:border-emerald-500 transition cursor-pointer"
+              >
+                {QURAN_RECITERS.map((reciter) => (
+                  <option 
+                    key={reciter.id} 
+                    value={reciter.id} 
+                    className="font-bold text-slate-900 bg-white"
+                    style={{ color: '#0f172a', backgroundColor: '#ffffff' }}
+                  >
+                    {reciter.name}
+                  </option>
+                ))}
+              </select>
             </div>
 
             {/* Visualizer & Playing Status */}
@@ -3139,6 +3610,150 @@ export default function App() {
           </div>
         </div>
       )}
+
+      {/* 👨‍🏫 CHATBOT FLOATING BUTTON & SLIDE-OVER PANEL */}
+      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3 font-sans">
+        
+        {/* Animated small hint bubble on load/hover */}
+        <AnimatePresence>
+          {!isChatOpen && (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.8, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 10 }}
+              transition={{ delay: 3 }}
+              className="bg-indigo-600 text-white text-xs font-black py-2.5 px-4 rounded-2xl shadow-xl flex items-center gap-1.5 border border-indigo-500 text-right cursor-pointer"
+              onClick={() => setIsChatOpen(true)}
+            >
+              <span className="animate-bounce">✨</span>
+              <span>اسألني: يلا نراجع مع بعض!</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <button 
+          onClick={() => setIsChatOpen(!isChatOpen)}
+          className="bg-gradient-to-br from-indigo-600 to-violet-700 hover:from-indigo-700 hover:to-violet-800 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 relative border-2 border-white/20 dark:border-slate-800 cursor-pointer"
+          title="المعلم الافتراضي 👨‍🏫"
+        >
+          {isChatOpen ? (
+            <X className="h-6 w-6" />
+          ) : (
+            <MessageSquare className="h-6 w-6" />
+          )}
+        </button>
+      </div>
+
+      {/* Slide-over Chat Interface */}
+      <AnimatePresence>
+        {isChatOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: 50, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 50, scale: 0.95 }}
+            className="fixed bottom-24 right-6 z-50 w-[92vw] sm:w-[420px] h-[520px] bg-white dark:bg-slate-900 border-2 border-indigo-100 dark:border-slate-800 rounded-3xl shadow-2xl flex flex-col overflow-hidden text-right font-sans backdrop-blur-md"
+          >
+            {/* Header */}
+            <div className="bg-gradient-to-r from-indigo-600 to-violet-700 p-4 text-white flex items-center justify-between shadow-md">
+              <button 
+                onClick={() => setIsChatOpen(false)}
+                className="hover:bg-white/10 p-1.5 rounded-lg text-white transition cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+              
+              <div className="flex items-center gap-2.5">
+                <div className="text-right">
+                  <h4 className="font-black text-xs">اسأل معلمك الافتراضي</h4>
+                  <span className="text-[10px] text-indigo-200 font-bold">مستعد لمراجعة كافة دروسك 🟢</span>
+                </div>
+                <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-lg shadow-inner">
+                  👨‍🏫
+                </div>
+              </div>
+            </div>
+
+            {/* Chat Body */}
+            <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-50/50 dark:bg-slate-950/20 text-right">
+              {chatMessages.map((msg, idx) => (
+                <div 
+                  key={idx} 
+                  className={`flex gap-2.5 max-w-[85%] ${msg.role === 'user' ? 'mr-auto justify-end flex-row-reverse' : 'ml-auto justify-start'}`}
+                >
+                  {msg.role !== 'user' && (
+                    <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-950/50 flex items-center justify-center text-sm shrink-0 shadow-sm border border-indigo-200/50">
+                      👨‍🏫
+                    </div>
+                  )}
+                  
+                  <div 
+                    className={`p-3 rounded-2xl text-xs font-medium leading-relaxed whitespace-pre-wrap shadow-sm ${
+                      msg.role === 'user' 
+                        ? 'bg-indigo-600 text-white rounded-tr-none' 
+                        : 'bg-white dark:bg-slate-800 text-gray-800 dark:text-slate-100 rounded-tl-none border border-slate-100 dark:border-slate-800/40'
+                    }`}
+                  >
+                    {msg.text}
+                  </div>
+                </div>
+              ))}
+              
+              {isChatLoading && (
+                <div className="flex gap-2.5 max-w-[85%] ml-auto justify-start">
+                  <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-950/50 flex items-center justify-center text-sm shrink-0 shadow-sm">
+                    👨‍🏫
+                  </div>
+                  <div className="bg-white dark:bg-slate-800 p-3.5 rounded-2xl rounded-tl-none border border-slate-100 dark:border-slate-800/40 shadow-sm flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 bg-indigo-600 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                    <span className="w-1.5 h-1.5 bg-indigo-600 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                    <span className="w-1.5 h-1.5 bg-indigo-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Quick Questions suggestion */}
+            {chatMessages.length === 1 && (
+              <div className="p-3 bg-slate-50 dark:bg-slate-950/40 border-t border-slate-100 dark:border-slate-800 flex flex-wrap gap-2 justify-end">
+                <button 
+                  onClick={() => handleSendChatMessage('كيف أذاكر بذكاء للاستعداد للامتحان؟')}
+                  className="bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-xl text-[10px] font-bold border border-slate-200/60 dark:border-slate-700 cursor-pointer shadow-sm"
+                >
+                  💡 كيف أذاكر بذكاء للامتحان؟
+                </button>
+                <button 
+                  onClick={() => handleSendChatMessage('كيف أفهم القوانين والمسائل الصعبة؟')}
+                  className="bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-xl text-[10px] font-bold border border-slate-200/60 dark:border-slate-700 cursor-pointer shadow-sm"
+                >
+                  ⚡ كيف أفهم القوانين الصعبة؟
+                </button>
+              </div>
+            )}
+
+            {/* Input Bar */}
+            <div className="p-3 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-center gap-2">
+              <button 
+                onClick={() => handleSendChatMessage()}
+                disabled={isChatLoading || !chatInput.trim()}
+                className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white p-2.5 rounded-xl cursor-pointer shadow-md transition shrink-0"
+              >
+                <Send className="w-4 h-4 transform rotate-180" />
+              </button>
+              
+              <input 
+                type="text" 
+                value={chatInput}
+                onChange={(e) => setChatInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleSendChatMessage();
+                }}
+                placeholder="اسألني عن أي موضوع في بالك... (مثال: قانون نيوتن)"
+                className="flex-1 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-xl py-2 px-3 text-xs text-right focus:outline-none focus:border-indigo-500 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-gray-500"
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );

@@ -16,7 +16,7 @@ export const phy10AdvInspire1: Curriculum = {
           icon: '🔄',
           duration: '50 min',
           lessonUrl: 'https://hesham-afandi.github.io/10Adv-Ins-phy-T1-1.1/',
-          examUrl: 'https://hesham-afandi.github.io/10Adv-Ins-phy-T1-1.1-exam/',
+          examUrl: 'https://hesham-afandi.github.io/10Adv-Bri-phy-T1-1.1-exam/',
           lessonTitle: '📖 Lesson Explanation',
           examTitle: '📝 Take the Quiz',
           content: {
@@ -50,7 +50,7 @@ export const phy10AdvInspire1: Curriculum = {
           icon: '📊',
           duration: '55 min',
           lessonUrl: 'https://hesham-afandi.github.io/10Adv-Ins-phy-T1-1.2/',
-          examUrl: 'https://hesham-afandi.github.io/10Adv-Ins-phy-T1-1.2-exam/',
+          examUrl: 'https://hesham-afandi.github.io/10Adv-Bri-phy-T1-1.2-exam/',
           lessonTitle: '📖 Lesson Explanation',
           examTitle: '📝 Take the Quiz',
           content: {
@@ -102,7 +102,7 @@ export const phy10AdvInspire1: Curriculum = {
           icon: '🔀',
           duration: '55 min',
           lessonUrl: 'https://hesham-afandi.github.io/10Adv-Ins-phy-T1-1.3/',
-          examUrl: 'https://hesham-afandi.github.io/10Adv-Ins-phy-T1-1.3-exam/',
+          examUrl: 'https://hesham-afandi.github.io/10Adv-Bri-phy-T1-1.3-exam/',
           lessonTitle: '📖 Lesson Explanation',
           examTitle: '📝 Take the Quiz',
           content: {
@@ -153,7 +153,7 @@ export const phy10AdvInspire1: Curriculum = {
           icon: '🎵',
           duration: '55 min',
           lessonUrl: 'https://hesham-afandi.github.io/10Adv-Ins-phy-T1-2.1/',
-          examUrl: 'https://hesham-afandi.github.io/10Adv-Ins-phy-T1-2.1-exam/',
+          examUrl: 'https://hesham-afandi.github.io/10Adv-Bri-phy-T1-2.1-exam/',
           lessonTitle: '📖 Lesson Explanation',
           examTitle: '📝 Take the Quiz',
           content: {
@@ -192,7 +192,7 @@ export const phy10AdvInspire1: Curriculum = {
           icon: '🎼',
           duration: '55 min',
           lessonUrl: 'https://hesham-afandi.github.io/10Adv-Ins-phy-T1-2.2/',
-          examUrl: 'https://hesham-afandi.github.io/10Adv-Ins-phy-T1-2.2-exam/',
+          examUrl: 'https://hesham-afandi.github.io/10Adv-Bri-phy-T1-2.2-exam/',
           lessonTitle: '📖 Lesson Explanation',
           examTitle: '📝 Take the Quiz',
           content: {
@@ -235,7 +235,7 @@ export const phy10AdvInspire1: Curriculum = {
           icon: '🎭',
           duration: '50 min',
           lessonUrl: 'https://hesham-afandi.github.io/10Adv-Ins-phy-T1-2.3/',
-          examUrl: 'https://hesham-afandi.github.io/10Adv-Ins-phy-T1-2.3-exam/',
+          examUrl: 'https://hesham-afandi.github.io/10Adv-Bri-phy-T1-2.3-exam/',
           lessonTitle: '📖 Lesson Explanation',
           examTitle: '📝 Take the Quiz',
           content: {
