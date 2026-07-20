@@ -477,6 +477,7 @@ export default function App() {
           console.log(`[Chat API] Trying endpoint: ${endpoint}`);
           const response = await fetch(endpoint, {
             method: 'POST',
+            mode: 'cors', // Explicitly specify CORS mode for cross-domain requests (like GitHub Pages)
             headers: {
               'Content-Type': 'application/json',
             },
@@ -510,7 +511,7 @@ export default function App() {
         ...prev,
         {
           role: 'model' as const,
-          text: 'عذراً يا بطل! واجهت مشكلة بسيطة في الاتصال. سأكون جاهزاً فور تفعيل الاتصال بالذكاء الاصطناعي ⏳✨'
+          text: 'عذراً يا بطل! لم أتمكن من الاتصال بخادمي التعليمي حالياً. يرجى الانتظار لحظات وإعادة إرسال رسالتك (قد يستغرق الخادم المخصص حوالي 10 ثوانٍ للاستيقاظ وتفعيل الذكاء الاصطناعي بنجاح عند التشغيل لأول مرة من GitHub Pages) ⏳✨'
         }
       ]);
     } finally {

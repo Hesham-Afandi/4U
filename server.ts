@@ -12,9 +12,10 @@ const PORT = 3000;
 
 // Highly robust standard CORS middleware for cross-origin environments (like GitHub Pages)
 app.use(cors({
-  origin: "*",
+  origin: true, // Dynamically mirrors the requesting origin (e.g. GitHub Pages), bypassing browser wildcard restrictions
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"],
+  credentials: true, // Supports credentials and complex headers from cross-origin requests
   preflightContinue: false,
   optionsSuccessStatus: 200
 }));
