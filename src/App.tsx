@@ -771,7 +771,7 @@ export default function App() {
       }
 
       // Channel 2: Try the local backend server (Cloud Run) - highly robust because it has GEMINI_API_KEY on the server!
-      if (!replyReceived && !isGitHubPages) {
+      if (!replyReceived) {
         try {
           const response = await fetch(getApiUrl('/api/chat'), {
             method: 'POST',
@@ -779,7 +779,8 @@ export default function App() {
             body: JSON.stringify({
               message: promptWithContext,
               history: newMessages.slice(0, -1)
-            })
+            }),
+            credentials: 'include'
           });
 
           if (response.ok) {
@@ -848,12 +849,15 @@ export default function App() {
   const getDetailedLessonExplanationText = async (lesson: any): Promise<string> => {
     if (!lesson) return '';
     let textToRead = '';
+    const hasCustomKey = chatGeminiKey && chatGeminiKey.trim().length > 5;
 
     // Step 1: Try the Cloud Run backend server first (supports Gemini Visual OCR of scanned PDFs!)
     if (lesson.lessonUrl) {
       try {
         console.log("[TTS Engine] Requesting backend explanation parser for URL:", lesson.lessonUrl);
-        const response = await fetch(getApiUrl(`/api/fetch-lesson-text?url=${encodeURIComponent(lesson.lessonUrl)}`));
+        const response = await fetch(getApiUrl(`/api/fetch-lesson-text?url=${encodeURIComponent(lesson.lessonUrl)}`), {
+          credentials: 'include'
+        });
         if (response.ok) {
           const data = await response.json();
           if (data.text && data.text.trim().length > 100) {
@@ -878,6 +882,57 @@ export default function App() {
       } catch (clientErr) {
         console.warn("[TTS Engine] Client-side extraction failed:", clientErr);
       }
+
+      // Step 2.5: Direct Client-Side PDF OCR using Custom Gemini API key (extremely robust for scanned PDFs on GitHub Pages!)
+      if (hasCustomKey) {
+        try {
+          console.log("[TTS Engine] Client-side text extracted is empty or minimal. Attempting direct custom Gemini API key OCR on PDF file...");
+          const pdfRes = await fetch(lesson.lessonUrl);
+          if (pdfRes.ok) {
+            const arrayBuffer = await pdfRes.arrayBuffer();
+            let binary = '';
+            const bytes = new Uint8Array(arrayBuffer);
+            const len = bytes.byteLength;
+            for (let i = 0; i < len; i++) {
+              binary += String.fromCharCode(bytes[i]);
+            }
+            const base64 = window.btoa(binary);
+
+            const clientModels = ['gemini-3.6-flash', 'gemini-3.1-flash-lite'];
+            for (const model of clientModels) {
+              try {
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${chatGeminiKey.trim()}`;
+                const promptOCR = `أنت المعلم الافتراضي الذكي لمادة العلوم. اقرأ ملف شرح الدرس المرفق واشرح محتواه بالتفصيل باللغة العربية الفصحى شرحاً وافياً وممتعاً ومبسّطاً للطلاب وكأنك تلقي درساً صوتياً رائعاً في الفصل. اكتب الشرح في شكل فقرات نصية متصلة وواضحة جداً لتتم قراءتها بواسطة قارئ النصوص الصوتي (لا تستخدم أبداً جداول أو رموزاً غريبة أو معادلات معقدة، فقط لغة عربية فصحى جميلة مشروحة للطلاب). ركز على تفسير المفاهيم الفيزيائية والقوانين بشكل لفظي واضح وسلس يستطيع الطالب استيعابه سماعياً.`;
+                const response = await fetch(url, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    contents: [{
+                      parts: [
+                        { inlineData: { mimeType: 'application/pdf', data: base64 } },
+                        { text: promptOCR }
+                      ]
+                    }],
+                    generationConfig: { temperature: 0.7 }
+                  })
+                });
+                if (response.ok) {
+                  const data = await response.json();
+                  const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                  if (reply && reply.trim().length > 100) {
+                    console.log("[TTS Engine] Successfully generated detailed PDF explanation client-side using custom Gemini API Key OCR!");
+                    return reply;
+                  }
+                }
+              } catch (err) {
+                console.warn(`[TTS Engine] Client-side PDF OCR failed for model ${model}:`, err);
+              }
+            }
+          }
+        } catch (pdfOcrErr) {
+          console.warn("[TTS Engine] Client-side PDF OCR flow encountered an error:", pdfOcrErr);
+        }
+      }
     }
 
     // Step 3: If still empty, use AI to dynamically generate a comprehensive multi-paragraph explanation
@@ -888,12 +943,44 @@ export default function App() {
       const grade = appState.grade?.name || '';
       const prompt = `أنت المعلم الافتراضي الذكي المتميز لمادة ${subject} للصف ${grade}. من فضلك اشرح بالتفصيل وبشكل وافٍ وممتع جداً درس: "${title}". اكتب الشرح في شكل فقرات نصية متصلة وواضحة جداً باللغة العربية الفصحى المبسطة لتتم قراءتها بوضوح وسلاسة بواسطة قارئ النصوص الصوتي (لا تستخدم أبداً جداول أو رموزاً غريبة أو معادلات معقدة، فقط لغة عربية ممتعة وسلسة تشرح المفاهيم ليفهمها الطالب تماماً). ركز على تبسيط المفاهيم الفيزيائية أو الرياضية بذكاء وتشويق.`;
 
-      // Try backend chat first to generate explanation
+      // Sub-step 3.1: Try direct Custom Gemini API key first if provided
+      if (hasCustomKey) {
+        console.log("[TTS Engine] Requesting direct custom Gemini API Key prompt generation...");
+        const clientModels = ['gemini-3.6-flash', 'gemini-3.1-flash-lite'];
+        for (const model of clientModels) {
+          try {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${chatGeminiKey.trim()}`;
+            const response = await fetch(url, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                contents: [{ role: 'user', parts: [{ text: prompt }] }],
+                systemInstruction: { parts: [{ text: `أنت المعلم الافتراضي الذكي المتميز لمادة ${subject} للصف ${grade}.` }] },
+                generationConfig: { temperature: 0.7 }
+              })
+            });
+
+            if (response.ok) {
+              const data = await response.json();
+              const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
+              if (reply && reply.trim().length > 100) {
+                console.log("[TTS Engine] Successfully generated rich lecture via direct custom Gemini API key.");
+                return reply;
+              }
+            }
+          } catch (err) {
+            console.warn(`[TTS Engine] Custom API key prompt generation failed for model ${model}:`, err);
+          }
+        }
+      }
+
+      // Sub-step 3.2: Try backend chat to generate explanation
       try {
         const response = await fetch(getApiUrl('/api/chat'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: prompt })
+          body: JSON.stringify({ message: prompt }),
+          credentials: 'include'
         });
         if (response.ok) {
           const data = await response.json();
@@ -906,7 +993,7 @@ export default function App() {
         console.warn("[TTS Engine] Backend AI failed to generate lecture, trying keyless Hercai...", chatApiErr);
       }
 
-      // Try keyless Hercai with CORS proxies
+      // Sub-step 3.3: Try keyless Hercai with CORS proxies
       const hercaiEndpoints = [
         `https://hercai.onrender.com/v3/hercai?question=${encodeURIComponent(prompt)}`,
         `https://hercai.onrender.com/v3-beta/hercai?question=${encodeURIComponent(prompt)}`
