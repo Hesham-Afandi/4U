@@ -112,6 +112,62 @@ async function generateContentWithFallbackAndRetry(
   throw lastError || new Error("Failed to generate content with all models and retries");
 }
 
+// Robust PDF content generator with automatic retry (exponential backoff) and model fallback
+async function generatePdfContentWithFallbackAndRetry(
+  ai: GoogleGenAI,
+  pdfBase64: string,
+  promptText: string
+): Promise<any> {
+  // Try gemini-3.5-flash, gemini-flash-latest, and gemini-3.1-flash-lite
+  const modelsToTry = ["gemini-3.5-flash", "gemini-flash-latest", "gemini-3.1-flash-lite"];
+  let lastError: any = null;
+
+  for (const model of modelsToTry) {
+    const maxRetries = 3;
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        console.log(`[Gemini PDF OCR] Attempt ${attempt} using model: ${model}`);
+        const response = await ai.models.generateContent({
+          model: model,
+          contents: [
+            {
+              inlineData: {
+                mimeType: "application/pdf",
+                data: pdfBase64,
+              },
+            },
+            promptText,
+          ],
+        });
+        return response;
+      } catch (err: any) {
+        lastError = err;
+        const errMsg = String(err.message || err).toLowerCase();
+        const isQuotaError = errMsg.includes("quota") || errMsg.includes("429") || errMsg.includes("resource_exhausted") || errMsg.includes("limit");
+        const isNotFoundError = errMsg.includes("not found") || errMsg.includes("404") || errMsg.includes("no longer available");
+
+        console.warn(`[Gemini PDF OCR] Error on attempt ${attempt} with model ${model}:`, err.message || err);
+
+        // If it is a quota limit or deprecation/not-found error, do not retry this model. Fail fast and move to fallback!
+        if (isQuotaError || isNotFoundError) {
+          console.warn(`[Gemini PDF OCR] Fast-failing model ${model} due to ${isQuotaError ? "quota limits" : "model unavailability"}. Trying next fallback...`);
+          break; // break the retry loop, moving to the next model in modelsToTry
+        }
+
+        if (model === modelsToTry[modelsToTry.length - 1] && attempt === maxRetries) {
+          break;
+        }
+
+        // Exponential backoff delay (e.g. 1000ms, 2000ms, 4000ms) for transient errors (e.g. 500/503/network)
+        const delay = Math.pow(2, attempt - 1) * 1000;
+        await new Promise((resolve) => setTimeout(resolve, delay));
+      }
+    }
+  }
+
+  throw lastError || new Error("Failed to transcribe PDF with all models and retries");
+}
+
 // 👨‍🏫 Personal Teacher System Instruction
 const SYSTEM_INSTRUCTION = `
 أنت "المعلم الافتراضي" الحكيم والودود على "المنصة التعليمية المتكاملة 4U".
@@ -235,19 +291,9 @@ app.get("/api/fetch-lesson-text", async (req, res) => {
           try {
             const ai = getAiClient();
             const base64 = buffer.toString("base64");
+            const promptText = "أنت المعلم الافتراضي الذكي لمادة العلوم. اقرأ ملف شرح الدرس المرفق واشرح محتواه بالتفصيل باللغة العربية الفصحى شرحاً وافياً وممتعاً ومبسّطاً للطلاب وكأنك تلقي درساً صوتياً رائعاً في الفصل. اكتب الشرح في شكل فقرات نصية متصلة وواضحة جداً لتتم قراءتها بواسطة قارئ النصوص الصوتي (لا تستخدم أبداً جداول أو رموزاً غريبة أو معادلات معقدة، فقط لغة عربية فصحى جميلة مشروحة للطلاب). ركز على تفسير المفاهيم الفيزيائية والقوانين بشكل لفظي واضح وسلس يستطيع الطالب استيعابه سماعياً.";
             
-            const genRes = await ai.models.generateContent({
-              model: "gemini-3.5-flash",
-              contents: [
-                {
-                  inlineData: {
-                    mimeType: "application/pdf",
-                    data: base64
-                  }
-                },
-                "أنت المعلم الافتراضي الذكي لمادة العلوم. اقرأ ملف شرح الدرس المرفق واشرح محتواه بالتفصيل باللغة العربية الفصحى شرحاً وافياً وممتعاً ومبسّطاً للطلاب وكأنك تلقي درساً صوتياً رائعاً في الفصل. اكتب الشرح في شكل فقرات نصية متصلة وواضحة جداً لتتم قراءتها بواسطة قارئ النصوص الصوتي (لا تستخدم أبداً جداول أو رموزاً غريبة أو معادلات معقدة، فقط لغة عربية فصحى جميلة مشروحة للطلاب). ركز على تفسير المفاهيم الفيزيائية والقوانين بشكل لفظي واضح وسلس يستطيع الطالب استيعابه سماعياً."
-              ]
-            });
+            const genRes = await generatePdfContentWithFallbackAndRetry(ai, base64, promptText);
 
             if (genRes.text && genRes.text.trim().length > 100) {
               extractedText = genRes.text;
