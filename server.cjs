@@ -76,10 +76,10 @@ function getAiClient() {
   return aiClient;
 }
 async function generateContentWithFallbackAndRetry(ai, contents, systemInstruction) {
-  const modelsToTry = ["gemini-3.1-flash-lite", "gemini-3.5-flash", "gemini-flash-latest"];
+  const modelsToTry = ["gemini-2.5-flash", "gemini-1.5-flash", "gemini-3.5-flash", "gemini-3.1-flash-lite"];
   let lastError = null;
   for (const model of modelsToTry) {
-    const maxRetries = 3;
+    const maxRetries = 2;
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
         console.log(`[Gemini API] Attempt ${attempt} using model: ${model}`);
@@ -97,9 +97,10 @@ async function generateContentWithFallbackAndRetry(ai, contents, systemInstructi
         const errMsg = String(err.message || err).toLowerCase();
         const isQuotaError = errMsg.includes("quota") || errMsg.includes("429") || errMsg.includes("resource_exhausted") || errMsg.includes("limit");
         const isNotFoundError = errMsg.includes("not found") || errMsg.includes("404") || errMsg.includes("no longer available");
+        const isOverloadedError = errMsg.includes("unavailable") || errMsg.includes("503") || errMsg.includes("high demand") || errMsg.includes("busy") || errMsg.includes("overloaded") || errMsg.includes("capacity");
         console.warn(`[Gemini API] Error on attempt ${attempt} with model ${model}:`, err.message || err);
-        if (isQuotaError || isNotFoundError) {
-          console.warn(`[Gemini API] Fast-failing model ${model} due to ${isQuotaError ? "quota limits" : "model unavailability"}. Trying next fallback...`);
+        if (isQuotaError || isNotFoundError || isOverloadedError) {
+          console.warn(`[Gemini API] Fast-failing model ${model} due to ${isOverloadedError ? "overload" : isQuotaError ? "quota limits" : "model unavailability"}. Trying next fallback...`);
           break;
         }
         if (model === modelsToTry[modelsToTry.length - 1] && attempt === maxRetries) {
@@ -113,10 +114,10 @@ async function generateContentWithFallbackAndRetry(ai, contents, systemInstructi
   throw lastError || new Error("Failed to generate content with all models and retries");
 }
 async function generatePdfContentWithFallbackAndRetry(ai, pdfBase64, promptText) {
-  const modelsToTry = ["gemini-3.5-flash", "gemini-flash-latest", "gemini-3.1-flash-lite"];
+  const modelsToTry = ["gemini-2.5-flash", "gemini-1.5-flash", "gemini-3.5-flash", "gemini-3.1-flash-lite"];
   let lastError = null;
   for (const model of modelsToTry) {
-    const maxRetries = 3;
+    const maxRetries = 2;
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
         console.log(`[Gemini PDF OCR] Attempt ${attempt} using model: ${model}`);
@@ -138,9 +139,10 @@ async function generatePdfContentWithFallbackAndRetry(ai, pdfBase64, promptText)
         const errMsg = String(err.message || err).toLowerCase();
         const isQuotaError = errMsg.includes("quota") || errMsg.includes("429") || errMsg.includes("resource_exhausted") || errMsg.includes("limit");
         const isNotFoundError = errMsg.includes("not found") || errMsg.includes("404") || errMsg.includes("no longer available");
+        const isOverloadedError = errMsg.includes("unavailable") || errMsg.includes("503") || errMsg.includes("high demand") || errMsg.includes("busy") || errMsg.includes("overloaded") || errMsg.includes("capacity");
         console.warn(`[Gemini PDF OCR] Error on attempt ${attempt} with model ${model}:`, err.message || err);
-        if (isQuotaError || isNotFoundError) {
-          console.warn(`[Gemini PDF OCR] Fast-failing model ${model} due to ${isQuotaError ? "quota limits" : "model unavailability"}. Trying next fallback...`);
+        if (isQuotaError || isNotFoundError || isOverloadedError) {
+          console.warn(`[Gemini PDF OCR] Fast-failing model ${model} due to ${isOverloadedError ? "overload" : isQuotaError ? "quota limits" : "model unavailability"}. Trying next fallback...`);
           break;
         }
         if (model === modelsToTry[modelsToTry.length - 1] && attempt === maxRetries) {
