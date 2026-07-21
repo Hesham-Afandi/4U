@@ -15,6 +15,7 @@ import {
 } from './components/modals';
 import { WeeklyStudyPlanner } from './components/layout';
 import { STUDY_QUOTES } from './data/quotes';
+import { extractTextFromLessonUrl } from './utils/pdfParser';
 
 const DAYS_OF_WEEK = [
   { key: 'Saturday', name: 'السبت' },
@@ -893,17 +894,28 @@ export default function App() {
 
     try {
       if (appState.lesson.lessonUrl) {
-        const response = await fetch(getApiUrl(`/api/fetch-lesson-text?url=${encodeURIComponent(appState.lesson.lessonUrl)}`));
-        if (response.ok) {
-          const data = await response.json();
-          if (data.text && data.text.trim().length > 10) {
-            textToRead = data.text;
-            console.log("Successfully loaded external lesson PDF text for TTS:", textToRead.substring(0, 100));
+        try {
+          const response = await fetch(getApiUrl(`/api/fetch-lesson-text?url=${encodeURIComponent(appState.lesson.lessonUrl)}`));
+          if (response.ok) {
+            const data = await response.json();
+            if (data.text && data.text.trim().length > 10) {
+              textToRead = data.text;
+              console.log("Successfully loaded external lesson PDF text from backend for TTS:", textToRead.substring(0, 100));
+            }
+          } else {
+            throw new Error(`Status ${response.status}`);
+          }
+        } catch (apiError) {
+          console.warn("Backend API failed or CORS blocked. Falling back to client-side PDF.js extraction...", apiError);
+          const clientExtracted = await extractTextFromLessonUrl(appState.lesson.lessonUrl);
+          if (clientExtracted && clientExtracted.trim().length > 10) {
+            textToRead = clientExtracted;
+            console.log("Successfully extracted PDF text client-side:", textToRead.substring(0, 100));
           }
         }
       }
     } catch (e) {
-      console.warn("Failed to fetch custom lesson text from backend, falling back to local description:", e);
+      console.warn("Failed to fetch or parse custom lesson text, falling back to local description:", e);
     }
 
     if (!textToRead) {
@@ -964,11 +976,21 @@ export default function App() {
       let textToRead = '';
       try {
         if (appState.lesson?.lessonUrl) {
-          const response = await fetch(getApiUrl(`/api/fetch-lesson-text?url=${encodeURIComponent(appState.lesson.lessonUrl)}`));
-          if (response.ok) {
-            const data = await response.json();
-            if (data.text && data.text.trim().length > 10) {
-              textToRead = data.text;
+          try {
+            const response = await fetch(getApiUrl(`/api/fetch-lesson-text?url=${encodeURIComponent(appState.lesson.lessonUrl)}`));
+            if (response.ok) {
+              const data = await response.json();
+              if (data.text && data.text.trim().length > 10) {
+                textToRead = data.text;
+              }
+            } else {
+              throw new Error(`Status ${response.status}`);
+            }
+          } catch (apiError) {
+            console.warn("Backend API failed or CORS blocked in rate change. Falling back to client-side PDF.js extraction...", apiError);
+            const clientExtracted = await extractTextFromLessonUrl(appState.lesson.lessonUrl);
+            if (clientExtracted && clientExtracted.trim().length > 10) {
+              textToRead = clientExtracted;
             }
           }
         }
