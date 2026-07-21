@@ -27,6 +27,22 @@ var import_path = __toESM(require("path"), 1);
 var import_dotenv = __toESM(require("dotenv"), 1);
 var import_genai = require("@google/genai");
 var import_cors = __toESM(require("cors"), 1);
+var import_module = require("module");
+var import_meta = {};
+var PDFParseClass;
+try {
+  if (typeof require !== "undefined") {
+    const pdfModule = require("pdf-parse");
+    PDFParseClass = pdfModule.PDFParse;
+  } else {
+    const requireFromEsm = (0, import_module.createRequire)(import_meta.url);
+    const pdfModule = requireFromEsm("pdf-parse");
+    PDFParseClass = pdfModule.PDFParse;
+  }
+} catch (e) {
+  console.warn("Failed to import pdf-parse:", e);
+}
+var lessonTextCache = /* @__PURE__ */ new Map();
 import_dotenv.default.config();
 var app = (0, import_express.default)();
 var PORT = 3e3;
@@ -133,6 +149,97 @@ app.post("/api/chat", async (req, res) => {
     console.error("Gemini API Error in backend:", error);
     res.status(500).json({
       error: "\u062D\u062F\u062B \u062E\u0637\u0623 \u0623\u062B\u0646\u0627\u0621 \u0627\u0644\u062A\u0648\u0627\u0635\u0644 \u0645\u0639 \u0627\u0644\u0645\u0639\u0644\u0645 \u0627\u0644\u0627\u0641\u062A\u0631\u0627\u0636\u064A.",
+      details: error.message || error
+    });
+  }
+});
+app.get("/api/fetch-lesson-text", async (req, res) => {
+  const lessonUrl = req.query.url;
+  if (!lessonUrl) {
+    return res.status(400).json({ error: "URL is required" });
+  }
+  if (lessonTextCache.has(lessonUrl)) {
+    console.log(`[Fetch Lesson Text] Cache hit for URL: ${lessonUrl}`);
+    return res.json({ text: lessonTextCache.get(lessonUrl) });
+  }
+  try {
+    console.log(`[Fetch Lesson Text] Cache miss. Requesting URL: ${lessonUrl}`);
+    const response = await fetch(lessonUrl);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch page: ${response.statusText}`);
+    }
+    const htmlText = await response.text();
+    const pdfMatch = htmlText.match(/['"]([^'"]+\.pdf)['"]/i);
+    let pdfUrl = "";
+    if (pdfMatch) {
+      const relativePath = pdfMatch[1];
+      pdfUrl = new URL(relativePath, lessonUrl).toString();
+      console.log(`[Fetch Lesson Text] Found PDF relative path: ${relativePath}, resolved to: ${pdfUrl}`);
+    } else if (lessonUrl.toLowerCase().endsWith(".pdf")) {
+      pdfUrl = lessonUrl;
+    }
+    let extractedText = "";
+    if (pdfUrl) {
+      console.log(`[Fetch Lesson Text] Fetching PDF from: ${pdfUrl}`);
+      const pdfRes = await fetch(pdfUrl);
+      if (pdfRes.ok) {
+        const arrayBuffer = await pdfRes.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+        try {
+          if (PDFParseClass) {
+            console.log(`[Fetch Lesson Text] Trying PDFParseClass text extraction...`);
+            const parser = new PDFParseClass({ data: buffer });
+            await parser.load();
+            const textResult = await parser.getText();
+            extractedText = textResult.text || "";
+            console.log(`[Fetch Lesson Text] PDFParseClass extracted ${extractedText.length} characters.`);
+          }
+        } catch (pdfParseError) {
+          console.warn(`[Fetch Lesson Text] PDFParseClass error, falling back:`, pdfParseError);
+        }
+        const isMinimallyExtracted = !extractedText.trim() || extractedText.trim().length < 350;
+        const hasGeminiKey = !!process.env.GEMINI_API_KEY;
+        if (isMinimallyExtracted && hasGeminiKey) {
+          console.log(`[Fetch Lesson Text] PDF text is minimal or empty (${extractedText.trim().length} chars). Invoking Gemini OCR & transcription...`);
+          try {
+            const ai = getAiClient();
+            const base64 = buffer.toString("base64");
+            const genRes = await ai.models.generateContent({
+              model: "gemini-3.5-flash",
+              contents: [
+                {
+                  inlineData: {
+                    mimeType: "application/pdf",
+                    data: base64
+                  }
+                },
+                "\u0623\u0646\u062A \u0627\u0644\u0645\u0639\u0644\u0645 \u0627\u0644\u0627\u0641\u062A\u0631\u0627\u0636\u064A \u0627\u0644\u0630\u0643\u064A \u0644\u0645\u0627\u062F\u0629 \u0627\u0644\u0639\u0644\u0648\u0645. \u0627\u0642\u0631\u0623 \u0645\u0644\u0641 \u0634\u0631\u062D \u0627\u0644\u062F\u0631\u0633 \u0627\u0644\u0645\u0631\u0641\u0642 \u0648\u0627\u0634\u0631\u062D \u0645\u062D\u062A\u0648\u0627\u0647 \u0628\u0627\u0644\u062A\u0641\u0635\u064A\u0644 \u0628\u0627\u0644\u0644\u063A\u0629 \u0627\u0644\u0639\u0631\u0628\u064A\u0629 \u0627\u0644\u0641\u0635\u062D\u0649 \u0634\u0631\u062D\u0627\u064B \u0648\u0627\u0641\u064A\u0627\u064B \u0648\u0645\u0645\u062A\u0639\u0627\u064B \u0648\u0645\u0628\u0633\u0651\u0637\u0627\u064B \u0644\u0644\u0637\u0644\u0627\u0628 \u0648\u0643\u0623\u0646\u0643 \u062A\u0644\u0642\u064A \u062F\u0631\u0633\u0627\u064B \u0635\u0648\u062A\u064A\u0627\u064B \u0631\u0627\u0626\u0639\u0627\u064B \u0641\u064A \u0627\u0644\u0641\u0635\u0644. \u0627\u0643\u062A\u0628 \u0627\u0644\u0634\u0631\u062D \u0641\u064A \u0634\u0643\u0644 \u0641\u0642\u0631\u0627\u062A \u0646\u0635\u064A\u0629 \u0645\u062A\u0635\u0644\u0629 \u0648\u0648\u0627\u0636\u062D\u0629 \u062C\u062F\u0627\u064B \u0644\u062A\u062A\u0645 \u0642\u0631\u0627\u0621\u062A\u0647\u0627 \u0628\u0648\u0627\u0633\u0637\u0629 \u0642\u0627\u0631\u0626 \u0627\u0644\u0646\u0635\u0648\u0635 \u0627\u0644\u0635\u0648\u062A\u064A (\u0644\u0627 \u062A\u0633\u062A\u062E\u062F\u0645 \u0623\u0628\u062F\u0627\u064B \u062C\u062F\u0627\u0648\u0644 \u0623\u0648 \u0631\u0645\u0648\u0632\u0627\u064B \u063A\u0631\u064A\u0628\u0629 \u0623\u0648 \u0645\u0639\u0627\u062F\u0644\u0627\u062A \u0645\u0639\u0642\u062F\u0629\u060C \u0641\u0642\u0637 \u0644\u063A\u0629 \u0639\u0631\u0628\u064A\u0629 \u0641\u0635\u062D\u0649 \u062C\u0645\u064A\u0644\u0629 \u0645\u0634\u0631\u0648\u062D\u0629 \u0644\u0644\u0637\u0644\u0627\u0628). \u0631\u0643\u0632 \u0639\u0644\u0649 \u062A\u0641\u0633\u064A\u0631 \u0627\u0644\u0645\u0641\u0627\u0647\u064A\u0645 \u0627\u0644\u0641\u064A\u0632\u064A\u0627\u0626\u064A\u0629 \u0648\u0627\u0644\u0642\u0648\u0627\u0646\u064A\u0646 \u0628\u0634\u0643\u0644 \u0644\u0641\u0638\u064A \u0648\u0627\u0636\u062D \u0648\u0633\u0644\u0633 \u064A\u0633\u062A\u0637\u064A\u0639 \u0627\u0644\u0637\u0627\u0644\u0628 \u0627\u0633\u062A\u064A\u0639\u0627\u0628\u0647 \u0633\u0645\u0627\u0639\u064A\u0627\u064B."
+              ]
+            });
+            if (genRes.text && genRes.text.trim().length > 100) {
+              extractedText = genRes.text;
+              console.log(`[Fetch Lesson Text] Successfully generated Gemini detailed lesson description of length ${extractedText.length}`);
+            }
+          } catch (geminiError) {
+            console.error(`[Fetch Lesson Text] Gemini PDF parsing failed:`, geminiError);
+          }
+        }
+      } else {
+        console.warn(`[Fetch Lesson Text] Failed to fetch PDF from resolved URL: ${pdfRes.statusText}`);
+      }
+    }
+    if (!extractedText.trim()) {
+      console.log(`[Fetch Lesson Text] No PDF text extracted. Falling back to cleaning HTML text...`);
+      let cleanHtml = htmlText.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "").replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+      extractedText = cleanHtml;
+    }
+    let formattedText = extractedText.replace(/\r\n/g, "\n").replace(/\n{3,}/g, "\n\n").replace(/[ \t]+/g, " ").trim();
+    lessonTextCache.set(lessonUrl, formattedText);
+    res.json({ text: formattedText });
+  } catch (error) {
+    console.error("[Fetch Lesson Text] Error:", error);
+    res.status(500).json({
+      error: "Failed to extract text from lesson link",
       details: error.message || error
     });
   }
