@@ -60,7 +60,7 @@ function getAiClient() {
   return aiClient;
 }
 async function generateContentWithFallbackAndRetry(ai, contents, systemInstruction) {
-  const modelsToTry = ["gemini-3.5-flash", "gemini-3.1-flash-lite"];
+  const modelsToTry = ["gemini-3.1-flash-lite", "gemini-3.5-flash", "gemini-flash-latest"];
   let lastError = null;
   for (const model of modelsToTry) {
     const maxRetries = 3;
@@ -78,7 +78,14 @@ async function generateContentWithFallbackAndRetry(ai, contents, systemInstructi
         return response;
       } catch (err) {
         lastError = err;
+        const errMsg = String(err.message || err).toLowerCase();
+        const isQuotaError = errMsg.includes("quota") || errMsg.includes("429") || errMsg.includes("resource_exhausted") || errMsg.includes("limit");
+        const isNotFoundError = errMsg.includes("not found") || errMsg.includes("404") || errMsg.includes("no longer available");
         console.warn(`[Gemini API] Error on attempt ${attempt} with model ${model}:`, err.message || err);
+        if (isQuotaError || isNotFoundError) {
+          console.warn(`[Gemini API] Fast-failing model ${model} due to ${isQuotaError ? "quota limits" : "model unavailability"}. Trying next fallback...`);
+          break;
+        }
         if (model === modelsToTry[modelsToTry.length - 1] && attempt === maxRetries) {
           break;
         }
@@ -86,7 +93,6 @@ async function generateContentWithFallbackAndRetry(ai, contents, systemInstructi
         await new Promise((resolve) => setTimeout(resolve, delay));
       }
     }
-    console.warn(`[Gemini API] Model ${model} failed after all retries. Trying fallback model...`);
   }
   throw lastError || new Error("Failed to generate content with all models and retries");
 }
