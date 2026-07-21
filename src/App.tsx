@@ -135,6 +135,54 @@ const getApiUrl = (path: string): string => {
   return path;
 };
 
+const fetchHercai = async (prompt: string): Promise<string> => {
+  const endpoints = [
+    'https://hercai.onrender.com/v3/hercai',
+    'https://hercai.onrender.com/v3-beta/hercai',
+    'https://hercai.onrender.com/v3-turbo/hercai'
+  ];
+
+  let lastError: any = null;
+
+  // Step 1: Try direct fetches first
+  for (const endpoint of endpoints) {
+    try {
+      const url = `${endpoint}?question=${encodeURIComponent(prompt)}`;
+      const response = await fetch(url);
+      if (response.ok) {
+        const data = await response.json();
+        if (data.reply && data.reply.trim().length > 10) {
+          return data.reply;
+        }
+      }
+    } catch (err) {
+      lastError = err;
+      console.warn(`Direct fetch to ${endpoint} failed, trying next...`, err);
+    }
+  }
+
+  // Step 2: Try via CORS Proxy as fallback
+  console.log("Direct Hercai calls failed or CORS-blocked. Retrying via CORS Proxy for maximum reliability...");
+  for (const endpoint of endpoints) {
+    try {
+      const targetUrl = `${endpoint}?question=${encodeURIComponent(prompt)}`;
+      const proxiedUrl = `https://corsproxy.io/?url=${encodeURIComponent(targetUrl)}`;
+      const response = await fetch(proxiedUrl);
+      if (response.ok) {
+        const data = await response.json();
+        if (data.reply && data.reply.trim().length > 10) {
+          return data.reply;
+        }
+      }
+    } catch (proxyErr) {
+      lastError = proxyErr;
+      console.warn(`Proxied fetch to ${endpoint} failed...`, proxyErr);
+    }
+  }
+
+  throw lastError || new Error("Failed to connect to public AI endpoints.");
+};
+
 export default function App() {
   // App Navigation State
   const [appState, setAppState] = useState<AppState>({
@@ -830,20 +878,8 @@ export default function App() {
         const currentLessonContext = lesson ? `(سياق الدرس النشط الذي يذاكره الطالب حالياً: ${lesson.title})` : '';
         const promptWithContext = `${systemInstruction}\n\n${currentLessonContext}\n\nسؤال الطالب الحالي للإجابة عليه كمعلم افتراضي:\n${textToSend}`;
 
-        // Call the super fast, stable, CORS-free v3 model on Hercai public endpoint
-        const hercaiUrl = `https://hercai.onrender.com/v3/hercai?question=${encodeURIComponent(promptWithContext)}`;
-        const hercaiResponse = await fetch(hercaiUrl);
-
-        if (!hercaiResponse.ok) {
-          throw new Error('HERCAI_CORS_OR_HTTP_ERROR');
-        }
-
-        const hercaiData = await hercaiResponse.json();
-        const hercaiReply = hercaiData.reply;
-
-        if (!hercaiReply) {
-          throw new Error('HERCAI_EMPTY_RESPONSE');
-        }
+        // Call our ultra-robust, proxied, multi-endpoint fetchHercai helper
+        const hercaiReply = await fetchHercai(promptWithContext);
 
         setChatMessages((prev) => [...prev, { role: 'model' as const, text: hercaiReply }]);
 
@@ -955,14 +991,10 @@ export default function App() {
         const grade = appState.grade?.name || '';
         const prompt = `أنت المعلم الافتراضي الذكي المتميز لمادة ${subject} للصف ${grade}. من فضلك اشرح بالتفصيل وبشكل وافٍ وممتع جداً درس: "${title}". اكتب الشرح في شكل فقرات نصية متصلة وواضحة جداً باللغة العربية الفصحى المبسطة لتتم قراءتها بوضوح وسلاسة بواسطة قارئ النصوص الصوتي (لا تستخدم أبداً جداول أو رموزاً غريبة أو معادلات معقدة، فقط لغة عربية ممتعة وسلسة تشرح المفاهيم ليفهمها الطالب تماماً). ركز على تبسيط المفاهيم الفيزيائية أو الرياضية بذكاء وتشويق.`;
         
-        const hercaiUrl = `https://hercai.onrender.com/v3/hercai?question=${encodeURIComponent(prompt)}`;
-        const hercaiResponse = await fetch(hercaiUrl);
-        if (hercaiResponse.ok) {
-          const hercaiData = await hercaiResponse.json();
-          if (hercaiData.reply && hercaiData.reply.trim().length > 100) {
-            textToRead = hercaiData.reply;
-            console.log("Successfully generated dynamic lesson explanation using Hercai:", textToRead.substring(0, 100));
-          }
+        const hercaiReply = await fetchHercai(prompt);
+        if (hercaiReply && hercaiReply.trim().length > 50) {
+          textToRead = hercaiReply;
+          console.log("Successfully generated dynamic lesson explanation using Hercai:", textToRead.substring(0, 100));
         }
       } catch (hercaiErr) {
         console.warn("Failed to generate dynamic lesson explanation via Hercai:", hercaiErr);
