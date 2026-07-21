@@ -126,6 +126,14 @@ const QURAN_RECITERS: Reciter[] = [
 const platformLogo = new URL('./assets/images/platform_logo_transparent.svg', import.meta.url).href;
 const teacherLoader = new URL('./assets/images/teacher_loader_1783347042138.jpg', import.meta.url).href;
 
+const getApiUrl = (path: string): string => {
+  const hostname = typeof window !== 'undefined' ? window.location.hostname : '';
+  if (hostname.includes('github.io') || (hostname !== 'localhost' && !hostname.endsWith('run.app') && !hostname.includes('3000'))) {
+    return `https://ais-pre-t5z4xmcbcttqdwgdadfuls-72955753475.europe-west2.run.app${path}`;
+  }
+  return path;
+};
+
 export default function App() {
   // App Navigation State
   const [appState, setAppState] = useState<AppState>({
@@ -769,12 +777,7 @@ export default function App() {
         }
       } else {
         // Option B: Call relative local server /api/chat (using platform process.env.GEMINI_API_KEY from Google AI Studio)
-        if (isGitHubPages) {
-          // GitHub Pages has no backend server, so we skip to Hercai immediately to avoid 404/CORS blocks!
-          throw new Error('GITHUB_PAGES_DIRECT_MODE');
-        }
-
-        const response = await fetch('/api/chat', {
+        const response = await fetch(getApiUrl('/api/chat'), {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -890,7 +893,7 @@ export default function App() {
 
     try {
       if (appState.lesson.lessonUrl) {
-        const response = await fetch(`/api/fetch-lesson-text?url=${encodeURIComponent(appState.lesson.lessonUrl)}`);
+        const response = await fetch(getApiUrl(`/api/fetch-lesson-text?url=${encodeURIComponent(appState.lesson.lessonUrl)}`));
         if (response.ok) {
           const data = await response.json();
           if (data.text && data.text.trim().length > 10) {
@@ -961,7 +964,7 @@ export default function App() {
       let textToRead = '';
       try {
         if (appState.lesson?.lessonUrl) {
-          const response = await fetch(`/api/fetch-lesson-text?url=${encodeURIComponent(appState.lesson.lessonUrl)}`);
+          const response = await fetch(getApiUrl(`/api/fetch-lesson-text?url=${encodeURIComponent(appState.lesson.lessonUrl)}`));
           if (response.ok) {
             const data = await response.json();
             if (data.text && data.text.trim().length > 10) {
