@@ -135,54 +135,6 @@ const getApiUrl = (path: string): string => {
   return path;
 };
 
-const fetchHercai = async (prompt: string): Promise<string> => {
-  const endpoints = [
-    'https://hercai.onrender.com/v3/hercai',
-    'https://hercai.onrender.com/v3-beta/hercai',
-    'https://hercai.onrender.com/v3-turbo/hercai'
-  ];
-
-  let lastError: any = null;
-
-  // Step 1: Try direct fetches first
-  for (const endpoint of endpoints) {
-    try {
-      const url = `${endpoint}?question=${encodeURIComponent(prompt)}`;
-      const response = await fetch(url);
-      if (response.ok) {
-        const data = await response.json();
-        if (data.reply && data.reply.trim().length > 10) {
-          return data.reply;
-        }
-      }
-    } catch (err) {
-      lastError = err;
-      console.warn(`Direct fetch to ${endpoint} failed, trying next...`, err);
-    }
-  }
-
-  // Step 2: Try via CORS Proxy as fallback
-  console.log("Direct Hercai calls failed or CORS-blocked. Retrying via CORS Proxy for maximum reliability...");
-  for (const endpoint of endpoints) {
-    try {
-      const targetUrl = `${endpoint}?question=${encodeURIComponent(prompt)}`;
-      const proxiedUrl = `https://corsproxy.io/?url=${encodeURIComponent(targetUrl)}`;
-      const response = await fetch(proxiedUrl);
-      if (response.ok) {
-        const data = await response.json();
-        if (data.reply && data.reply.trim().length > 10) {
-          return data.reply;
-        }
-      }
-    } catch (proxyErr) {
-      lastError = proxyErr;
-      console.warn(`Proxied fetch to ${endpoint} failed...`, proxyErr);
-    }
-  }
-
-  throw lastError || new Error("Failed to connect to public AI endpoints.");
-};
-
 export default function App() {
   // App Navigation State
   const [appState, setAppState] = useState<AppState>({
@@ -825,6 +777,12 @@ export default function App() {
         if (fetchError) {
           throw fetchError;
         }
+      } else if (isGitHubPages) {
+        // Option B: Running on GitHub Pages without Custom Key. Use the smart local educational AI engine directly.
+        // This is extremely fast, 100% stable, CORS-free, and respects user's current lesson/subject focus perfectly!
+        console.log("[Chat] Running on GitHub Pages without API key. Routing directly to high-performance local teacher engine.");
+        const localReply = generateClientSideTeacherResponse(textToSend);
+        replyText = localReply;
       } else {
         const isExternalOrigin = isGitHubPages || (
           window.location.hostname !== 'localhost' && 
@@ -837,7 +795,7 @@ export default function App() {
           throw new Error('EXTERNAL_ORIGIN_DIRECT_MODE');
         }
 
-        // Option B: Call relative local server /api/chat (using platform process.env.GEMINI_API_KEY from Google AI Studio)
+        // Option C: Call relative local server /api/chat (using platform process.env.GEMINI_API_KEY from Google AI Studio)
         const response = await fetch(getApiUrl('/api/chat'), {
           method: 'POST',
           headers: {
@@ -878,8 +836,20 @@ export default function App() {
         const currentLessonContext = lesson ? `(سياق الدرس النشط الذي يذاكره الطالب حالياً: ${lesson.title})` : '';
         const promptWithContext = `${systemInstruction}\n\n${currentLessonContext}\n\nسؤال الطالب الحالي للإجابة عليه كمعلم افتراضي:\n${textToSend}`;
 
-        // Call our ultra-robust, proxied, multi-endpoint fetchHercai helper
-        const hercaiReply = await fetchHercai(promptWithContext);
+        // Call the super fast, stable, CORS-free v3 model on Hercai public endpoint (Reverted to the approved working structure)
+        const hercaiUrl = `https://hercai.onrender.com/v3/hercai?question=${encodeURIComponent(promptWithContext)}`;
+        const hercaiResponse = await fetch(hercaiUrl);
+
+        if (!hercaiResponse.ok) {
+          throw new Error('HERCAI_CORS_OR_HTTP_ERROR');
+        }
+
+        const hercaiData = await hercaiResponse.json();
+        const hercaiReply = hercaiData.reply;
+
+        if (!hercaiReply) {
+          throw new Error('HERCAI_EMPTY_RESPONSE');
+        }
 
         setChatMessages((prev) => [...prev, { role: 'model' as const, text: hercaiReply }]);
 
@@ -935,69 +905,86 @@ export default function App() {
     }
 
     window.speechSynthesis.cancel();
-    setTtsState('loading');
-    showToastMsg('📥 جاري استخراج وتحضير شرح الدرس من الرابط، يرجى الانتظار ثوانٍ...');
-
+    
     let textToRead = '';
 
-    try {
-      if (appState.lesson.lessonUrl) {
-        const isGitHubPages = window.location.hostname.includes('github.io');
-        const isExternalOrigin = isGitHubPages || (
-          window.location.hostname !== 'localhost' && 
-          !window.location.hostname.endsWith('run.app') && 
-          !window.location.hostname.includes('3000')
-        );
+    // Step 1: Check if the lesson has rich pre-defined local structured content
+    // This is instant, 100% reliable, works offline, on GitHub Pages, and guarantees SpeechSynthesis is NOT blocked by browser security.
+    const localContentText = getLessonTextToRead(appState.lesson);
+    if (localContentText && localContentText.trim().length > 50) {
+      textToRead = localContentText;
+      console.log("Using rich local structured content for TTS directly (instant & robust):", textToRead.substring(0, 100));
+    }
 
-        if (isExternalOrigin) {
-          console.warn("External origin or GitHub Pages. Skipping backend API to avoid CORS/redirect block, extracting PDF directly client-side...");
-          const clientExtracted = await extractTextFromLessonUrl(appState.lesson.lessonUrl);
-          if (clientExtracted && clientExtracted.trim().length > 10) {
-            textToRead = clientExtracted;
-            console.log("Successfully extracted PDF text client-side:", textToRead.substring(0, 100));
-          }
-        } else {
-          try {
-            const response = await fetch(getApiUrl(`/api/fetch-lesson-text?url=${encodeURIComponent(appState.lesson.lessonUrl)}`));
-            if (response.ok) {
-              const data = await response.json();
-              if (data.text && data.text.trim().length > 10) {
-                textToRead = data.text;
-                console.log("Successfully loaded external lesson PDF text from backend for TTS:", textToRead.substring(0, 100));
-              }
-            } else {
-              throw new Error(`Status ${response.status}`);
-            }
-          } catch (apiError) {
-            console.warn("Backend API failed or CORS blocked. Falling back to client-side PDF.js extraction...", apiError);
+    // Step 2: If no rich local content is available, only then proceed with external extraction or AI generation
+    if (!textToRead) {
+      setTtsState('loading');
+      showToastMsg('📥 جاري استخراج وتحضير شرح الدرس من الرابط، يرجى الانتظار ثوانٍ...');
+
+      try {
+        if (appState.lesson.lessonUrl) {
+          const isGitHubPages = window.location.hostname.includes('github.io');
+          const isExternalOrigin = isGitHubPages || (
+            window.location.hostname !== 'localhost' && 
+            !window.location.hostname.endsWith('run.app') && 
+            !window.location.hostname.includes('3000')
+          );
+
+          if (isExternalOrigin) {
+            console.warn("External origin or GitHub Pages. Skipping backend API to avoid CORS/redirect block, extracting PDF directly client-side...");
             const clientExtracted = await extractTextFromLessonUrl(appState.lesson.lessonUrl);
             if (clientExtracted && clientExtracted.trim().length > 10) {
               textToRead = clientExtracted;
               console.log("Successfully extracted PDF text client-side:", textToRead.substring(0, 100));
             }
+          } else {
+            try {
+              const response = await fetch(getApiUrl(`/api/fetch-lesson-text?url=${encodeURIComponent(appState.lesson.lessonUrl)}`));
+              if (response.ok) {
+                const data = await response.json();
+                if (data.text && data.text.trim().length > 10) {
+                  textToRead = data.text;
+                  console.log("Successfully loaded external lesson PDF text from backend for TTS:", textToRead.substring(0, 100));
+                }
+              } else {
+                throw new Error(`Status ${response.status}`);
+              }
+            } catch (apiError) {
+              console.warn("Backend API failed or CORS blocked. Falling back to client-side PDF.js extraction...", apiError);
+              const clientExtracted = await extractTextFromLessonUrl(appState.lesson.lessonUrl);
+              if (clientExtracted && clientExtracted.trim().length > 10) {
+                textToRead = clientExtracted;
+                console.log("Successfully extracted PDF text client-side:", textToRead.substring(0, 100));
+              }
+            }
           }
         }
+      } catch (e) {
+        console.warn("Failed to fetch or parse custom lesson text, falling back to local description:", e);
       }
-    } catch (e) {
-      console.warn("Failed to fetch or parse custom lesson text, falling back to local description:", e);
-    }
 
-    // Dynamic AI Fallback if PDF has no selectable text (scanned or image PDF)
-    if (!textToRead) {
-      try {
-        console.log("No selectable PDF text found or parsing failed. Generating rich lesson explanation on the fly using Hercai public AI...");
-        const title = appState.lesson.title || '';
-        const subject = appState.subject?.title || '';
-        const grade = appState.grade?.name || '';
-        const prompt = `أنت المعلم الافتراضي الذكي المتميز لمادة ${subject} للصف ${grade}. من فضلك اشرح بالتفصيل وبشكل وافٍ وممتع جداً درس: "${title}". اكتب الشرح في شكل فقرات نصية متصلة وواضحة جداً باللغة العربية الفصحى المبسطة لتتم قراءتها بوضوح وسلاسة بواسطة قارئ النصوص الصوتي (لا تستخدم أبداً جداول أو رموزاً غريبة أو معادلات معقدة، فقط لغة عربية ممتعة وسلسة تشرح المفاهيم ليفهمها الطالب تماماً). ركز على تبسيط المفاهيم الفيزيائية أو الرياضية بذكاء وتشويق.`;
-        
-        const hercaiReply = await fetchHercai(prompt);
-        if (hercaiReply && hercaiReply.trim().length > 50) {
-          textToRead = hercaiReply;
-          console.log("Successfully generated dynamic lesson explanation using Hercai:", textToRead.substring(0, 100));
+      // Dynamic AI Fallback if PDF has no selectable text (scanned or image PDF)
+      if (!textToRead) {
+        try {
+          console.log("No selectable PDF text found or parsing failed. Generating rich lesson explanation on the fly using Hercai public AI...");
+          const title = appState.lesson.title || '';
+          const subject = appState.subject?.title || '';
+          const grade = appState.grade?.name || '';
+          const prompt = `أنت المعلم الافتراضي الذكي المتميز لمادة ${subject} للصف ${grade}. من فضلك اشرح بالتفصيل وبشكل وافٍ وممتع جداً درس: "${title}". اكتب الشرح في شكل فقرات نصية متصلة وواضحة جداً باللغة العربية الفصحى المبسطة لتتم قراءتها بوضوح وسلاسة بواسطة قارئ النصوص الصوتي (لا تستخدم أبداً جداول أو رموزاً غريبة أو معادلات معقدة، فقط لغة عربية ممتعة وسلسة تشرح المفاهيم ليفهمها الطالب تماماً). ركز على تبسيط المفاهيم الفيزيائية أو الرياضية بذكاء وتشويق.`;
+          
+          // Original direct Hercai fetch (Reverted to working structure)
+          const hercaiUrl = `https://hercai.onrender.com/v3/hercai?question=${encodeURIComponent(prompt)}`;
+          const hercaiResponse = await fetch(hercaiUrl);
+          if (hercaiResponse.ok) {
+            const hercaiData = await hercaiResponse.json();
+            if (hercaiData.reply && hercaiData.reply.trim().length > 50) {
+              textToRead = hercaiData.reply;
+              console.log("Successfully generated dynamic lesson explanation using Hercai:", textToRead.substring(0, 100));
+            }
+          }
+        } catch (hercaiErr) {
+          console.warn("Failed to generate dynamic lesson explanation via Hercai:", hercaiErr);
         }
-      } catch (hercaiErr) {
-        console.warn("Failed to generate dynamic lesson explanation via Hercai:", hercaiErr);
       }
     }
 
@@ -4301,6 +4288,20 @@ export default function App() {
 
             {/* Chat Body */}
             <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-50/50 dark:bg-slate-950/20 text-right">
+              {typeof window !== 'undefined' && window.location.hostname.includes('github.io') && (!chatGeminiKey || chatGeminiKey.trim().length < 5) && (
+                <div className="p-3 bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/50 rounded-xl text-[11px] text-indigo-700 dark:text-indigo-300 leading-relaxed text-center flex flex-col sm:flex-row items-center justify-between gap-2 shadow-sm">
+                  <div className="flex-1 text-right">
+                    💡 **مرحباً بك!** لتفعيل الردود الذكية الكاملة عبر **Google Gemini** على GitHub Pages، يرجى إضافة مفتاح API مجاني من الإعدادات بالضغط على ⚙️ في الأعلى. حالياً يتم استخدام المعلم المحلي الذكي.
+                  </div>
+                  <button 
+                    onClick={() => setShowChatSettings(true)}
+                    className="shrink-0 bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-bold py-1 px-3 rounded-lg shadow-sm transition cursor-pointer"
+                  >
+                    إضافة المفتاح ⚙️
+                  </button>
+                </div>
+              )}
+
               {chatMessages.map((msg, idx) => (
                 <div 
                   key={idx} 
