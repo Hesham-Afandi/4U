@@ -2,8 +2,25 @@ import express from "express";
 import path from "path";
 import dotenv from "dotenv";
 import { GoogleGenAI } from "@google/genai";
-
 import cors from "cors";
+import { createRequire } from "module";
+
+let PDFParseClass: any;
+try {
+  if (typeof require !== "undefined") {
+    const pdfModule = require("pdf-parse");
+    PDFParseClass = pdfModule.PDFParse;
+  } else {
+    const requireFromEsm = createRequire(import.meta.url);
+    const pdfModule = requireFromEsm("pdf-parse");
+    PDFParseClass = pdfModule.PDFParse;
+  }
+} catch (e) {
+  console.warn("Failed to import pdf-parse:", e);
+}
+
+// In-memory cache for fetched/transcribed lesson texts to provide instantaneous play subsequent times
+const lessonTextCache = new Map<string, string>();
 
 dotenv.config();
 
@@ -144,6 +161,138 @@ app.post("/api/chat", async (req, res) => {
     console.error("Gemini API Error in backend:", error);
     res.status(500).json({ 
       error: "حدث خطأ أثناء التواصل مع المعلم الافتراضي.", 
+      details: error.message || error 
+    });
+  }
+});
+
+// Endpoint to fetch and parse lesson content (HTML or PDF) to feed to TTS
+app.get("/api/fetch-lesson-text", async (req, res) => {
+  const lessonUrl = req.query.url as string;
+  if (!lessonUrl) {
+    return res.status(400).json({ error: "URL is required" });
+  }
+
+  // 1. Check in-memory cache
+  if (lessonTextCache.has(lessonUrl)) {
+    console.log(`[Fetch Lesson Text] Cache hit for URL: ${lessonUrl}`);
+    return res.json({ text: lessonTextCache.get(lessonUrl) });
+  }
+
+  try {
+    console.log(`[Fetch Lesson Text] Cache miss. Requesting URL: ${lessonUrl}`);
+
+    // 2. Fetch HTML of the page
+    const response = await fetch(lessonUrl);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch page: ${response.statusText}`);
+    }
+
+    const htmlText = await response.text();
+
+    // 3. Try to find a PDF link in the HTML
+    // We look for strings ending in .pdf inside single/double quotes or simple matches
+    const pdfMatch = htmlText.match(/['"]([^'"]+\.pdf)['"]/i);
+    let pdfUrl = "";
+
+    if (pdfMatch) {
+      const relativePath = pdfMatch[1];
+      pdfUrl = new URL(relativePath, lessonUrl).toString();
+      console.log(`[Fetch Lesson Text] Found PDF relative path: ${relativePath}, resolved to: ${pdfUrl}`);
+    } else if (lessonUrl.toLowerCase().endsWith(".pdf")) {
+      pdfUrl = lessonUrl;
+    }
+
+    let extractedText = "";
+
+    if (pdfUrl) {
+      // 4. Fetch PDF and parse it using pdf-parse or Gemini fallback
+      console.log(`[Fetch Lesson Text] Fetching PDF from: ${pdfUrl}`);
+      const pdfRes = await fetch(pdfUrl);
+      if (pdfRes.ok) {
+        const arrayBuffer = await pdfRes.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+        
+        try {
+          if (PDFParseClass) {
+            console.log(`[Fetch Lesson Text] Trying PDFParseClass text extraction...`);
+            const parser = new PDFParseClass({ data: buffer });
+            await parser.load();
+            const textResult = await parser.getText();
+            extractedText = textResult.text || "";
+            console.log(`[Fetch Lesson Text] PDFParseClass extracted ${extractedText.length} characters.`);
+          }
+        } catch (pdfParseError) {
+          console.warn(`[Fetch Lesson Text] PDFParseClass error, falling back:`, pdfParseError);
+        }
+
+        // 5. Intelligent Fallback: If pdf-parse failed, or if it extracted < 350 characters (indicating a scanned/image PDF)
+        const isMinimallyExtracted = !extractedText.trim() || extractedText.trim().length < 350;
+        const hasGeminiKey = !!process.env.GEMINI_API_KEY;
+
+        if (isMinimallyExtracted && hasGeminiKey) {
+          console.log(`[Fetch Lesson Text] PDF text is minimal or empty (${extractedText.trim().length} chars). Invoking Gemini OCR & transcription...`);
+          try {
+            const ai = getAiClient();
+            const base64 = buffer.toString("base64");
+            
+            const genRes = await ai.models.generateContent({
+              model: "gemini-3.5-flash",
+              contents: [
+                {
+                  inlineData: {
+                    mimeType: "application/pdf",
+                    data: base64
+                  }
+                },
+                "أنت المعلم الافتراضي الذكي لمادة العلوم. اقرأ ملف شرح الدرس المرفق واشرح محتواه بالتفصيل باللغة العربية الفصحى شرحاً وافياً وممتعاً ومبسّطاً للطلاب وكأنك تلقي درساً صوتياً رائعاً في الفصل. اكتب الشرح في شكل فقرات نصية متصلة وواضحة جداً لتتم قراءتها بواسطة قارئ النصوص الصوتي (لا تستخدم أبداً جداول أو رموزاً غريبة أو معادلات معقدة، فقط لغة عربية فصحى جميلة مشروحة للطلاب). ركز على تفسير المفاهيم الفيزيائية والقوانين بشكل لفظي واضح وسلس يستطيع الطالب استيعابه سماعياً."
+              ]
+            });
+
+            if (genRes.text && genRes.text.trim().length > 100) {
+              extractedText = genRes.text;
+              console.log(`[Fetch Lesson Text] Successfully generated Gemini detailed lesson description of length ${extractedText.length}`);
+            }
+          } catch (geminiError) {
+            console.error(`[Fetch Lesson Text] Gemini PDF parsing failed:`, geminiError);
+          }
+        }
+      } else {
+        console.warn(`[Fetch Lesson Text] Failed to fetch PDF from resolved URL: ${pdfRes.statusText}`);
+      }
+    }
+
+    // 6. Fallback: If no PDF found or PDF parsing yielded empty result, clean up HTML text and return it
+    if (!extractedText.trim()) {
+      console.log(`[Fetch Lesson Text] No PDF text extracted. Falling back to cleaning HTML text...`);
+      // Simple HTML tags & scripts stripper
+      let cleanHtml = htmlText
+        .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
+        .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, "")
+        .replace(/<[^>]+>/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+      extractedText = cleanHtml;
+    }
+
+    // Clean up excessive whitespace/newlines/decorative characters from the extracted text
+    let formattedText = extractedText
+      .replace(/\r\n/g, "\n")
+      .replace(/\n{3,}/g, "\n\n")
+      .replace(/[ \t]+/g, " ")
+      .trim();
+
+    // 7. Store in-memory cache
+    lessonTextCache.set(lessonUrl, formattedText);
+
+    // Send back extracted text
+    res.json({ text: formattedText });
+
+  } catch (error: any) {
+    console.error("[Fetch Lesson Text] Error:", error);
+    res.status(500).json({ 
+      error: "Failed to extract text from lesson link", 
       details: error.message || error 
     });
   }

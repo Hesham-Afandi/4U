@@ -199,7 +199,7 @@ export default function App() {
   });
 
   // --- 🔊 Text-To-Speech (TTS) States ---
-  const [ttsState, setTtsState] = useState<'idle' | 'playing' | 'paused'>('idle');
+  const [ttsState, setTtsState] = useState<'idle' | 'playing' | 'paused' | 'loading'>('idle');
   const [ttsRate, setTtsRate] = useState(1);
   const ttsUtteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const [ttsCurrentParagraph, setTtsCurrentParagraph] = useState('');
@@ -868,7 +868,7 @@ export default function App() {
     return parts.join('\n\n');
   };
 
-  const handleStartTts = () => {
+  const handleStartTts = async () => {
     if (!appState.lesson) return;
 
     if (ttsState === 'playing') {
@@ -883,9 +883,32 @@ export default function App() {
     }
 
     window.speechSynthesis.cancel();
+    setTtsState('loading');
+    showToastMsg('📥 جاري استخراج وتحضير شرح الدرس من الرابط، يرجى الانتظار ثوانٍ...');
 
-    const textToRead = getLessonTextToRead(appState.lesson);
+    let textToRead = '';
+
+    try {
+      if (appState.lesson.lessonUrl) {
+        const response = await fetch(`/api/fetch-lesson-text?url=${encodeURIComponent(appState.lesson.lessonUrl)}`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.text && data.text.trim().length > 10) {
+            textToRead = data.text;
+            console.log("Successfully loaded external lesson PDF text for TTS:", textToRead.substring(0, 100));
+          }
+        }
+      }
+    } catch (e) {
+      console.warn("Failed to fetch custom lesson text from backend, falling back to local description:", e);
+    }
+
     if (!textToRead) {
+      textToRead = getLessonTextToRead(appState.lesson);
+    }
+
+    if (!textToRead) {
+      setTtsState('idle');
       showToastMsg('⚠️ لا يوجد محتوى نصي متاح للقراءة في هذا الدرس حالياً.');
       return;
     }
@@ -920,7 +943,7 @@ export default function App() {
     window.speechSynthesis.speak(utterance);
     setTtsState('playing');
     setTtsCurrentParagraph(appState.lesson.title);
-    showToastMsg('🔊 تم بدء الشرح الصوتي للدرس بصوت المعلم.');
+    showToastMsg('🔊 تم بدء الشرح الصوتي المباشر من ملف شرح الدرس بنجاح!');
   };
 
   const handleStopTts = () => {
@@ -929,11 +952,36 @@ export default function App() {
     setTtsCurrentParagraph('');
   };
 
-  const handleTtsRateChange = (rate: number) => {
+  const handleTtsRateChange = async (rate: number) => {
     setTtsRate(rate);
     if (ttsState === 'playing') {
       window.speechSynthesis.cancel();
-      const textToRead = getLessonTextToRead(appState.lesson);
+      setTtsState('loading');
+
+      let textToRead = '';
+      try {
+        if (appState.lesson?.lessonUrl) {
+          const response = await fetch(`/api/fetch-lesson-text?url=${encodeURIComponent(appState.lesson.lessonUrl)}`);
+          if (response.ok) {
+            const data = await response.json();
+            if (data.text && data.text.trim().length > 10) {
+              textToRead = data.text;
+            }
+          }
+        }
+      } catch (e) {
+        console.warn(e);
+      }
+
+      if (!textToRead && appState.lesson) {
+        textToRead = getLessonTextToRead(appState.lesson);
+      }
+
+      if (!textToRead) {
+        setTtsState('idle');
+        return;
+      }
+
       const utterance = new SpeechSynthesisUtterance(textToRead);
       const isEnglish = DB.curriculum[getCurriculumKey() || '']?.isEnglish;
       utterance.lang = isEnglish ? 'en-US' : 'ar-SA';
@@ -953,6 +1001,7 @@ export default function App() {
       
       ttsUtteranceRef.current = utterance;
       window.speechSynthesis.speak(utterance);
+      setTtsState('playing');
     }
   };
 
@@ -3332,7 +3381,7 @@ export default function App() {
                             <div className="bg-slate-50 dark:bg-slate-800/40 p-4 rounded-2xl border border-slate-100 dark:border-slate-800/60 space-y-3 text-right">
                               <div className="flex items-center justify-between">
                                 <span className="text-[10px] bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 font-extrabold px-2.5 py-1 rounded-full">
-                                  {ttsState === 'playing' ? '🟢 مستمع نشط' : '🔊 الشرح الصوتي'}
+                                  {ttsState === 'playing' ? '🟢 مستمع نشط' : ttsState === 'loading' ? '⏳ جاري استخراج الشرح...' : '🔊 الشرح الصوتي'}
                                 </span>
                                 <h4 className="font-extrabold text-xs text-gray-700 dark:text-slate-300 flex items-center gap-1">
                                   <span>الاستماع إلى الدرس</span>
@@ -3360,6 +3409,14 @@ export default function App() {
                                       <span>إنهاء</span>
                                     </button>
                                   </>
+                                ) : ttsState === 'loading' ? (
+                                  <button
+                                    disabled
+                                    className="w-full bg-slate-100 dark:bg-slate-800/80 text-emerald-600 dark:text-emerald-400 py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 cursor-wait border border-slate-200 dark:border-slate-700 animate-pulse"
+                                  >
+                                    <span className="animate-spin text-lg">⏳</span>
+                                    <span>جاري استخراج وتحميل شرح الدرس...</span>
+                                  </button>
                                 ) : ttsState === 'paused' ? (
                                   <>
                                     <button
