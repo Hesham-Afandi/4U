@@ -66,12 +66,12 @@ async function generateContentWithFallbackAndRetry(
   contents: any[],
   systemInstruction: string
 ): Promise<any> {
-  // Prioritize gemini-3.1-flash-lite (larger free tier quota) followed by gemini-3.5-flash and gemini-flash-latest
-  const modelsToTry = ["gemini-3.1-flash-lite", "gemini-3.5-flash", "gemini-flash-latest"];
+  // Use highly robust and available model sequences
+  const modelsToTry = ["gemini-2.5-flash", "gemini-1.5-flash", "gemini-3.5-flash", "gemini-3.1-flash-lite"];
   let lastError: any = null;
 
   for (const model of modelsToTry) {
-    const maxRetries = 3;
+    const maxRetries = 2;
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
         console.log(`[Gemini API] Attempt ${attempt} using model: ${model}`);
@@ -89,12 +89,13 @@ async function generateContentWithFallbackAndRetry(
         const errMsg = String(err.message || err).toLowerCase();
         const isQuotaError = errMsg.includes("quota") || errMsg.includes("429") || errMsg.includes("resource_exhausted") || errMsg.includes("limit");
         const isNotFoundError = errMsg.includes("not found") || errMsg.includes("404") || errMsg.includes("no longer available");
+        const isOverloadedError = errMsg.includes("unavailable") || errMsg.includes("503") || errMsg.includes("high demand") || errMsg.includes("busy") || errMsg.includes("overloaded") || errMsg.includes("capacity");
 
         console.warn(`[Gemini API] Error on attempt ${attempt} with model ${model}:`, err.message || err);
 
-        // If it is a quota limit or deprecation/not-found error, do not retry this model. Fail fast and move to fallback!
-        if (isQuotaError || isNotFoundError) {
-          console.warn(`[Gemini API] Fast-failing model ${model} due to ${isQuotaError ? "quota limits" : "model unavailability"}. Trying next fallback...`);
+        // If it is a quota limit, overload/unavailability, or deprecation/not-found error, do not retry this model. Fail fast and move to fallback!
+        if (isQuotaError || isNotFoundError || isOverloadedError) {
+          console.warn(`[Gemini API] Fast-failing model ${model} due to ${isOverloadedError ? "overload" : isQuotaError ? "quota limits" : "model unavailability"}. Trying next fallback...`);
           break; // break the retry loop, moving to the next model in modelsToTry
         }
 
@@ -102,7 +103,7 @@ async function generateContentWithFallbackAndRetry(
           break;
         }
 
-        // Exponential backoff delay (e.g. 600ms, 1200ms, 2400ms) for transient errors (e.g. 500/503/network)
+        // Exponential backoff delay (e.g. 600ms, 1200ms) for transient errors (e.g. network)
         const delay = Math.pow(2, attempt - 1) * 600;
         await new Promise((resolve) => setTimeout(resolve, delay));
       }
@@ -118,12 +119,12 @@ async function generatePdfContentWithFallbackAndRetry(
   pdfBase64: string,
   promptText: string
 ): Promise<any> {
-  // Try gemini-3.5-flash, gemini-flash-latest, and gemini-3.1-flash-lite
-  const modelsToTry = ["gemini-3.5-flash", "gemini-flash-latest", "gemini-3.1-flash-lite"];
+  // Use highly robust and available model sequences for PDF transcription
+  const modelsToTry = ["gemini-2.5-flash", "gemini-1.5-flash", "gemini-3.5-flash", "gemini-3.1-flash-lite"];
   let lastError: any = null;
 
   for (const model of modelsToTry) {
-    const maxRetries = 3;
+    const maxRetries = 2;
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
         console.log(`[Gemini PDF OCR] Attempt ${attempt} using model: ${model}`);
@@ -145,12 +146,13 @@ async function generatePdfContentWithFallbackAndRetry(
         const errMsg = String(err.message || err).toLowerCase();
         const isQuotaError = errMsg.includes("quota") || errMsg.includes("429") || errMsg.includes("resource_exhausted") || errMsg.includes("limit");
         const isNotFoundError = errMsg.includes("not found") || errMsg.includes("404") || errMsg.includes("no longer available");
+        const isOverloadedError = errMsg.includes("unavailable") || errMsg.includes("503") || errMsg.includes("high demand") || errMsg.includes("busy") || errMsg.includes("overloaded") || errMsg.includes("capacity");
 
         console.warn(`[Gemini PDF OCR] Error on attempt ${attempt} with model ${model}:`, err.message || err);
 
-        // If it is a quota limit or deprecation/not-found error, do not retry this model. Fail fast and move to fallback!
-        if (isQuotaError || isNotFoundError) {
-          console.warn(`[Gemini PDF OCR] Fast-failing model ${model} due to ${isQuotaError ? "quota limits" : "model unavailability"}. Trying next fallback...`);
+        // If it is a quota limit, overload/unavailability, or deprecation/not-found error, do not retry this model. Fail fast and move to fallback!
+        if (isQuotaError || isNotFoundError || isOverloadedError) {
+          console.warn(`[Gemini PDF OCR] Fast-failing model ${model} due to ${isOverloadedError ? "overload" : isQuotaError ? "quota limits" : "model unavailability"}. Trying next fallback...`);
           break; // break the retry loop, moving to the next model in modelsToTry
         }
 
@@ -158,7 +160,7 @@ async function generatePdfContentWithFallbackAndRetry(
           break;
         }
 
-        // Exponential backoff delay (e.g. 1000ms, 2000ms, 4000ms) for transient errors (e.g. 500/503/network)
+        // Exponential backoff delay (e.g. 1000ms, 2000ms) for transient errors (e.g. network)
         const delay = Math.pow(2, attempt - 1) * 1000;
         await new Promise((resolve) => setTimeout(resolve, delay));
       }

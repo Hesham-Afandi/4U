@@ -211,6 +211,7 @@ export default function App() {
   const [ttsState, setTtsState] = useState<'idle' | 'playing' | 'paused' | 'loading'>('idle');
   const [ttsRate, setTtsRate] = useState(1);
   const ttsUtteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const ttsActiveTextRef = useRef<string>('');
   const [ttsCurrentParagraph, setTtsCurrentParagraph] = useState('');
 
   // Focus Mode & Personal Student Notes
@@ -777,6 +778,17 @@ export default function App() {
           throw fetchError;
         }
       } else {
+        const isExternalOrigin = isGitHubPages || (
+          window.location.hostname !== 'localhost' && 
+          !window.location.hostname.endsWith('run.app') && 
+          !window.location.hostname.includes('3000')
+        );
+
+        if (isExternalOrigin) {
+          console.log("[Chat] External origin or GitHub Pages detected. Bypassing backend container proxy to avoid CORS/redirect block...");
+          throw new Error('EXTERNAL_ORIGIN_DIRECT_MODE');
+        }
+
         // Option B: Call relative local server /api/chat (using platform process.env.GEMINI_API_KEY from Google AI Studio)
         const response = await fetch(getApiUrl('/api/chat'), {
           method: 'POST',
@@ -894,23 +906,39 @@ export default function App() {
 
     try {
       if (appState.lesson.lessonUrl) {
-        try {
-          const response = await fetch(getApiUrl(`/api/fetch-lesson-text?url=${encodeURIComponent(appState.lesson.lessonUrl)}`));
-          if (response.ok) {
-            const data = await response.json();
-            if (data.text && data.text.trim().length > 10) {
-              textToRead = data.text;
-              console.log("Successfully loaded external lesson PDF text from backend for TTS:", textToRead.substring(0, 100));
-            }
-          } else {
-            throw new Error(`Status ${response.status}`);
-          }
-        } catch (apiError) {
-          console.warn("Backend API failed or CORS blocked. Falling back to client-side PDF.js extraction...", apiError);
+        const isGitHubPages = window.location.hostname.includes('github.io');
+        const isExternalOrigin = isGitHubPages || (
+          window.location.hostname !== 'localhost' && 
+          !window.location.hostname.endsWith('run.app') && 
+          !window.location.hostname.includes('3000')
+        );
+
+        if (isExternalOrigin) {
+          console.warn("External origin or GitHub Pages. Skipping backend API to avoid CORS/redirect block, extracting PDF directly client-side...");
           const clientExtracted = await extractTextFromLessonUrl(appState.lesson.lessonUrl);
           if (clientExtracted && clientExtracted.trim().length > 10) {
             textToRead = clientExtracted;
             console.log("Successfully extracted PDF text client-side:", textToRead.substring(0, 100));
+          }
+        } else {
+          try {
+            const response = await fetch(getApiUrl(`/api/fetch-lesson-text?url=${encodeURIComponent(appState.lesson.lessonUrl)}`));
+            if (response.ok) {
+              const data = await response.json();
+              if (data.text && data.text.trim().length > 10) {
+                textToRead = data.text;
+                console.log("Successfully loaded external lesson PDF text from backend for TTS:", textToRead.substring(0, 100));
+              }
+            } else {
+              throw new Error(`Status ${response.status}`);
+            }
+          } catch (apiError) {
+            console.warn("Backend API failed or CORS blocked. Falling back to client-side PDF.js extraction...", apiError);
+            const clientExtracted = await extractTextFromLessonUrl(appState.lesson.lessonUrl);
+            if (clientExtracted && clientExtracted.trim().length > 10) {
+              textToRead = clientExtracted;
+              console.log("Successfully extracted PDF text client-side:", textToRead.substring(0, 100));
+            }
           }
         }
       }
@@ -918,9 +946,35 @@ export default function App() {
       console.warn("Failed to fetch or parse custom lesson text, falling back to local description:", e);
     }
 
+    // Dynamic AI Fallback if PDF has no selectable text (scanned or image PDF)
+    if (!textToRead) {
+      try {
+        console.log("No selectable PDF text found or parsing failed. Generating rich lesson explanation on the fly using Hercai public AI...");
+        const title = appState.lesson.title || '';
+        const subject = appState.subject?.title || '';
+        const grade = appState.grade?.name || '';
+        const prompt = `أنت المعلم الافتراضي الذكي المتميز لمادة ${subject} للصف ${grade}. من فضلك اشرح بالتفصيل وبشكل وافٍ وممتع جداً درس: "${title}". اكتب الشرح في شكل فقرات نصية متصلة وواضحة جداً باللغة العربية الفصحى المبسطة لتتم قراءتها بوضوح وسلاسة بواسطة قارئ النصوص الصوتي (لا تستخدم أبداً جداول أو رموزاً غريبة أو معادلات معقدة، فقط لغة عربية ممتعة وسلسة تشرح المفاهيم ليفهمها الطالب تماماً). ركز على تبسيط المفاهيم الفيزيائية أو الرياضية بذكاء وتشويق.`;
+        
+        const hercaiUrl = `https://hercai.onrender.com/v3/hercai?question=${encodeURIComponent(prompt)}`;
+        const hercaiResponse = await fetch(hercaiUrl);
+        if (hercaiResponse.ok) {
+          const hercaiData = await hercaiResponse.json();
+          if (hercaiData.reply && hercaiData.reply.trim().length > 100) {
+            textToRead = hercaiData.reply;
+            console.log("Successfully generated dynamic lesson explanation using Hercai:", textToRead.substring(0, 100));
+          }
+        }
+      } catch (hercaiErr) {
+        console.warn("Failed to generate dynamic lesson explanation via Hercai:", hercaiErr);
+      }
+    }
+
     if (!textToRead) {
       textToRead = getLessonTextToRead(appState.lesson);
     }
+
+    // Cache the loaded/generated text so rate changes don't re-parse or re-fetch
+    ttsActiveTextRef.current = textToRead;
 
     if (!textToRead) {
       setTtsState('idle');
@@ -973,33 +1027,51 @@ export default function App() {
       window.speechSynthesis.cancel();
       setTtsState('loading');
 
-      let textToRead = '';
-      try {
-        if (appState.lesson?.lessonUrl) {
-          try {
-            const response = await fetch(getApiUrl(`/api/fetch-lesson-text?url=${encodeURIComponent(appState.lesson.lessonUrl)}`));
-            if (response.ok) {
-              const data = await response.json();
-              if (data.text && data.text.trim().length > 10) {
-                textToRead = data.text;
+      let textToRead = ttsActiveTextRef.current;
+      if (!textToRead) {
+        try {
+          if (appState.lesson?.lessonUrl) {
+            const isGitHubPages = window.location.hostname.includes('github.io');
+            const isExternalOrigin = isGitHubPages || (
+              window.location.hostname !== 'localhost' && 
+              !window.location.hostname.endsWith('run.app') && 
+              !window.location.hostname.includes('3000')
+            );
+
+            if (isExternalOrigin) {
+              const clientExtracted = await extractTextFromLessonUrl(appState.lesson.lessonUrl);
+              if (clientExtracted && clientExtracted.trim().length > 10) {
+                textToRead = clientExtracted;
               }
             } else {
-              throw new Error(`Status ${response.status}`);
-            }
-          } catch (apiError) {
-            console.warn("Backend API failed or CORS blocked in rate change. Falling back to client-side PDF.js extraction...", apiError);
-            const clientExtracted = await extractTextFromLessonUrl(appState.lesson.lessonUrl);
-            if (clientExtracted && clientExtracted.trim().length > 10) {
-              textToRead = clientExtracted;
+              try {
+                const response = await fetch(getApiUrl(`/api/fetch-lesson-text?url=${encodeURIComponent(appState.lesson.lessonUrl)}`));
+                if (response.ok) {
+                  const data = await response.json();
+                  if (data.text && data.text.trim().length > 10) {
+                    textToRead = data.text;
+                  }
+                } else {
+                  throw new Error(`Status ${response.status}`);
+                }
+              } catch (apiError) {
+                console.warn("Backend API failed or CORS blocked in rate change. Falling back to client-side PDF.js extraction...", apiError);
+                const clientExtracted = await extractTextFromLessonUrl(appState.lesson.lessonUrl);
+                if (clientExtracted && clientExtracted.trim().length > 10) {
+                  textToRead = clientExtracted;
+                }
+              }
             }
           }
+        } catch (e) {
+          console.warn(e);
         }
-      } catch (e) {
-        console.warn(e);
-      }
 
-      if (!textToRead && appState.lesson) {
-        textToRead = getLessonTextToRead(appState.lesson);
+        if (!textToRead && appState.lesson) {
+          textToRead = getLessonTextToRead(appState.lesson);
+        }
+        
+        ttsActiveTextRef.current = textToRead;
       }
 
       if (!textToRead) {

@@ -6,7 +6,3 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(self.clients.claim());
 });
 
-self.addEventListener('fetch', (event) => {
-  // Let network handle everything directly
-  event.respondWith(fetch(event.request));
-});
