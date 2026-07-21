@@ -76,7 +76,7 @@ function getAiClient() {
   return aiClient;
 }
 async function generateContentWithFallbackAndRetry(ai, contents, systemInstruction) {
-  const modelsToTry = ["gemini-2.5-flash", "gemini-1.5-flash", "gemini-3.5-flash", "gemini-3.1-flash-lite"];
+  const modelsToTry = ["gemini-3.6-flash", "gemini-3.1-flash-lite"];
   let lastError = null;
   for (const model of modelsToTry) {
     const maxRetries = 2;
@@ -114,7 +114,7 @@ async function generateContentWithFallbackAndRetry(ai, contents, systemInstructi
   throw lastError || new Error("Failed to generate content with all models and retries");
 }
 async function generatePdfContentWithFallbackAndRetry(ai, pdfBase64, promptText) {
-  const modelsToTry = ["gemini-2.5-flash", "gemini-1.5-flash", "gemini-3.5-flash", "gemini-3.1-flash-lite"];
+  const modelsToTry = ["gemini-3.6-flash", "gemini-3.1-flash-lite"];
   let lastError = null;
   for (const model of modelsToTry) {
     const maxRetries = 2;
