@@ -67,7 +67,7 @@ async function generateContentWithFallbackAndRetry(
   systemInstruction: string
 ): Promise<any> {
   // Use highly robust and available model sequences
-  const modelsToTry = ["gemini-2.5-flash", "gemini-1.5-flash", "gemini-3.5-flash", "gemini-3.1-flash-lite"];
+  const modelsToTry = ["gemini-3.6-flash", "gemini-3.1-flash-lite"];
   let lastError: any = null;
 
   for (const model of modelsToTry) {
@@ -120,7 +120,7 @@ async function generatePdfContentWithFallbackAndRetry(
   promptText: string
 ): Promise<any> {
   // Use highly robust and available model sequences for PDF transcription
-  const modelsToTry = ["gemini-2.5-flash", "gemini-1.5-flash", "gemini-3.5-flash", "gemini-3.1-flash-lite"];
+  const modelsToTry = ["gemini-3.6-flash", "gemini-3.1-flash-lite"];
   let lastError: any = null;
 
   for (const model of modelsToTry) {

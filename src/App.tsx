@@ -712,89 +712,90 @@ export default function App() {
 
     try {
       let replyText = '';
+      let replyReceived = false;
       const isGitHubPages = window.location.hostname.includes('github.io');
       const hasCustomKey = chatGeminiKey && chatGeminiKey.trim().length > 5;
 
+      const systemInstruction = `
+أنت "المعلم الافتراضي" الحكيم والودود على "المنصة التعليمية المتكاملة 4U".
+مهمتك هي مساعدة الطالب ومراجعته في دروسه، والإجابة على استفساراته العامة المتعلقة بالمنهج الدراسي بدقة ومرح وتشويق.
+- ممنوع تماماً ذكر أسماء "جيمني" (Gemini) أو "شات جي بي تي" (ChatGPT) أو "جوجل" (Google) أو أي أداة ذكاء اصطناعي أخرى. إذا سألك الطالب من أنت، أخبره بكل حب: "أنا معلمك الافتراضي ومستشارك الدراسي على منصة 4U، متواجد دائماً هنا لأساعدك في رحلتك التعليمية وسحق الامتحانات! يلا نراجع مع بعض ✨".
+- تفاعل مع الطالب بأسلوب المعلم الحنون، الدافئ والمشجع. استخدم عبارات إيجابية مثل "يا بطل"، "يا متميزة"، "يا بطلة المستقبل"، "أحسنت"، "سؤال ذكي جداً!"، "فخور بك وباهتمامك".
+- بسّط المفاهيم المعقدة، واستخدم الترتيب النقطي أو الجداول التوضيحية البسيطة عند الحاجة.
+- استخدم الرموز التعبيرية بحكمة ومرح لتسهيل القراءة وزيادة التفاعل (مثل: 🔥, 📚, ✨, 🚀, 🎓, 💡, 📝).
+- تواصل باللغة العربية بلهجة بيضاء أو فصحى مبسطة وواضحة جداً.
+`;
+
+      const lesson = appState.lesson;
+      const currentLessonContext = lesson ? `(سياق الدرس النشط الذي يذاكره الطالب حالياً: ${lesson.title})` : '';
+      const promptWithContext = `${systemInstruction}\n\n${currentLessonContext}\n\nسؤال الطالب الحالي للإجابة عليه كمعلم افتراضي:\n${textToSend}`;
+
+      // Channel 1: Try custom key directly from the browser if provided
       if (hasCustomKey) {
-        // Option A: Call Gemini directly using custom API key (with stable gemini-2.5-flash model)
-        const systemInstruction = `
-أنت "المعلم الافتراضي" الحكيم والودود على "المنصة التعليمية المتكاملة 4U".
-مهمتك هي مساعدة الطالب ومراجعته في دروسه، والإجابة على استفساراته العامة المتعلقة بالمنهج الدراسي (سواء لبلدان الخليج مثل الإمارات، السعودية، قطر، عمان، البحرين أو مصر).
-- ممنوع تماماً ذكر أسماء "جيمني" (Gemini) أو "شات جي بي تي" (ChatGPT) أو "جوجل" (Google) أو أي أداة ذكاء اصطناعي أخرى. إذا سألك الطالب من أنت، أخبره بكل حب: "أنا معلمك الافتراضي ومستشارك الدراسي على منصة 4U، متواجد دائماً هنا لأساعدك في رحلتك التعليمية وسحق الامتحانات! يلا نراجع مع بعض ✨".
-- تفاعل مع الطالب بأسلوب المعلم الحنون، الدافئ والمشجع. استخدم عبارات إيجابية مثل "يا بطل"، "يا متميزة"، "يا بطلة المستقبل"، "أحسنت"، "سؤال ذكي جداً!"، "فخور بك وباهتمامك".
-- بسّط المفاهيم المعقدة، واستخدم الترتيب النقطي أو الجداول التوضيحية البسيطة عند الحاجة.
-- استخدم الرموز التعبيرية بحكمة ومرح لتسهيل القراءة وزيادة التفاعل (مثل: 🔥, 📚, ✨, 🚀, 🎓, 💡, 📝).
-- تواصل باللغة العربية بلهجة بيضاء أو فصحى مبسطة وواضحة جداً، وإذا سألك الطالب بالإنجليزية أجب بالإنجليزية بأسلوب مشجع وبسيط ومناسب لطلاب المدارس.
-- ركز على تعزيز ثقته بنفسه وذكّره بأهمية المذاكرة والاستمرارية لتحقيق أحلامه.
-`;
+        try {
+          const formattedContents = newMessages.map(msg => ({
+            role: msg.role === 'user' ? 'user' : 'model',
+            parts: [{ text: msg.text }]
+          }));
 
-        const formattedContents = newMessages.map(msg => ({
-          role: msg.role === 'user' ? 'user' : 'model',
-          parts: [{ text: msg.text }]
-        }));
+          const clientModels = ['gemini-3.6-flash', 'gemini-3.1-flash-lite'];
+          for (const model of clientModels) {
+            try {
+              const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${chatGeminiKey.trim()}`;
+              const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  contents: formattedContents,
+                  systemInstruction: { parts: [{ text: systemInstruction }] },
+                  generationConfig: { temperature: 0.7 }
+                })
+              });
 
-        const clientModels = ['gemini-3.1-flash-lite', 'gemini-3.5-flash'];
-        let fetchError: any = null;
-
-        for (const model of clientModels) {
-          try {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${chatGeminiKey.trim()}`;
-            const response = await fetch(url, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                contents: formattedContents,
-                systemInstruction: {
-                  parts: [{ text: systemInstruction }]
-                },
-                generationConfig: {
-                  temperature: 0.7,
+              if (response.ok) {
+                const data = await response.json();
+                const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (reply) {
+                  replyText = reply;
+                  replyReceived = true;
+                  break;
                 }
-              })
-            });
-
-            if (!response.ok) {
-              const errData = await response.json().catch(() => ({}));
-              throw new Error(errData?.error?.message || `API Error ${response.status}`);
+              }
+            } catch (err) {
+              console.warn(`Custom API key call failed for model ${model}:`, err);
             }
-
-            const data = await response.json();
-            const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
-            if (!reply) {
-              throw new Error('لم يرجع نموذج الذكاء الاصطناعي رداً صالحاً.');
-            }
-            replyText = reply;
-            fetchError = null;
-            break; // Success! Break out of the model loop
-          } catch (err: any) {
-            fetchError = err;
-            console.warn(`Custom API key call failed for model ${model}:`, err.message || err);
           }
+        } catch (customKeyOuterErr) {
+          console.warn("Custom API key flow failed, falling back to next channels:", customKeyOuterErr);
         }
+      }
 
-        if (fetchError) {
-          throw fetchError;
+      // Channel 2: Try the local backend server (Cloud Run) - highly robust because it has GEMINI_API_KEY on the server!
+      if (!replyReceived && !isGitHubPages) {
+        try {
+          const response = await fetch(getApiUrl('/api/chat'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              message: promptWithContext,
+              history: newMessages.slice(0, -1)
+            })
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            if (data.reply) {
+              replyText = data.reply;
+              replyReceived = true;
+            }
+          }
+        } catch (backendErr) {
+          console.warn("Backend /api/chat call failed:", backendErr);
         }
-      } else if (isGitHubPages) {
-        // Option B: Running on GitHub Pages without Custom Key. Use the super-stable, keyless Hercai public AI engine automatically!
-        // This delivers a rich, intelligent natural language response instantly and completely free.
-        console.log("[Chat] Running on GitHub Pages without API key. Routing automatically to Hercai keyless public AI engine.");
-        
-        const systemInstruction = `
-أنت "المعلم الافتراضي" الحكيم والودود على "المنصة التعليمية المتكاملة 4U".
-مهمتك هي مساعدة الطالب ومراجعته في دروسه، والإجابة على استفساراته التعليمية والعامة بدقة عالية وبشكل وافٍ وممتع.
-- ممنوع تماماً ذكر أسماء "جيمني" (Gemini) أو "شات جي بي تي" (ChatGPT) أو "جوجل" (Google) أو أي أداة ذكاء اصطناعي أخرى. إذا سألك الطالب من أنت، أخبره بكل حب: "أنا معلمك الافتراضي ومستشارك الدراسي على منصة 4U، متواجد دائماً هنا لأساعدك في رحلتك التعليمية وسحق الامتحانات! يلا نراجع مع بعض ✨".
-- تفاعل مع الطالب بأسلوب المعلم الحنون، الدافئ والمشجع. استخدم عبارات إيجابية مثل "يا بطل"، "يا متميزة"، "يا بطلة المستقبل"، "أحسنت"، "سؤال ذكي جداً!"، "فخور بك وباهتمامك".
-- بسّط المفاهيم المعقدة، واستخدم الترتيب النقطي أو الجداول التوضيحية البسيطة عند الحاجة.
-- استخدم الرموز التعبيرية بحكمة ومرح لتسهيل القراءة وزيادة التفاعل (مثل: 🔥, 📚, ✨, 🚀, 🎓, 💡, 📝).
-- تواصل باللغة العربية بلهجة بيضاء أو فصحى مبسطة وواضحة جداً، وإذا سألك الطالب بالإنجليزية أجب بالإنجليزية بأسلوب مناسب لطلاب المدارس.
-`;
-        const lesson = appState.lesson;
-        const currentLessonContext = lesson ? `(سياق الدرس النشط الذي يذاكره الطالب حالياً: ${lesson.title})` : '';
-        const promptWithContext = `${systemInstruction}\n\n${currentLessonContext}\n\nسؤال الطالب الحالي للإجابة عليه كمعلم افتراضي:\n${textToSend}`;
+      }
 
+      // Channel 3: If on GitHub Pages or if backend failed, try keyless Hercai
+      if (!replyReceived) {
         try {
           const hercaiUrl = `https://hercai.onrender.com/v3/hercai?question=${encodeURIComponent(promptWithContext)}`;
           const hercaiResponse = await fetch(hercaiUrl);
@@ -802,122 +803,149 @@ export default function App() {
             const hercaiData = await hercaiResponse.json();
             if (hercaiData.reply) {
               replyText = hercaiData.reply;
-            } else {
-              throw new Error('HERCAI_EMPTY_RESPONSE');
+              replyReceived = true;
             }
-          } else {
-            throw new Error('HERCAI_HTTP_ERROR');
           }
         } catch (hercaiErr) {
-          console.warn("[Chat] Automatic Hercai fallback failed, using local rule-based database:", hercaiErr);
-          const localReply = generateClientSideTeacherResponse(textToSend);
-          replyText = localReply;
+          console.warn("Hercai failed:", hercaiErr);
         }
-      } else {
-        const isExternalOrigin = isGitHubPages || (
-          window.location.hostname !== 'localhost' && 
-          !window.location.hostname.endsWith('run.app') && 
-          !window.location.hostname.includes('3000')
-        );
+      }
 
-        if (isExternalOrigin) {
-          console.log("[Chat] External origin or GitHub Pages detected. Bypassing backend container proxy to avoid CORS/redirect block...");
-          throw new Error('EXTERNAL_ORIGIN_DIRECT_MODE');
-        }
-
-        // Option C: Call relative local server /api/chat (using platform process.env.GEMINI_API_KEY from Google AI Studio)
-        const response = await fetch(getApiUrl('/api/chat'), {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            message: textToSend,
-            history: newMessages.slice(0, -1),
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error('SERVER_UNREACHABLE');
-        }
-
-        const data = await response.json();
-        replyText = data.reply;
+      // Channel 4: Final rule-based fallback if everything else failed
+      if (!replyReceived) {
+        replyText = generateClientSideTeacherResponse(textToSend);
       }
 
       setChatMessages((prev) => [...prev, { role: 'model' as const, text: replyText }]);
-
     } catch (error: any) {
-      console.warn('Primary channel (Custom key or local backend) was unavailable or not configured. Routing to Hercai public AI API fallback:', error);
-      
-      try {
-        // Define educational persona guidelines for the Hercai assistant
-        const systemInstruction = `
-أنت "المعلم الافتراضي" الحكيم والودود على "المنصة التعليمية المتكاملة 4U".
-مهمتك هي مساعدة الطالب ومراجعته في دروسه، والإجابة على استفساراته التعليمية والعامة بدقة عالية.
-- ممنوع تماماً ذكر أسماء "جيمني" (Gemini) أو "شات جي بي تي" (ChatGPT) أو "جوجل" (Google) أو أي أداة ذكاء اصطناعي أخرى. إذا سألك الطالب من أنت، أخبره بكل حب: "أنا معلمك الافتراضي ومستشارك الدراسي على منصة 4U، متواجد دائماً هنا لأساعدك في رحلتك التعليمية وسحق الامتحانات! يلا نراجع مع بعض ✨".
-- تفاعل مع الطالب بأسلوب المعلم الحنون، الدافئ والمشجع. استخدم عبارات إيجابية مثل "يا بطل"، "يا متميزة"، "يا بطلة المستقبل"، "أحسنت"، "سؤال ذكي جداً!"، "فخور بك وباهتمامك".
-- بسّط المفاهيم المعقدة، واستخدم الترتيب النقطي أو الجداول التوضيحية البسيطة عند الحاجة.
-- استخدم الرموز التعبيرية بحكمة ومرح لتسهيل القراءة وزيادة التفاعل (مثل: 🔥, 📚, ✨, 🚀, 🎓, 💡, 📝).
-- تواصل باللغة العربية بلهجة بيضاء أو فصحى مبسطة وواضحة جداً، وإذا سألك الطالب بالإنجليزية أجب بالإنجليزية بأسلوب مناسب لطلاب المدارس.
-`;
-
-        const lesson = appState.lesson;
-        const currentLessonContext = lesson ? `(سياق الدرس النشط الذي يذاكره الطالب حالياً: ${lesson.title})` : '';
-        const promptWithContext = `${systemInstruction}\n\n${currentLessonContext}\n\nسؤال الطالب الحالي للإجابة عليه كمعلم افتراضي:\n${textToSend}`;
-
-        // Call the super fast, stable, CORS-free v3 model on Hercai public endpoint (Reverted to the approved working structure)
-        const hercaiUrl = `https://hercai.onrender.com/v3/hercai?question=${encodeURIComponent(promptWithContext)}`;
-        const hercaiResponse = await fetch(hercaiUrl);
-
-        if (!hercaiResponse.ok) {
-          throw new Error('HERCAI_CORS_OR_HTTP_ERROR');
-        }
-
-        const hercaiData = await hercaiResponse.json();
-        const hercaiReply = hercaiData.reply;
-
-        if (!hercaiReply) {
-          throw new Error('HERCAI_EMPTY_RESPONSE');
-        }
-
-        setChatMessages((prev) => [...prev, { role: 'model' as const, text: hercaiReply }]);
-
-      } catch (hercaiError) {
-        console.warn('Hercai public API failed. Using final offline-grade rule-based teacher engine:', hercaiError);
-        
-        // Final fallback: local educational knowledge database
-        const localReply = generateClientSideTeacherResponse(textToSend);
-        setChatMessages((prev) => [...prev, { role: 'model' as const, text: localReply }]);
-      }
+      console.error('All chat communication channels failed, using local rule-based teacher fallback:', error);
+      const localReply = generateClientSideTeacherResponse(textToSend);
+      setChatMessages((prev) => [...prev, { role: 'model' as const, text: localReply }]);
     } finally {
       setIsChatLoading(false);
     }
   };
 
-  // --- 🔊 Text-To-Speech (TTS) Engine ---
-  const getLessonTextToRead = (lesson: any) => {
-    if (!lesson || !lesson.content) return '';
-    const parts = [];
-    parts.push(lesson.title || '');
-    const c = lesson.content;
-    if (c.intro) parts.push(c.intro);
-    if (c.sections) {
-      c.sections.forEach((s: any) => {
-        if (s.title) parts.push(s.title);
-        if (typeof s.content === 'string') {
-          parts.push(s.content);
-        } else if (Array.isArray(s.content)) {
-          parts.push(s.content.join('، '));
-        }
-        if (s.rows) {
-          s.rows.forEach((row: any) => {
-            parts.push(row.join('، '));
-          });
+  const getLessonTextToRead = (lesson: any): string => {
+    if (!lesson) return '';
+    let text = `${lesson.title || ''}.\n`;
+    if (lesson.content?.intro) {
+      text += `${lesson.content.intro}\n`;
+    }
+    if (lesson.content?.sections && Array.isArray(lesson.content.sections)) {
+      lesson.content.sections.forEach((sec: any) => {
+        if (sec.title) text += `${sec.title}.\n`;
+        if (typeof sec.content === 'string') {
+          text += `${sec.content}\n`;
+        } else if (Array.isArray(sec.content)) {
+          text += `${sec.content.join('\n')}\n`;
         }
       });
     }
-    return parts.join('\n\n');
+    return text;
+  };
+
+  const getDetailedLessonExplanationText = async (lesson: any): Promise<string> => {
+    if (!lesson) return '';
+    let textToRead = '';
+
+    // Step 1: Try the Cloud Run backend server first (supports Gemini Visual OCR of scanned PDFs!)
+    if (lesson.lessonUrl) {
+      try {
+        console.log("[TTS Engine] Requesting backend explanation parser for URL:", lesson.lessonUrl);
+        const response = await fetch(getApiUrl(`/api/fetch-lesson-text?url=${encodeURIComponent(lesson.lessonUrl)}`));
+        if (response.ok) {
+          const data = await response.json();
+          if (data.text && data.text.trim().length > 100) {
+            textToRead = data.text;
+            console.log("[TTS Engine] Successfully loaded rich text from backend server.");
+            return textToRead;
+          }
+        }
+      } catch (backendErr) {
+        console.warn("[TTS Engine] Backend parser failed or unreachable. Trying client-side fallback...", backendErr);
+      }
+
+      // Step 2: Try client-side extraction (PDF.js / HTML parser) as backup
+      try {
+        console.log("[TTS Engine] Extracting text client-side directly...");
+        const clientExtracted = await extractTextFromLessonUrl(lesson.lessonUrl);
+        if (clientExtracted && clientExtracted.trim().length > 100) {
+          textToRead = clientExtracted;
+          console.log("[TTS Engine] Successfully extracted rich text client-side.");
+          return textToRead;
+        }
+      } catch (clientErr) {
+        console.warn("[TTS Engine] Client-side extraction failed:", clientErr);
+      }
+    }
+
+    // Step 3: If still empty, use AI to dynamically generate a comprehensive multi-paragraph explanation
+    try {
+      console.log("[TTS Engine] Lesson file is scanned or empty. Generating rich comprehensive lesson lecture on the fly...");
+      const title = lesson.title || '';
+      const subject = appState.subject?.title || '';
+      const grade = appState.grade?.name || '';
+      const prompt = `أنت المعلم الافتراضي الذكي المتميز لمادة ${subject} للصف ${grade}. من فضلك اشرح بالتفصيل وبشكل وافٍ وممتع جداً درس: "${title}". اكتب الشرح في شكل فقرات نصية متصلة وواضحة جداً باللغة العربية الفصحى المبسطة لتتم قراءتها بوضوح وسلاسة بواسطة قارئ النصوص الصوتي (لا تستخدم أبداً جداول أو رموزاً غريبة أو معادلات معقدة، فقط لغة عربية ممتعة وسلسة تشرح المفاهيم ليفهمها الطالب تماماً). ركز على تبسيط المفاهيم الفيزيائية أو الرياضية بذكاء وتشويق.`;
+
+      // Try backend chat first to generate explanation
+      try {
+        const response = await fetch(getApiUrl('/api/chat'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: prompt })
+        });
+        if (response.ok) {
+          const data = await response.json();
+          if (data.reply && data.reply.trim().length > 100) {
+            console.log("[TTS Engine] Successfully generated rich lecture via backend AI.");
+            return data.reply;
+          }
+        }
+      } catch (chatApiErr) {
+        console.warn("[TTS Engine] Backend AI failed to generate lecture, trying keyless Hercai...", chatApiErr);
+      }
+
+      // Try keyless Hercai with CORS proxies
+      const hercaiEndpoints = [
+        `https://hercai.onrender.com/v3/hercai?question=${encodeURIComponent(prompt)}`,
+        `https://hercai.onrender.com/v3-beta/hercai?question=${encodeURIComponent(prompt)}`
+      ];
+
+      for (const targetUrl of hercaiEndpoints) {
+        try {
+          const res = await fetch(targetUrl);
+          if (res.ok) {
+            const data = await res.json();
+            if (data.reply && data.reply.trim().length > 100) {
+              console.log("[TTS Engine] Successfully generated rich lecture via direct Hercai.");
+              return data.reply;
+            }
+          }
+        } catch (directErr) {
+          console.warn("[TTS Engine] Direct Hercai lecture call failed, trying via CORS proxy...", directErr);
+          try {
+            const proxiedUrl = `https://corsproxy.io/?url=${encodeURIComponent(targetUrl)}`;
+            const res = await fetch(proxiedUrl);
+            if (res.ok) {
+              const data = await res.json();
+              if (data.reply && data.reply.trim().length > 100) {
+                console.log("[TTS Engine] Successfully generated rich lecture via proxied Hercai.");
+                return data.reply;
+              }
+            }
+          } catch (proxyErr) {
+            console.warn("[TTS Engine] Proxied Hercai lecture call failed:", proxyErr);
+          }
+        }
+      }
+    } catch (lectureErr) {
+      console.warn("[TTS Engine] Dynamic lecture generation failed:", lectureErr);
+    }
+
+    // Step 4: Final last-resort fallback: Use the short local description/intro from the page database
+    console.log("[TTS Engine] All dynamic extraction and generation failed. Falling back to local brief page description.");
+    return getLessonTextToRead(lesson);
   };
 
   const handleStartTts = async () => {
@@ -936,88 +964,10 @@ export default function App() {
 
     window.speechSynthesis.cancel();
     
-    let textToRead = '';
-
-    // Step 1: Try to extract and read the actual detailed explanation file (from external lessonUrl) FIRST
     setTtsState('loading');
     showToastMsg('📥 جاري استخراج وتحضير شرح الدرس من ملف الشرح، يرجى الانتظار ثوانٍ...');
 
-    try {
-      if (appState.lesson.lessonUrl) {
-        const isGitHubPages = window.location.hostname.includes('github.io');
-        const isExternalOrigin = isGitHubPages || (
-          window.location.hostname !== 'localhost' && 
-          !window.location.hostname.endsWith('run.app') && 
-          !window.location.hostname.includes('3000')
-        );
-
-        if (isExternalOrigin) {
-          console.log("[TTS] GitHub Pages / External. Extracting text client-side directly from explanation URL:", appState.lesson.lessonUrl);
-          const clientExtracted = await extractTextFromLessonUrl(appState.lesson.lessonUrl);
-          if (clientExtracted && clientExtracted.trim().length > 50) {
-            textToRead = clientExtracted;
-            console.log("Successfully extracted rich text client-side for TTS:", textToRead.substring(0, 100));
-          }
-        } else {
-          try {
-            const response = await fetch(getApiUrl(`/api/fetch-lesson-text?url=${encodeURIComponent(appState.lesson.lessonUrl)}`));
-            if (response.ok) {
-              const data = await response.json();
-              if (data.text && data.text.trim().length > 50) {
-                textToRead = data.text;
-                console.log("Successfully loaded rich text from backend for TTS:", textToRead.substring(0, 100));
-              }
-            } else {
-              throw new Error(`Status ${response.status}`);
-            }
-          } catch (apiError) {
-            console.warn("Backend API failed. Falling back to client-side PDF/HTML parser...", apiError);
-            const clientExtracted = await extractTextFromLessonUrl(appState.lesson.lessonUrl);
-            if (clientExtracted && clientExtracted.trim().length > 50) {
-              textToRead = clientExtracted;
-              console.log("Successfully extracted text client-side as fallback for TTS:", textToRead.substring(0, 100));
-            }
-          }
-        }
-      }
-    } catch (e) {
-      console.warn("Failed to extract from explanation URL, falling back to other sources:", e);
-    }
-
-    // Step 2: If the explanation file yielded nothing, fallback to pre-defined local structured content
-    if (!textToRead) {
-      console.log("Explanation URL parsing returned empty or failed. Falling back to local structured summary...");
-      const localContentText = getLessonTextToRead(appState.lesson);
-      if (localContentText && localContentText.trim().length > 10) {
-        textToRead = localContentText;
-        console.log("Using local structured summary for TTS:", textToRead.substring(0, 100));
-      }
-    }
-
-    // Step 3: Dynamic AI Fallback if both URL parsing and local content yielded nothing
-    if (!textToRead) {
-      try {
-        console.log("No text found. Generating rich lesson explanation on the fly using Hercai public AI...");
-        const title = appState.lesson.title || '';
-        const subject = appState.subject?.title || '';
-        const grade = appState.grade?.name || '';
-        const prompt = `أنت المعلم الافتراضي الذكي المتميز لمادة ${subject} للصف ${grade}. من فضلك اشرح بالتفصيل وبشكل وافٍ وممتع جداً درس: "${title}". اكتب الشرح في شكل فقرات نصية متصلة وواضحة جداً باللغة العربية الفصحى المبسطة لتتم قراءتها بوضوح وسلاسة بواسطة قارئ النصوص الصوتي (لا تستخدم أبداً جداول أو رموزاً غريبة أو معادلات معقدة، فقط لغة عربية ممتعة وسلسة تشرح المفاهيم ليفهمها الطالب تماماً). ركز على تبسيط المفاهيم الفيزيائية أو الرياضية بذكاء وتشويق.`;
-        
-        const hercaiUrl = `https://hercai.onrender.com/v3/hercai?question=${encodeURIComponent(prompt)}`;
-        const hercaiResponse = await fetch(hercaiUrl);
-        if (hercaiResponse.ok) {
-          const hercaiData = await hercaiResponse.json();
-          if (hercaiData.reply && hercaiData.reply.trim().length > 50) {
-            textToRead = hercaiData.reply;
-            console.log("Successfully generated dynamic lesson explanation using Hercai:", textToRead.substring(0, 100));
-          }
-        }
-      } catch (hercaiErr) {
-        console.warn("Failed to generate dynamic lesson explanation via Hercai:", hercaiErr);
-      }
-    }
-
-    // Cache the loaded/generated text so rate changes don't re-parse or re-fetch
+    const textToRead = await getDetailedLessonExplanationText(appState.lesson);
     ttsActiveTextRef.current = textToRead;
 
     if (!textToRead) {
@@ -1072,49 +1022,8 @@ export default function App() {
       setTtsState('loading');
 
       let textToRead = ttsActiveTextRef.current;
-      if (!textToRead) {
-        try {
-          if (appState.lesson?.lessonUrl) {
-            const isGitHubPages = window.location.hostname.includes('github.io');
-            const isExternalOrigin = isGitHubPages || (
-              window.location.hostname !== 'localhost' && 
-              !window.location.hostname.endsWith('run.app') && 
-              !window.location.hostname.includes('3000')
-            );
-
-            if (isExternalOrigin) {
-              const clientExtracted = await extractTextFromLessonUrl(appState.lesson.lessonUrl);
-              if (clientExtracted && clientExtracted.trim().length > 10) {
-                textToRead = clientExtracted;
-              }
-            } else {
-              try {
-                const response = await fetch(getApiUrl(`/api/fetch-lesson-text?url=${encodeURIComponent(appState.lesson.lessonUrl)}`));
-                if (response.ok) {
-                  const data = await response.json();
-                  if (data.text && data.text.trim().length > 10) {
-                    textToRead = data.text;
-                  }
-                } else {
-                  throw new Error(`Status ${response.status}`);
-                }
-              } catch (apiError) {
-                console.warn("Backend API failed or CORS blocked in rate change. Falling back to client-side PDF.js extraction...", apiError);
-                const clientExtracted = await extractTextFromLessonUrl(appState.lesson.lessonUrl);
-                if (clientExtracted && clientExtracted.trim().length > 10) {
-                  textToRead = clientExtracted;
-                }
-              }
-            }
-          }
-        } catch (e) {
-          console.warn(e);
-        }
-
-        if (!textToRead && appState.lesson) {
-          textToRead = getLessonTextToRead(appState.lesson);
-        }
-        
+      if (!textToRead && appState.lesson) {
+        textToRead = await getDetailedLessonExplanationText(appState.lesson);
         ttsActiveTextRef.current = textToRead;
       }
 
@@ -1139,10 +1048,11 @@ export default function App() {
         setTtsState('idle');
         setTtsCurrentParagraph('');
       };
-      
+
       ttsUtteranceRef.current = utterance;
       window.speechSynthesis.speak(utterance);
       setTtsState('playing');
+      setTtsCurrentParagraph(appState.lesson.title);
     }
   };
 
