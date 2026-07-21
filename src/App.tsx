@@ -778,11 +778,41 @@ export default function App() {
           throw fetchError;
         }
       } else if (isGitHubPages) {
-        // Option B: Running on GitHub Pages without Custom Key. Use the smart local educational AI engine directly.
-        // This is extremely fast, 100% stable, CORS-free, and respects user's current lesson/subject focus perfectly!
-        console.log("[Chat] Running on GitHub Pages without API key. Routing directly to high-performance local teacher engine.");
-        const localReply = generateClientSideTeacherResponse(textToSend);
-        replyText = localReply;
+        // Option B: Running on GitHub Pages without Custom Key. Use the super-stable, keyless Hercai public AI engine automatically!
+        // This delivers a rich, intelligent natural language response instantly and completely free.
+        console.log("[Chat] Running on GitHub Pages without API key. Routing automatically to Hercai keyless public AI engine.");
+        
+        const systemInstruction = `
+أنت "المعلم الافتراضي" الحكيم والودود على "المنصة التعليمية المتكاملة 4U".
+مهمتك هي مساعدة الطالب ومراجعته في دروسه، والإجابة على استفساراته التعليمية والعامة بدقة عالية وبشكل وافٍ وممتع.
+- ممنوع تماماً ذكر أسماء "جيمني" (Gemini) أو "شات جي بي تي" (ChatGPT) أو "جوجل" (Google) أو أي أداة ذكاء اصطناعي أخرى. إذا سألك الطالب من أنت، أخبره بكل حب: "أنا معلمك الافتراضي ومستشارك الدراسي على منصة 4U، متواجد دائماً هنا لأساعدك في رحلتك التعليمية وسحق الامتحانات! يلا نراجع مع بعض ✨".
+- تفاعل مع الطالب بأسلوب المعلم الحنون، الدافئ والمشجع. استخدم عبارات إيجابية مثل "يا بطل"، "يا متميزة"، "يا بطلة المستقبل"، "أحسنت"، "سؤال ذكي جداً!"، "فخور بك وباهتمامك".
+- بسّط المفاهيم المعقدة، واستخدم الترتيب النقطي أو الجداول التوضيحية البسيطة عند الحاجة.
+- استخدم الرموز التعبيرية بحكمة ومرح لتسهيل القراءة وزيادة التفاعل (مثل: 🔥, 📚, ✨, 🚀, 🎓, 💡, 📝).
+- تواصل باللغة العربية بلهجة بيضاء أو فصحى مبسطة وواضحة جداً، وإذا سألك الطالب بالإنجليزية أجب بالإنجليزية بأسلوب مناسب لطلاب المدارس.
+`;
+        const lesson = appState.lesson;
+        const currentLessonContext = lesson ? `(سياق الدرس النشط الذي يذاكره الطالب حالياً: ${lesson.title})` : '';
+        const promptWithContext = `${systemInstruction}\n\n${currentLessonContext}\n\nسؤال الطالب الحالي للإجابة عليه كمعلم افتراضي:\n${textToSend}`;
+
+        try {
+          const hercaiUrl = `https://hercai.onrender.com/v3/hercai?question=${encodeURIComponent(promptWithContext)}`;
+          const hercaiResponse = await fetch(hercaiUrl);
+          if (hercaiResponse.ok) {
+            const hercaiData = await hercaiResponse.json();
+            if (hercaiData.reply) {
+              replyText = hercaiData.reply;
+            } else {
+              throw new Error('HERCAI_EMPTY_RESPONSE');
+            }
+          } else {
+            throw new Error('HERCAI_HTTP_ERROR');
+          }
+        } catch (hercaiErr) {
+          console.warn("[Chat] Automatic Hercai fallback failed, using local rule-based database:", hercaiErr);
+          const localReply = generateClientSideTeacherResponse(textToSend);
+          replyText = localReply;
+        }
       } else {
         const isExternalOrigin = isGitHubPages || (
           window.location.hostname !== 'localhost' && 
@@ -908,88 +938,83 @@ export default function App() {
     
     let textToRead = '';
 
-    // Step 1: Check if the lesson has rich pre-defined local structured content
-    // This is instant, 100% reliable, works offline, on GitHub Pages, and guarantees SpeechSynthesis is NOT blocked by browser security.
-    const localContentText = getLessonTextToRead(appState.lesson);
-    if (localContentText && localContentText.trim().length > 50) {
-      textToRead = localContentText;
-      console.log("Using rich local structured content for TTS directly (instant & robust):", textToRead.substring(0, 100));
-    }
+    // Step 1: Try to extract and read the actual detailed explanation file (from external lessonUrl) FIRST
+    setTtsState('loading');
+    showToastMsg('📥 جاري استخراج وتحضير شرح الدرس من ملف الشرح، يرجى الانتظار ثوانٍ...');
 
-    // Step 2: If no rich local content is available, only then proceed with external extraction or AI generation
-    if (!textToRead) {
-      setTtsState('loading');
-      showToastMsg('📥 جاري استخراج وتحضير شرح الدرس من الرابط، يرجى الانتظار ثوانٍ...');
+    try {
+      if (appState.lesson.lessonUrl) {
+        const isGitHubPages = window.location.hostname.includes('github.io');
+        const isExternalOrigin = isGitHubPages || (
+          window.location.hostname !== 'localhost' && 
+          !window.location.hostname.endsWith('run.app') && 
+          !window.location.hostname.includes('3000')
+        );
 
-      try {
-        if (appState.lesson.lessonUrl) {
-          const isGitHubPages = window.location.hostname.includes('github.io');
-          const isExternalOrigin = isGitHubPages || (
-            window.location.hostname !== 'localhost' && 
-            !window.location.hostname.endsWith('run.app') && 
-            !window.location.hostname.includes('3000')
-          );
-
-          if (isExternalOrigin) {
-            console.warn("External origin or GitHub Pages. Skipping backend API to avoid CORS/redirect block, extracting PDF directly client-side...");
+        if (isExternalOrigin) {
+          console.log("[TTS] GitHub Pages / External. Extracting text client-side directly from explanation URL:", appState.lesson.lessonUrl);
+          const clientExtracted = await extractTextFromLessonUrl(appState.lesson.lessonUrl);
+          if (clientExtracted && clientExtracted.trim().length > 50) {
+            textToRead = clientExtracted;
+            console.log("Successfully extracted rich text client-side for TTS:", textToRead.substring(0, 100));
+          }
+        } else {
+          try {
+            const response = await fetch(getApiUrl(`/api/fetch-lesson-text?url=${encodeURIComponent(appState.lesson.lessonUrl)}`));
+            if (response.ok) {
+              const data = await response.json();
+              if (data.text && data.text.trim().length > 50) {
+                textToRead = data.text;
+                console.log("Successfully loaded rich text from backend for TTS:", textToRead.substring(0, 100));
+              }
+            } else {
+              throw new Error(`Status ${response.status}`);
+            }
+          } catch (apiError) {
+            console.warn("Backend API failed. Falling back to client-side PDF/HTML parser...", apiError);
             const clientExtracted = await extractTextFromLessonUrl(appState.lesson.lessonUrl);
-            if (clientExtracted && clientExtracted.trim().length > 10) {
+            if (clientExtracted && clientExtracted.trim().length > 50) {
               textToRead = clientExtracted;
-              console.log("Successfully extracted PDF text client-side:", textToRead.substring(0, 100));
-            }
-          } else {
-            try {
-              const response = await fetch(getApiUrl(`/api/fetch-lesson-text?url=${encodeURIComponent(appState.lesson.lessonUrl)}`));
-              if (response.ok) {
-                const data = await response.json();
-                if (data.text && data.text.trim().length > 10) {
-                  textToRead = data.text;
-                  console.log("Successfully loaded external lesson PDF text from backend for TTS:", textToRead.substring(0, 100));
-                }
-              } else {
-                throw new Error(`Status ${response.status}`);
-              }
-            } catch (apiError) {
-              console.warn("Backend API failed or CORS blocked. Falling back to client-side PDF.js extraction...", apiError);
-              const clientExtracted = await extractTextFromLessonUrl(appState.lesson.lessonUrl);
-              if (clientExtracted && clientExtracted.trim().length > 10) {
-                textToRead = clientExtracted;
-                console.log("Successfully extracted PDF text client-side:", textToRead.substring(0, 100));
-              }
+              console.log("Successfully extracted text client-side as fallback for TTS:", textToRead.substring(0, 100));
             }
           }
         }
-      } catch (e) {
-        console.warn("Failed to fetch or parse custom lesson text, falling back to local description:", e);
       }
+    } catch (e) {
+      console.warn("Failed to extract from explanation URL, falling back to other sources:", e);
+    }
 
-      // Dynamic AI Fallback if PDF has no selectable text (scanned or image PDF)
-      if (!textToRead) {
-        try {
-          console.log("No selectable PDF text found or parsing failed. Generating rich lesson explanation on the fly using Hercai public AI...");
-          const title = appState.lesson.title || '';
-          const subject = appState.subject?.title || '';
-          const grade = appState.grade?.name || '';
-          const prompt = `أنت المعلم الافتراضي الذكي المتميز لمادة ${subject} للصف ${grade}. من فضلك اشرح بالتفصيل وبشكل وافٍ وممتع جداً درس: "${title}". اكتب الشرح في شكل فقرات نصية متصلة وواضحة جداً باللغة العربية الفصحى المبسطة لتتم قراءتها بوضوح وسلاسة بواسطة قارئ النصوص الصوتي (لا تستخدم أبداً جداول أو رموزاً غريبة أو معادلات معقدة، فقط لغة عربية ممتعة وسلسة تشرح المفاهيم ليفهمها الطالب تماماً). ركز على تبسيط المفاهيم الفيزيائية أو الرياضية بذكاء وتشويق.`;
-          
-          // Original direct Hercai fetch (Reverted to working structure)
-          const hercaiUrl = `https://hercai.onrender.com/v3/hercai?question=${encodeURIComponent(prompt)}`;
-          const hercaiResponse = await fetch(hercaiUrl);
-          if (hercaiResponse.ok) {
-            const hercaiData = await hercaiResponse.json();
-            if (hercaiData.reply && hercaiData.reply.trim().length > 50) {
-              textToRead = hercaiData.reply;
-              console.log("Successfully generated dynamic lesson explanation using Hercai:", textToRead.substring(0, 100));
-            }
-          }
-        } catch (hercaiErr) {
-          console.warn("Failed to generate dynamic lesson explanation via Hercai:", hercaiErr);
-        }
+    // Step 2: If the explanation file yielded nothing, fallback to pre-defined local structured content
+    if (!textToRead) {
+      console.log("Explanation URL parsing returned empty or failed. Falling back to local structured summary...");
+      const localContentText = getLessonTextToRead(appState.lesson);
+      if (localContentText && localContentText.trim().length > 10) {
+        textToRead = localContentText;
+        console.log("Using local structured summary for TTS:", textToRead.substring(0, 100));
       }
     }
 
+    // Step 3: Dynamic AI Fallback if both URL parsing and local content yielded nothing
     if (!textToRead) {
-      textToRead = getLessonTextToRead(appState.lesson);
+      try {
+        console.log("No text found. Generating rich lesson explanation on the fly using Hercai public AI...");
+        const title = appState.lesson.title || '';
+        const subject = appState.subject?.title || '';
+        const grade = appState.grade?.name || '';
+        const prompt = `أنت المعلم الافتراضي الذكي المتميز لمادة ${subject} للصف ${grade}. من فضلك اشرح بالتفصيل وبشكل وافٍ وممتع جداً درس: "${title}". اكتب الشرح في شكل فقرات نصية متصلة وواضحة جداً باللغة العربية الفصحى المبسطة لتتم قراءتها بوضوح وسلاسة بواسطة قارئ النصوص الصوتي (لا تستخدم أبداً جداول أو رموزاً غريبة أو معادلات معقدة، فقط لغة عربية ممتعة وسلسة تشرح المفاهيم ليفهمها الطالب تماماً). ركز على تبسيط المفاهيم الفيزيائية أو الرياضية بذكاء وتشويق.`;
+        
+        const hercaiUrl = `https://hercai.onrender.com/v3/hercai?question=${encodeURIComponent(prompt)}`;
+        const hercaiResponse = await fetch(hercaiUrl);
+        if (hercaiResponse.ok) {
+          const hercaiData = await hercaiResponse.json();
+          if (hercaiData.reply && hercaiData.reply.trim().length > 50) {
+            textToRead = hercaiData.reply;
+            console.log("Successfully generated dynamic lesson explanation using Hercai:", textToRead.substring(0, 100));
+          }
+        }
+      } catch (hercaiErr) {
+        console.warn("Failed to generate dynamic lesson explanation via Hercai:", hercaiErr);
+      }
     }
 
     // Cache the loaded/generated text so rate changes don't re-parse or re-fetch
@@ -4289,15 +4314,15 @@ export default function App() {
             {/* Chat Body */}
             <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-50/50 dark:bg-slate-950/20 text-right">
               {typeof window !== 'undefined' && window.location.hostname.includes('github.io') && (!chatGeminiKey || chatGeminiKey.trim().length < 5) && (
-                <div className="p-3 bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/50 rounded-xl text-[11px] text-indigo-700 dark:text-indigo-300 leading-relaxed text-center flex flex-col sm:flex-row items-center justify-between gap-2 shadow-sm">
-                  <div className="flex-1 text-right">
-                    💡 **مرحباً بك!** لتفعيل الردود الذكية الكاملة عبر **Google Gemini** على GitHub Pages، يرجى إضافة مفتاح API مجاني من الإعدادات بالضغط على ⚙️ في الأعلى. حالياً يتم استخدام المعلم المحلي الذكي.
+                <div className="p-3 bg-emerald-50/75 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/50 rounded-xl text-[11px] text-emerald-700 dark:text-emerald-300 leading-relaxed text-center flex flex-col sm:flex-row items-center justify-between gap-2 shadow-sm">
+                  <div className="flex-1 text-right font-medium">
+                    ✨ **المعلم الذكي نشط تلقائياً!** المحادثة تعمل الآن بالكامل ومجاناً دون الحاجة لكتابة أي مفاتيح. يمكنك إضافة مفتاح Gemini الخاص بك من الإعدادات ⚙️ للحصول على أقصى أداء وسرعة فائقة في أي وقت.
                   </div>
                   <button 
                     onClick={() => setShowChatSettings(true)}
-                    className="shrink-0 bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-bold py-1 px-3 rounded-lg shadow-sm transition cursor-pointer"
+                    className="shrink-0 bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold py-1 px-3 rounded-lg shadow-sm transition cursor-pointer"
                   >
-                    إضافة المفتاح ⚙️
+                    عرض الإعدادات ⚙️
                   </button>
                 </div>
               )}
