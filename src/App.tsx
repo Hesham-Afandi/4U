@@ -700,25 +700,13 @@ export default function App() {
     setChatMessages(newMessages);
     setIsChatLoading(true);
 
-    // If on GitHub Pages, or if we do NOT have an API key, we use the local smart educational AI immediately to keep it super fast and 100% reliable
-    const isGitHubPages = window.location.hostname.includes('github.io');
-    const hasCustomKey = chatGeminiKey && chatGeminiKey.trim().length > 5;
-
-    if (isGitHubPages && !hasCustomKey) {
-      // Simulate realistic typing delay for local AI to feel high-quality
-      setTimeout(() => {
-        const reply = generateClientSideTeacherResponse(textToSend);
-        setChatMessages((prev) => [...prev, { role: 'model' as const, text: reply }]);
-        setIsChatLoading(false);
-      }, 800);
-      return;
-    }
-
     try {
       let replyText = '';
+      const isGitHubPages = window.location.hostname.includes('github.io');
+      const hasCustomKey = chatGeminiKey && chatGeminiKey.trim().length > 5;
 
       if (hasCustomKey) {
-        // Option A: Call Gemini directly using custom API key (with correct gemini-3.5-flash model)
+        // Option A: Call Gemini directly using custom API key (with stable gemini-2.5-flash model)
         const systemInstruction = `
 أنت "المعلم الافتراضي" الحكيم والودود على "المنصة التعليمية المتكاملة 4U".
 مهمتك هي مساعدة الطالب ومراجعته في دروسه، والإجابة على استفساراته العامة المتعلقة بالمنهج الدراسي (سواء لبلدان الخليج مثل الإمارات، السعودية، قطر، عمان، البحرين أو مصر).
@@ -735,38 +723,57 @@ export default function App() {
           parts: [{ text: msg.text }]
         }));
 
-        const modelName = 'gemini-3.5-flash';
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${chatGeminiKey.trim()}`;
+        const clientModels = ['gemini-3.1-flash-lite', 'gemini-3.5-flash'];
+        let fetchError: any = null;
 
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            contents: formattedContents,
-            systemInstruction: {
-              parts: [{ text: systemInstruction }]
-            },
-            generationConfig: {
-              temperature: 0.7,
+        for (const model of clientModels) {
+          try {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${chatGeminiKey.trim()}`;
+            const response = await fetch(url, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                contents: formattedContents,
+                systemInstruction: {
+                  parts: [{ text: systemInstruction }]
+                },
+                generationConfig: {
+                  temperature: 0.7,
+                }
+              })
+            });
+
+            if (!response.ok) {
+              const errData = await response.json().catch(() => ({}));
+              throw new Error(errData?.error?.message || `API Error ${response.status}`);
             }
-          })
-        });
 
-        if (!response.ok) {
-          const errData = await response.json().catch(() => ({}));
-          throw new Error(errData?.error?.message || `API Error ${response.status}`);
+            const data = await response.json();
+            const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (!reply) {
+              throw new Error('لم يرجع نموذج الذكاء الاصطناعي رداً صالحاً.');
+            }
+            replyText = reply;
+            fetchError = null;
+            break; // Success! Break out of the model loop
+          } catch (err: any) {
+            fetchError = err;
+            console.warn(`Custom API key call failed for model ${model}:`, err.message || err);
+          }
         }
 
-        const data = await response.json();
-        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (!reply) {
-          throw new Error('لم يرجع نموذج الذكاء الاصطناعي رداً صالحاً.');
+        if (fetchError) {
+          throw fetchError;
         }
-        replyText = reply;
       } else {
         // Option B: Call relative local server /api/chat (using platform process.env.GEMINI_API_KEY from Google AI Studio)
+        if (isGitHubPages) {
+          // GitHub Pages has no backend server, so we skip to Hercai immediately to avoid 404/CORS blocks!
+          throw new Error('GITHUB_PAGES_DIRECT_MODE');
+        }
+
         const response = await fetch('/api/chat', {
           method: 'POST',
           headers: {
@@ -789,11 +796,48 @@ export default function App() {
       setChatMessages((prev) => [...prev, { role: 'model' as const, text: replyText }]);
 
     } catch (error: any) {
-      console.warn('Backend / Custom key fetch failed or blocked. Gracefully falling back to local smart educational AI:', error);
+      console.warn('Primary channel (Custom key or local backend) was unavailable or not configured. Routing to Hercai public AI API fallback:', error);
       
-      // Automatic seamless fallback to the local educational AI without showing errors!
-      const fallbackReply = generateClientSideTeacherResponse(textToSend);
-      setChatMessages((prev) => [...prev, { role: 'model' as const, text: fallbackReply }]);
+      try {
+        // Define educational persona guidelines for the Hercai assistant
+        const systemInstruction = `
+أنت "المعلم الافتراضي" الحكيم والودود على "المنصة التعليمية المتكاملة 4U".
+مهمتك هي مساعدة الطالب ومراجعته في دروسه، والإجابة على استفساراته التعليمية والعامة بدقة عالية.
+- ممنوع تماماً ذكر أسماء "جيمني" (Gemini) أو "شات جي بي تي" (ChatGPT) أو "جوجل" (Google) أو أي أداة ذكاء اصطناعي أخرى. إذا سألك الطالب من أنت، أخبره بكل حب: "أنا معلمك الافتراضي ومستشارك الدراسي على منصة 4U، متواجد دائماً هنا لأساعدك في رحلتك التعليمية وسحق الامتحانات! يلا نراجع مع بعض ✨".
+- تفاعل مع الطالب بأسلوب المعلم الحنون، الدافئ والمشجع. استخدم عبارات إيجابية مثل "يا بطل"، "يا متميزة"، "يا بطلة المستقبل"، "أحسنت"، "سؤال ذكي جداً!"، "فخور بك وباهتمامك".
+- بسّط المفاهيم المعقدة، واستخدم الترتيب النقطي أو الجداول التوضيحية البسيطة عند الحاجة.
+- استخدم الرموز التعبيرية بحكمة ومرح لتسهيل القراءة وزيادة التفاعل (مثل: 🔥, 📚, ✨, 🚀, 🎓, 💡, 📝).
+- تواصل باللغة العربية بلهجة بيضاء أو فصحى مبسطة وواضحة جداً، وإذا سألك الطالب بالإنجليزية أجب بالإنجليزية بأسلوب مناسب لطلاب المدارس.
+`;
+
+        const lesson = appState.lesson;
+        const currentLessonContext = lesson ? `(سياق الدرس النشط الذي يذاكره الطالب حالياً: ${lesson.title})` : '';
+        const promptWithContext = `${systemInstruction}\n\n${currentLessonContext}\n\nسؤال الطالب الحالي للإجابة عليه كمعلم افتراضي:\n${textToSend}`;
+
+        // Call the super fast, stable, CORS-free v3 model on Hercai public endpoint
+        const hercaiUrl = `https://hercai.onrender.com/v3/hercai?question=${encodeURIComponent(promptWithContext)}`;
+        const hercaiResponse = await fetch(hercaiUrl);
+
+        if (!hercaiResponse.ok) {
+          throw new Error('HERCAI_CORS_OR_HTTP_ERROR');
+        }
+
+        const hercaiData = await hercaiResponse.json();
+        const hercaiReply = hercaiData.reply;
+
+        if (!hercaiReply) {
+          throw new Error('HERCAI_EMPTY_RESPONSE');
+        }
+
+        setChatMessages((prev) => [...prev, { role: 'model' as const, text: hercaiReply }]);
+
+      } catch (hercaiError) {
+        console.warn('Hercai public API failed. Using final offline-grade rule-based teacher engine:', hercaiError);
+        
+        // Final fallback: local educational knowledge database
+        const localReply = generateClientSideTeacherResponse(textToSend);
+        setChatMessages((prev) => [...prev, { role: 'model' as const, text: localReply }]);
+      }
     } finally {
       setIsChatLoading(false);
     }
