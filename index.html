@@ -13,6 +13,9 @@
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json" />
     
+    <!-- Google Identity Services for Direct Google Sign-In -->
+    <script src="https://accounts.google.com/gsi/client" id="google-gis-script" async defer></script>
+    
     <!-- Inline script to capture PWA installation prompt immediately -->
     <script>
       window.addEventListener('beforeinstallprompt', (e) => {

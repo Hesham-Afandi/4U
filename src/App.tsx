@@ -14,7 +14,7 @@ import {
   VideoPlayerModal, ExamCodesModal, SubscribersModal
 } from './components/modals';
 import { signInWithPopup } from 'firebase/auth';
-import { auth, googleProvider, syncUserToFirestore, fetchAllSubscribers, fetchActiveAnnouncement, UserRecord, Announcement } from './lib/firebase';
+import { auth, googleProvider, syncUserToFirestore, fetchAllSubscribers, fetchActiveAnnouncement, performGoogleSignIn, UserRecord, Announcement } from './lib/firebase';
 import { WeeklyStudyPlanner } from './components/layout';
 import { STUDY_QUOTES } from './data/quotes';
 import { extractTextFromLessonUrl } from './utils/pdfParser';
@@ -1792,14 +1792,13 @@ export default function App() {
     setIsLoggingIn(true);
     setLoginError(null);
     try {
-      const res = await signInWithPopup(auth, googleProvider);
-      if (res.user) {
-        const u = res.user;
+      const gUser = await performGoogleSignIn();
+      if (gUser && gUser.email) {
         const userRec = await syncUserToFirestore({
-          uid: u.uid,
-          email: u.email || '',
-          displayName: u.displayName || u.email?.split('@')[0] || 'طالب متميز',
-          photoURL: u.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(u.email || 'student')}`,
+          uid: gUser.uid,
+          email: gUser.email,
+          displayName: gUser.displayName,
+          photoURL: gUser.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(gUser.email)}`,
           provider: 'google'
         });
         setCurrentUser(userRec);
@@ -1809,8 +1808,9 @@ export default function App() {
         showToastMsg(`مرحباً بك يا ${userRec.displayName}! تم تسجيل دخولك بنجاح ✨`);
       }
     } catch (err: any) {
-      console.warn("Google popup login notice:", err);
-      setLoginError("تعذر فتح نافذة Google المباشرة (قد تكون محظورة من المتصفح أو بيئة جيت هب). أدخل بريد Google الخاص بك بالأسفل للمتابعة بنجاح!");
+      console.warn("Google login notice:", err);
+      const errorMsg = err?.message || "حدث خطأ أثناء فتح نافذة Google. يرجى إعادة المحاولة.";
+      setLoginError(errorMsg);
     } finally {
       setIsLoggingIn(false);
     }
