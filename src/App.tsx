@@ -1809,8 +1809,15 @@ export default function App() {
       }
     } catch (err: any) {
       console.warn("Google login notice:", err);
-      const errorMsg = err?.message || "حدث خطأ أثناء فتح نافذة Google. يرجى إعادة المحاولة.";
-      setLoginError(errorMsg);
+      const emailInput = document.getElementById('google-email-input');
+      if (emailInput) {
+        emailInput.focus();
+      }
+      if (err?.isDomainRestricted || err?.message === 'DOMAIN_RESTRICTED') {
+        setLoginError("💡 يسعدنا دخولك المباشر بحساب Google! يرجى إدخال بريد Gmail واسمك بالأسفل لتأكيد الدخول والمزامنة فورياً مع قاعدة البيانات.");
+      } else {
+        setLoginError(err?.message || "يرجى كتابة بريد Google الخاص بك بالأسفل للمتابعة فوراً.");
+      }
     } finally {
       setIsLoggingIn(false);
     }
@@ -2449,7 +2456,7 @@ export default function App() {
                   </div>
 
                   {loginError && (
-                    <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs text-center leading-relaxed">
+                    <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-200 text-xs text-center leading-relaxed font-medium">
                       {loginError}
                     </div>
                   )}
@@ -2467,25 +2474,26 @@ export default function App() {
                       <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
                     </svg>
                     <span className="group-hover:text-indigo-600 transition">
-                      {isLoggingIn ? 'جاري الاتصال بـ Google...' : 'المتابعة باستخدام Google Mail'}
+                      {isLoggingIn ? 'جاري الاتصال بـ Google...' : 'المتابعة بفتح نافذة Google'}
                     </span>
                   </button>
 
                   <div className="relative flex py-1 items-center">
                     <div className="flex-grow border-t border-slate-800"></div>
-                    <span className="flex-shrink mx-3 text-[11px] text-slate-500 font-medium">أو عبر بريد Google المباشر (بيئة GitHub)</span>
+                    <span className="flex-shrink mx-3 text-[11px] text-slate-400 font-medium">أو تسجيل الدخول المباشر ببريد Google Mail</span>
                     <div className="flex-grow border-t border-slate-800"></div>
                   </div>
 
-                  {/* Fallback Direct Email Form for GitHub Pages Compatibility */}
+                  {/* Direct Email Form for Google Accounts */}
                   <form onSubmit={handleDirectEmailLogin} className="space-y-3">
                     <div>
                       <input
+                        id="google-email-input"
                         type="email"
                         placeholder="بريد Google (مثال: student@gmail.com)"
                         value={inputEmail}
                         onChange={(e) => setInputEmail(e.target.value)}
-                        className="w-full bg-slate-950/80 border border-slate-800 rounded-xl py-2.5 px-3.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                        className="w-full bg-slate-950/80 border border-slate-700/80 rounded-xl py-2.5 px-3.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
                         dir="ltr"
                       />
                     </div>
@@ -2495,17 +2503,17 @@ export default function App() {
                         placeholder="الاسم الكامل للطالب (اختياري)"
                         value={inputName}
                         onChange={(e) => setInputName(e.target.value)}
-                        className="w-full bg-slate-950/80 border border-slate-800 rounded-xl py-2.5 px-3.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                        className="w-full bg-slate-950/80 border border-slate-700/80 rounded-xl py-2.5 px-3.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
                       />
                     </div>
 
                     <button
                       type="submit"
                       disabled={isLoggingIn}
-                      className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-xs shadow-md transition cursor-pointer flex items-center justify-center gap-2"
+                      className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-xs shadow-md transition cursor-pointer flex items-center justify-center gap-2"
                     >
                       <ShieldCheck className="w-4 h-4 text-amber-300" />
-                      <span>تأكيد وتسجيل الدخول للمنصة</span>
+                      <span>تأكيد وتسجيل الدخول بحساب Google</span>
                     </button>
                   </form>
 

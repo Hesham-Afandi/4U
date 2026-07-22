@@ -29,7 +29,7 @@ export const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: 'select_account' });
 
 /**
- * Perform Google Sign-In with automatic GIS OAuth fallback so it works seamlessly on any domain (e.g. GitHub Pages) without domain errors
+ * Perform Google Sign-In with graceful handling for restricted domain environments (like GitHub Pages)
  */
 export async function performGoogleSignIn(): Promise<{
   uid: string;
@@ -37,7 +37,6 @@ export async function performGoogleSignIn(): Promise<{
   displayName: string;
   photoURL?: string;
 }> {
-  // Method 1: Try Firebase signInWithPopup
   try {
     const res = await signInWithPopup(auth, googleProvider);
     if (res.user && res.user.email) {
@@ -49,89 +48,16 @@ export async function performGoogleSignIn(): Promise<{
       };
     }
   } catch (popupErr: any) {
-    console.warn("Firebase popup login notice (switching to Google OAuth GIS):", popupErr);
+    console.warn("Firebase popup login notice:", popupErr);
+    // On domains like GitHub Pages where OAuth popup is blocked by Google/Firebase security policies,
+    // throw a clean domain restriction error so App.tsx can smoothly handle direct Google Sign-In
+    const errObj: any = new Error("DOMAIN_RESTRICTED");
+    errObj.isDomainRestricted = true;
+    errObj.code = popupErr?.code || 'auth/unauthorized-domain';
+    throw errObj;
   }
 
-  // Method 2: Google Identity Services (GIS) direct OAuth Popup
-  const clientId = firebaseConfigData.oAuthClientId || "843029844159-1sv3trufu7m6ctoo9m3s3iksf37qcolh.apps.googleusercontent.com";
-
-  return new Promise((resolve, reject) => {
-    const ensureGisLoaded = (): Promise<void> => {
-      if ((window as any).google?.accounts?.oauth2) {
-        return Promise.resolve();
-      }
-      return new Promise<void>((res, rej) => {
-        const existing = document.getElementById('google-gis-script');
-        if (existing) {
-          existing.addEventListener('load', () => res());
-          existing.addEventListener('error', () => rej(new Error('Failed to load Google GIS')));
-          return;
-        }
-        const script = document.createElement('script');
-        script.id = 'google-gis-script';
-        script.src = 'https://accounts.google.com/gsi/client';
-        script.async = true;
-        script.defer = true;
-        script.onload = () => res();
-        script.onerror = () => rej(new Error('Failed to load Google GIS'));
-        document.head.appendChild(script);
-      });
-    };
-
-    ensureGisLoaded()
-      .then(() => {
-        const google = (window as any).google;
-        if (!google?.accounts?.oauth2) {
-          throw new Error('Google OAuth client unavailable');
-        }
-
-        const client = google.accounts.oauth2.initTokenClient({
-          client_id: clientId,
-          scope: 'openid email profile',
-          callback: async (response: any) => {
-            if (response.error) {
-              reject(new Error('تعذر إكمال دخول Google: ' + (response.error_description || response.error)));
-              return;
-            }
-            if (response.access_token) {
-              try {
-                const userInfoRes = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-                  headers: { Authorization: `Bearer ${response.access_token}` }
-                });
-                const googleUser = await userInfoRes.json();
-                if (googleUser && googleUser.email) {
-                  try {
-                    const cred = GoogleAuthProvider.credential(null, response.access_token);
-                    await signInWithCredential(auth, cred);
-                  } catch (e) {
-                    console.warn("Firebase credential sync notice:", e);
-                  }
-
-                  resolve({
-                    uid: 'google_' + (googleUser.sub || googleUser.email.replace(/[^a-zA-Z0-9]/g, '_')),
-                    email: googleUser.email,
-                    displayName: googleUser.name || googleUser.email.split('@')[0],
-                    photoURL: googleUser.picture,
-                  });
-                } else {
-                  reject(new Error('لم يتم الحصول على بيانات حساب Google'));
-                }
-              } catch (fetchErr) {
-                reject(fetchErr);
-              }
-            } else {
-              reject(new Error('لم يتم استلام تصريح Google'));
-            }
-          },
-          error_callback: () => {
-            reject(new Error('تم إغلاق نافذة تسجيل الدخول بـ Google'));
-          }
-        });
-
-        client.requestAccessToken();
-      })
-      .catch(reject);
-  });
+  throw new Error("لم يتم إكمال الدخول بحساب Google");
 }
 
 export interface UserRecord {
