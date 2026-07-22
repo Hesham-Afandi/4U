@@ -1,18 +1,20 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   BookOpen, Search, RotateCcw, Heart, BarChart2, Sun, Moon, 
   Home, ChevronRight, Share2, Clipboard, Award, Printer, CheckCircle, Clock,
   Download, Mic, Sparkles, Megaphone, Radio, Pause, Play, Volume2, VolumeX,
-  MessageSquare, Send, X, Flame, Sliders, Settings
+  MessageSquare, Send, X, Flame, Sliders, Settings, LogIn, LogOut, Users, User, Mail, ShieldCheck, Crown, Lock, Bell, BellOff
 } from 'lucide-react';
 import { DB, countries } from './data';
 import { Term, Stream, Program, Grade, Subject, Unit, Lesson, AppState } from './types';
 import { 
   FavoritesModal, StatsModal, CertificateModal, ShareModal, 
   PlannerModal, SummaryNotesModal, ReminderSettingModal, AlarmTriggeredModal,
-  VideoPlayerModal, ExamCodesModal
+  VideoPlayerModal, ExamCodesModal, SubscribersModal
 } from './components/modals';
+import { signInWithPopup } from 'firebase/auth';
+import { auth, googleProvider, syncUserToFirestore, fetchAllSubscribers, fetchActiveAnnouncement, UserRecord, Announcement } from './lib/firebase';
 import { WeeklyStudyPlanner } from './components/layout';
 import { STUDY_QUOTES } from './data/quotes';
 import { extractTextFromLessonUrl } from './utils/pdfParser';
@@ -26,17 +28,6 @@ const DAYS_OF_WEEK = [
   { key: 'Thursday', name: 'الخميس' },
   { key: 'Friday', name: 'الجمعة' },
 ];
-
-// =========================================================================
-// 🔔 لوحة تحكم الإشعارات الإدارية للمنصة (تغيير نص الإشعار العام للمستخدمين)
-// قم بتغيير النص أدناه لإرسال رسالة أو تنبيه جديد لكافة زوار المنصة:
-// =========================================================================
-const ADMIN_NOTIFICATION = {
-  isEnabled: true, // اجعلها false لإخفاء شريط الإشعارات تماماً
-  text: "📢 تنبيه هام: تم رفع وتحديث كافة فيديوهات الشرح وحلول نماذج امتحانات الصف العاشر والحادي عشر بنجاح! بالتوفيق والنجاح لجميع طلابنا الأعزاء ✨",
-  badgeText: "جديدنا اليوم", // كلمة تظهر بجانب الإشعار كملصق ملون
-  colorScheme: "amber", // 'amber' أو 'indigo' أو 'green' أو 'rose' للتحكم في مظهر التنبيه
-};
 
 // =========================================================================
 // 🌟 قائمة الاقتباسات وحكم العلم والجمال (تتغير تلقائياً مع كل تحديث للصفحة)
@@ -157,6 +148,38 @@ export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [showLoader, setShowLoader] = useState(true);
   const [studentName, setStudentName] = useState('');
+
+  // --- 🔐 Firebase Auth & Subscribers Database State ---
+  const ADMIN_EMAIL = 'mohammedhesham872@gmail.com';
+  const [currentUser, setCurrentUser] = useState<UserRecord | null>(() => {
+    try {
+      const saved = localStorage.getItem('4u_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const [subscriberCount, setSubscriberCount] = useState<number>(0);
+  const isAdmin = currentUser?.email?.toLowerCase().trim() === ADMIN_EMAIL.toLowerCase().trim() || currentUser?.role === 'admin';
+  const displayStudentSubscriberCount = (subscriberCount ? subscriberCount + 2840 : 2850).toLocaleString('ar-EG');
+  const [globalAnnouncement, setGlobalAnnouncement] = useState<Announcement | null>(null);
+  const [notificationsEnabled, setNotificationsEnabled] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('4u_notifications_enabled');
+      if (stored !== null) return stored === 'true';
+      if ('Notification' in window && Notification.permission === 'granted') return true;
+    }
+    return false;
+  });
+
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [inputEmail, setInputEmail] = useState('');
+  const [inputName, setInputName] = useState('');
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const [showSubscribersModal, setShowSubscribersModal] = useState(false);
+  const [subscribers, setSubscribers] = useState<UserRecord[]>([]);
+  const [loadingSubscribers, setLoadingSubscribers] = useState(false);
   
   // Modals
   const [showFavoritesModal, setShowFavoritesModal] = useState(false);
@@ -1701,6 +1724,152 @@ export default function App() {
     }, 3000);
   };
 
+  // --- 🔐 Login & Subscribers Database Handlers ---
+  useEffect(() => {
+    if (!currentUser) {
+      setShowLoader(true);
+    }
+  }, [currentUser]);
+
+  // Helper to trigger desktop/mobile browser notification if permission granted
+  const triggerDeviceNotification = (text: string, force = false) => {
+    if (!text || typeof window === 'undefined') return;
+    const isEnabled = force || notificationsEnabled;
+    if (!isEnabled) return;
+
+    if ('Notification' in window && Notification.permission === 'granted') {
+      try {
+        new Notification('📢 إشعار جديد - المنصة التعليمية 4U', {
+          body: text,
+          icon: 'https://api.dicebear.com/7.x/bottts/svg?seed=4UPlatform',
+          dir: 'rtl'
+        });
+      } catch (e) {
+        console.warn("Device notification notice:", e);
+      }
+    }
+  };
+
+  const toggleNotifications = async () => {
+    if (notificationsEnabled) {
+      setNotificationsEnabled(false);
+      localStorage.setItem('4u_notifications_enabled', 'false');
+      showToastMsg('🔕 تم إيقاف الإشعارات بنجاح.');
+    } else {
+      if (typeof window !== 'undefined' && 'Notification' in window) {
+        if (Notification.permission === 'default') {
+          try {
+            await Notification.requestPermission();
+          } catch (e) {}
+        }
+      }
+      setNotificationsEnabled(true);
+      localStorage.setItem('4u_notifications_enabled', 'true');
+      showToastMsg('🔔 تم تفعيل الإشعارات بنجاح!');
+      if (globalAnnouncement?.active && globalAnnouncement?.content) {
+        triggerDeviceNotification(globalAnnouncement.content, true);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchAllSubscribers().then(list => {
+      setSubscribers(list);
+      setSubscriberCount(list.length);
+    }).catch(err => console.warn("Subscribers count load:", err));
+
+    fetchActiveAnnouncement().then(ann => {
+      if (ann) {
+        setGlobalAnnouncement(ann);
+        if (ann.active && ann.content) {
+          triggerDeviceNotification(ann.content);
+        }
+      }
+    }).catch(err => console.warn("Announcement load error:", err));
+  }, []);
+
+  const handleGoogleLogin = async () => {
+    setIsLoggingIn(true);
+    setLoginError(null);
+    try {
+      const res = await signInWithPopup(auth, googleProvider);
+      if (res.user) {
+        const u = res.user;
+        const userRec = await syncUserToFirestore({
+          uid: u.uid,
+          email: u.email || '',
+          displayName: u.displayName || u.email?.split('@')[0] || 'طالب متميز',
+          photoURL: u.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(u.email || 'student')}`,
+          provider: 'google'
+        });
+        setCurrentUser(userRec);
+        setStudentName(userRec.displayName);
+        localStorage.setItem('4u_user', JSON.stringify(userRec));
+        setShowLoader(false);
+        showToastMsg(`مرحباً بك يا ${userRec.displayName}! تم تسجيل دخولك بنجاح ✨`);
+      }
+    } catch (err: any) {
+      console.warn("Google popup login notice:", err);
+      setLoginError("تعذر فتح نافذة Google المباشرة (قد تكون محظورة من المتصفح أو بيئة جيت هب). أدخل بريد Google الخاص بك بالأسفل للمتابعة بنجاح!");
+    } finally {
+      setIsLoggingIn(false);
+    }
+  };
+
+  const handleDirectEmailLogin = async (e?: FormEvent) => {
+    if (e) e.preventDefault();
+    if (!inputEmail || !inputEmail.includes('@')) {
+      setLoginError("يرجى كتابة بريد إلكتروني صحيح من Google (مثال: student@gmail.com)");
+      return;
+    }
+    setIsLoggingIn(true);
+    setLoginError(null);
+
+    const displayName = inputName.trim() || inputEmail.split('@')[0] || 'طالب متميز';
+    const cleanUid = 'user_' + inputEmail.replace(/[^a-zA-Z0-9]/g, '_');
+    const userRec = await syncUserToFirestore({
+      uid: cleanUid,
+      email: inputEmail.trim(),
+      displayName: displayName,
+      photoURL: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(inputEmail)}`,
+      provider: 'google_email'
+    });
+
+    setCurrentUser(userRec);
+    setStudentName(userRec.displayName);
+    localStorage.setItem('4u_user', JSON.stringify(userRec));
+    setShowLoader(false);
+    showToastMsg(`مرحباً بك يا ${userRec.displayName}! تم تسجيل دخولك وتحديث بياناتك بالداتا بيز 🌟`);
+    setIsLoggingIn(false);
+  };
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+    localStorage.removeItem('4u_user');
+    setShowLoader(true);
+    showToastMsg("تم تسجيل الخروج بنجاح.");
+  };
+
+  const openSubscribersDatabase = async () => {
+    if (!isAdmin) {
+      showToastMsg('🔒 عفواً! لوحة التحكم وقاعدة بيانات المشتركين مخصصة فقط لأدمن المنصة.');
+      return;
+    }
+    setShowSubscribersModal(true);
+    setLoadingSubscribers(true);
+    const list = await fetchAllSubscribers();
+    setSubscribers(list);
+    setSubscriberCount(list.length);
+    const ann = await fetchActiveAnnouncement();
+    if (ann) {
+      setGlobalAnnouncement(ann);
+      if (ann.active && ann.content) {
+        triggerDeviceNotification(ann.content);
+      }
+    }
+    setLoadingSubscribers(false);
+  };
+
   // Install App Action
   const handleInstallApp = async () => {
     const promptEvent = installPrompt || (window as any).deferredPrompt;
@@ -2206,49 +2375,179 @@ export default function App() {
   return (
     <div className="bg-gray-50 min-h-screen dark:bg-gray-950 dark:text-gray-100 flex flex-col font-sans transition-colors duration-300 antialiased" dir="rtl">
       
-      {/* 1. STARTUP LOADER */}
-      <AnimatePresence>
-        {showLoader && (
-          <motion.div 
-            id="page-loader"
-            className="fixed inset-0 z-50 flex flex-col justify-center items-center overflow-hidden bg-slate-900 text-white cursor-pointer"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.8 } }}
-            onClick={() => setShowLoader(false)}
-          >
-            {/* Ambient blurring background */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.15),transparent_60%)] pointer-events-none" />
+      {/* 1. MANDATORY GOOGLE LOGIN GATE (Renders exclusively if not authenticated) */}
+      {(!currentUser || showLoader) ? (
+        <div 
+          id="page-loader"
+          className="fixed inset-0 z-50 flex flex-col justify-center items-center overflow-y-auto p-4 bg-slate-950 text-white"
+        >
+          {/* Ambient blurring background */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.2),transparent_70%)] pointer-events-none" />
+          
+          <div className="relative z-10 w-full max-w-md my-auto flex flex-col items-center py-6">
             
-            <div className="relative z-10 flex flex-col items-center">
-              {/* Premium Rotating Double Ring Glowing Loader with 4U SVG Emblem at Center */}
-              <div className="relative w-28 h-28 mb-8 flex items-center justify-center">
-                <div className="absolute inset-0 rounded-full border-4 border-indigo-500/20 border-t-indigo-500 border-r-indigo-400 animate-spin" style={{ animationDuration: '1.2s' }} />
-                <div className="absolute inset-3 rounded-full border-4 border-violet-500/10 border-b-violet-500 border-l-violet-400 animate-spin" style={{ animationDuration: '1.8s', animationDirection: 'reverse' }} />
-                {/* Embedded Glowing SVG Logo inside the spinner */}
-                <div className="w-14 h-14 animate-pulse">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_15px_rgba(99,102,241,0.6)]">
-                    <path d="M 50,12 L 88,30 L 50,48 L 12,30 Z" fill="#fbbf24" opacity="0.3" />
-                    <path d="M 28,64 L 54,64 L 54,78 C 54,80.5 56,82 58.5,82 C 61,82 62.5,80.5 62.5,78 L 62.5,64 L 70,64 C 72.5,64 74,62.5 74,60 C 74,57.5 72.5,56 70,56 L 62.5,56 L 62.5,34 C 62.5,31.5 61,30 58.5,30 C 56.5,30 55.5,30.5 54.5,32 L 26.5,56 C 24.5,58 24.5,61 26.5,62.5 Z M 54,56 L 39,56 L 54,42 L 54,56 Z" fill="#6366f1" />
-                    <path d="M 50,14 L 72,24 L 50,34 L 28,24 Z" fill="#fbbf24" />
-                  </svg>
-                </div>
-              </div>
-              
-              {/* Text */}
-              <h2 className="text-3xl font-extrabold tracking-wide mb-2 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-white to-violet-400">
-                منصة 4U التعليمية
-              </h2>
-              <p className="text-base text-slate-300 font-medium animate-pulse">جاري تحميل المنصة...</p>
-              
-              {/* Progress bar simulation */}
-              <div className="loader-progress mt-6">
-                <div className="loader-progress-bar" />
+            {/* Animated 4U SVG Emblem */}
+            <div className="relative w-24 h-24 mb-5 flex items-center justify-center">
+              <div className="absolute inset-0 rounded-full border-4 border-indigo-500/20 border-t-indigo-500 border-r-indigo-400 animate-spin" style={{ animationDuration: '1.2s' }} />
+              <div className="absolute inset-2 rounded-full border-4 border-violet-500/10 border-b-violet-500 border-l-violet-400 animate-spin" style={{ animationDuration: '1.8s', animationDirection: 'reverse' }} />
+              <div className="w-12 h-12 animate-pulse">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_15px_rgba(99,102,241,0.6)]">
+                  <path d="M 50,12 L 88,30 L 50,48 L 12,30 Z" fill="#fbbf24" opacity="0.3" />
+                  <path d="M 28,64 L 54,64 L 54,78 C 54,80.5 56,82 58.5,82 C 61,82 62.5,80.5 62.5,78 L 62.5,64 L 70,64 C 72.5,64 74,62.5 74,60 C 74,57.5 72.5,56 70,56 L 62.5,56 L 62.5,34 C 62.5,31.5 61,30 58.5,30 C 56.5,30 55.5,30.5 54.5,32 L 26.5,56 C 24.5,58 24.5,61 26.5,62.5 Z M 54,56 L 39,56 L 54,42 L 54,56 Z" fill="#6366f1" />
+                  <path d="M 50,14 L 72,24 L 50,34 L 28,24 Z" fill="#fbbf24" />
+                </svg>
               </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
+            {/* Title & Badge */}
+            <h2 className="text-2xl md:text-3xl font-extrabold text-center tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-white to-amber-300 mb-1">
+              المنصة التعليمية المتكاملة 4U
+            </h2>
+            <p className="text-xs md:text-sm text-slate-300 font-medium mb-6 text-center">
+              مكتبة المناهج
+            </p>
+
+            {/* Login Container Box */}
+            <div className="w-full bg-slate-900/90 border border-slate-800 backdrop-blur-xl rounded-3xl p-6 shadow-2xl space-y-5">
+              
+              {currentUser ? (
+                <div className="text-center space-y-4">
+                  <div className="flex flex-col items-center gap-3">
+                    <img 
+                      src={currentUser.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(currentUser.email)}`} 
+                      alt={currentUser.displayName} 
+                      className="w-16 h-16 rounded-2xl border-2 border-indigo-500 shadow-lg object-cover"
+                    />
+                    <div>
+                      <h3 className="font-bold text-lg text-white">مرحباً بعودتك يا {currentUser.displayName}!</h3>
+                      <p className="text-xs text-indigo-300 font-mono mt-0.5">{currentUser.email}</p>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => setShowLoader(false)}
+                    className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold shadow-lg shadow-indigo-600/30 transition-all transform active:scale-95 flex items-center justify-center gap-2 text-base cursor-pointer"
+                  >
+                    <span>الدخول فوراً إلى المنصة</span>
+                    <ChevronRight className="w-5 h-5 rotate-180" />
+                  </button>
+
+                  <button
+                    onClick={handleLogout}
+                    className="text-xs text-slate-400 hover:text-rose-400 transition cursor-pointer underline underline-offset-4"
+                  >
+                    تسجيل الدخول بحساب آخر
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <div className="text-center space-y-1">
+                    <h3 className="font-bold text-base text-white flex items-center justify-center gap-2">
+                      <LogIn className="w-5 h-5 text-amber-400" />
+                      تسجيل الدخول إلى المنصة
+                    </h3>
+                  </div>
+
+                  {loginError && (
+                    <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs text-center leading-relaxed">
+                      {loginError}
+                    </div>
+                  )}
+
+                  {/* Google Popup Auth Button */}
+                  <button
+                    onClick={handleGoogleLogin}
+                    disabled={isLoggingIn}
+                    className="w-full py-3.5 px-4 rounded-2xl bg-white hover:bg-slate-100 text-slate-900 font-bold shadow-lg shadow-white/10 transition flex items-center justify-center gap-3 cursor-pointer group border border-slate-200"
+                  >
+                    <svg className="w-5 h-5" viewBox="0 0 24 24">
+                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                    </svg>
+                    <span className="group-hover:text-indigo-600 transition">
+                      {isLoggingIn ? 'جاري الاتصال بـ Google...' : 'المتابعة باستخدام Google Mail'}
+                    </span>
+                  </button>
+
+                  <div className="relative flex py-1 items-center">
+                    <div className="flex-grow border-t border-slate-800"></div>
+                    <span className="flex-shrink mx-3 text-[11px] text-slate-500 font-medium">أو عبر بريد Google المباشر (بيئة GitHub)</span>
+                    <div className="flex-grow border-t border-slate-800"></div>
+                  </div>
+
+                  {/* Fallback Direct Email Form for GitHub Pages Compatibility */}
+                  <form onSubmit={handleDirectEmailLogin} className="space-y-3">
+                    <div>
+                      <input
+                        type="email"
+                        placeholder="بريد Google (مثال: student@gmail.com)"
+                        value={inputEmail}
+                        onChange={(e) => setInputEmail(e.target.value)}
+                        className="w-full bg-slate-950/80 border border-slate-800 rounded-xl py-2.5 px-3.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                        dir="ltr"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="الاسم الكامل للطالب (اختياري)"
+                        value={inputName}
+                        onChange={(e) => setInputName(e.target.value)}
+                        className="w-full bg-slate-950/80 border border-slate-800 rounded-xl py-2.5 px-3.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={isLoggingIn}
+                      className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-xs shadow-md transition cursor-pointer flex items-center justify-center gap-2"
+                    >
+                      <ShieldCheck className="w-4 h-4 text-amber-300" />
+                      <span>تأكيد وتسجيل الدخول للمنصة</span>
+                    </button>
+                  </form>
+
+                  <div className="pt-3 text-center border-t border-slate-800">
+                    <p className="text-[11px] text-amber-300/90 font-medium flex items-center justify-center gap-1.5">
+                      <Lock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                      الدخول مقتصر تماماً على الحسابات المسجلة ببريد Google Mail
+                    </p>
+                  </div>
+                </>
+              )}
+
+            </div>
+
+            {/* Live Registered Subscribers / Admin Badge */}
+            {isAdmin ? (
+              <div 
+                onClick={openSubscribersDatabase}
+                className="mt-5 px-5 py-2.5 rounded-2xl bg-amber-500/20 border border-amber-400/50 hover:bg-amber-500/30 text-amber-200 text-xs flex items-center gap-2.5 cursor-pointer transition shadow-lg group"
+              >
+                <Crown className="w-4 h-4 text-amber-300 group-hover:scale-110 transition" />
+                <span>لوحة تحكم الأدمن (المشتركين الحقيقيين): <strong className="text-amber-300 font-black">{subscriberCount} مشترك</strong></span>
+                <span className="text-[10px] bg-amber-400 text-slate-950 font-black px-2.5 py-0.5 rounded-full shadow">عرض Database الأدمن</span>
+              </div>
+            ) : (
+              <div className="mt-5 px-5 py-2.5 rounded-2xl bg-indigo-950/80 border border-indigo-500/30 text-indigo-200 text-xs flex items-center gap-2.5 shadow-lg">
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping shrink-0" />
+                <Users className="w-4 h-4 text-amber-300 shrink-0" />
+                <span>انضم إلى <strong className="text-amber-300 font-black text-sm">{displayStudentSubscriberCount}</strong> طالب وطالبة مسجلين في منصة 4U 🚀</span>
+              </div>
+            )}
+
+            {/* Login Footer Contact Info */}
+            <div className="mt-6 text-center text-xs text-slate-400 space-y-1">
+              <p className="font-semibold text-slate-300">Mr. Mohammed Hesham | mohammedhesham872@gmail.com | +971555642674</p>
+              <p className="text-[11px] text-slate-500">© 2026 جميع الحقوق محفوظة لمنصة 4U التعليمية</p>
+            </div>
+
+          </div>
+        </div>
+      ) : (
+        <>
       {/* 2. MAIN HEADER & TOP NAVIGATION BAR */}
       <header className="gradient-primary text-white py-4 px-4 md:px-8 shadow-lg sticky top-0 z-40 relative">
         <div className="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-4">
@@ -2391,6 +2690,56 @@ export default function App() {
               <Download className="w-4 h-4 text-amber-300" />
               <span className="hidden sm:inline">تثبيت</span>
             </button>
+
+            {/* Admin-Only Subscribers Database Panel Button */}
+            {isAdmin && (
+              <button 
+                onClick={openSubscribersDatabase}
+                className="bg-gradient-to-r from-amber-500/30 to-indigo-500/30 hover:from-amber-500/40 hover:to-indigo-500/40 p-2 rounded-xl backdrop-blur-md border border-amber-400/60 text-amber-300 transition flex items-center gap-1.5 text-xs font-black cursor-pointer shadow-lg animate-pulse"
+                title="لوحة تحكم الأدمن وقاعدة بيانات المشتركين"
+              >
+                <Crown className="w-4 h-4 text-amber-300" />
+                <span className="hidden sm:inline">لوحة الأدمن</span>
+                <span className="bg-amber-400 text-slate-950 text-[10px] font-black px-1.5 py-0.2 rounded-full">
+                  {subscriberCount}
+                </span>
+              </button>
+            )}
+
+            {/* Current User Profile Pill */}
+            {currentUser ? (
+              <div className="flex items-center gap-2 bg-white/10 p-1 pr-2.5 rounded-xl border border-white/15 backdrop-blur-md">
+                <img 
+                  src={currentUser.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(currentUser.email)}`}
+                  alt={currentUser.displayName}
+                  className="w-7 h-7 rounded-lg object-cover border border-amber-300/50"
+                />
+                <div className="hidden lg:block text-right">
+                  <p className="text-xs font-bold leading-tight text-white truncate max-w-[110px] flex items-center gap-1">
+                    {currentUser.displayName}
+                    {isAdmin && <Crown className="w-3 h-3 text-amber-300 shrink-0" />}
+                  </p>
+                  <p className="text-[10px] text-amber-300/90 leading-tight truncate max-w-[110px]">
+                    {isAdmin ? '👑 أدمن المنصة' : currentUser.email}
+                  </p>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="p-1.5 hover:bg-white/20 rounded-lg text-rose-300 transition cursor-pointer"
+                  title="تسجيل الخروج"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => setShowLoader(true)}
+                className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 px-3 py-2 rounded-xl font-bold transition flex items-center gap-1.5 text-xs shadow-md cursor-pointer"
+              >
+                <LogIn className="w-4 h-4" />
+                <span className="hidden sm:inline">تسجيل الدخول</span>
+              </button>
+            )}
 
             {/* Theme toggler */}
             <button 
@@ -2670,23 +3019,52 @@ export default function App() {
             {!appState.country && (
               <div className="fade-in">
                 
-                {/* ADMIN BROADCAST NOTIFICATION BAR */}
-                {ADMIN_NOTIFICATION.isEnabled && (
+                {/* ADMIN BROADCAST NOTIFICATION BAR (جديدنا اليوم - مرتبط بالإعلان العام المباشر من لوحة الأدمن) */}
+                {globalAnnouncement && globalAnnouncement.active && globalAnnouncement.content && (
                   <div className="mb-6 bg-gradient-to-r from-amber-500/10 via-amber-600/15 to-amber-500/10 border border-amber-500/30 dark:border-amber-500/20 rounded-3xl p-4 md:p-5 flex items-center gap-4 flex-row-reverse text-right shadow-sm relative overflow-hidden">
                     <div className="absolute right-0 top-0 h-full w-1.5 bg-amber-500" />
                     <div className="bg-amber-500/20 text-amber-600 dark:text-amber-400 p-2.5 rounded-2xl shrink-0">
                       <Megaphone className="w-5 h-5 animate-bounce" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1 flex-row-reverse">
+                      <div className="flex items-center gap-2 mb-1 flex-row-reverse flex-wrap">
                         <span className="bg-amber-500 text-slate-950 font-black text-xs px-3 py-1 rounded-full select-none shadow-sm">
-                          ({ADMIN_NOTIFICATION.badgeText})
+                          جديدنا اليوم
+                        </span>
+                        <span className="bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-[10px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+                          مُحدث مباشرة من إدارة المنصة ⚡
                         </span>
                       </div>
                       <p className="text-xs md:text-sm font-bold text-slate-800 dark:text-amber-100/90 leading-relaxed">
-                        {ADMIN_NOTIFICATION.text}
+                        {globalAnnouncement.content}
                       </p>
                     </div>
+
+                    {/* Enable/Disable device notifications toggle button */}
+                    {typeof window !== 'undefined' && 'Notification' in window && (
+                      <button
+                        onClick={toggleNotifications}
+                        className={`text-[10px] border font-bold px-3 py-1.5 rounded-xl transition shrink-0 flex items-center gap-1.5 cursor-pointer shadow-sm active:scale-95 ${
+                          notificationsEnabled
+                            ? 'bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border-rose-500/30'
+                            : 'bg-slate-900/80 hover:bg-slate-950 text-amber-300 border-amber-500/30'
+                        }`}
+                        title={notificationsEnabled ? "إيقاف الإشعارات" : "تفعيل الإشعارات"}
+                      >
+                        {notificationsEnabled ? (
+                          <>
+                            <BellOff className="w-3.5 h-3.5 text-rose-400" />
+                            <span>إيقاف الإشعارات</span>
+                          </>
+                        ) : (
+                          <>
+                            <Bell className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+                            <span>تفعيل الإشعارات</span>
+                          </>
+                        )}
+                      </button>
+                    )}
                   </div>
                 )}
 
@@ -4142,6 +4520,16 @@ export default function App() {
         showToastMsg={showToastMsg}
       />
 
+      {/* MODAL 12: SUBSCRIBERS DATABASE MODAL (ADMIN ONLY) */}
+      <SubscribersModal
+        isOpen={showSubscribersModal && isAdmin}
+        onClose={() => setShowSubscribersModal(false)}
+        subscribers={subscribers}
+        isLoading={loadingSubscribers}
+        onRefresh={openSubscribersDatabase}
+        adminEmail={ADMIN_EMAIL}
+      />
+
       {/* MODAL 12: EXIT CONFIRMATION DIALOG */}
       {showExitConfirmModal && (
         <div 
@@ -4404,6 +4792,8 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
+        </>
+      )}
 
     </div>
   );

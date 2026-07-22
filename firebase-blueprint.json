@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "users": {
+      "title": "Users",
+      "description": "Registered students and subscribers database",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Unique user ID from Auth"
+        },
+        "email": {
+          "type": "string",
+          "description": "User Google email address"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User full display name"
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "User profile avatar image URL"
+        },
+        "role": {
+          "type": "string",
+          "description": "User role: 'admin' or 'user'"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp when user first registered"
+        },
+        "lastLoginAt": {
+          "type": "string",
+          "description": "Timestamp of last login session"
+        }
+      },
+      "required": ["uid", "email", "createdAt"]
+    },
+    "announcements": {
+      "title": "Announcements",
+      "description": "Global admin announcements and broadcast messages shown to all students",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string",
+          "description": "Announcement broadcast text"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string"
+        }
+      },
+      "required": ["id", "content", "active"]
+    }
+  }
+}
