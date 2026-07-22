@@ -104,10 +104,10 @@ async function withTimeout<T>(promise: Promise<T>, timeoutMs = 4000, fallbackVal
 /**
  * Syncs logged in user (from Google Auth or GitHub Pages direct login) to the subscribers/users Firestore database
  */
-export async function syncUserToFirestore(userData: { uid: string; email: string; displayName?: string; photoURL?: string; provider?: string }): Promise<UserRecord> {
+export async function syncUserToFirestore(userData: { uid: string; email: string; displayName?: string; photoURL?: string; provider?: string; isAdminVerified?: boolean }): Promise<UserRecord> {
   const now = new Date().toISOString();
   const cleanUid = userData.uid || ('user_' + userData.email.replace(/[^a-zA-Z0-9]/g, '_'));
-  const isPrimaryAdmin = userData.email.toLowerCase().trim() === PRIMARY_ADMIN_EMAIL.toLowerCase().trim();
+  const isPrimaryAdminEmail = userData.email.toLowerCase().trim() === PRIMARY_ADMIN_EMAIL.toLowerCase().trim();
   
   const record: UserRecord = {
     uid: cleanUid,
@@ -115,7 +115,7 @@ export async function syncUserToFirestore(userData: { uid: string; email: string
     displayName: userData.displayName || userData.email.split('@')[0] || 'طالب متميز',
     photoURL: userData.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(userData.email)}`,
     provider: userData.provider || 'google',
-    role: isPrimaryAdmin ? 'admin' : 'user',
+    role: isPrimaryAdminEmail ? (userData.isAdminVerified ? 'admin' : 'user') : 'user',
     createdAt: now,
     lastLoginAt: now
   };
@@ -129,12 +129,25 @@ export async function syncUserToFirestore(userData: { uid: string; email: string
     } else {
       const existingData = snap.data();
       record.createdAt = existingData.createdAt || now;
-      record.role = existingData.role || (isPrimaryAdmin ? 'admin' : 'user');
+      
+      if (isPrimaryAdminEmail) {
+        if (userData.isAdminVerified === true) {
+          record.role = 'admin';
+        } else if (userData.isAdminVerified === false) {
+          record.role = 'user';
+        } else {
+          record.role = existingData.role || 'user';
+        }
+      } else {
+        // Retain promoted admin status from Firestore for other accounts!
+        record.role = existingData.role || 'user';
+      }
+
       await withTimeout(setDoc(userRef, {
         lastLoginAt: now,
         displayName: userData.displayName || existingData.displayName || record.displayName,
         photoURL: userData.photoURL || existingData.photoURL || record.photoURL,
-        role: isPrimaryAdmin ? 'admin' : (existingData.role || 'user')
+        role: record.role
       }, { merge: true }), 3000, null);
     }
   } catch (err) {
@@ -168,10 +181,22 @@ export async function fetchAllSubscribers(): Promise<UserRecord[]> {
 /**
  * Updates a user's role in Firestore (e.g., set to 'admin' or 'user')
  */
-export async function updateUserRoleInFirestore(uid: string, role: 'admin' | 'user'): Promise<boolean> {
+export async function updateUserRoleInFirestore(uid: string, role: 'admin' | 'user', email?: string): Promise<boolean> {
   try {
     const userRef = doc(db, 'users', uid);
     await updateDoc(userRef, { role });
+    if (email) {
+      try {
+        const usersCol = collection(db, 'users');
+        const q = query(usersCol, where('email', '==', email.toLowerCase().trim()));
+        const snap = await getDocs(q);
+        snap.forEach(async (d) => {
+          await updateDoc(d.ref, { role });
+        });
+      } catch (e) {
+        console.warn("Notice updating secondary docs:", e);
+      }
+    }
     return true;
   } catch (err) {
     console.error("Error updating user role:", err);
@@ -182,10 +207,22 @@ export async function updateUserRoleInFirestore(uid: string, role: 'admin' | 'us
 /**
  * Deletes a subscriber from Firestore database
  */
-export async function deleteUserFromFirestore(uid: string): Promise<boolean> {
+export async function deleteUserFromFirestore(uid: string, email?: string): Promise<boolean> {
   try {
     const userRef = doc(db, 'users', uid);
     await deleteDoc(userRef);
+    if (email) {
+      try {
+        const usersCol = collection(db, 'users');
+        const q = query(usersCol, where('email', '==', email.toLowerCase().trim()));
+        const snap = await getDocs(q);
+        snap.forEach(async (d) => {
+          await deleteDoc(d.ref);
+        });
+      } catch (e) {
+        console.warn("Notice deleting secondary docs:", e);
+      }
+    }
     return true;
   } catch (err) {
     console.error("Error deleting user:", err);

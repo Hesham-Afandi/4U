@@ -48,6 +48,13 @@ export const SubscribersModal: React.FC<SubscribersModalProps> = ({
 
   // Action status state
   const [actionLoadingId, setActionLoadingId] = useState<string | null>(null);
+  const [pendingAction, setPendingAction] = useState<{
+    type: 'toggle_admin' | 'delete_user';
+    user: UserRecord;
+    title: string;
+    message: string;
+  } | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   useEffect(() => {
     if (isOpen) {
@@ -102,41 +109,67 @@ export const SubscribersModal: React.FC<SubscribersModalProps> = ({
     document.body.removeChild(link);
   };
 
-  const handleToggleAdminRole = async (user: UserRecord) => {
+  const handleToggleAdminRole = (user: UserRecord) => {
     if (user.email.toLowerCase() === adminEmail.toLowerCase()) {
-      alert('لا يمكنك إزالة صلاحية الأدمن الأساسي للغة والموقع!');
+      setToastMessage('⚠️ لا يمكنك إزالة صلاحية الأدمن الأساسي للمنصة!');
+      setTimeout(() => setToastMessage(null), 4000);
       return;
     }
     const newRole = user.role === 'admin' ? 'user' : 'admin';
-    const actionText = newRole === 'admin' ? 'منح صلاحيات الأدمن' : 'إلغاء صلاحية الأدمن';
-    if (!confirm(`هل أنت تأكد من ${actionText} لهذا البريد (${user.email})؟`)) return;
-
-    setActionLoadingId(user.uid);
-    const ok = await updateUserRoleInFirestore(user.uid, newRole);
-    setActionLoadingId(null);
-
-    if (ok) {
-      onRefresh();
-    } else {
-      alert('حدث خطأ أثناء تعديل صلاحيات الأدمن');
-    }
+    const actionText = newRole === 'admin' ? 'منح صلاحيات الأدمن 👑' : 'تنزيل الحساب إلى طالب عادي';
+    setPendingAction({
+      type: 'toggle_admin',
+      user,
+      title: `${actionText}`,
+      message: `هل أنت متأكد من ${actionText} للمستخدم (${user.email})؟`
+    });
   };
 
-  const handleDeleteSubscriber = async (user: UserRecord) => {
+  const handleDeleteSubscriber = (user: UserRecord) => {
     if (user.email.toLowerCase() === adminEmail.toLowerCase()) {
-      alert('لا يمكنك حذف حساب الأدمن الرئيسي!');
+      setToastMessage('⚠️ لا يمكنك حذف حساب الأدمن الرئيسي!');
+      setTimeout(() => setToastMessage(null), 4000);
       return;
     }
-    if (!confirm(`⚠️ هل أنت متأكد من حذف المشترك (${user.email}) نهائياً من الداتا بيز؟`)) return;
+    setPendingAction({
+      type: 'delete_user',
+      user,
+      title: 'حذف الحساب نهائياً',
+      message: `⚠️ هل أنت متأكد من حذف الحساب (${user.email}) نهائياً من قاعدة البيانات؟`
+    });
+  };
 
-    setActionLoadingId(user.uid);
-    const ok = await deleteUserFromFirestore(user.uid);
-    setActionLoadingId(null);
+  const handleExecutePendingAction = async () => {
+    if (!pendingAction) return;
+    const { type, user } = pendingAction;
+    setPendingAction(null);
 
-    if (ok) {
-      onRefresh();
-    } else {
-      alert('حدث خطأ أثناء حذف المشترك');
+    const targetUid = user.uid || ('user_' + user.email.replace(/[^a-zA-Z0-9]/g, '_'));
+    setActionLoadingId(targetUid);
+
+    if (type === 'toggle_admin') {
+      const newRole = user.role === 'admin' ? 'user' : 'admin';
+      const ok = await updateUserRoleInFirestore(targetUid, newRole, user.email);
+      setActionLoadingId(null);
+      if (ok) {
+        setToastMessage(newRole === 'admin' ? `تمت ترقية (${user.email}) إلى أدمن بنجاح! 👑` : `تم تحويل (${user.email}) إلى حساب طالب.`);
+        setTimeout(() => setToastMessage(null), 4000);
+        onRefresh();
+      } else {
+        setToastMessage('❌ حدث خطأ أثناء تعديل صلاحيات الحساب.');
+        setTimeout(() => setToastMessage(null), 4000);
+      }
+    } else if (type === 'delete_user') {
+      const ok = await deleteUserFromFirestore(targetUid, user.email);
+      setActionLoadingId(null);
+      if (ok) {
+        setToastMessage(`تم حذف الحساب (${user.email}) بنجاح من قاعدة البيانات. 🗑️`);
+        setTimeout(() => setToastMessage(null), 4000);
+        onRefresh();
+      } else {
+        setToastMessage('❌ حدث خطأ أثناء حذف الحساب.');
+        setTimeout(() => setToastMessage(null), 4000);
+      }
     }
   };
 
@@ -174,6 +207,49 @@ export const SubscribersModal: React.FC<SubscribersModalProps> = ({
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-4 bg-black/80 backdrop-blur-md">
+        {/* Toast Notification Banner */}
+        {toastMessage && (
+          <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[1200] bg-indigo-600 text-white font-bold text-xs py-3 px-6 rounded-2xl shadow-2xl border border-indigo-400/40 flex items-center gap-2 animate-bounce">
+            <span>{toastMessage}</span>
+          </div>
+        )}
+
+        {/* Custom Confirmation Dialog Modal */}
+        {pendingAction && (
+          <div className="fixed inset-0 z-[1100] flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fadeIn">
+            <div className="bg-slate-900 border border-amber-500/50 rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-5 text-right">
+              <div className="flex items-center gap-3 text-amber-400">
+                <div className="p-3 rounded-2xl bg-amber-500/20 border border-amber-500/30 shrink-0">
+                  <ShieldAlert className="w-6 h-6 text-amber-400" />
+                </div>
+                <div>
+                  <h3 className="font-extrabold text-base text-white">{pendingAction.title}</h3>
+                  <p className="text-xs text-amber-300 font-mono mt-0.5 truncate">{pendingAction.user.email}</p>
+                </div>
+              </div>
+
+              <p className="text-xs text-slate-200 leading-relaxed bg-slate-950/80 p-3.5 rounded-2xl border border-slate-800">
+                {pendingAction.message}
+              </p>
+
+              <div className="flex items-center justify-end gap-3 pt-2">
+                <button
+                  onClick={() => setPendingAction(null)}
+                  className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition cursor-pointer"
+                >
+                  إلغاء
+                </button>
+                <button
+                  onClick={handleExecutePendingAction}
+                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs shadow-lg transition cursor-pointer flex items-center gap-1.5"
+                >
+                  <span>تأكيد التنفيذ الآن</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}

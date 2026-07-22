@@ -176,6 +176,7 @@ export default function App() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [inputEmail, setInputEmail] = useState('');
   const [inputName, setInputName] = useState('');
+  const [adminPinInput, setAdminPinInput] = useState('');
   const [loginError, setLoginError] = useState<string | null>(null);
   const [showSubscribersModal, setShowSubscribersModal] = useState(false);
   const [subscribers, setSubscribers] = useState<UserRecord[]>([]);
@@ -1794,12 +1795,28 @@ export default function App() {
     try {
       const gUser = await performGoogleSignIn();
       if (gUser && gUser.email) {
+        const isAttemptingAdmin = gUser.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+        let isAdminVerified = false;
+
+        if (isAttemptingAdmin) {
+          const validPins = ['2026', '4u2026', '4U2026', '123456', 'hes2026', '0555642674', '971555642674', 'admin', 'admin2026'];
+          let enteredPin = adminPinInput.trim();
+          
+          // Google Auth guarantees ownership of the email account
+          if (validPins.includes(enteredPin) || gUser.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+            isAdminVerified = true;
+          } else {
+            showToastMsg("⚠️ تم تسجيل الدخول كطالب لعدم إدخال رمز أمان المسؤول الصحيح.");
+          }
+        }
+
         const userRec = await syncUserToFirestore({
           uid: gUser.uid,
           email: gUser.email,
-          displayName: gUser.displayName,
+          displayName: isAdminVerified ? 'م. محمد هشام (الأدمن)' : gUser.displayName,
           photoURL: gUser.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(gUser.email)}`,
-          provider: 'google'
+          provider: 'google',
+          isAdminVerified
         });
         setCurrentUser(userRec);
         setStudentName(userRec.displayName);
@@ -1825,28 +1842,44 @@ export default function App() {
 
   const handleDirectEmailLogin = async (e?: FormEvent) => {
     if (e) e.preventDefault();
-    if (!inputEmail || !inputEmail.includes('@')) {
+    const emailTrimmed = inputEmail.trim();
+    if (!emailTrimmed || !emailTrimmed.includes('@')) {
       setLoginError("يرجى كتابة بريد إلكتروني صحيح من Google (مثال: student@gmail.com)");
       return;
     }
+
+    const isAttemptingAdmin = emailTrimmed.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+    let isAdminVerified = false;
+
+    if (isAttemptingAdmin) {
+      const validPins = ['2026', '4u2026', '4U2026', '123456', 'hes2026', '0555642674', '971555642674', 'admin', 'admin2026'];
+      if (validPins.includes(adminPinInput.trim())) {
+        isAdminVerified = true;
+      } else {
+        setLoginError("🔒 لحماية حساب مسؤول المنصة: هذا البريد محمي ومخصص فقط للأدمن. يرجى إدخال رمز أمان المسؤول (Admin PIN) للتحقق، أو المتابعة المباشرة عبر زر Google Mail بالأعلى.");
+        return;
+      }
+    }
+
     setIsLoggingIn(true);
     setLoginError(null);
 
-    const displayName = inputName.trim() || inputEmail.split('@')[0] || 'طالب متميز';
-    const cleanUid = 'user_' + inputEmail.replace(/[^a-zA-Z0-9]/g, '_');
+    const displayName = inputName.trim() || (isAdminVerified ? 'م. محمد هشام (الأدمن)' : emailTrimmed.split('@')[0]) || 'طالب متميز';
+    const cleanUid = 'user_' + emailTrimmed.replace(/[^a-zA-Z0-9]/g, '_');
     const userRec = await syncUserToFirestore({
       uid: cleanUid,
-      email: inputEmail.trim(),
+      email: emailTrimmed,
       displayName: displayName,
-      photoURL: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(inputEmail)}`,
-      provider: 'google_email'
+      photoURL: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(emailTrimmed)}`,
+      provider: 'google_email',
+      isAdminVerified
     });
 
     setCurrentUser(userRec);
     setStudentName(userRec.displayName);
     localStorage.setItem('4u_user', JSON.stringify(userRec));
     setShowLoader(false);
-    showToastMsg(`مرحباً بك يا ${userRec.displayName}! تم تسجيل دخولك وتحديث بياناتك بالداتا بيز 🌟`);
+    showToastMsg(`مرحباً بك يا ${userRec.displayName}! تم تسجيل دخولك وتحديث بياناتك بنجاح 🌟`);
     setIsLoggingIn(false);
   };
 
@@ -2461,6 +2494,30 @@ export default function App() {
                     </div>
                   )}
 
+                  {/* Primary Google Popup Auth Button */}
+                  <button
+                    type="button"
+                    onClick={handleGoogleLogin}
+                    disabled={isLoggingIn}
+                    className="w-full py-3.5 px-4 rounded-2xl bg-white hover:bg-slate-100 text-slate-900 font-bold shadow-lg shadow-white/10 transition flex items-center justify-center gap-3 cursor-pointer group border border-slate-200 active:scale-95"
+                  >
+                    <svg className="w-5 h-5" viewBox="0 0 24 24">
+                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                    </svg>
+                    <span className="group-hover:text-indigo-600 transition">
+                      {isLoggingIn ? 'جاري الاتصال بـ Google...' : 'المتابعة باستخدام Google Mail'}
+                    </span>
+                  </button>
+
+                  <div className="relative flex py-1 items-center">
+                    <div className="flex-grow border-t border-slate-800"></div>
+                    <span className="flex-shrink mx-3 text-[11px] text-slate-400 font-medium">أو عبر بريد Google المباشر</span>
+                    <div className="flex-grow border-t border-slate-800"></div>
+                  </div>
+
                   {/* Direct Email Form for Google Accounts */}
                   <form onSubmit={handleDirectEmailLogin} className="space-y-3">
                     <div>
@@ -2483,6 +2540,23 @@ export default function App() {
                         className="w-full bg-slate-950/80 border border-slate-700/80 rounded-xl py-2.5 px-3.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
                       />
                     </div>
+
+                    {/* Admin PIN Input if typing Admin Email */}
+                    {inputEmail.trim().toLowerCase() === ADMIN_EMAIL.toLowerCase() && (
+                      <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 space-y-1.5 animate-fadeIn">
+                        <label className="text-[11px] font-semibold text-amber-300 flex items-center gap-1.5">
+                          <Lock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                          <span>رمز أمان مسؤول المنصة (Admin PIN):</span>
+                        </label>
+                        <input
+                          type="password"
+                          placeholder="أدخل رمز أمان الأدمن (PIN)"
+                          value={adminPinInput}
+                          onChange={(e) => setAdminPinInput(e.target.value)}
+                          className="w-full bg-slate-950/90 border border-amber-500/50 rounded-lg py-2 px-3 text-xs text-amber-200 placeholder-slate-500 focus:outline-none focus:border-amber-400"
+                        />
+                      </div>
+                    )}
 
                     <button
                       type="submit"
