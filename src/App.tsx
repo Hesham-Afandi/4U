@@ -11,10 +11,10 @@ import { Term, Stream, Program, Grade, Subject, Unit, Lesson, AppState } from '.
 import { 
   FavoritesModal, StatsModal, CertificateModal, ShareModal, 
   PlannerModal, SummaryNotesModal, ReminderSettingModal, AlarmTriggeredModal,
-  VideoPlayerModal, ExamCodesModal, SubscribersModal
+  VideoPlayerModal, ExamCodesModal, SubscribersModal, EmbeddedLessonViewerModal
 } from './components/modals';
 import { signInWithPopup } from 'firebase/auth';
-import { auth, googleProvider, syncUserToFirestore, fetchAllSubscribers, fetchActiveAnnouncement, performGoogleSignIn, UserRecord, Announcement } from './lib/firebase';
+import { auth, googleProvider, syncUserToFirestore, syncUserStatsToFirestore, fetchAllSubscribers, fetchActiveAnnouncement, performGoogleSignIn, UserRecord, Announcement } from './lib/firebase';
 import { WeeklyStudyPlanner } from './components/layout';
 import { STUDY_QUOTES } from './data/quotes';
 import { extractTextFromLessonUrl } from './utils/pdfParser';
@@ -207,6 +207,19 @@ export default function App() {
   const [showInstallModal, setShowInstallModal] = useState(false);
   const [showExitConfirmModal, setShowExitConfirmModal] = useState(false);
   const [activeVideoLesson, setActiveVideoLesson] = useState<Lesson | null>(null);
+  const [activeEmbeddedViewer, setActiveEmbeddedViewer] = useState<{
+    isOpen: boolean;
+    title: string;
+    contentType: 'lesson' | 'exam';
+    url: string;
+    unitName?: string;
+    subjectName?: string;
+  }>({
+    isOpen: false,
+    title: '',
+    contentType: 'lesson',
+    url: ''
+  });
   const [activeQuote, setActiveQuote] = useState('');
 
   // --- Visit Streak & Platform Active Session Timer ---
@@ -2356,18 +2369,87 @@ export default function App() {
     return `${subjectId}-${appState.grade?.id}-${streamPart}-${appState.term?.id}`;
   };
 
+  const syncCurrentStudentStatsToFirestore = async (customProgress?: any) => {
+    if (!currentUser?.uid) return;
+    const currentProg = customProgress || progress;
+    let totalRead = 0;
+    let totalExams = 0;
+    let totalTime = 0;
+    Object.values(currentProg).forEach((item: any) => {
+      if (item?.read) totalRead++;
+      if (item?.examDone) totalExams++;
+      totalTime += (item?.totalTime || 0);
+    });
+
+    const gradeName = appState.grade?.name || 'غير محدد';
+    const countryName = COUNTRY_INFO[appState.country || 'UAE']?.name || 'الإمارات';
+
+    await syncUserStatsToFirestore(currentUser.uid, {
+      examsCompletedCount: totalExams,
+      lessonsCompletedCount: totalRead,
+      totalTimeSpentSeconds: totalTime,
+      streakDays: visitStreak || 1,
+      gradeName,
+      countryName
+    });
+  };
+
   const openLesson = () => {
     if (appState.lesson?.lessonUrl) {
-      window.open(appState.lesson.lessonUrl, '_blank');
+      setActiveEmbeddedViewer({
+        isOpen: true,
+        title: appState.lesson.title,
+        contentType: 'lesson',
+        url: appState.lesson.lessonUrl,
+        unitName: appState.unit?.name,
+        subjectName: appState.subject?.name
+      });
       toggleLessonRead(appState.lesson, appState.unit!, true);
+    } else {
+      showToastMsg('⚠️ رابط الشرح غير متوفر لهذا الدرس حالياً');
     }
   };
 
   const openExam = () => {
     if (appState.lesson?.examUrl) {
-      window.open(appState.lesson.examUrl, '_blank');
+      setActiveEmbeddedViewer({
+        isOpen: true,
+        title: `اختبار: ${appState.lesson.title}`,
+        contentType: 'exam',
+        url: appState.lesson.examUrl,
+        unitName: appState.unit?.name,
+        subjectName: appState.subject?.name
+      });
       markExamDone(appState.lesson, appState.unit!);
+    } else {
+      showToastMsg('⚠️ رابط الاختبار غير متوفر لهذا الدرس حالياً');
     }
+  };
+
+  const handleConfirmEmbeddedViewerExit = (elapsedSeconds: number) => {
+    setActiveEmbeddedViewer(prev => ({ ...prev, isOpen: false }));
+    
+    if (appState.lesson && appState.unit) {
+      const key = getLessonKey(appState.lesson, appState.unit);
+      if (key) {
+        setProgress(prev => {
+          const current = prev[key] || { read: false, examDone: false, totalTime: 0 };
+          const updated = {
+            ...prev,
+            [key]: {
+              ...current,
+              totalTime: (current.totalTime || 0) + elapsedSeconds
+            }
+          };
+          localStorage.setItem('4u_progress', JSON.stringify(updated));
+          syncCurrentStudentStatsToFirestore(updated);
+          return updated;
+        });
+      }
+    } else {
+      syncCurrentStudentStatsToFirestore();
+    }
+    showToastMsg('✅ تم إغلاق الجلسة المدمجة والعودة للمنصة بنجاح');
   };
 
   return (
@@ -4896,6 +4978,18 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* 22. EMBEDDED LESSON & EXAM VIEWER MODAL WITH EXIT CONFIRMATION */}
+      <EmbeddedLessonViewerModal
+        isOpen={activeEmbeddedViewer.isOpen}
+        onClose={() => setActiveEmbeddedViewer(prev => ({ ...prev, isOpen: false }))}
+        onConfirmExit={handleConfirmEmbeddedViewerExit}
+        title={activeEmbeddedViewer.title}
+        contentType={activeEmbeddedViewer.contentType}
+        url={activeEmbeddedViewer.url}
+        unitName={activeEmbeddedViewer.unitName}
+        subjectName={activeEmbeddedViewer.subjectName}
+      />
         </>
       )}
 

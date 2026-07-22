@@ -60,6 +60,15 @@ export async function performGoogleSignIn(): Promise<{
   throw new Error("لم يتم إكمال الدخول بحساب Google");
 }
 
+export interface ExamHistoryItem {
+  id: string;
+  title: string;
+  subject?: string;
+  score: number;
+  date: string;
+  correctQuestions?: number;
+}
+
 export interface UserRecord {
   uid: string;
   email: string;
@@ -67,8 +76,26 @@ export interface UserRecord {
   photoURL?: string;
   createdAt?: string;
   lastLoginAt?: string;
+  lastActiveAt?: string;
   provider?: string;
   role?: 'admin' | 'user';
+  // Detailed Analytics for Admin View & Student Dashboard
+  examsCompletedCount?: number;
+  lessonsCompletedCount?: number;
+  totalTimeSpentSeconds?: number;
+  streakDays?: number;
+  gradeName?: string;
+  countryName?: string;
+  points?: number;
+  totalCorrectQuestions?: number;
+  averageScore?: number;
+  lastExamTitle?: string;
+  lastExamScore?: number;
+  lastExamDate?: string;
+  certificatesCount?: number;
+  badges?: string[];
+  mostStudiedSubject?: string;
+  examHistory?: ExamHistoryItem[];
 }
 
 export interface Announcement {
@@ -155,6 +182,43 @@ export async function syncUserToFirestore(userData: { uid: string; email: string
   }
 
   return record;
+}
+
+/**
+ * Syncs student activity stats (exams solved, lessons completed, time spent, streak, grade) to Firestore
+ */
+export async function syncUserStatsToFirestore(
+  uid: string,
+  stats: {
+    examsCompletedCount?: number;
+    lessonsCompletedCount?: number;
+    totalTimeSpentSeconds?: number;
+    streakDays?: number;
+    gradeName?: string;
+    countryName?: string;
+    points?: number;
+    totalCorrectQuestions?: number;
+    averageScore?: number;
+    lastExamTitle?: string;
+    lastExamScore?: number;
+    lastExamDate?: string;
+    certificatesCount?: number;
+    badges?: string[];
+    mostStudiedSubject?: string;
+    examHistory?: ExamHistoryItem[];
+  }
+): Promise<void> {
+  if (!uid) return;
+  try {
+    const userRef = doc(db, 'users', uid);
+    const now = new Date().toISOString();
+    await updateDoc(userRef, {
+      ...stats,
+      lastActiveAt: now
+    });
+  } catch (err) {
+    // Silently ignore if network issue or user document is fast-synced
+  }
 }
 
 /**
