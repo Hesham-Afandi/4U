@@ -34,25 +34,25 @@ export const ShareModal: React.FC<ShareModalProps> = ({
         </p>
 
         {/* Quick Share buttons */}
-        <div className="grid grid-cols-2 gap-3 mb-5">
+        <div className="grid grid-cols-2 gap-3 mb-4">
           <a 
-            href={`https://wa.me/?text=${encodeURIComponent(`📚 ${shareInfo.title}\nمنصة 4U التعليمية: ${shareInfo.url}`)}`}
+            href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`${shareInfo.url}\n\n📚 ${shareInfo.title}\n🎓 المنصة التعليمية المتكاملة 4U`)}`}
             target="_blank"
             rel="noreferrer"
             className="bg-emerald-500 hover:bg-emerald-600 text-white p-3 rounded-2xl flex flex-col items-center gap-1 text-xs font-bold transition duration-300"
           >
             <span className="text-xl">💬</span>
-            <span>واتساب</span>
+            <span>مشاركة عبر واتساب</span>
           </a>
 
           <a 
-            href={`https://t.me/share/url?url=${encodeURIComponent(shareInfo.url)}&text=${encodeURIComponent(`📚 ${shareInfo.title}`)}`}
+            href={`https://t.me/share/url?url=${encodeURIComponent(shareInfo.url)}&text=${encodeURIComponent(`📚 ${shareInfo.title} - المنصة التعليمية المتكاملة 4U`)}`}
             target="_blank"
             rel="noreferrer"
             className="bg-sky-500 hover:bg-sky-600 text-white p-3 rounded-2xl flex flex-col items-center gap-1 text-xs font-bold transition duration-300"
           >
             <span className="text-xl">✈️</span>
-            <span>تليجرام</span>
+            <span>مشاركة عبر تليجرام</span>
           </a>
         </div>
 
