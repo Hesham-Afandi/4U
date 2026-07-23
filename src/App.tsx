@@ -4,7 +4,7 @@ import {
   BookOpen, Search, RotateCcw, Heart, BarChart2, Sun, Moon, 
   Home, ChevronRight, Share2, Clipboard, Copy, Award, Printer, CheckCircle, Clock,
   Download, Mic, Sparkles, Megaphone, Radio, Pause, Play, Volume2, VolumeX,
-  MessageSquare, Send, X, Flame, Sliders, Settings, LogIn, LogOut, Users, User, Mail, ShieldCheck, Crown, Lock, Bell, BellOff
+  MessageSquare, Send, X, Flame, Sliders, Settings, LogIn, LogOut, Users, User, Mail, ShieldCheck, Crown, Lock, Bell, BellOff, RefreshCw
 } from 'lucide-react';
 import { DB, countries } from './data';
 import { Term, Stream, Program, Grade, Subject, Unit, Lesson, AppState } from './types';
@@ -212,6 +212,7 @@ export default function App() {
   const [loaderError, setLoaderError] = useState(false);
   const [loaderSrc, setLoaderSrc] = useState(teacherLoader);
   const [toast, setToast] = useState<string | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [installPrompt, setInstallPrompt] = useState<any>(null);
   const [showInstallModal, setShowInstallModal] = useState(false);
   const [showExitConfirmModal, setShowExitConfirmModal] = useState(false);
@@ -1796,6 +1797,29 @@ export default function App() {
     }
   };
 
+  const handlePlatformRefresh = async () => {
+    if (isRefreshing) return;
+    setIsRefreshing(true);
+    showToastMsg("🔄 جاري تحديث المنصة بالكامل وتحديث المحتوى والبيانات...");
+    try {
+      const [list, ann] = await Promise.all([
+        fetchAllSubscribers().catch(() => []),
+        fetchActiveAnnouncement().catch(() => null)
+      ]);
+      if (list && list.length > 0) {
+        setSubscribers(list);
+        setSubscriberCount(list.length);
+      }
+      if (ann) setGlobalAnnouncement(ann);
+    } catch (e) {
+      console.warn("Refresh error:", e);
+    }
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 400);
+  };
+
   useEffect(() => {
     fetchAllSubscribers().then(list => {
       setSubscribers(list);
@@ -2853,6 +2877,17 @@ export default function App() {
                 <span className="hidden sm:inline">تسجيل الدخول</span>
               </button>
             )}
+
+            {/* Always-visible Platform Refresh / Reload Button */}
+            <button 
+              onClick={handlePlatformRefresh}
+              disabled={isRefreshing}
+              className="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 p-2 rounded-xl backdrop-blur-sm border border-emerald-400/40 transition flex items-center gap-1.5 text-xs font-bold cursor-pointer active:scale-95 shadow-md shrink-0"
+              title="تحديث المنصة بالكامل وجلب أحدث الدروس والبيانات"
+            >
+              <RefreshCw className={`w-4 h-4 text-emerald-300 ${isRefreshing ? 'animate-spin' : ''}`} />
+              <span className="hidden md:inline">تحديث المنصة</span>
+            </button>
 
             {/* Theme toggler */}
             <button 
