@@ -43,7 +43,7 @@ export async function performGoogleSignIn(): Promise<{
       return {
         uid: res.user.uid,
         email: res.user.email,
-        displayName: res.user.displayName || res.user.email.split('@')[0] || 'طالب متميز',
+        displayName: res.user.displayName || res.user.email.split('@')[0] || 'طالب المنصة',
         photoURL: res.user.photoURL || undefined,
       };
     }
@@ -74,6 +74,9 @@ export interface UserRecord {
   email: string;
   displayName: string;
   photoURL?: string;
+  phoneNumber?: string;
+  guardianPhone?: string;
+  address?: string;
   createdAt?: string;
   lastLoginAt?: string;
   lastActiveAt?: string;
@@ -139,7 +142,7 @@ export async function syncUserToFirestore(userData: { uid: string; email: string
   const record: UserRecord = {
     uid: cleanUid,
     email: userData.email,
-    displayName: userData.displayName || userData.email.split('@')[0] || 'طالب متميز',
+    displayName: userData.displayName || userData.email.split('@')[0] || 'طالب المنصة',
     photoURL: userData.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(userData.email)}`,
     provider: userData.provider || 'google',
     role: isPrimaryAdminEmail ? (userData.isAdminVerified ? 'admin' : 'user') : 'user',
@@ -218,6 +221,33 @@ export async function syncUserStatsToFirestore(
     });
   } catch (err) {
     // Silently ignore if network issue or user document is fast-synced
+  }
+}
+
+/**
+ * Updates full profile data (name, phone, photo, address, grade, guardian phone) for student dashboard
+ */
+export async function updateUserProfileInFirestore(
+  uid: string,
+  profileData: {
+    displayName?: string;
+    photoURL?: string;
+    phoneNumber?: string;
+    guardianPhone?: string;
+    address?: string;
+    gradeName?: string;
+    countryName?: string;
+  }
+): Promise<void> {
+  if (!uid) return;
+  try {
+    const userRef = doc(db, 'users', uid);
+    await setDoc(userRef, {
+      ...profileData,
+      lastActiveAt: new Date().toISOString()
+    }, { merge: true });
+  } catch (err) {
+    console.warn("Profile update sync notice:", err);
   }
 }
 

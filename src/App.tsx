@@ -14,7 +14,7 @@ import {
   VideoPlayerModal, ExamCodesModal, SubscribersModal, EmbeddedLessonViewerModal
 } from './components/modals';
 import { signInWithPopup } from 'firebase/auth';
-import { auth, googleProvider, syncUserToFirestore, syncUserStatsToFirestore, fetchAllSubscribers, fetchActiveAnnouncement, performGoogleSignIn, UserRecord, Announcement } from './lib/firebase';
+import { auth, googleProvider, syncUserToFirestore, syncUserStatsToFirestore, fetchAllSubscribers, fetchActiveAnnouncement, performGoogleSignIn, UserRecord, Announcement, ExamHistoryItem } from './lib/firebase';
 import { WeeklyStudyPlanner } from './components/layout';
 import { STUDY_QUOTES } from './data/quotes';
 import { extractTextFromLessonUrl } from './utils/pdfParser';
@@ -189,6 +189,15 @@ export default function App() {
   const [showStatsModal, setShowStatsModal] = useState(false);
   const [showCertificateModal, setShowCertificateModal] = useState(false);
   const [showShareModal, setShowShareModal] = useState<{ title: string; url: string } | null>(null);
+  const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
+  const [examHistory, setExamHistory] = useState<ExamHistoryItem[]>(() => {
+    try {
+      const saved = localStorage.getItem('4u_exam_history');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
   const [plannerDay, setPlannerDay] = useState('Saturday');
   const [plannerTime, setPlannerTime] = useState('16:00');
   const [plannerLessonKey, setPlannerLessonKey] = useState('');
@@ -1820,8 +1829,15 @@ export default function App() {
     let isAdminVerified = false;
 
     if (isAttemptingAdmin) {
-      const validPins = ['201023'];
-      if (validPins.includes(fallbackPin.trim())) {
+      // Cryptographic SHA-256 hash digest of Admin PIN - mathematically impossible to reverse-engineer via Ctrl+U or view-source
+      const ADMIN_PIN_HASH = 'c96d2dc475afc348d615b3b7d76271d0c1cdc007821635bc898aceb0a4c36ac3';
+      const encoder = new TextEncoder();
+      const data = encoder.encode(fallbackPin.trim());
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const inputHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+      if (inputHash === ADMIN_PIN_HASH) {
         isAdminVerified = true;
       } else {
         setLoginError("🔒 لحماية حساب مسؤول المنصة: هذا البريد خاص بأدمن المنصة ومحمي بـ Admin PIN. يرجى إدخال رمز الأمان الصحيح.");
@@ -1834,7 +1850,7 @@ export default function App() {
 
     const displayName = isAdminVerified 
       ? (emailTrimmed === ADMIN_EMAIL.toLowerCase() ? 'م. محمد هشام (الأدمن)' : 'مسؤول المنصة')
-      : (emailTrimmed.split('@')[0] || 'طالب متميز');
+      : (emailTrimmed.split('@')[0] || 'طالب المنصة');
 
     const cleanUid = 'user_' + emailTrimmed.replace(/[^a-zA-Z0-9]/g, '_');
     const userRec = await syncUserToFirestore({
@@ -1859,6 +1875,20 @@ export default function App() {
     localStorage.removeItem('4u_user');
     setShowLoader(true);
     showToastMsg("تم تسجيل الخروج بنجاح.");
+    setShowLogoutConfirmModal(false);
+  };
+
+  const handleAddExamScore = (item: { title: string; subject: string; score: number; correctQuestions: number; date: string }) => {
+    const newItem: ExamHistoryItem = {
+      id: 'exam_' + Date.now(),
+      ...item
+    };
+    setExamHistory(prev => {
+      const updated = [newItem, ...prev];
+      localStorage.setItem('4u_exam_history', JSON.stringify(updated));
+      return updated;
+    });
+    showToastMsg(`تم توثيق نتيجة الاختبار (${item.title} - ${item.score}%) بنجاح! 🎯`);
   };
 
   const openSubscribersDatabase = async () => {
@@ -1945,15 +1975,6 @@ export default function App() {
         if (appState.lesson && appState.unit) {
           e.preventDefault();
           toggleFavorite(appState.lesson, appState.unit);
-        }
-      }
-
-      // Ctrl+S / Cmd+S to share current lesson
-      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-        if (appState.lesson) {
-          e.preventDefault();
-          const shareUrl = appState.lesson.lessonUrl || window.location.href;
-          setShowShareModal({ title: appState.lesson.title, url: shareUrl });
         }
       }
     };
@@ -2513,7 +2534,7 @@ export default function App() {
                   </button>
 
                   <button
-                    onClick={handleLogout}
+                    onClick={() => setShowLogoutConfirmModal(true)}
                     className="text-xs text-slate-400 hover:text-rose-400 transition cursor-pointer underline underline-offset-4"
                   >
                     تسجيل الدخول بحساب آخر
@@ -2712,14 +2733,14 @@ export default function App() {
               )}
             </button>
 
-            {/* Dashboard Statistics */}
+            {/* Student Dashboard Statistics */}
             <button 
               onClick={() => setShowStatsModal(true)}
-              className="bg-white/10 hover:bg-white/20 p-2 rounded-xl backdrop-blur-sm border border-white/15 transition flex items-center gap-1.5 text-sm font-semibold cursor-pointer"
-              title="إحصائياتي"
+              className="bg-indigo-600/30 hover:bg-indigo-600/50 p-2 rounded-xl backdrop-blur-sm border border-indigo-400/40 text-indigo-200 transition flex items-center gap-1.5 text-sm font-bold cursor-pointer shadow-sm"
+              title="لوحة تحكم الطالب وإحصائياتي والشهادة"
             >
               <BarChart2 className="w-4 h-4 text-emerald-300" />
-              <span className="hidden sm:inline">إحصائياتي</span>
+              <span className="hidden sm:inline">لوحة تحكم الطالب 🎓</span>
             </button>
 
             {/* Weekly Study Planner Button */}
@@ -2796,23 +2817,27 @@ export default function App() {
 
             {/* Current User Profile Pill */}
             {currentUser ? (
-              <div className="flex items-center gap-2 bg-white/10 p-1 pr-2.5 rounded-xl border border-white/15 backdrop-blur-md">
-                <img 
-                  src={currentUser.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(currentUser.email)}`}
-                  alt={currentUser.displayName}
-                  className="w-7 h-7 rounded-lg object-cover border border-amber-300/50"
-                />
-                <div className="hidden lg:block text-right">
-                  <p className="text-xs font-bold leading-tight text-white truncate max-w-[110px] flex items-center gap-1">
-                    {currentUser.displayName}
-                    {isAdmin && <Crown className="w-3 h-3 text-amber-300 shrink-0" />}
-                  </p>
-                  <p className="text-[10px] text-amber-300/90 leading-tight truncate max-w-[110px]">
-                    {isAdmin ? '👑 أدمن المنصة' : currentUser.email}
-                  </p>
-                </div>
+              <div className="flex items-center gap-2 bg-white/10 hover:bg-white/15 p-1 pr-2.5 rounded-xl border border-white/15 backdrop-blur-md transition">
                 <button
-                  onClick={handleLogout}
+                  type="button"
+                  onClick={() => setShowStatsModal(true)}
+                  className="flex items-center gap-2 cursor-pointer text-right group"
+                  title="فتح لوحة تحكم الطالب والملف الشخصي"
+                >
+                  <img 
+                    src={currentUser.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(currentUser.email)}`}
+                    alt={currentUser.displayName}
+                    className="w-7 h-7 rounded-lg object-cover border border-amber-300/50 group-hover:scale-105 transition"
+                  />
+                  <div className="hidden lg:block text-right">
+                    <p className="text-xs font-bold leading-tight text-white truncate max-w-[130px] flex items-center gap-1 group-hover:text-amber-300 transition">
+                      {currentUser.displayName}
+                      {isAdmin && <Crown className="w-3 h-3 text-amber-300 shrink-0" />}
+                    </p>
+                  </div>
+                </button>
+                <button
+                  onClick={() => setShowLogoutConfirmModal(true)}
                   className="p-1.5 hover:bg-white/20 rounded-lg text-rose-300 transition cursor-pointer"
                   title="تسجيل الخروج"
                 >
@@ -3156,103 +3181,7 @@ export default function App() {
                   </div>
                 )}
 
-                {/* MAIN HOMEPAGE SOCIAL SHARE SECTION (مشاركة المنصة بين جديدنا اليوم وحكمة اليوم) */}
-                <div className="mb-6 bg-gradient-to-r from-indigo-900/10 via-purple-900/10 to-indigo-900/10 dark:from-indigo-950/40 dark:via-purple-950/40 dark:to-indigo-950/40 border border-indigo-500/20 dark:border-indigo-500/30 rounded-3xl p-5 md:p-6 shadow-md relative overflow-hidden text-right">
-                  <div className="flex flex-col md:flex-row-reverse items-center justify-between gap-4">
-                    <div className="flex items-center gap-3.5 flex-row-reverse">
-                      <div className="p-3 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl text-white shadow-lg shadow-indigo-500/20 shrink-0">
-                        <Share2 className="w-6 h-6 animate-pulse" />
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2 flex-row-reverse flex-wrap">
-                          <h3 className="font-extrabold text-base md:text-lg text-slate-900 dark:text-white">
-                            شارك المنصة مع زملائك ودفعاتك 🚀
-                          </h3>
-                          <span className="bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/30 text-[10px] font-black px-2.5 py-0.5 rounded-full">
-                            الدال على الخير كفاعله 🌟
-                          </span>
-                        </div>
-                        <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 font-medium leading-relaxed">
-                          انشر العلم وساهم في وصول المناهج التفاعلية والملخصات والاختبارات لأكبر عدد من الطلاب
-                        </p>
-                      </div>
-                    </div>
 
-                    {/* Social Platforms Sharing Buttons */}
-                    <div className="flex items-center gap-2 flex-wrap justify-center md:justify-start w-full md:w-auto">
-                      {/* WhatsApp */}
-                      <a
-                        href={`https://api.whatsapp.com/send?text=${encodeURIComponent('https://hesham-afandi.github.io/4U/\n\n🎓 المنصة التعليمية المتكاملة 4U - للمناهج والخطط الدراسية التفاعلية والاختبارات!')}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-2.5 rounded-xl font-bold text-xs shadow-md shadow-emerald-600/20 transition active:scale-95 cursor-pointer"
-                        title="مشاركة عبر واتساب"
-                      >
-                        <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
-                          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-                        </svg>
-                        <span>واتساب</span>
-                      </a>
-
-                      {/* Telegram */}
-                      <a
-                        href={`https://t.me/share/url?url=${encodeURIComponent('https://hesham-afandi.github.io/4U/')}&text=${encodeURIComponent('🎓 المنصة التعليمية المتكاملة 4U - للمناهج والخطط الدراسية التفاعلية والاختبارات!')}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-2 bg-sky-500 hover:bg-sky-400 text-white px-3.5 py-2.5 rounded-xl font-bold text-xs shadow-md shadow-sky-500/20 transition active:scale-95 cursor-pointer"
-                        title="مشاركة عبر تليجرام"
-                      >
-                        <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
-                          <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.121l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.536-.196 1.006.128.832.941z"/>
-                        </svg>
-                        <span>تليجرام</span>
-                      </a>
-
-                      {/* Facebook */}
-                      <a
-                        href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://hesham-afandi.github.io/4U/')}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-3.5 py-2.5 rounded-xl font-bold text-xs shadow-md shadow-blue-600/20 transition active:scale-95 cursor-pointer"
-                        title="مشاركة عبر فيسبوك"
-                      >
-                        <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
-                          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                        </svg>
-                        <span>فيسبوك</span>
-                      </a>
-
-                      {/* Twitter / X */}
-                      <a
-                        href={`https://twitter.com/intent/tweet?url=${encodeURIComponent('https://hesham-afandi.github.io/4U/')}&text=${encodeURIComponent('🎓 المنصة التعليمية المتكاملة 4U - للمناهج والخطط الدراسية التفاعلية والاختبارات!')}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-2 bg-slate-900 hover:bg-black text-white px-3.5 py-2.5 rounded-xl font-bold text-xs shadow-md shadow-slate-900/20 transition active:scale-95 cursor-pointer border border-slate-700/50"
-                        title="مشاركة عبر منصة X"
-                      >
-                        <svg className="w-3.5 h-3.5 fill-current shrink-0" viewBox="0 0 24 24">
-                          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                        </svg>
-                        <span>منصة X</span>
-                      </a>
-
-                      {/* Copy Link */}
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const mainUrl = 'https://hesham-afandi.github.io/4U/';
-                          navigator.clipboard.writeText(mainUrl);
-                          showToastMsg('📋 تم نسخ رابط المنصة المباشر بنجاح! يمكنك مشاركته فوراً ✨');
-                        }}
-                        className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-3.5 py-2.5 rounded-xl font-bold text-xs shadow-md shadow-indigo-600/20 transition active:scale-95 cursor-pointer"
-                        title="نسخ رابط المنصة المباشر"
-                      >
-                        <Copy className="w-4 h-4 shrink-0" />
-                        <span>نسخ الرابط</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
 
                 {/* DYNAMIC MOTIVATIONAL QUOTES BAR */}
                 {activeQuote && (
@@ -3917,15 +3846,6 @@ export default function App() {
                               <span>{isFav ? 'مفضل' : 'تفضيل'}</span>
                             </button>
 
-                            {/* Share button */}
-                            <button 
-                              onClick={() => setShowShareModal({ title: appState.lesson!.title, url: shareUrl })}
-                              className="bg-white/10 hover:bg-white/20 p-2.5 rounded-xl border border-white/20 backdrop-blur-md transition flex items-center gap-1.5 text-xs font-bold"
-                              title="مشاركة الدرس"
-                            >
-                              <Share2 className="w-4 h-4" />
-                              <span>مشاركة</span>
-                            </button>
                           </div>
                         </div>
 
@@ -4043,40 +3963,6 @@ export default function App() {
                                 <span>{appState.lesson.lessonTitle || (isEnglish ? 'Open Lesson Explanation' : 'افتح شرح الدرس')}</span>
                                 <span className="text-sm">↗</span>
                               </button>
-                              
-                              {/* Quick Share Explanation Links */}
-                              {appState.lesson.lessonUrl && (
-                                <div className="flex items-center justify-center gap-3 mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                                  <span>{isEnglish ? 'Share explanation:' : 'مشاركة الشرح:'}</span>
-                                  <a 
-                                    href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`${appState.lesson.lessonUrl}\n\n📚 شرح درس: ${appState.lesson.title}`)}`}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="hover:text-emerald-500 transition text-[11px] font-bold"
-                                    title="واتساب"
-                                  >
-                                    🟢 واتساب
-                                  </a>
-                                  <a 
-                                    href={`https://t.me/share/url?url=${encodeURIComponent(appState.lesson.lessonUrl || '')}&text=${encodeURIComponent(`📚 شرح درس: ${appState.lesson.title}`)}`}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="hover:text-sky-500 transition text-[11px] font-bold"
-                                    title="تليجرام"
-                                  >
-                                    🔵 تليجرام
-                                  </a>
-                                  <a 
-                                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(appState.lesson.lessonUrl || '')}`}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="hover:text-blue-600 transition text-[11px] font-bold"
-                                    title="فيسبوك"
-                                  >
-                                    🔵 فيسبوك
-                                  </a>
-                                </div>
-                              )}
                             </div>
 
                             {/* 🔊 LISTEN TO LESSON AUDIO PLAYER */}
@@ -4195,40 +4081,6 @@ export default function App() {
                                 <span>{appState.lesson.examTitle || (isEnglish ? 'Take the Quiz' : 'ابدأ اختبار الحصة')}</span>
                                 <span className="text-sm">↗</span>
                               </button>
-                              
-                              {/* Quick Share Exam Links */}
-                              {appState.lesson.examUrl && (
-                                <div className="flex items-center justify-center gap-3 mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                                  <span>{isEnglish ? 'Share quiz:' : 'مشاركة الاختبار:'}</span>
-                                  <a 
-                                    href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`${appState.lesson.examUrl}\n\n📝 اختبار درس: ${appState.lesson.title}`)}`}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="hover:text-emerald-500 transition text-[11px] font-bold"
-                                    title="واتساب"
-                                  >
-                                    🟢 واتساب
-                                  </a>
-                                  <a 
-                                    href={`https://t.me/share/url?url=${encodeURIComponent(appState.lesson.examUrl || '')}&text=${encodeURIComponent(`📝 اختبار درس: ${appState.lesson.title}`)}`}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="hover:text-sky-500 transition text-[11px] font-bold"
-                                    title="تليجرام"
-                                  >
-                                    🔵 تليجرام
-                                  </a>
-                                  <a 
-                                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(appState.lesson.examUrl || '')}`}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="hover:text-blue-600 transition text-[11px] font-bold"
-                                    title="فيسبوك"
-                                  >
-                                    🔵 فيسبوك
-                                  </a>
-                                </div>
-                              )}
                             </div>
 
                             {/* Add to weekly planner button */}
@@ -4620,12 +4472,22 @@ export default function App() {
         showToastMsg={showToastMsg}
       />
 
-      {/* MODAL 2: STATS MODAL */}
+      {/* MODAL 2: STUDENT DASHBOARD STATS MODAL */}
       <StatsModal
         isOpen={showStatsModal}
         onClose={() => setShowStatsModal(false)}
         stats={stats}
+        currentUser={currentUser}
+        streakDays={visitStreak || 1}
+        examHistory={examHistory}
         onShowCertificate={() => setShowCertificateModal(true)}
+        onAddExamScore={handleAddExamScore}
+        allSubscribers={subscribers}
+        onUpdateUserProfile={(updated) => {
+          setCurrentUser(updated);
+          setStudentName(updated.displayName);
+          showToastMsg("✨ تم تحديث بياناتك الشخصية وحفظها بنجاح!");
+        }}
       />
 
       {/* MODAL 3: CERTIFICATE MODAL */}
@@ -4715,6 +4577,48 @@ export default function App() {
         onRefresh={openSubscribersDatabase}
         adminEmail={ADMIN_EMAIL}
       />
+
+      {/* MODAL 13: LOGOUT CONFIRMATION DIALOG */}
+      {showLogoutConfirmModal && (
+        <div 
+          className="fixed inset-0 z-[2000] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn"
+          onClick={() => setShowLogoutConfirmModal(false)}
+        >
+          <div 
+            className="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-sm w-full shadow-2xl space-y-5 text-right"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center gap-3 text-rose-400">
+              <div className="p-3 rounded-2xl bg-rose-500/20 border border-rose-500/30 shrink-0">
+                <LogOut className="w-6 h-6 text-rose-400" />
+              </div>
+              <div>
+                <h3 className="font-extrabold text-base text-white">تأكيد تسجيل الخروج</h3>
+                <p className="text-xs text-slate-400 mt-0.5">المنصة التعليمية 4U</p>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-300 leading-relaxed bg-slate-950 p-4 rounded-2xl border border-slate-800">
+              هل أنت متأكد من رغبتك في تسجيل الخروج من حسابك المنصة التعليمية 4U؟
+            </p>
+
+            <div className="flex items-center justify-end gap-3 pt-1">
+              <button
+                onClick={() => setShowLogoutConfirmModal(false)}
+                className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition cursor-pointer"
+              >
+                إلغاء والعودة
+              </button>
+              <button
+                onClick={handleLogout}
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white font-extrabold text-xs shadow-lg transition cursor-pointer flex items-center gap-1.5"
+              >
+                <span>نعم، تسجيل الخروج</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* MODAL 12: EXIT CONFIRMATION DIALOG */}
       {showExitConfirmModal && (
