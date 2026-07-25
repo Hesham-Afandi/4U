@@ -11,7 +11,7 @@ import { Term, Stream, Program, Grade, Subject, Unit, Lesson, AppState } from '.
 import { 
   FavoritesModal, StatsModal, CertificateModal, ShareModal, 
   PlannerModal, SummaryNotesModal, ReminderSettingModal, AlarmTriggeredModal,
-  VideoPlayerModal, ExamCodesModal, SubscribersModal, EmbeddedLessonViewerModal
+  VideoPlayerModal, ExamCodesModal, SubscribersModal, EmbeddedLessonViewerModal, GeneralChatModal
 } from './components/modals';
 import { signInWithPopup } from 'firebase/auth';
 import { auth, googleProvider, syncUserToFirestore, syncUserStatsToFirestore, fetchAllSubscribers, fetchActiveAnnouncement, performGoogleSignIn, UserRecord, Announcement, ExamHistoryItem } from './lib/firebase';
@@ -208,6 +208,7 @@ export default function App() {
   const [progress, setProgress] = useState<Record<string, { read: boolean; examDone: boolean; totalTime: number }>>({});
   const [studyPlan, setStudyPlan] = useState<any[]>([]);
   const [showPlannerModal, setShowPlannerModal] = useState(false);
+  const [showGeneralChatModal, setShowGeneralChatModal] = useState(false);
   const [logoError, setLogoError] = useState(false);
   const [loaderError, setLoaderError] = useState(false);
   const [loaderSrc, setLoaderSrc] = useState(teacherLoader);
@@ -2767,6 +2768,17 @@ export default function App() {
               <span className="hidden sm:inline">لوحة تحكم الطالب 🎓</span>
             </button>
 
+            {/* General Community Chat Button */}
+            <button 
+              onClick={() => setShowGeneralChatModal(true)}
+              className="bg-amber-500/30 hover:bg-amber-500/50 p-2 md:px-3 rounded-xl backdrop-blur-md border border-amber-400/50 text-amber-200 transition flex items-center gap-1.5 text-sm font-extrabold cursor-pointer shadow-md shrink-0"
+              title="الشات العام وغرف التواصل الطلابية"
+            >
+              <MessageSquare className="w-4 h-4 text-amber-300 animate-pulse" />
+              <span className="hidden sm:inline">الشات العام 💬</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
+            </button>
+
             {/* Weekly Study Planner Button */}
             <button 
               onClick={() => setShowPlannerModal(true)}
@@ -2828,12 +2840,12 @@ export default function App() {
             {isAdmin && (
               <button 
                 onClick={openSubscribersDatabase}
-                className="bg-gradient-to-r from-amber-500/30 to-indigo-500/30 hover:from-amber-500/40 hover:to-indigo-500/40 p-2 rounded-xl backdrop-blur-md border border-amber-400/60 text-amber-300 transition flex items-center gap-1.5 text-xs font-black cursor-pointer shadow-lg animate-pulse"
+                className="bg-gradient-to-r from-amber-500/40 via-amber-600/30 to-indigo-600/40 hover:from-amber-500/50 hover:to-indigo-600/50 p-2 md:px-3 rounded-xl backdrop-blur-md border border-amber-400/80 text-amber-300 transition flex items-center gap-1.5 text-xs font-black cursor-pointer shadow-xl animate-pulse shrink-0"
                 title="لوحة تحكم الأدمن وقاعدة بيانات المشتركين"
               >
-                <Crown className="w-4 h-4 text-amber-300" />
-                <span className="hidden sm:inline">لوحة الأدمن</span>
-                <span className="bg-amber-400 text-slate-950 text-[10px] font-black px-1.5 py-0.2 rounded-full">
+                <Crown className="w-4 h-4 text-amber-300 shrink-0" />
+                <span className="inline font-bold">لوحة الأدمن</span>
+                <span className="bg-amber-400 text-slate-950 text-[10px] font-black px-1.5 py-0.2 rounded-full shadow">
                   {subscriberCount}
                 </span>
               </button>
@@ -4699,24 +4711,6 @@ export default function App() {
 
       {/* 👨‍🏫 CHATBOT FLOATING BUTTON & SLIDE-OVER PANEL */}
       <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3 font-sans">
-        
-        {/* Animated small hint bubble on load/hover */}
-        <AnimatePresence>
-          {!isChatOpen && (
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.8, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.8, y: 10 }}
-              transition={{ delay: 3 }}
-              className="bg-indigo-600 text-white text-xs font-black py-2.5 px-4 rounded-2xl shadow-xl flex items-center gap-1.5 border border-indigo-500 text-right cursor-pointer"
-              onClick={() => setIsChatOpen(true)}
-            >
-              <span className="animate-bounce">✨</span>
-              <span>اسألني: يلا نراجع مع بعض!</span>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
         <button 
           onClick={() => setIsChatOpen(!isChatOpen)}
           className="bg-gradient-to-br from-indigo-600 to-violet-700 hover:from-indigo-700 hover:to-violet-800 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 relative border-2 border-white/20 dark:border-slate-800 cursor-pointer"
@@ -4928,6 +4922,15 @@ export default function App() {
         url={activeEmbeddedViewer.url}
         unitName={activeEmbeddedViewer.unitName}
         subjectName={activeEmbeddedViewer.subjectName}
+      />
+
+      {/* 23. GENERAL COMMUNITY CHAT MODAL */}
+      <GeneralChatModal
+        isOpen={showGeneralChatModal}
+        onClose={() => setShowGeneralChatModal(false)}
+        currentUser={currentUser}
+        isAdmin={isAdmin}
+        userGradeName={appState.grade?.name}
       />
         </>
       )}

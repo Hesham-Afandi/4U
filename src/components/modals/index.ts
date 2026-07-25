@@ -10,3 +10,4 @@ export { VideoPlayerModal } from './VideoPlayerModal';
 export { ExamCodesModal } from './ExamCodesModal';
 export { SubscribersModal } from './SubscribersModal';
 export { EmbeddedLessonViewerModal } from './EmbeddedLessonViewerModal';
+export { GeneralChatModal } from './GeneralChatModal';

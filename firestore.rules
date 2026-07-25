@@ -14,6 +14,14 @@ service cloud.firestore {
     match /announcements/{announcementId} {
       allow read, write, delete: if true;
     }
+
+    match /community_chats/{roomId}/messages/{messageId} {
+      allow read, create, write, update: if true;
+    }
+
+    match /community_chats/{roomId} {
+      allow read, create, write, update: if true;
+    }
   }
 }
 
