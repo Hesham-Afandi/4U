@@ -11,13 +11,15 @@ import { Term, Stream, Program, Grade, Subject, Unit, Lesson, AppState } from '.
 import { 
   FavoritesModal, StatsModal, CertificateModal, ShareModal, 
   PlannerModal, SummaryNotesModal, ReminderSettingModal, AlarmTriggeredModal,
-  VideoPlayerModal, ExamCodesModal, SubscribersModal, EmbeddedLessonViewerModal, GeneralChatModal
+  VideoPlayerModal, ExamCodesModal, SubscribersModal, EmbeddedLessonViewerModal, GeneralChatModal,
+  FlashcardsModal
 } from './components/modals';
 import { signInWithPopup } from 'firebase/auth';
 import { auth, googleProvider, syncUserToFirestore, syncUserStatsToFirestore, fetchAllSubscribers, fetchActiveAnnouncement, performGoogleSignIn, UserRecord, Announcement, ExamHistoryItem } from './lib/firebase';
 import { WeeklyStudyPlanner } from './components/layout';
 import { STUDY_QUOTES } from './data/quotes';
 import { extractTextFromLessonUrl } from './utils/pdfParser';
+import { getEnglishSubjectName, getEnglishGradeName, getEnglishTermName, getEnglishStreamName } from './utils/language';
 
 const DAYS_OF_WEEK = [
   { key: 'Saturday', name: 'السبت' },
@@ -209,6 +211,8 @@ export default function App() {
   const [studyPlan, setStudyPlan] = useState<any[]>([]);
   const [showPlannerModal, setShowPlannerModal] = useState(false);
   const [showGeneralChatModal, setShowGeneralChatModal] = useState(false);
+  const [showFlashcardsModal, setShowFlashcardsModal] = useState(false);
+  const [flashcardsSubject, setFlashcardsSubject] = useState('physics');
   const [logoError, setLogoError] = useState(false);
   const [loaderError, setLoaderError] = useState(false);
   const [loaderSrc, setLoaderSrc] = useState(teacherLoader);
@@ -2768,6 +2772,21 @@ export default function App() {
               <span className="hidden sm:inline">لوحة تحكم الطالب 🎓</span>
             </button>
 
+            {/* Flashcards & Quick Reviews Button */}
+            <button 
+              onClick={() => {
+                if (appState.subject?.id) {
+                  setFlashcardsSubject(appState.subject.id.toLowerCase());
+                }
+                setShowFlashcardsModal(true);
+              }}
+              className="bg-purple-600/40 hover:bg-purple-600/60 p-2 md:px-3 rounded-xl backdrop-blur-md border border-purple-400/50 text-purple-200 transition flex items-center gap-1.5 text-sm font-extrabold cursor-pointer shadow-md shrink-0"
+              title="بطاقات التكرار المتباعد والمراجعة السريعة"
+            >
+              <Sparkles className="w-4 h-4 text-amber-300" />
+              <span className="hidden sm:inline">بطاقات المراجعة 🎴</span>
+            </button>
+
             {/* General Community Chat Button */}
             <button 
               onClick={() => setShowGeneralChatModal(true)}
@@ -3034,7 +3053,7 @@ export default function App() {
               <>
                 <span className="text-gray-400">‹</span>
                 <button onClick={() => jumpToBreadcrumb('term')} className="hover:text-indigo-600 dark:hover:text-indigo-400 font-medium cursor-pointer">
-                  {appState.term.icon} {appState.term.name}
+                  {appState.term.icon} {(appState.program?.id === 'inspire' || appState.program?.isEnglish) ? getEnglishTermName(appState.term.name, appState.term.id) : appState.term.name}
                 </button>
               </>
             )}
@@ -3043,7 +3062,7 @@ export default function App() {
               <>
                 <span className="text-gray-400">‹</span>
                 <button onClick={() => jumpToBreadcrumb('stream')} className="hover:text-indigo-600 dark:hover:text-indigo-400 font-medium cursor-pointer">
-                  {appState.stream.name}
+                  {(appState.program?.id === 'inspire' || appState.program?.isEnglish) ? getEnglishStreamName(appState.stream.name, appState.stream.id) : appState.stream.name}
                 </button>
               </>
             )}
@@ -3061,7 +3080,7 @@ export default function App() {
               <>
                 <span className="text-gray-400">‹</span>
                 <button onClick={() => jumpToBreadcrumb('grade')} className="hover:text-indigo-600 dark:hover:text-indigo-400 font-medium cursor-pointer">
-                  {appState.grade.name}
+                  {(appState.program?.id === 'inspire' || appState.program?.isEnglish) ? getEnglishGradeName(appState.grade.name, appState.grade.id) : appState.grade.name}
                 </button>
               </>
             )}
@@ -3070,7 +3089,7 @@ export default function App() {
               <>
                 <span className="text-gray-400">‹</span>
                 <button onClick={() => jumpToBreadcrumb('subject')} className="hover:text-indigo-600 dark:hover:text-indigo-400 font-medium cursor-pointer">
-                  {appState.subject.name}
+                  {(appState.program?.id === 'inspire' || appState.program?.isEnglish) ? getEnglishSubjectName(appState.subject.name, appState.subject.id) : appState.subject.name}
                 </button>
               </>
             )}
@@ -3428,63 +3447,87 @@ export default function App() {
             {/* VIEW 4: GRADES (9, 10, 11, 12) */}
             {appState.term && appState.stream && (appState.stream.id !== 'advanced' || appState.program) && !appState.grade && (
               <div className="fade-in">
-                <div className="gradient-success rounded-3xl p-8 text-white mb-8 shadow-md">
-                  <h2 className="text-3xl font-black mb-1">
-                    {appState.term.name} • {appState.stream.name} {appState.program ? `(${appState.program.name})` : ''}
-                  </h2>
-                  <p className="opacity-90 text-sm font-medium">اختر الصف الدراسي المناسب</p>
-                </div>
+                {(() => {
+                  const isInspire = appState.program?.id === 'inspire' || appState.program?.isEnglish;
+                  return (
+                    <>
+                      <div className="gradient-success rounded-3xl p-8 text-white mb-8 shadow-md">
+                        <h2 className="text-3xl font-black mb-1">
+                          {isInspire ? getEnglishTermName(appState.term.name, appState.term.id) : appState.term.name} • {isInspire ? getEnglishStreamName(appState.stream.name, appState.stream.id) : appState.stream.name} {appState.program ? `(${appState.program.name})` : ''}
+                        </h2>
+                        <p className="opacity-90 text-sm font-medium">
+                          {isInspire ? 'Select Academic Grade' : 'اختر الصف الدراسي المناسب'}
+                        </p>
+                      </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                  {DB.grades.map(g => (
-                    <button 
-                      key={g.id}
-                      onClick={() => navigateTo({ grade: g })}
-                      className="card-hover bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-md border-2 border-transparent hover:border-blue-500 text-center cursor-pointer"
-                    >
-                      <div className="text-5xl mb-3">{g.icon}</div>
-                      <h4 className="font-extrabold text-lg text-gray-800 dark:text-white">{g.name}</h4>
-                    </button>
-                  ))}
-                </div>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        {DB.grades.map(g => {
+                          const displayName = isInspire ? getEnglishGradeName(g.name, g.id) : g.name;
+                          return (
+                            <button 
+                              key={g.id}
+                              onClick={() => navigateTo({ grade: g })}
+                              className="card-hover bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-md border-2 border-transparent hover:border-blue-500 text-center cursor-pointer"
+                            >
+                              <div className="text-5xl mb-3">{g.icon}</div>
+                              <h4 className="font-extrabold text-lg text-gray-800 dark:text-white">{displayName}</h4>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </>
+                  );
+                })()}
               </div>
             )}
 
             {/* VIEW 5: SUBJECTS */}
             {appState.term && appState.stream && (appState.stream.id !== 'advanced' || appState.program) && appState.grade && !appState.subject && (
               <div className="fade-in">
-                <div className="gradient-warm rounded-3xl p-8 text-white mb-8 shadow-md">
-                  <h2 className="text-3xl font-black mb-1">{appState.grade.icon} {appState.grade.name}</h2>
-                  <p className="opacity-90 text-sm font-medium">
-                    {appState.term.name} • {appState.stream.name} {appState.program ? `• ${appState.program.name}` : ''}
-                  </p>
-                </div>
+                {(() => {
+                  const isInspire = appState.program?.id === 'inspire' || appState.program?.isEnglish;
+                  const gradeDisplayName = isInspire ? getEnglishGradeName(appState.grade.name, appState.grade.id) : appState.grade.name;
+                  const termDisplayName = isInspire ? getEnglishTermName(appState.term.name, appState.term.id) : appState.term.name;
+                  const streamDisplayName = isInspire ? getEnglishStreamName(appState.stream.name, appState.stream.id) : appState.stream.name;
 
-                <h3 className="text-2xl font-black mb-6 text-gray-800 dark:text-white flex items-center gap-2">
-                  <span>⚛️</span> اختر المادة العلمية
-                </h3>
+                  return (
+                    <>
+                      <div className="gradient-warm rounded-3xl p-8 text-white mb-8 shadow-md">
+                        <h2 className="text-3xl font-black mb-1">{appState.grade.icon} {gradeDisplayName}</h2>
+                        <p className="opacity-90 text-sm font-medium">
+                          {termDisplayName} • {streamDisplayName} {appState.program ? `• ${appState.program.name}` : ''}
+                        </p>
+                      </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                  {DB.subjects.map(s => {
-                    const key = getCurriculumKey({ ...appState, subject: s });
-                    const isAvailable = getCurriculum(key) ? true : false;
-                    
-                    return (
-                      <button 
-                        key={s.id}
-                        onClick={() => navigateTo({ subject: s })}
-                        className="card-hover bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-md border-2 border-transparent hover:border-purple-500 text-center cursor-pointer flex flex-col items-center justify-between"
-                      >
-                        <div className="text-5xl mb-3">{s.icon}</div>
-                        <h4 className="font-extrabold text-lg text-gray-800 dark:text-white mb-2">{s.name}</h4>
-                        
-                        <span className={`text-[10px] font-bold py-1 px-3 rounded-full ${isAvailable ? 'bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-400' : 'bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400'}`}>
-                          {isAvailable ? '✅ متاح حالياً' : '🚧 قريباً'}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
+                      <h3 className="text-2xl font-black mb-6 text-gray-800 dark:text-white flex items-center gap-2">
+                        <span>⚛️</span> {isInspire ? 'Select Subject' : 'اختر المادة العلمية'}
+                      </h3>
+
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        {DB.subjects.map(s => {
+                          const key = getCurriculumKey({ ...appState, subject: s });
+                          const isAvailable = getCurriculum(key) ? true : false;
+                          const subjectDisplayName = isInspire ? getEnglishSubjectName(s.name, s.id) : s.name;
+                          
+                          return (
+                            <button 
+                              key={s.id}
+                              onClick={() => navigateTo({ subject: s })}
+                              className="card-hover bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-md border-2 border-transparent hover:border-purple-500 text-center cursor-pointer flex flex-col items-center justify-between"
+                            >
+                              <div className="text-5xl mb-3">{s.icon}</div>
+                              <h4 className="font-extrabold text-lg text-gray-800 dark:text-white mb-2">{subjectDisplayName}</h4>
+                              
+                              <span className={`text-[10px] font-bold py-1 px-3 rounded-full ${isAvailable ? 'bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-400' : 'bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400'}`}>
+                                {isAvailable ? (isInspire ? '✅ Available' : '✅ متاح حالياً') : (isInspire ? '🚧 Coming Soon' : '🚧 قريباً')}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </>
+                  );
+                })()}
               </div>
             )}
 
@@ -3494,34 +3537,42 @@ export default function App() {
                 {(() => {
                   const key = getCurriculumKey();
                   const curriculum = getCurriculum(key);
+                  const isEnglish = curriculum?.isEnglish || appState.program?.id === 'inspire' || appState.program?.isEnglish;
                   
+                  const subjectDisplayName = isEnglish ? getEnglishSubjectName(appState.subject.name, appState.subject.id) : appState.subject.name;
+                  const gradeDisplayName = isEnglish ? getEnglishGradeName(appState.grade.name, appState.grade.id) : appState.grade.name;
+                  const termDisplayName = isEnglish ? getEnglishTermName(appState.term.name, appState.term.id) : appState.term.name;
+                  const streamDisplayName = isEnglish ? getEnglishStreamName(appState.stream.name, appState.stream.id) : appState.stream.name;
+
                   if (!curriculum) {
                     return (
                       <div>
                         <div className="bg-gradient-to-br from-slate-600 to-slate-800 rounded-3xl p-8 text-white mb-8 shadow-md">
-                          <h2 className="text-3xl font-black mb-1">{appState.subject.icon} {appState.subject.name}</h2>
+                          <h2 className="text-3xl font-black mb-1">{appState.subject.icon} {subjectDisplayName}</h2>
                           <p className="opacity-95 text-sm font-medium">
-                            {appState.grade.name} • {appState.term.name} • {appState.stream.name}
+                            {gradeDisplayName} • {termDisplayName} • {streamDisplayName}
                           </p>
                         </div>
                         <div className="bg-slate-50 dark:bg-slate-900/50 border-2 border-slate-200 dark:border-slate-800 rounded-2xl p-8 text-center shadow-sm">
                           <div className="text-5xl mb-4">🚧</div>
-                          <h3 className="text-lg font-bold text-gray-800 dark:text-indigo-300 mb-2">المحتوى قيد التحضير</h3>
-                          <p className="text-gray-600 dark:text-gray-300 text-sm">سيتم توفير الوحدات والدروس الخاصة بهذا الاختيار قريباً جداً.</p>
+                          <h3 className="text-lg font-bold text-gray-800 dark:text-indigo-300 mb-2">
+                            {isEnglish ? 'Content Under Preparation' : 'المحتوى قيد التحضير'}
+                          </h3>
+                          <p className="text-gray-600 dark:text-gray-300 text-sm">
+                            {isEnglish ? 'Units and lessons for this selection will be available very soon.' : 'سيتم توفير الوحدات والدروس الخاصة بهذا الاختيار قريباً جداً.'}
+                          </p>
                         </div>
                       </div>
                     );
                   }
 
-                  const isEnglish = curriculum.isEnglish;
-                  
                   return (
                     <div>
                       <div className="gradient-primary text-white rounded-3xl p-6 md:p-8 mb-8 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
                         <div>
-                          <h2 className="text-3xl font-black mb-1">{appState.subject.icon} {appState.subject.name}</h2>
+                          <h2 className="text-3xl font-black mb-1">{appState.subject.icon} {subjectDisplayName}</h2>
                           <p className="opacity-90 text-sm font-medium">
-                            {appState.grade.name} • {appState.term.name} • {appState.stream.name} {appState.program ? `• ${appState.program.name}` : ''}
+                            {gradeDisplayName} • {termDisplayName} • {streamDisplayName} {appState.program ? `• ${appState.program.name}` : ''}
                           </p>
                         </div>
                         
@@ -3540,7 +3591,7 @@ export default function App() {
                       </div>
 
                       <h3 className="text-2xl font-black mb-6 text-gray-800 dark:text-white flex items-center gap-2">
-                        <span>📚</span> الوحدات الدراسية
+                        <span>📚</span> {isEnglish ? 'Curriculum Units' : 'الوحدات الدراسية'}
                       </h3>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -3561,11 +3612,11 @@ export default function App() {
                                 <div className="flex-1 min-w-0">
                                   <div className="flex items-center justify-between gap-2 flex-wrap mb-1">
                                     <h3 className="font-extrabold text-lg dark:text-white">{unit.name}</h3>
-                                    {compRate === 100 && <span className="completed-badge">✓ مكتمل</span>}
+                                    {compRate === 100 && <span className="completed-badge">{isEnglish ? '✓ Completed' : '✓ مكتمل'}</span>}
                                   </div>
                                   {unit.description && <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed mb-2">{unit.description}</p>}
                                   <span className="text-xs font-semibold text-indigo-600 dark:text-indigo-400">
-                                    📖 {lessonCount} {isEnglish ? 'lessons' : 'دروس'} {compRate > 0 && `• انجاز ${compRate}%`}
+                                    📖 {lessonCount} {isEnglish ? 'lessons' : 'دروس'} {compRate > 0 && `• ${isEnglish ? 'Progress' : 'انجاز'} ${compRate}%`}
                                   </span>
                                   {compRate > 0 && (
                                     <div className="lesson-progress-bar mt-2">
@@ -3577,7 +3628,7 @@ export default function App() {
 
                               <div className="flex items-center justify-between text-indigo-600 dark:text-indigo-400 font-bold text-xs border-t border-slate-100 dark:border-slate-800/80 pt-3">
                                 <span>{isEnglish ? 'Browse Lessons' : 'استعراض الدروس'}</span>
-                                <span>{isEnglish ? '←' : '←'}</span>
+                                <span>←</span>
                               </div>
                             </button>
                           );
@@ -3595,19 +3646,22 @@ export default function App() {
                 {(() => {
                   const key = getCurriculumKey();
                   const curriculum = DB.curriculum[key || ''];
-                  const isEnglish = curriculum?.isEnglish;
+                  const isEnglish = curriculum?.isEnglish || appState.program?.id === 'inspire' || appState.program?.isEnglish;
+                  const subjectDisplayName = isEnglish ? getEnglishSubjectName(appState.subject.name, appState.subject.id) : appState.subject.name;
+                  const gradeDisplayName = isEnglish ? getEnglishGradeName(appState.grade.name, appState.grade.id) : appState.grade.name;
+                  const termDisplayName = isEnglish ? getEnglishTermName(appState.term.name, appState.term.id) : appState.term.name;
                   
                   return (
                     <div>
                       <div className="gradient-violet rounded-3xl p-8 text-white mb-8 shadow-md">
                         <h2 className="text-3xl font-black mb-1">{appState.unit.icon} {appState.unit.name}</h2>
                         <p className="opacity-90 text-sm font-medium">
-                          {appState.subject.name} • {appState.grade.name} • {appState.term.name}
+                          {subjectDisplayName} • {gradeDisplayName} • {termDisplayName}
                         </p>
                       </div>
 
                       <h3 className="text-2xl font-black mb-6 text-gray-800 dark:text-white flex items-center gap-2">
-                        <span>📖</span> الدروس والاجزاء العلمية
+                        <span>📖</span> {isEnglish ? 'Lessons & Topics' : 'الدروس والاجزاء العلمية'}
                       </h3>
 
                       <div className="space-y-4">
@@ -4931,6 +4985,16 @@ export default function App() {
         currentUser={currentUser}
         isAdmin={isAdmin}
         userGradeName={appState.grade?.name}
+      />
+
+      {/* 24. FLASHCARDS & QUICK REVIEWS MODAL */}
+      <FlashcardsModal
+        isOpen={showFlashcardsModal}
+        onClose={() => setShowFlashcardsModal(false)}
+        defaultSubject={flashcardsSubject}
+        onRewardPoints={(pts) => {
+          showToastMsg(`🎉 كسبت +${pts} نقطة لتفوقك في مراجعة البطاقات!`);
+        }}
       />
         </>
       )}

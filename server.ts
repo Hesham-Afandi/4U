@@ -224,6 +224,65 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
+// Endpoint for AI Lesson Summarizer & Smart Q&A
+app.post("/api/lesson-summary", async (req, res) => {
+  try {
+    const { title, subject, unit, lessonText } = req.body;
+    const ai = getAiClient();
+
+    const prompt = `
+أنت المعلم الافتراضي المتميز على منصة 4U التعليمية.
+قدم ملخصاً تحليلياً شاملاً ومركزاً للدرس التالي:
+- عنوان الدرس: ${title || 'غير محدد'}
+- المادة: ${subject || 'غير محدد'}
+- الوحدة الدراسية: ${unit || 'غير محدد'}
+${lessonText ? `- نص أو محتوى الدرس المتاح: ${lessonText.slice(0, 3000)}` : ''}
+
+اكتب الملخص بتنسيق ماركداون (Markdown) بأسلوب ممتع ومشجع وواضح جداً للطلاب باللغة العربية (أو بالإنجليزية إذا كان الدرس من مناهج Inspire/American)، واجعله يحتوي على الأقسام التالية:
+1. 🎯 **الفكرة المحورية للدرس** (في سطرين ملهمين)
+2. 📌 **أهم المفاهيم والنقاط الرئيسية** (في نقاط واضحة)
+3. 📐 **القوانين والمعادلات الأساسية** (إن وجدت في الفيزياء/الرياضيات/الكيمياء)
+4. 💡 **نصيحة ذهبية للتفوق في أسئلة هذا الدرس**
+`;
+
+    const response = await generateContentWithFallbackAndRetry(ai, [{ role: "user", parts: [{ text: prompt }] }], SYSTEM_INSTRUCTION);
+    res.json({ summary: response.text || "تم توليد ملخص الدرس بنجاح." });
+  } catch (error: any) {
+    console.error("Gemini API Error in lesson summary:", error);
+    res.status(500).json({ error: "تعذر توليد ملخص الدرس حالياً." });
+  }
+});
+
+// Endpoint for Generating Custom Flashcards
+app.post("/api/generate-flashcards", async (req, res) => {
+  try {
+    const { topic, subject } = req.body;
+    const ai = getAiClient();
+
+    const prompt = `
+أنشئ قائمة بـ 6 بطاقات استذكار تكرار متباعد (Flashcards) لموضوع: "${topic || 'المفاهيم الأساسية'}" في مادة "${subject || 'العلوم والرياضيات'}".
+يجب أن ترجع النتيجة بصيغة JSON حصرية بتنسيق المصفوفة التالية فقط بدون أي كلام إضافي:
+[
+  {
+    "id": "1",
+    "front": "السؤال أو القانون أو المصطلح الأساسي",
+    "back": "الشرح الموجز الدقيق أو الصيغة الرياضية والتعريف",
+    "category": "مفهوم / قانون / مثال"
+  }
+]
+`;
+
+    const response = await generateContentWithFallbackAndRetry(ai, [{ role: "user", parts: [{ text: prompt }] }], SYSTEM_INSTRUCTION);
+    const rawText = response.text || "[]";
+    const jsonMatch = rawText.match(/\[[\s\S]*\]/);
+    const cards = jsonMatch ? JSON.parse(jsonMatch[0]) : [];
+    res.json({ cards });
+  } catch (error: any) {
+    console.error("Error generating flashcards:", error);
+    res.status(500).json({ cards: [] });
+  }
+});
+
 // Endpoint to fetch and parse lesson content (HTML or PDF) to feed to TTS
 app.get("/api/fetch-lesson-text", async (req, res) => {
   const lessonUrl = req.query.url as string;
