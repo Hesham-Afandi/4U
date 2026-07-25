@@ -4,6 +4,7 @@ import {
   X, Sparkles, RotateCw, CheckCircle2, AlertCircle, Trophy, 
   Layers, ArrowLeft, ArrowRight, Zap, RefreshCw, BookOpen, Brain
 } from 'lucide-react';
+import { fetchGeneratedFlashcards } from '../../services/ai';
 
 export interface Flashcard {
   id: string;
@@ -204,14 +205,13 @@ export const FlashcardsModal: React.FC<FlashcardsModalProps> = ({
     setIsAiLoading(true);
 
     try {
-      const res = await fetch('/api/generate-flashcards', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ topic: customTopic.trim(), subject: selectedSubject })
+      const generatedCards = await fetchGeneratedFlashcards({
+        topic: customTopic.trim(),
+        subject: selectedSubject
       });
-      const data = await res.json();
-      if (data.cards && Array.isArray(data.cards) && data.cards.length > 0) {
-        setCards(data.cards);
+
+      if (generatedCards && generatedCards.length > 0) {
+        setCards(generatedCards);
         setCurrentIndex(0);
         setIsFlipped(false);
         setMasteredIds(new Set());

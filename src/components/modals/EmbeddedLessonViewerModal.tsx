@@ -5,6 +5,7 @@ import {
   Sparkles, RotateCcw, AlertTriangle, Maximize2, Minimize2, CheckCircle2, Loader2,
   Bot, Send, Copy, Check, MessageSquare, ListFilter, HelpCircle, RefreshCw
 } from 'lucide-react';
+import { fetchLessonSummary, fetchLessonChatAnswer } from '../../services/ai';
 
 interface EmbeddedLessonViewerModalProps {
   isOpen: boolean;
@@ -111,22 +112,13 @@ export const EmbeddedLessonViewerModal: React.FC<EmbeddedLessonViewerModalProps>
     setIsGeneratingSummary(true);
     setSummaryText('');
     try {
-      const res = await fetch('/api/lesson-summary', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title,
-          subject: subjectName,
-          unit: unitName,
-          lessonUrl: url
-        })
+      const summary = await fetchLessonSummary({
+        title,
+        subject: subjectName,
+        unit: unitName,
+        lessonText: url
       });
-      const data = await res.json();
-      if (data.summary) {
-        setSummaryText(data.summary);
-      } else {
-        setSummaryText('تعذر توليد الملخص حالياً. حاول مرة أخرى!');
-      }
+      setSummaryText(summary);
     } catch (e) {
       console.error(e);
       setSummaryText('حدث خطأ أثناء التواصل مع المعلم الافتراضي لتوليد الملخص.');
@@ -152,24 +144,15 @@ export const EmbeddedLessonViewerModal: React.FC<EmbeddedLessonViewerModalProps>
     setIsChatLoading(true);
 
     try {
-      const contextualMessage = `[معلومات الدرس الحالي: "${title}" - المادة: ${subjectName || 'عام'} - الوحدة: ${unitName || 'عام'}]\n\nسؤال الطالب: ${textToSend}`;
-      
       const history = chatMessages.map(m => ({ role: m.role, text: m.text }));
-
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: contextualMessage,
-          history
-        })
+      const reply = await fetchLessonChatAnswer({
+        message: textToSend,
+        history,
+        title,
+        subject: subjectName,
+        unit: unitName
       });
-      const data = await res.json();
-      if (data.reply) {
-        setChatMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: 'model', text: data.reply }]);
-      } else {
-        setChatMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: 'model', text: 'عذراً يا بطل، تعذر الإجابة حالياً. جرب مرة أخرى!' }]);
-      }
+      setChatMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: 'model', text: reply }]);
     } catch (e) {
       console.error(e);
       setChatMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: 'model', text: 'حدث خطأ بالاتصال.' }]);
