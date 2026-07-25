@@ -20,6 +20,7 @@ import { WeeklyStudyPlanner } from './components/layout';
 import { STUDY_QUOTES } from './data/quotes';
 import { extractTextFromLessonUrl } from './utils/pdfParser';
 import { getEnglishSubjectName, getEnglishGradeName, getEnglishTermName, getEnglishStreamName } from './utils/language';
+import { EotSpecsView } from './components/EotSpecsView';
 
 const DAYS_OF_WEEK = [
   { key: 'Saturday', name: 'السبت' },
@@ -236,6 +237,8 @@ export default function App() {
     url: ''
   });
   const [activeQuote, setActiveQuote] = useState('');
+  const [activePlatformSection, setActivePlatformSection] = useState<'curriculum' | 'eot'>('curriculum');
+  const [curriculumSubView, setCurriculumSubView] = useState<'landing' | 'terms'>('landing');
 
   // --- Visit Streak & Platform Active Session Timer ---
   const [visitStreak, setVisitStreak] = useState(1);
@@ -2051,6 +2054,8 @@ export default function App() {
 
   const goHome = () => {
     setHistory([]);
+    setActivePlatformSection('curriculum');
+    setCurriculumSubView('landing');
     setAppState({
       country: null,
       term: null,
@@ -2678,7 +2683,7 @@ export default function App() {
 
             {/* Login Footer Contact Info */}
             <div className="mt-6 text-center text-xs text-slate-400 space-y-1">
-              <p className="font-semibold text-slate-300">Mr. Mohammed Hesham | mohammedhesham872@gmail.com | +971555642674</p>
+              <p className="font-semibold text-slate-300">أ/ هشام أفندي (Mr. Hesham Afandi) | mohammedhesham872@gmail.com | +971555642674</p>
               <p className="text-[11px] text-slate-500">© 2026 جميع الحقوق محفوظة لمنصة 4U التعليمية</p>
             </div>
 
@@ -3032,22 +3037,23 @@ export default function App() {
         </div>
       </div>
 
-      {/* Breadcrumbs */}
+      {/* Breadcrumbs & Section Selector */}
       {(appState.country || appState.term || appState.stream || appState.grade || appState.subject || appState.unit || appState.lesson) && (
         <div id="breadcrumbs" className="max-w-7xl mx-auto px-4 md:px-6 py-4">
-          <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 flex-wrap">
-            <button onClick={goHome} className="hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center gap-1 cursor-pointer">
-              <span>🎓</span> الرئيسية
-            </button>
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 flex-wrap">
+              <button onClick={goHome} className="hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center gap-1 cursor-pointer">
+                <span>🎓</span> الرئيسية
+              </button>
 
-            {appState.country && (
-              <>
-                <span className="text-gray-400">‹</span>
-                <button onClick={() => jumpToBreadcrumb('country')} className="hover:text-indigo-600 dark:hover:text-indigo-400 font-medium cursor-pointer flex items-center gap-1">
-                  <span>{COUNTRY_INFO[appState.country]?.flag || '🌍'}</span> {COUNTRY_INFO[appState.country]?.name || appState.country}
-                </button>
-              </>
-            )}
+              {appState.country && (
+                <>
+                  <span className="text-gray-400">‹</span>
+                  <button onClick={() => jumpToBreadcrumb('country')} className="hover:text-indigo-600 dark:hover:text-indigo-400 font-medium cursor-pointer flex items-center gap-1">
+                    <span>{COUNTRY_INFO[appState.country]?.flag || '🌍'}</span> {COUNTRY_INFO[appState.country]?.name || appState.country}
+                  </button>
+                </>
+              )}
             
             {appState.term && (
               <>
@@ -3108,6 +3114,36 @@ export default function App() {
                 <span className="text-gray-400">‹</span>
                 <span className="text-gray-400 dark:text-gray-500 font-semibold max-w-[200px] truncate">{appState.lesson.title}</span>
               </>
+            )}
+            </div>
+
+            {/* Section Switcher Tabs when country is selected */}
+            {appState.country && (
+              <div className="flex items-center bg-slate-100 dark:bg-slate-800/90 p-1 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-inner">
+                <button
+                  onClick={() => setActivePlatformSection('curriculum')}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+                    activePlatformSection === 'curriculum'
+                      ? 'bg-indigo-600 text-white shadow-md'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400'
+                  }`}
+                >
+                  <span>📚</span>
+                  <span>قسم المناهج والدروس</span>
+                </button>
+
+                <button
+                  onClick={() => setActivePlatformSection('eot')}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+                    activePlatformSection === 'eot'
+                      ? 'bg-amber-500 text-slate-950 shadow-md'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400'
+                  }`}
+                >
+                  <span>📜</span>
+                  <span>قسم الهياكل الامتحانية (EOT)</span>
+                </button>
+              </div>
             )}
           </div>
         </div>
@@ -3320,29 +3356,72 @@ export default function App() {
               </div>
             )}
 
-            {/* VIEW 1: HOME (SELECT TERM) */}
-            {appState.country && !appState.term && (
-              <div className="fade-in">
+            {/* VIEW 1: HOME (SELECT SECTION OR TERMS) */}
+            {appState.country && activePlatformSection === 'eot' && (
+              <EotSpecsView onSwitchToCurriculum={() => {
+                setActivePlatformSection('curriculum');
+                setCurriculumSubView('terms');
+              }} />
+            )}
+
+            {appState.country && activePlatformSection === 'curriculum' && !appState.term && curriculumSubView === 'landing' && (
+              <div className="fade-in space-y-8 my-6">
                 {/* Hero Card Banner */}
-                <div className="gradient-primary rounded-3xl p-8 md:p-12 text-white mb-8 shadow-xl relative overflow-hidden">
+                <div className="gradient-primary rounded-3xl p-8 md:p-10 text-white shadow-xl relative overflow-hidden">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.1),transparent_50%)] pointer-events-none" />
                   <div className="text-center md:text-right relative z-10">
-                    <h2 className="text-3xl md:text-5xl font-black mb-3 leading-tight text-amber-300">
-                      مرحباً بك في مكتبة المناهج التفاعلية
+                    <h2 className="text-2xl md:text-4xl font-black mb-2 leading-tight text-amber-300">
+                      مرحباً بك في منصة 4U التعليمية
                     </h2>
-                    <p className="text-lg opacity-90 mb-5 font-medium">رحلة تعلم ذكية ومبسطة للصفوف (9 - 12)</p>
-                    <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                      <span className="bg-white/15 backdrop-blur-md px-4 py-2 rounded-2xl text-xs font-semibold border border-white/10 shadow-sm">📚 المنهج كاملاً دون حذف</span>
-                      <span className="bg-white/15 backdrop-blur-md px-4 py-2 rounded-2xl text-xs font-semibold border border-white/10 shadow-sm">🌟 خطة دراسية متكاملة</span>
-                      <span className="bg-white/15 backdrop-blur-md px-4 py-2 rounded-2xl text-xs font-semibold border border-white/10 shadow-sm">⏱️ تتبع ذكي لوقت الدراسة</span>
-                    </div>
+                    <p className="text-sm md:text-base opacity-90 font-medium">اختر القسم المطلوب للتصفح والمذاكرة الذكية</p>
                   </div>
                 </div>
 
-                <h3 className="text-2xl font-black mb-6 text-gray-800 dark:text-white flex items-center gap-2">
-                  <span>📅</span> اختر الترم الدراسي
-                </h3>
-                
+                {/* TWO MAIN PLATFORM SECTIONS CARDS ONLY */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                  {/* Curriculum Section Card */}
+                  <div
+                    onClick={() => setCurriculumSubView('terms')}
+                    className="group p-10 rounded-3xl shadow-xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-indigo-500 hover:ring-4 hover:ring-indigo-500/20 transition-all cursor-pointer flex flex-col items-center text-center justify-center space-y-5"
+                  >
+                    <div className="w-24 h-24 rounded-3xl bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-5xl font-bold group-hover:scale-110 transition-transform">
+                      📚
+                    </div>
+                    <h3 className="text-2xl font-black text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                      قسم المناهج والدروس التفاعلية
+                    </h3>
+                  </div>
+
+                  {/* EOT Specs Section Card */}
+                  <div
+                    onClick={() => setActivePlatformSection('eot')}
+                    className="group p-10 rounded-3xl shadow-xl border-2 border-amber-500/40 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-950 text-white hover:border-amber-400 hover:ring-4 hover:ring-amber-500/20 transition-all cursor-pointer flex flex-col items-center text-center justify-center space-y-5"
+                  >
+                    <div className="w-24 h-24 rounded-3xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-5xl font-bold group-hover:scale-110 transition-transform">
+                      📜
+                    </div>
+                    <h3 className="text-2xl font-black text-amber-300 group-hover:text-amber-200 transition-colors">
+                      قسم الهياكل الامتحانية (EOT)
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {appState.country && activePlatformSection === 'curriculum' && !appState.term && curriculumSubView === 'terms' && (
+              <div className="fade-in space-y-8">
+                <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+                  <h3 className="text-2xl font-black text-gray-800 dark:text-white flex items-center gap-2">
+                    <span>📅</span> اختر الترم الدراسي في قسم المناهج
+                  </h3>
+                  <button
+                    onClick={() => setCurriculumSubView('landing')}
+                    className="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-bold rounded-xl transition cursor-pointer flex items-center gap-1.5"
+                  >
+                    <span>← العودة للأقسام</span>
+                  </button>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {DB.terms.map(t => (
                     <button 
@@ -3377,7 +3456,6 @@ export default function App() {
                   progress={progress}
                   showToastMsg={showToastMsg}
                 />
-
               </div>
             )}
 
@@ -4381,7 +4459,7 @@ export default function App() {
             مكتبة تفاعلية رقمية مبسطة تم تطويرها باحترافية لتغطية المقررات الأساسية لمواد الفيزياء والرياضيات والكيمياء والأحياء.
           </p>
           <div className="text-xs text-slate-500 space-y-1">
-            <p>Mr. Mohammed Hesham | mohammedhesham872@gmail.com | +971555642674</p>
+            <p>أ/ هشام أفندي (Mr. Hesham Afandi) | mohammedhesham872@gmail.com | +971555642674</p>
             <p>© 2026 جميع الحقوق محفوظة لمنصة 4U التعليمية</p>
           </div>
         </div>
