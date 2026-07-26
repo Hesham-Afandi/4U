@@ -4459,7 +4459,7 @@ export default function App() {
             مكتبة تفاعلية رقمية مبسطة تم تطويرها باحترافية لتغطية المقررات الأساسية لمواد الفيزياء والرياضيات والكيمياء والأحياء.
           </p>
           <div className="text-xs text-slate-500 space-y-1">
-            <p>أ/ هشام أفندي (Mr. Hesham Afandi) | mohammedhesham872@gmail.com | +971555642674</p>
+            <p>Mr. Mohammed Hesham | mohammedhesham872@gmail.com | +971555642674</p>
             <p>© 2026 جميع الحقوق محفوظة لمنصة 4U التعليمية</p>
           </div>
         </div>

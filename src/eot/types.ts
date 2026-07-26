@@ -25,7 +25,7 @@ export interface QuestionItem {
   questionTextAr?: string;
   imageSvgType?: string; // Optional indicator if graph visualization applies
   options?: QuestionOption[];
-  correctAnswer?: 'A' | 'B' | 'C' | 'D';
+  correctAnswer?: 'A' | 'B' | 'C' | 'D' | string;
   solutionSteps: string[]; // Step by step solution in clean text/LaTeX
   finalAnswer: string;
 }

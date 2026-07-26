@@ -1,8 +1,16 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { QUESTIONS_DATA } from '../eot/data/questionsData';
 import { mathG11Questions } from '../eot/data/mathG11QuestionsData';
+import { mathG11GeneralQuestions } from '../eot/data/mathG11GeneralQuestionsData';
+import { mathG10Questions } from '../eot/data/mathG10QuestionsData';
+import { mathG10GeneralQuestions } from '../eot/data/mathG10GeneralQuestionsData';
+import { mathG9Questions } from '../eot/data/mathG9QuestionsData';
+import { mathG12GeneralQuestions } from '../eot/data/mathG12GeneralQuestionsData';
 import { physicsG12BridgeQuestions, physicsG12InspireQuestions } from '../eot/data/physicsQuestionsData';
+import { physicsG12GeneralQuestions } from '../eot/data/physicsG12GeneralData';
 import { physicsG11BridgeQuestions } from '../eot/data/physicsG11BridgeData';
+import { physicsG10Questions } from '../eot/data/physicsG10Data';
+import { physicsG9Questions } from '../eot/data/physicsG9Data';
 import { QuestionItem, StreamType, GradeType, TermType } from '../eot/types';
 import { Navbar } from '../eot/components/Navbar';
 import { FilterBar } from '../eot/components/FilterBar';
@@ -72,13 +80,27 @@ export const EotSpecsView: React.FC<EotSpecsViewProps> = ({ onSwitchToCurriculum
     
     // Math
     if (selectedSubject === 'math') {
-      if (selectedGrade === '12') return QUESTIONS_DATA;
-      if (selectedGrade === '11') return mathG11Questions;
+      if (selectedGrade === '12') {
+        if (selectedStream === 'general') return mathG12GeneralQuestions;
+        return QUESTIONS_DATA;
+      }
+      if (selectedGrade === '11') {
+        if (selectedStream === 'general') return mathG11GeneralQuestions;
+        return mathG11Questions;
+      }
+      if (selectedGrade === '10') {
+        if (selectedStream === 'general') return mathG10GeneralQuestions;
+        return mathG10Questions;
+      }
+      if (selectedGrade === '9') return mathG9Questions;
     }
     
-    // Physics (Grade 11 & Grade 12 Inspire are identical, Grade 11 Bridge has its own 20-question EOT dataset)
+    // Physics (Grade 12 General, Grade 12 Inspire, Grade 12 Bridge, Grade 11 Bridge, Grade 10, Grade 9)
     if (selectedSubject === 'physics') {
       if (selectedGrade === '12') {
+        if (selectedStream === 'general') {
+          return physicsG12GeneralQuestions;
+        }
         if (selectedStream === 'advanced_inspire') {
           return physicsG12InspireQuestions;
         }
@@ -89,6 +111,12 @@ export const EotSpecsView: React.FC<EotSpecsViewProps> = ({ onSwitchToCurriculum
           return physicsG12InspireQuestions;
         }
         return physicsG11BridgeQuestions;
+      }
+      if (selectedGrade === '10') {
+        return physicsG10Questions;
+      }
+      if (selectedGrade === '9') {
+        return physicsG9Questions;
       }
     }
 
@@ -338,6 +366,61 @@ export const EotSpecsView: React.FC<EotSpecsViewProps> = ({ onSwitchToCurriculum
                       <button
                         onClick={() => {
                           setSelectedSubject('math');
+                          setSelectedGrade('9');
+                          setSelectedStream('advanced');
+                          setSelectedTerm('EOT1');
+                        }}
+                        className="px-4 py-2 bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 text-xs font-bold rounded-xl hover:bg-indigo-100 transition cursor-pointer"
+                      >
+                        رياضيات 9 متقدم (بريدج وانسباير) 📐
+                      </button>
+                      <button
+                        onClick={() => {
+                          setSelectedSubject('math');
+                          setSelectedGrade('10');
+                          setSelectedStream('general');
+                          setSelectedTerm('EOT1');
+                        }}
+                        className="px-4 py-2 bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-300 text-xs font-bold rounded-xl hover:bg-amber-100 transition cursor-pointer"
+                      >
+                        رياضيات 10 عام 📐
+                      </button>
+                      <button
+                        onClick={() => {
+                          setSelectedSubject('math');
+                          setSelectedGrade('10');
+                          setSelectedStream('advanced');
+                          setSelectedTerm('EOT1');
+                        }}
+                        className="px-4 py-2 bg-purple-50 dark:bg-purple-950 text-purple-700 dark:text-purple-300 text-xs font-bold rounded-xl hover:bg-purple-100 transition cursor-pointer"
+                      >
+                        رياضيات 10 متقدم (بريدج وانسباير)
+                      </button>
+                      <button
+                        onClick={() => {
+                          setSelectedSubject('math');
+                          setSelectedGrade('12');
+                          setSelectedStream('general');
+                          setSelectedTerm('EOT1');
+                        }}
+                        className="px-4 py-2 bg-fuchsia-50 dark:bg-fuchsia-950 text-fuchsia-700 dark:text-fuchsia-300 text-xs font-bold rounded-xl hover:bg-fuchsia-100 transition cursor-pointer"
+                      >
+                        رياضيات 12 عام 📐
+                      </button>
+                      <button
+                        onClick={() => {
+                          setSelectedSubject('math');
+                          setSelectedGrade('11');
+                          setSelectedStream('general');
+                          setSelectedTerm('EOT1');
+                        }}
+                        className="px-4 py-2 bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-bold rounded-xl hover:bg-emerald-100 transition cursor-pointer"
+                      >
+                        رياضيات 11 عام 📐
+                      </button>
+                      <button
+                        onClick={() => {
+                          setSelectedSubject('math');
                           setSelectedGrade('11');
                           setSelectedStream('advanced');
                           setSelectedTerm('EOT1');
@@ -345,6 +428,28 @@ export const EotSpecsView: React.FC<EotSpecsViewProps> = ({ onSwitchToCurriculum
                         className="px-4 py-2 bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 text-xs font-bold rounded-xl hover:bg-blue-100 transition cursor-pointer"
                       >
                         هيكل الرياضيات 11 متقدم
+                      </button>
+                      <button
+                        onClick={() => {
+                          setSelectedSubject('physics');
+                          setSelectedGrade('9');
+                          setSelectedStream('advanced');
+                          setSelectedTerm('EOT1');
+                        }}
+                        className="px-4 py-2 bg-cyan-50 dark:bg-cyan-950 text-cyan-800 dark:text-cyan-300 text-xs font-bold rounded-xl hover:bg-cyan-100 transition cursor-pointer"
+                      >
+                        فيزياء 9 متقدم (بريدج وانسباير) ⚛️
+                      </button>
+                      <button
+                        onClick={() => {
+                          setSelectedSubject('physics');
+                          setSelectedGrade('10');
+                          setSelectedStream('advanced');
+                          setSelectedTerm('EOT1');
+                        }}
+                        className="px-4 py-2 bg-emerald-50 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 text-xs font-bold rounded-xl hover:bg-emerald-100 transition cursor-pointer"
+                      >
+                        فيزياء 10 متقدم (بريدج وانسباير)
                       </button>
                       <button
                         onClick={() => {
@@ -367,6 +472,17 @@ export const EotSpecsView: React.FC<EotSpecsViewProps> = ({ onSwitchToCurriculum
                         className="px-4 py-2 bg-purple-50 dark:bg-purple-950 text-purple-700 dark:text-purple-300 text-xs font-bold rounded-xl hover:bg-purple-100 transition cursor-pointer"
                       >
                         فيزياء 12 انسباير (11 انسباير)
+                      </button>
+                      <button
+                        onClick={() => {
+                          setSelectedSubject('physics');
+                          setSelectedGrade('12');
+                          setSelectedStream('general');
+                          setSelectedTerm('EOT1');
+                        }}
+                        className="px-4 py-2 bg-rose-50 dark:bg-rose-950 text-rose-700 dark:text-rose-300 text-xs font-bold rounded-xl hover:bg-rose-100 transition cursor-pointer"
+                      >
+                        فيزياء 12 عام ⚡
                       </button>
                       <button
                         onClick={() => {
@@ -448,26 +564,6 @@ export const EotSpecsView: React.FC<EotSpecsViewProps> = ({ onSwitchToCurriculum
                 questions={activeDataset}
                 onAskAi={(q) => setAiModalQuestion(q)}
               />
-            ) : activeTab === 'tutor' ? (
-              <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 shadow-sm text-center max-w-2xl mx-auto space-y-4">
-                <div className="w-16 h-16 rounded-3xl bg-pink-100 dark:bg-pink-950/50 text-pink-600 dark:text-pink-400 flex items-center justify-center mx-auto shadow-inner">
-                  <Sparkles className="w-8 h-8" />
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-                  قسم المساعدة مع Mr. Mohammed Hesham
-                </h3>
-                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                  اختر أي سؤال من قائمة الأسئلة وانقر على زر "مساعدة" للحصول على شرح تفصيلي وتوضيحات فورية.
-                </p>
-                {activeDataset.length > 0 && (
-                  <button
-                    onClick={() => setAiModalQuestion(activeDataset[0])}
-                    className="px-6 py-3 bg-indigo-600 text-white font-bold text-xs rounded-xl shadow-md hover:bg-indigo-700 transition-all cursor-pointer"
-                  >
-                    بدء مساعدة على السؤال الأول
-                  </button>
-                )}
-              </div>
             ) : (
               <div>
                 {/* Questions List */}
@@ -503,15 +599,12 @@ export const EotSpecsView: React.FC<EotSpecsViewProps> = ({ onSwitchToCurriculum
       {/* Footer */}
       <footer className="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 text-center text-xs mt-auto">
         <div className="max-w-7xl mx-auto px-4 space-y-3">
-          <div className="flex flex-wrap items-center justify-center gap-4 text-slate-300 font-bold">
-            <span>منصة الهياكل الامتحانية المعتمدة</span>
-            <span>•</span>
+          <div className="flex flex-wrap items-center justify-center gap-2 text-slate-300 font-bold dir-ltr">
             <span className="text-amber-400">Mr. Mohammed Hesham</span>
-          </div>
-          <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-mono text-slate-400 pt-1">
-            <span>Email: mohammedhesham872@gmail.com</span>
             <span>|</span>
-            <span dir="ltr">Mobile: +971555642674</span>
+            <span>mohammedhesham872@gmail.com</span>
+            <span>|</span>
+            <span dir="ltr">+971555642674</span>
           </div>
         </div>
       </footer>

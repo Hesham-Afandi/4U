@@ -110,15 +110,15 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 const isCorrect = option.id === question.correctAnswer;
                 const isSelected = selectedOption === option.id;
 
-                let btnStyle = 'border-slate-200 dark:border-slate-700/80 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-750';
+                let btnStyle = 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/90 text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700';
                 if (isSelected) {
                   if (isCorrect) {
-                    btnStyle = 'border-emerald-500 dark:border-emerald-500 bg-emerald-50 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 ring-2 ring-emerald-300 dark:ring-emerald-700';
+                    btnStyle = 'border-emerald-500 dark:border-emerald-400 bg-emerald-100 dark:bg-emerald-950/90 text-emerald-950 dark:text-emerald-100 ring-2 ring-emerald-400 dark:ring-emerald-500 font-bold';
                   } else {
-                    btnStyle = 'border-rose-400 dark:border-rose-500 bg-rose-50 dark:bg-rose-950/80 text-rose-950 dark:text-rose-100 ring-2 ring-rose-200 dark:ring-rose-800';
+                    btnStyle = 'border-rose-500 dark:border-rose-400 bg-rose-100 dark:bg-rose-950/90 text-rose-950 dark:text-rose-100 ring-2 ring-rose-400 dark:ring-rose-500 font-bold';
                   }
                 } else if (showSolution && isCorrect) {
-                  btnStyle = 'border-emerald-500 dark:border-emerald-500 bg-emerald-50/80 dark:bg-emerald-950/70 text-emerald-950 dark:text-emerald-100 ring-1 ring-emerald-400';
+                  btnStyle = 'border-emerald-500 dark:border-emerald-400 bg-emerald-100/90 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-100 ring-1 ring-emerald-400 dark:ring-emerald-500 font-bold';
                 }
 
                 return (
@@ -165,7 +165,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             {showSolution ? (
               <>
                 <ChevronUp className="w-4 h-4" />
-                إخفاء نموذج الحل
+                إخفاء نموذج الحل والخطوات
               </>
             ) : (
               <>
@@ -173,15 +173,6 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 عرض نموذج الحل والخطوات
               </>
             )}
-          </button>
-
-          {/* User requirement: "وايقونة (اسأل المعلم الذكي gemini( اجعلها اسمها (مساعدة)" */}
-          <button
-            onClick={() => onAskAi(question)}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white text-xs font-bold shadow-md shadow-indigo-500/20 hover:opacity-95 transition-all cursor-pointer"
-          >
-            <Sparkles className="w-4 h-4" />
-            <span>مساعدة</span>
           </button>
         </div>
 

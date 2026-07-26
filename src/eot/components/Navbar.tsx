@@ -43,7 +43,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     }
   };
   return (
-    <header className="bg-slate-900 text-white shadow-xl border-b border-slate-800 sticky top-0 z-40">
+    <header className="bg-slate-900 text-white shadow-xl border-b border-slate-800 relative z-20 rounded-3xl overflow-hidden mb-4">
       {/* Teacher Contact Header Bar */}
       <div className="bg-gradient-to-r from-indigo-950 via-slate-900 to-purple-950 border-b border-indigo-900/50 py-1.5 px-4 text-xs text-slate-300">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
@@ -308,19 +308,6 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             <Award className="w-4 h-4" />
             الاختبار التفاعلي
-          </button>
-
-          <button
-            id="tab-ai-tutor"
-            onClick={() => setActiveTab('tutor')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all whitespace-nowrap ${
-              activeTab === 'tutor'
-                ? 'bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-md shadow-rose-500/30'
-                : 'bg-slate-800/50 text-pink-300 hover:bg-slate-800 hover:text-pink-200'
-            }`}
-          >
-            <Sparkles className="w-4 h-4" />
-            مساعدة
           </button>
         </nav>
       </div>

@@ -3,10 +3,11 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   MessageSquare, Send, X, Image as ImageIcon, Paperclip, Mic, MicOff, 
   Square, Play, Pause, Download, Folder, FileText, Music, Crown, Users, 
-  Sparkles, AlertCircle, Search, Filter, RefreshCw, CheckCircle2, ChevronDown, Eye
+  Sparkles, AlertCircle, Search, Filter, RefreshCw, CheckCircle2, ChevronDown, Eye, ShieldAlert
 } from 'lucide-react';
 import { collection, addDoc, onSnapshot, query, orderBy, limit, serverTimestamp, getDocs } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
+import { containsProfanity, sanitizeText } from '../../utils/profanityFilter';
 
 interface ChatRoom {
   id: string;
@@ -86,6 +87,7 @@ export const GeneralChatModal: React.FC<GeneralChatModalProps> = ({
   const [inputText, setInputText] = useState<string>('');
   const [isSending, setIsSending] = useState<boolean>(false);
   const [isLoadingMessages, setIsLoadingMessages] = useState<boolean>(true);
+  const [profanityWarning, setProfanityWarning] = useState<string | null>(null);
 
   // Attachment states
   const [attachedFile, setAttachedFile] = useState<{
@@ -182,6 +184,13 @@ export const GeneralChatModal: React.FC<GeneralChatModalProps> = ({
     if (!currentUser) return;
     if (!inputText.trim() && !attachedFile) return;
 
+    // Check for profanity and offensive language
+    if (containsProfanity(inputText)) {
+      setProfanityWarning('⚠️ يُحظر إرسال الألفاظ غير اللائقة أو البذيئة أو الشتم في الشات العام. يرجى الالتزام بالحديث المحترم الراقي.');
+      return;
+    }
+
+    setProfanityWarning(null);
     setIsSending(true);
 
     const messagePayload = {
@@ -191,7 +200,7 @@ export const GeneralChatModal: React.FC<GeneralChatModalProps> = ({
       senderEmail: currentUser.email,
       senderPhoto: currentUser.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(currentUser.email)}`,
       senderRole: isAdmin ? 'admin' : 'user',
-      text: inputText.trim(),
+      text: sanitizeText(inputText.trim()),
       fileUrl: attachedFile?.url || '',
       fileName: attachedFile?.name || '',
       fileType: attachedFile?.type || '',
@@ -788,6 +797,22 @@ export const GeneralChatModal: React.FC<GeneralChatModalProps> = ({
 
         </div>
 
+        {/* PROFANITY WARNING BANNER */}
+        {profanityWarning && (
+          <div className="bg-rose-950/90 border-t border-b border-rose-500/50 px-4 py-2.5 flex items-center justify-between gap-3 text-xs text-rose-200 shrink-0 animate-fadeIn">
+            <div className="flex items-center gap-2">
+              <ShieldAlert className="w-4 h-4 text-rose-400 shrink-0" />
+              <span>{profanityWarning}</span>
+            </div>
+            <button
+              onClick={() => setProfanityWarning(null)}
+              className="p-1 rounded bg-rose-900/50 hover:bg-rose-800/80 text-rose-300 transition cursor-pointer"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
+
         {/* ATTACHMENT PREVIEW BAR (if file selected) */}
         {attachedFile && (
           <div className="bg-slate-950 px-4 py-2 border-t border-slate-800 flex items-center justify-between gap-3 text-xs shrink-0 animate-fadeIn">
@@ -898,7 +923,10 @@ export const GeneralChatModal: React.FC<GeneralChatModalProps> = ({
                 type="text"
                 placeholder={`اكتب رسالتك في ${activeRoom.name}...`}
                 value={inputText}
-                onChange={(e) => setInputText(e.target.value)}
+                onChange={(e) => {
+                  setInputText(e.target.value);
+                  if (profanityWarning) setProfanityWarning(null);
+                }}
                 className="flex-1 bg-slate-900 border border-slate-800 rounded-xl py-2.5 px-4 text-xs md:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 transition"
               />
 

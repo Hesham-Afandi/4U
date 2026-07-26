@@ -151,8 +151,8 @@ export const QuizMode: React.FC<QuizModeProps> = ({ questions, onAskAi }) => {
       )}
 
       {/* Progress Dots / Bar */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-        <div className="flex items-center justify-between text-xs font-bold text-slate-600 mb-2">
+      <div className="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div className="flex items-center justify-between text-xs font-bold text-slate-600 dark:text-slate-300 mb-2">
           <span>السؤال {currentIndex + 1} من أصل {total}</span>
           <span>المكتمل: {Object.keys(selectedAnswers).length} / {total}</span>
         </div>
@@ -160,7 +160,7 @@ export const QuizMode: React.FC<QuizModeProps> = ({ questions, onAskAi }) => {
           {mcqQuestions.map((q, idx) => {
             const isAnswered = !!selectedAnswers[q.id];
             const isCurrent = idx === currentIndex;
-            let dotColor = 'bg-slate-200 text-slate-600';
+            let dotColor = 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400';
 
             if (isSubmitted) {
               if (selectedAnswers[q.id] === q.correctAnswer) {
@@ -168,7 +168,7 @@ export const QuizMode: React.FC<QuizModeProps> = ({ questions, onAskAi }) => {
               } else if (selectedAnswers[q.id]) {
                 dotColor = 'bg-rose-600 text-white';
               } else {
-                dotColor = 'bg-slate-300 text-slate-600';
+                dotColor = 'bg-slate-300 dark:bg-slate-700 text-slate-600 dark:text-slate-300';
               }
             } else if (isAnswered) {
               dotColor = 'bg-indigo-600 text-white';
@@ -179,7 +179,7 @@ export const QuizMode: React.FC<QuizModeProps> = ({ questions, onAskAi }) => {
                 key={q.id}
                 onClick={() => setCurrentIndex(idx)}
                 className={`w-8 h-8 rounded-lg text-xs font-bold shrink-0 transition-all ${dotColor} ${
-                  isCurrent ? 'ring-2 ring-indigo-500 ring-offset-2 scale-105' : ''
+                  isCurrent ? 'ring-2 ring-indigo-500 ring-offset-2 dark:ring-offset-slate-900 scale-105' : ''
                 }`}
               >
                 {idx + 1}
@@ -190,22 +190,22 @@ export const QuizMode: React.FC<QuizModeProps> = ({ questions, onAskAi }) => {
       </div>
 
       {/* Question Main Card */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-5">
-        <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-          <span className="text-xs font-bold bg-indigo-50 text-indigo-700 px-3 py-1 rounded-lg border border-indigo-100">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 space-y-5">
+        <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+          <span className="text-xs font-bold bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-lg border border-indigo-100 dark:border-indigo-900">
             السؤال {currentQuestion.qNumber} • الوحدة {currentQuestion.unit} ({currentQuestion.lesson})
           </span>
-          <span className="text-xs text-slate-500 font-semibold">
+          <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold">
             ص {currentQuestion.page} ({currentQuestion.exerciseRef})
           </span>
         </div>
 
         {/* Question Text */}
-        <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm font-medium leading-relaxed">
+        <div className="bg-slate-50 dark:bg-slate-800/80 p-4 rounded-xl border border-slate-100 dark:border-slate-700 text-sm font-medium leading-relaxed">
           {currentQuestion.questionTextAr && (
-            <p className="font-bold text-slate-900 mb-2">{currentQuestion.questionTextAr}</p>
+            <p className="font-bold text-slate-900 dark:text-slate-100 mb-2">{currentQuestion.questionTextAr}</p>
           )}
-          <div className="text-slate-800 font-serif dir-ltr">
+          <div className="text-slate-800 dark:text-slate-100 font-serif dir-ltr">
             <MathRenderer text={currentQuestion.questionText} />
           </div>
         </div>
@@ -217,16 +217,16 @@ export const QuizMode: React.FC<QuizModeProps> = ({ questions, onAskAi }) => {
               const isSelected = selectedAnswers[currentQuestion.id] === opt.id;
               const isCorrect = opt.id === currentQuestion.correctAnswer;
 
-              let style = 'border-slate-200 bg-white hover:bg-slate-50 text-slate-800';
+              let style = 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700';
 
               if (isSubmitted) {
                 if (isCorrect) {
-                  style = 'border-emerald-500 bg-emerald-50 text-emerald-950 font-bold ring-2 ring-emerald-400';
+                  style = 'border-emerald-500 dark:border-emerald-400 bg-emerald-100 dark:bg-emerald-950/90 text-emerald-950 dark:text-emerald-100 font-bold ring-2 ring-emerald-400 dark:ring-emerald-500';
                 } else if (isSelected) {
-                  style = 'border-rose-400 bg-rose-50 text-rose-950 ring-2 ring-rose-200';
+                  style = 'border-rose-500 dark:border-rose-400 bg-rose-100 dark:bg-rose-950/90 text-rose-950 dark:text-rose-100 ring-2 ring-rose-400 dark:ring-rose-500 font-bold';
                 }
               } else if (isSelected) {
-                style = 'border-indigo-600 bg-indigo-50/80 text-indigo-950 ring-2 ring-indigo-300 font-bold';
+                style = 'border-indigo-500 dark:border-indigo-400 bg-indigo-100 dark:bg-indigo-950/90 text-indigo-950 dark:text-indigo-100 ring-2 ring-indigo-400 dark:ring-indigo-500 font-bold';
               }
 
               return (
@@ -234,7 +234,7 @@ export const QuizMode: React.FC<QuizModeProps> = ({ questions, onAskAi }) => {
                   key={opt.id}
                   onClick={() => handleSelectOption(opt.id)}
                   disabled={isSubmitted}
-                  className={`p-4 rounded-xl border text-right text-sm transition-all flex items-center justify-between ${style}`}
+                  className={`p-4 rounded-xl border text-right text-sm transition-all flex items-center justify-between cursor-pointer ${style}`}
                 >
                   <span className="flex items-center gap-3">
                     <span
@@ -245,7 +245,7 @@ export const QuizMode: React.FC<QuizModeProps> = ({ questions, onAskAi }) => {
                           ? 'bg-emerald-600 text-white'
                           : isSubmitted && isSelected && !isCorrect
                           ? 'bg-rose-600 text-white'
-                          : 'bg-slate-100 text-slate-700'
+                          : 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200'
                       }`}
                     >
                       {opt.id}
@@ -256,10 +256,10 @@ export const QuizMode: React.FC<QuizModeProps> = ({ questions, onAskAi }) => {
                   </span>
 
                   {isSubmitted && isCorrect && (
-                    <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                   )}
                   {isSubmitted && isSelected && !isCorrect && (
-                    <XCircle className="w-5 h-5 text-rose-600" />
+                    <XCircle className="w-5 h-5 text-rose-600 dark:text-rose-400" />
                   )}
                 </button>
               );
@@ -268,28 +268,20 @@ export const QuizMode: React.FC<QuizModeProps> = ({ questions, onAskAi }) => {
         )}
 
         {/* Navigation Controls */}
-        <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+        <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
           <button
             onClick={() => setCurrentIndex((prev) => Math.max(0, prev - 1))}
             disabled={currentIndex === 0}
-            className="flex items-center gap-1.5 px-4 py-2 bg-slate-100 disabled:opacity-40 text-slate-700 text-xs font-bold rounded-xl hover:bg-slate-200 transition-all"
+            className="flex items-center gap-1.5 px-4 py-2 bg-slate-100 dark:bg-slate-800 disabled:opacity-40 text-slate-700 dark:text-slate-200 text-xs font-bold rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer"
           >
             <ChevronRight className="w-4 h-4" />
             السؤال السابق
           </button>
 
           <button
-            onClick={() => onAskAi(currentQuestion)}
-            className="flex items-center gap-1.5 px-3 py-2 bg-purple-50 text-purple-700 border border-purple-200 text-xs font-bold rounded-xl hover:bg-purple-100 transition-all"
-          >
-            <Sparkles className="w-4 h-4 text-purple-600" />
-            تفسير معلم AI
-          </button>
-
-          <button
             onClick={() => setCurrentIndex((prev) => Math.min(total - 1, prev + 1))}
             disabled={currentIndex === total - 1}
-            className="flex items-center gap-1.5 px-4 py-2 bg-indigo-600 disabled:opacity-40 text-white text-xs font-bold rounded-xl hover:bg-indigo-500 transition-all"
+            className="flex items-center gap-1.5 px-4 py-2 bg-indigo-600 disabled:opacity-40 text-white text-xs font-bold rounded-xl hover:bg-indigo-500 transition-all cursor-pointer"
           >
             السؤال التالي
             <ChevronLeft className="w-4 h-4" />
@@ -298,19 +290,19 @@ export const QuizMode: React.FC<QuizModeProps> = ({ questions, onAskAi }) => {
 
         {/* Solution Step View if submitted */}
         {isSubmitted && (
-          <div className="mt-4 p-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-xs space-y-2">
-            <h4 className="font-bold text-emerald-950 flex items-center gap-1.5 text-sm">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+          <div className="mt-4 p-4 bg-emerald-50 dark:bg-emerald-950/70 border border-emerald-200 dark:border-emerald-800 rounded-2xl text-xs space-y-2">
+            <h4 className="font-bold text-emerald-950 dark:text-emerald-100 flex items-center gap-1.5 text-sm">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               توضيح حل السؤال {currentQuestion.qNumber}:
             </h4>
-            <ul className="list-disc pr-4 space-y-1 text-emerald-900">
+            <ul className="list-disc pr-4 space-y-1 text-emerald-900 dark:text-emerald-200">
               {currentQuestion.solutionSteps.map((step, sIdx) => (
                 <li key={sIdx}>
                   <MathRenderer text={step} inline />
                 </li>
               ))}
             </ul>
-            <p className="font-bold text-emerald-950 mt-2">
+            <p className="font-bold text-emerald-950 dark:text-emerald-100 mt-2">
               الإجابة الصحيحة المعتمَدة: {currentQuestion.finalAnswer}
             </p>
           </div>
