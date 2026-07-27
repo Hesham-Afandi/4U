@@ -2774,17 +2774,15 @@ export default function App() {
           {/* Top Bar Action Rail */}
           <div className="flex items-center gap-2 md:gap-3 flex-wrap">
             
-            {/* Back button */}
-            {history.length > 0 && (
-              <button 
-                onClick={handleBack}
-                className="bg-white/10 hover:bg-white/20 p-2 rounded-xl backdrop-blur-sm border border-white/15 transition flex items-center gap-1.5 text-sm font-semibold cursor-pointer"
-                title="رجوع (Esc)"
-              >
-                <RotateCcw className="w-4 h-4" />
-                <span className="hidden sm:inline">رجوع</span>
-              </button>
-            )}
+            {/* Back button - Always visible in top header bar */}
+            <button 
+              onClick={handleBack}
+              className="bg-amber-400 hover:bg-amber-300 text-slate-950 px-3 py-2 rounded-xl border border-amber-300 font-extrabold shadow-md transition flex items-center gap-1.5 text-sm cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+              title="رجوع للخلف (Esc)"
+            >
+              <RotateCcw className="w-4 h-4 text-slate-950 font-bold" />
+              <span>رجوع</span>
+            </button>
 
             {/* Bookmarks */}
             <button 
@@ -3024,10 +3022,20 @@ export default function App() {
               <span>حفظ التقدم</span>
             </button>
 
+            {/* Back button */}
+            <button 
+              onClick={handleBack}
+              className="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-3.5 rounded-xl transition flex items-center gap-1.5 text-sm font-bold shadow-md cursor-pointer hover:scale-105 active:scale-95"
+              title="رجوع للخلف (Esc)"
+            >
+              <RotateCcw className="w-4 h-4 text-amber-300" />
+              <span>رجوع</span>
+            </button>
+
             {/* Home button */}
             <button 
               onClick={goHome}
-              className="bg-amber-400 hover:bg-amber-500 text-slate-900 py-2 px-3.5 rounded-xl transition flex items-center gap-1.5 text-sm font-bold shadow-md cursor-pointer"
+              className="bg-amber-400 hover:bg-amber-500 text-slate-900 py-2 px-3.5 rounded-xl transition flex items-center gap-1.5 text-sm font-bold shadow-md cursor-pointer hover:scale-105 active:scale-95"
             >
               <Home className="w-4 h-4" />
               <span>الرئيسية</span>
