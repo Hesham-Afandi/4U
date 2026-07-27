@@ -3,9 +3,10 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   X, Award, CheckCircle2, Trophy, Star, Flame, BookOpen, Clock, 
   FileCheck, TrendingUp, Calendar, User, ShieldCheck, Plus, Sparkles, Medal,
-  Hash, GraduationCap, Percent, ChevronLeft
+  Hash, GraduationCap, Percent, ChevronLeft, FileSpreadsheet
 } from 'lucide-react';
 import { UserRecord, ExamHistoryItem, updateUserProfileInFirestore } from '../../lib/firebase';
+import { AttendanceExcelSheet } from '../AttendanceExcelSheet';
 
 interface StatsModalProps {
   isOpen: boolean;
@@ -38,7 +39,7 @@ export const StatsModal: React.FC<StatsModalProps> = ({
   allSubscribers = [],
   onUpdateUserProfile
 }) => {
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'badges' | 'history' | 'profile'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'attendance' | 'badges' | 'history' | 'profile'>('dashboard');
   
   // State for manual score logging
   const [showLogExamForm, setShowLogExamForm] = useState(false);
@@ -306,6 +307,18 @@ export const StatsModal: React.FC<StatsModalProps> = ({
             >
               <TrendingUp className="w-3.5 h-3.5" />
               <span>نظرة عامة</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('attendance')}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+                activeTab === 'attendance'
+                  ? 'bg-emerald-600 text-white font-extrabold shadow-md'
+                  : 'bg-slate-800/60 text-emerald-300 hover:bg-slate-800'
+              }`}
+            >
+              <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-400" />
+              <span>📊 شيت سجل الحضور اليومي</span>
             </button>
 
             <button
@@ -585,6 +598,15 @@ export const StatsModal: React.FC<StatsModalProps> = ({
                 </div>
               </div>
             </div>
+          )}
+
+          {/* TAB: ATTENDANCE EXCEL LOG SHEET */}
+          {activeTab === 'attendance' && (
+            <AttendanceExcelSheet
+              studentName={currentUser?.displayName || 'طالب المنصة'}
+              studentEmail={currentUser?.email || 'student@gmail.com'}
+              gradeName={currentUser?.gradeName || 'تاسع عام'}
+            />
           )}
 
           {/* TAB 2: POINTS & BADGES SYSTEM */}

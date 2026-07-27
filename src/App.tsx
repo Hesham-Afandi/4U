@@ -15,6 +15,7 @@ import {
   FlashcardsModal, ScientificCalculatorModal, MistakesLogModal
 } from './components/modals';
 import { mistakesService } from './services/mistakes/mistakesService';
+import { attendanceService } from './services/attendance/attendanceService';
 import { QuestionItem } from './eot/types';
 import { signInWithPopup } from 'firebase/auth';
 import { auth, googleProvider, syncUserToFirestore, syncUserStatsToFirestore, fetchAllSubscribers, fetchActiveAnnouncement, performGoogleSignIn, UserRecord, Announcement, ExamHistoryItem } from './lib/firebase';
@@ -205,6 +206,24 @@ export default function App() {
     window.addEventListener('student_mistakes_updated', updateMistakesCount);
     return () => window.removeEventListener('student_mistakes_updated', updateMistakesCount);
   }, []);
+
+  // 📊 Initialize and track student daily attendance session (Excel Attendance Log)
+  useEffect(() => {
+    const session = attendanceService.startOrResumeSession(
+      currentUser?.displayName || studentName || 'طالب المنصة',
+      currentUser?.email || 'student@gmail.com',
+      currentUser?.gradeName || 'تاسع عام'
+    );
+
+    // Heartbeat: update duration by 30 seconds every 30s
+    const interval = setInterval(() => {
+      if (session?.id) {
+        attendanceService.updateSessionDuration(session.id, 30);
+      }
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, [currentUser, studentName]);
   const [showCertificateModal, setShowCertificateModal] = useState(false);
   const [showShareModal, setShowShareModal] = useState<{ title: string; url: string } | null>(null);
   const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
