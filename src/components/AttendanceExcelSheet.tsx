@@ -17,13 +17,15 @@ interface AttendanceExcelSheetProps {
   studentEmail?: string;
   gradeName?: string;
   onShowToast?: (msg: string) => void;
+  subscribersList?: { displayName: string; email: string; gradeName?: string }[];
 }
 
 export const AttendanceExcelSheet: React.FC<AttendanceExcelSheetProps> = ({
   studentName = 'طالب المنصة',
   studentEmail = 'student@gmail.com',
   gradeName = 'تاسع عام',
-  onShowToast
+  onShowToast,
+  subscribersList = []
 }) => {
   const [records, setRecords] = useState<AttendanceRecord[]>([]);
   const [selectedMonth, setSelectedMonth] = useState<number | 'ALL'>('ALL');
@@ -50,13 +52,17 @@ export const AttendanceExcelSheet: React.FC<AttendanceExcelSheetProps> = ({
     return Array.from(yearsSet).sort((a, b) => b - a);
   }, [records]);
 
+  const subscribersCount = subscribersList?.length || 0;
+
   // Load and subscribe to attendance records
   useEffect(() => {
     // Make sure active session is running
     attendanceService.startOrResumeSession(studentName, studentEmail, gradeName);
 
     const loadData = () => {
-      const data = attendanceService.getLogs(studentName, studentEmail);
+      const data = (subscribersList && subscribersList.length > 0)
+        ? attendanceService.getLogs(studentName, studentEmail)
+        : attendanceService.getStudentLogs(studentName, studentEmail);
       setRecords(data);
     };
 
@@ -64,7 +70,7 @@ export const AttendanceExcelSheet: React.FC<AttendanceExcelSheetProps> = ({
 
     window.addEventListener('student_attendance_updated', loadData);
     return () => window.removeEventListener('student_attendance_updated', loadData);
-  }, [studentName, studentEmail, gradeName]);
+  }, [studentName, studentEmail, gradeName, subscribersCount]);
 
   // Filtered Records (Respects month, year, search, and sort order)
   const filteredRecords = useMemo(() => {
@@ -237,6 +243,24 @@ export const AttendanceExcelSheet: React.FC<AttendanceExcelSheetProps> = ({
               </select>
             </div>
 
+            {/* STUDENT FILTER DROPDOWN FOR ADMIN */}
+            {subscribersList && subscribersList.length > 0 && (
+              <div className="relative min-w-[180px]">
+                <select
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-slate-50 dark:bg-slate-800 border border-emerald-500/40 text-emerald-800 dark:text-emerald-300 rounded-xl py-2 px-3 text-xs font-extrabold focus:outline-none focus:ring-2 focus:ring-emerald-500 transition cursor-pointer shadow-sm"
+                >
+                  <option value="">👤 كل الطلاب المسجلين ({subscribersList.length})</option>
+                  {subscribersList.map((sub, sIdx) => (
+                    <option key={sub.email || sIdx} value={sub.email || sub.displayName}>
+                      {sub.displayName} ({sub.email})
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+
             {/* YEAR FILTER DROPDOWN */}
             <div className="relative min-w-[120px]">
               <select
@@ -353,6 +377,9 @@ export const AttendanceExcelSheet: React.FC<AttendanceExcelSheetProps> = ({
                 <th className="p-2.5 text-center border-l border-slate-300 dark:border-slate-700 w-12 bg-slate-200/70 dark:bg-slate-800/90 font-mono">
                   #
                 </th>
+                <th className="p-2.5 border-l border-slate-300 dark:border-slate-700 min-w-[150px]">
+                  اسم الطالب والبريد
+                </th>
                 <th className="p-2.5 border-l border-slate-300 dark:border-slate-700 min-w-[100px]">
                   اليوم
                 </th>
@@ -384,7 +411,7 @@ export const AttendanceExcelSheet: React.FC<AttendanceExcelSheetProps> = ({
             <tbody className="divide-y divide-slate-200 dark:divide-slate-800/80 font-medium text-slate-800 dark:text-slate-200">
               {filteredRecords.length === 0 ? (
                 <tr>
-                  <td colSpan={9} className="p-8 text-center text-slate-400 space-y-2">
+                  <td colSpan={10} className="p-8 text-center text-slate-400 space-y-2">
                     <Info className="w-8 h-8 text-slate-400 mx-auto opacity-60" />
                     <p className="text-sm font-bold text-slate-600 dark:text-slate-300">
                       لا توجد سجلات حضور تطابق خيارات الفلترة أو البحث الحالية
@@ -419,6 +446,18 @@ export const AttendanceExcelSheet: React.FC<AttendanceExcelSheetProps> = ({
                         isLatest ? 'font-black text-emerald-600 dark:text-emerald-400 bg-emerald-500/10' : 'text-slate-500 dark:text-slate-400 bg-slate-100/50 dark:bg-slate-800/40'
                       }`}>
                         {index + 1}
+                      </td>
+
+                      {/* Student Name & Email */}
+                      <td className="p-2.5 border-l border-slate-200 dark:border-slate-800 font-bold">
+                        <div className="flex flex-col">
+                          <span className="font-extrabold text-xs text-indigo-700 dark:text-indigo-300">
+                            {record.studentName || 'طالب المنصة'}
+                          </span>
+                          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono truncate max-w-[140px]">
+                            {record.email || 'student@gmail.com'}
+                          </span>
+                        </div>
                       </td>
 
                       {/* Day Name */}

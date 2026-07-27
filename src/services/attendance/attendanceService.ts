@@ -162,6 +162,39 @@ export const attendanceService = {
   },
 
   /**
+   * Gets logs specifically for a given student email/name, auto-generating history if new.
+   */
+  getStudentLogs(studentName = 'طالب المنصة', email = 'student@gmail.com'): AttendanceRecord[] {
+    try {
+      const allLogs = this.getLogs(studentName, email);
+      if (!email) return allLogs;
+
+      const filtered = allLogs.filter(
+        r => (r.email && r.email.toLowerCase() === email.toLowerCase()) || 
+             (r.studentName && r.studentName.toLowerCase() === studentName.toLowerCase())
+      );
+
+      if (filtered.length > 0) {
+        return filtered;
+      }
+
+      // Generate initial logs for this student if none exist
+      const initialLogs = generateInitialHistoricalLogs(studentName, email);
+      const combined = [...allLogs, ...initialLogs];
+      combined.sort((a, b) => b.timestamp - a.timestamp);
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(combined));
+      } catch (err) {
+        console.error('Failed to write student initial logs:', err);
+      }
+      return initialLogs;
+    } catch (e) {
+      console.error('Error loading student attendance records:', e);
+      return [];
+    }
+  },
+
+  /**
    * Saves attendance records to LocalStorage & dispatches update event.
    */
   saveLogs(logs: AttendanceRecord[]): void {

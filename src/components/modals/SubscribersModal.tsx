@@ -4,7 +4,7 @@ import {
   X, Users, ShieldCheck, Mail, Calendar, Search, RefreshCw, Copy, Download, 
   Crown, UserPlus, Trash2, ShieldAlert, Megaphone, BarChart3, CheckCircle2, AlertCircle,
   FileCheck, BookOpen, Clock, Flame, ArrowUpDown, Activity, Sparkles, GraduationCap,
-  Trophy, Star, Medal, Award, AlertTriangle, BookMarked, User
+  Trophy, Star, Medal, Award, AlertTriangle, BookMarked, User, FileSpreadsheet
 } from 'lucide-react';
 import { 
   UserRecord, 
@@ -14,6 +14,7 @@ import {
   fetchActiveAnnouncement,
   saveAnnouncementInFirestore
 } from '../../lib/firebase';
+import { AttendanceExcelSheet } from '../AttendanceExcelSheet';
 
 interface SubscribersModalProps {
   isOpen: boolean;
@@ -32,12 +33,13 @@ export const SubscribersModal: React.FC<SubscribersModalProps> = ({
   onRefresh,
   adminEmail
 }) => {
-  const [activeTab, setActiveTab] = useState<'users' | 'admins' | 'broadcast' | 'analytics'>('users');
+  const [activeTab, setActiveTab] = useState<'users' | 'admins' | 'broadcast' | 'analytics' | 'attendance'>('users');
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState<'recent' | 'exams' | 'time' | 'lessons'>('recent');
   const [roleFilter, setRoleFilter] = useState<'all' | 'users' | 'admins'>('all');
   const [copySuccess, setCopySuccess] = useState(false);
   const [selectedStudentDetails, setSelectedStudentDetails] = useState<UserRecord | null>(null);
+  const [studentDetailTab, setStudentDetailTab] = useState<'attendance' | 'stats' | 'profile'>('attendance');
   
   // Admin add state
   const [newAdminEmail, setNewAdminEmail] = useState('');
@@ -59,6 +61,14 @@ export const SubscribersModal: React.FC<SubscribersModalProps> = ({
     message: string;
   } | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const mappedSubscribersList = React.useMemo(() => {
+    return subscribers.map(s => ({
+      displayName: s.displayName || s.email.split('@')[0],
+      email: s.email,
+      gradeName: s.gradeName
+    }));
+  }, [subscribers]);
 
   useEffect(() => {
     if (isOpen) {
@@ -404,6 +414,18 @@ export const SubscribersModal: React.FC<SubscribersModalProps> = ({
             >
               <Megaphone className="w-4 h-4 text-amber-300 animate-pulse" />
               <span>إعلان المنصة العام</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('attendance')}
+              className={`px-4 py-2 rounded-xl font-bold text-xs flex items-center gap-2 transition cursor-pointer shrink-0 ${
+                activeTab === 'attendance'
+                  ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 font-black shadow-md'
+                  : 'text-emerald-400 hover:text-white hover:bg-slate-900'
+              }`}
+            >
+              <FileSpreadsheet className="w-4 h-4 text-emerald-400" />
+              <span>📊 سجل حضور الطلاب</span>
             </button>
 
             <button
@@ -864,6 +886,35 @@ export const SubscribersModal: React.FC<SubscribersModalProps> = ({
                 </div>
               </div>
             )}
+
+            {/* TAB 5: ATTENDANCE LOG SHEET */}
+            {activeTab === 'attendance' && (
+              <div className="space-y-4 animate-fadeIn">
+                <div className="bg-slate-950 p-4 rounded-2xl border border-emerald-500/40 shadow-lg space-y-2 text-right">
+                  <div className="flex items-center justify-between flex-wrap gap-2">
+                    <div className="flex items-center gap-2">
+                      <FileSpreadsheet className="w-5 h-5 text-emerald-400" />
+                      <h4 className="font-extrabold text-sm text-white">شيت ودفتر سجل حضور الطلاب العام (Excel Grid)</h4>
+                    </div>
+                    <span className="text-xs text-slate-400 bg-slate-900 px-3 py-1 rounded-xl border border-slate-800">
+                      إجمالي المسجلين: <strong className="text-emerald-400">{subscribers.length} طالب</strong>
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    يمكنك هنا كأدمن الاطلاع على سجلات حضور وانصراف جميع الطلاب، تفاصيل الوقت المستغرق، تاريخ وساعة الدخول والخروج، نوع الجهاز المستخدم، وتصدير أو طباعة شيت الحضور التفاعلي.
+                  </p>
+                </div>
+
+                {/* Attendance Excel Sheet with Subscribers List Dropdown */}
+                <AttendanceExcelSheet
+                  subscribersList={mappedSubscribersList}
+                  onShowToast={(msg) => {
+                    setToastMessage(msg);
+                    setTimeout(() => setToastMessage(null), 3000);
+                  }}
+                />
+              </div>
+            )}
           </div>
 
           {/* Modal Footer */}
@@ -887,7 +938,7 @@ export const SubscribersModal: React.FC<SubscribersModalProps> = ({
             <motion.div
               initial={{ scale: 0.9, opacity: 0, y: 10 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
-              className="bg-slate-900 border border-amber-500/50 rounded-3xl p-4 sm:p-6 max-w-xl w-full shadow-2xl space-y-4 sm:space-y-5 text-right relative overflow-hidden max-h-[90vh] flex flex-col my-auto"
+              className="bg-slate-900 border border-amber-500/50 rounded-3xl p-3 sm:p-5 max-w-3xl w-full shadow-2xl space-y-3 sm:space-y-4 text-right relative overflow-hidden max-h-[94vh] flex flex-col my-auto"
             >
               {/* Header */}
               <div className="flex items-start justify-between gap-3 pb-3 border-b border-slate-800 shrink-0">
@@ -895,10 +946,10 @@ export const SubscribersModal: React.FC<SubscribersModalProps> = ({
                   <img
                     src={selectedStudentDetails.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(selectedStudentDetails.email)}`}
                     alt={selectedStudentDetails.displayName}
-                    className="w-14 h-14 rounded-2xl bg-slate-800 border-2 border-amber-400/60 object-cover shadow-lg shrink-0"
+                    className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-slate-800 border-2 border-amber-400/60 object-cover shadow-lg shrink-0"
                   />
                   <div>
-                    <h3 className="font-extrabold text-base text-white flex items-center gap-2">
+                    <h3 className="font-extrabold text-sm sm:text-base text-white flex items-center gap-2">
                       {selectedStudentDetails.displayName}
                       {selectedStudentDetails.role === 'admin' && (
                         <span className="bg-amber-400 text-slate-950 text-[10px] font-black px-1.5 py-0.5 rounded-md">👑 أدمن</span>
@@ -921,168 +972,245 @@ export const SubscribersModal: React.FC<SubscribersModalProps> = ({
                 </button>
               </div>
 
-              {/* Scrollable Student Full Profile */}
+              {/* Sub-Tabs for Student Details Modal */}
+              <div className="flex items-center gap-1.5 bg-slate-950 p-1.5 rounded-2xl border border-slate-800 shrink-0 overflow-x-auto text-xs">
+                <button
+                  onClick={() => setStudentDetailTab('attendance')}
+                  className={`flex-1 py-2 px-3 rounded-xl font-extrabold transition cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap ${
+                    studentDetailTab === 'attendance'
+                      ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 shadow-md font-black'
+                      : 'text-emerald-400 hover:text-white hover:bg-slate-900'
+                  }`}
+                >
+                  <FileSpreadsheet className="w-4 h-4" />
+                  <span>📊 سجل حضور الطالب (Excel Grid)</span>
+                </button>
+
+                <button
+                  onClick={() => setStudentDetailTab('stats')}
+                  className={`flex-1 py-2 px-3 rounded-xl font-extrabold transition cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap ${
+                    studentDetailTab === 'stats'
+                      ? 'bg-indigo-600 text-white shadow-md font-black'
+                      : 'text-indigo-300 hover:text-white hover:bg-slate-900'
+                  }`}
+                >
+                  <Activity className="w-4 h-4" />
+                  <span>📈 الإحصائيات والأداء</span>
+                </button>
+
+                <button
+                  onClick={() => setStudentDetailTab('profile')}
+                  className={`flex-1 py-2 px-3 rounded-xl font-extrabold transition cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap ${
+                    studentDetailTab === 'profile'
+                      ? 'bg-amber-500 text-slate-950 shadow-md font-black'
+                      : 'text-amber-300 hover:text-white hover:bg-slate-900'
+                  }`}
+                >
+                  <User className="w-4 h-4" />
+                  <span>👤 البيانات والتواصل</span>
+                </button>
+              </div>
+
+              {/* Modal Body Content */}
               <div className="space-y-4 overflow-y-auto flex-1 pr-1 custom-scrollbar">
-                {/* Points & Rank Banner */}
-                <div className="bg-gradient-to-r from-indigo-900 via-purple-900 to-slate-900 p-4 rounded-2xl border border-indigo-500/30 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2">
-                    <Trophy className="w-5 h-5 text-amber-400" />
-                    <div>
-                      <span className="font-bold text-white block">نقاط وترتيب الطالب:</span>
-                      <span className="text-[10px] text-slate-400">حسُبت من أنشطة المنصة</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="px-3 py-1 bg-amber-500/20 border border-amber-400/40 text-amber-300 rounded-xl font-black">
-                      {(selectedStudentDetails.points || 0) + (selectedStudentDetails.examsCompletedCount || 0) * 50} ⭐ نقاط
-                    </span>
-                    <span className="px-3 py-1 bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 rounded-xl font-black">
-                      المركز #1 🏆
-                    </span>
-                  </div>
-                </div>
-
-                {/* Metrics Breakdown */}
-                <div className="grid grid-cols-2 gap-2.5">
-                  <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800 space-y-1">
-                    <span className="text-slate-400 text-[10px] font-semibold flex items-center gap-1">
-                      <FileCheck className="w-3.5 h-3.5 text-emerald-400" />
-                      الامتحانات المحلولة:
-                    </span>
-                    <p className="text-xl font-black text-emerald-300">
-                      {selectedStudentDetails.examsCompletedCount || 0}
-                    </p>
-                  </div>
-
-                  <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800 space-y-1">
-                    <span className="text-slate-400 text-[10px] font-semibold flex items-center gap-1">
-                      <BookOpen className="w-3.5 h-3.5 text-blue-400" />
-                      الدروس المكتملة:
-                    </span>
-                    <p className="text-xl font-black text-blue-300">
-                      {selectedStudentDetails.lessonsCompletedCount || 0}
-                    </p>
-                  </div>
-
-                  <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800 space-y-1">
-                    <span className="text-slate-400 text-[10px] font-semibold flex items-center gap-1">
-                      <Clock className="w-3.5 h-3.5 text-amber-400" />
-                      وقت المنصة:
-                    </span>
-                    <p className="text-xl font-black text-amber-300">
-                      {formatTimeSpent(selectedStudentDetails.totalTimeSpentSeconds)}
-                    </p>
-                  </div>
-
-                  <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800 space-y-1">
-                    <span className="text-slate-400 text-[10px] font-semibold flex items-center gap-1">
-                      <Flame className="w-3.5 h-3.5 text-rose-400" />
-                      الأيام المتتالية (Streak):
-                    </span>
-                    <p className="text-xl font-black text-rose-300">
-                      {selectedStudentDetails.streakDays || 1} يوم 🔥
-                    </p>
-                  </div>
-                </div>
-
-                {/* Detailed Student Contact & Profile Info Card */}
-                <div className="p-4 rounded-2xl bg-slate-950 border border-indigo-500/30 space-y-3 text-xs">
-                  <h5 className="font-extrabold text-amber-300 flex items-center gap-1.5 text-xs border-b border-slate-800 pb-2">
-                    <User className="w-4 h-4 text-indigo-400" />
-                    <span>بيانات ملف الطالب الشخصية والتواصل:</span>
-                  </h5>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-slate-300">
-                    <div>
-                      <span className="text-slate-400 block text-[10px]">اسم الطالب الكامل:</span>
-                      <strong className="text-white font-bold">{selectedStudentDetails.displayName || selectedStudentDetails.email.split('@')[0]}</strong>
+                {/* SUB TAB 1: ATTENDANCE SHEET */}
+                {studentDetailTab === 'attendance' && (
+                  <div className="space-y-3 animate-fadeIn">
+                    <div className="bg-slate-950 p-3 rounded-2xl border border-emerald-500/30 flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-2">
+                        <FileSpreadsheet className="w-4 h-4 text-emerald-400" />
+                        <span className="font-extrabold text-white text-xs">
+                          سجل وساعات حضور الطالب: <strong className="text-emerald-400">{selectedStudentDetails.displayName}</strong>
+                        </span>
+                      </div>
+                      <span className="text-[10px] text-slate-400 font-mono">
+                        {selectedStudentDetails.email}
+                      </span>
                     </div>
 
-                    <div>
-                      <span className="text-slate-400 block text-[10px]">البريد الإلكتروني:</span>
-                      <span className="text-indigo-300 font-mono font-bold">{selectedStudentDetails.email}</span>
-                    </div>
+                    <AttendanceExcelSheet
+                      studentName={selectedStudentDetails.displayName || selectedStudentDetails.email.split('@')[0]}
+                      studentEmail={selectedStudentDetails.email}
+                      gradeName={selectedStudentDetails.gradeName || 'تاسع عام'}
+                      onShowToast={(msg) => {
+                        setToastMessage(msg);
+                        setTimeout(() => setToastMessage(null), 3000);
+                      }}
+                    />
+                  </div>
+                )}
 
-                    <div>
-                      <span className="text-slate-400 block text-[10px]">رقم موبايل الطالب (واتساب):</span>
-                      {selectedStudentDetails.phoneNumber ? (
-                        <div className="flex items-center gap-2 mt-1">
-                          <span className="text-emerald-400 font-mono font-bold dir-ltr">{selectedStudentDetails.phoneNumber}</span>
-                          <a 
-                            href={`https://wa.me/${selectedStudentDetails.phoneNumber.replace(/[^0-9]/g, '')}`} 
-                            target="_blank" 
-                            rel="noreferrer"
-                            className="px-2 py-0.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 text-[10px] font-bold border border-emerald-500/40 inline-flex items-center gap-1 transition shadow-sm shrink-0"
-                          >
-                            💬 مراسلة واتساب
-                          </a>
+                {/* SUB TAB 2: STATS & ACHIEVEMENTS */}
+                {studentDetailTab === 'stats' && (
+                  <div className="space-y-4 animate-fadeIn">
+                    {/* Points & Rank Banner */}
+                    <div className="bg-gradient-to-r from-indigo-900 via-purple-900 to-slate-900 p-4 rounded-2xl border border-indigo-500/30 flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-2">
+                        <Trophy className="w-5 h-5 text-amber-400" />
+                        <div>
+                          <span className="font-bold text-white block">نقاط وترتيب الطالب:</span>
+                          <span className="text-[10px] text-slate-400">حسُبت من أنشطة المنصة</span>
                         </div>
-                      ) : (
-                        <span className="text-slate-500 font-mono text-xs">لم يُدخل رقم الموبايل بعد</span>
-                      )}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="px-3 py-1 bg-amber-500/20 border border-amber-400/40 text-amber-300 rounded-xl font-black">
+                          {(selectedStudentDetails.points || 0) + (selectedStudentDetails.examsCompletedCount || 0) * 50} ⭐ نقاط
+                        </span>
+                        <span className="px-3 py-1 bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 rounded-xl font-black">
+                          المركز #1 🏆
+                        </span>
+                      </div>
                     </div>
 
-                    <div>
-                      <span className="text-slate-400 block text-[10px]">رقم ولي الأمر:</span>
-                      {selectedStudentDetails.guardianPhone ? (
-                        <div className="flex items-center gap-2 mt-1">
-                          <span className="text-amber-400 font-mono font-bold dir-ltr">{selectedStudentDetails.guardianPhone}</span>
-                          <a 
-                            href={`https://wa.me/${selectedStudentDetails.guardianPhone.replace(/[^0-9]/g, '')}`} 
-                            target="_blank" 
-                            rel="noreferrer"
-                            className="px-2 py-0.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 text-[10px] font-bold border border-amber-500/40 inline-flex items-center gap-1 transition shadow-sm shrink-0"
-                          >
-                            💬 واتساب ولي الأمر
-                          </a>
+                    {/* Metrics Breakdown */}
+                    <div className="grid grid-cols-2 gap-2.5">
+                      <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800 space-y-1">
+                        <span className="text-slate-400 text-[10px] font-semibold flex items-center gap-1">
+                          <FileCheck className="w-3.5 h-3.5 text-emerald-400" />
+                          الامتحانات المحلولة:
+                        </span>
+                        <p className="text-xl font-black text-emerald-300">
+                          {selectedStudentDetails.examsCompletedCount || 0}
+                        </p>
+                      </div>
+
+                      <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800 space-y-1">
+                        <span className="text-slate-400 text-[10px] font-semibold flex items-center gap-1">
+                          <BookOpen className="w-3.5 h-3.5 text-blue-400" />
+                          الدروس المكتملة:
+                        </span>
+                        <p className="text-xl font-black text-blue-300">
+                          {selectedStudentDetails.lessonsCompletedCount || 0}
+                        </p>
+                      </div>
+
+                      <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800 space-y-1">
+                        <span className="text-slate-400 text-[10px] font-semibold flex items-center gap-1">
+                          <Clock className="w-3.5 h-3.5 text-amber-400" />
+                          وقت المنصة:
+                        </span>
+                        <p className="text-xl font-black text-amber-300">
+                          {formatTimeSpent(selectedStudentDetails.totalTimeSpentSeconds)}
+                        </p>
+                      </div>
+
+                      <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800 space-y-1">
+                        <span className="text-slate-400 text-[10px] font-semibold flex items-center gap-1">
+                          <Flame className="w-3.5 h-3.5 text-rose-400" />
+                          الأيام المتتالية (Streak):
+                        </span>
+                        <p className="text-xl font-black text-rose-300">
+                          {selectedStudentDetails.streakDays || 1} يوم 🔥
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Certificate Preview Status */}
+                    <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-2">
+                        <Award className="w-5 h-5 text-amber-400" />
+                        <div>
+                          <span className="font-bold text-white block">حالة الشهادة المعتمدة:</span>
+                          <span className="text-[10px] text-slate-300">متاحة ومفتوحة للطالب بناءً على تفاعله</span>
                         </div>
-                      ) : (
-                        <span className="text-slate-500 font-mono text-xs">لم يُدخل رقم ولي الأمر بعد</span>
-                      )}
-                    </div>
-
-                    <div>
-                      <span className="text-slate-400 block text-[10px]">الصف الدراسي:</span>
-                      <strong className="text-white font-bold">{selectedStudentDetails.gradeName || 'تاسع عام'}</strong>
-                    </div>
-
-                    <div>
-                      <span className="text-slate-400 block text-[10px]">العنوان والمحافظة:</span>
-                      <strong className="text-white font-bold">{selectedStudentDetails.address || 'لم يُدخل العنوان بعد'}</strong>
+                      </div>
+                      <span className="px-2.5 py-1 rounded-xl bg-amber-400 text-slate-950 font-black text-[10px]">
+                        مفعلة 📜
+                      </span>
                     </div>
                   </div>
-                </div>
+                )}
 
-                {/* Additional Profile Info */}
-                <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2 text-xs">
-                  <h5 className="font-bold text-amber-300 mb-1 text-[11px]">بيانات النشاط بالمنصة:</h5>
-                  <div className="flex items-center justify-between text-slate-300">
-                    <span className="text-slate-400">تاريخ إنشاء الحساب:</span>
-                    <span className="font-mono">{selectedStudentDetails.createdAt ? new Date(selectedStudentDetails.createdAt).toLocaleString('ar-EG') : 'غير محدد'}</span>
-                  </div>
-                  <div className="flex items-center justify-between text-slate-300">
-                    <span className="text-slate-400">آخر تواجد بالمنصة:</span>
-                    <span className="font-mono text-emerald-300">{selectedStudentDetails.lastActiveAt || selectedStudentDetails.lastLoginAt ? new Date(selectedStudentDetails.lastActiveAt || selectedStudentDetails.lastLoginAt!).toLocaleString('ar-EG') : 'نشط الآن'}</span>
-                  </div>
-                </div>
+                {/* SUB TAB 3: CONTACT & PROFILE */}
+                {studentDetailTab === 'profile' && (
+                  <div className="space-y-4 animate-fadeIn">
+                    {/* Detailed Student Contact & Profile Info Card */}
+                    <div className="p-4 rounded-2xl bg-slate-950 border border-indigo-500/30 space-y-3 text-xs">
+                      <h5 className="font-extrabold text-amber-300 flex items-center gap-1.5 text-xs border-b border-slate-800 pb-2">
+                        <User className="w-4 h-4 text-indigo-400" />
+                        <span>بيانات ملف الطالب الشخصية والتواصل:</span>
+                      </h5>
 
-                {/* Certificate Preview Status */}
-                <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2">
-                    <Award className="w-5 h-5 text-amber-400" />
-                    <div>
-                      <span className="font-bold text-white block">حالة الشهادة المعتمدة:</span>
-                      <span className="text-[10px] text-slate-300">متاحة ومفتوحة للطالب بناءً على تفاعله</span>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-slate-300">
+                        <div>
+                          <span className="text-slate-400 block text-[10px]">اسم الطالب الكامل:</span>
+                          <strong className="text-white font-bold">{selectedStudentDetails.displayName || selectedStudentDetails.email.split('@')[0]}</strong>
+                        </div>
+
+                        <div>
+                          <span className="text-slate-400 block text-[10px]">البريد الإلكتروني:</span>
+                          <span className="text-indigo-300 font-mono font-bold select-all">{selectedStudentDetails.email}</span>
+                        </div>
+
+                        <div>
+                          <span className="text-slate-400 block text-[10px]">رقم موبايل الطالب (واتساب):</span>
+                          {selectedStudentDetails.phoneNumber ? (
+                            <div className="flex items-center gap-2 mt-1">
+                              <span className="text-emerald-400 font-mono font-bold dir-ltr">{selectedStudentDetails.phoneNumber}</span>
+                              <a 
+                                href={`https://wa.me/${selectedStudentDetails.phoneNumber.replace(/[^0-9]/g, '')}`} 
+                                target="_blank" 
+                                rel="noreferrer"
+                                className="px-2 py-0.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 text-[10px] font-bold border border-emerald-500/40 inline-flex items-center gap-1 transition shadow-sm shrink-0"
+                              >
+                                💬 مراسلة واتساب
+                              </a>
+                            </div>
+                          ) : (
+                            <span className="text-slate-500 font-mono text-xs">لم يُدخل رقم الموبايل بعد</span>
+                          )}
+                        </div>
+
+                        <div>
+                          <span className="text-slate-400 block text-[10px]">رقم ولي الأمر:</span>
+                          {selectedStudentDetails.guardianPhone ? (
+                            <div className="flex items-center gap-2 mt-1">
+                              <span className="text-amber-400 font-mono font-bold dir-ltr">{selectedStudentDetails.guardianPhone}</span>
+                              <a 
+                                href={`https://wa.me/${selectedStudentDetails.guardianPhone.replace(/[^0-9]/g, '')}`} 
+                                target="_blank" 
+                                rel="noreferrer"
+                                className="px-2 py-0.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 text-[10px] font-bold border border-amber-500/40 inline-flex items-center gap-1 transition shadow-sm shrink-0"
+                              >
+                                💬 واتساب ولي الأمر
+                              </a>
+                            </div>
+                          ) : (
+                            <span className="text-slate-500 font-mono text-xs">لم يُدخل رقم ولي الأمر بعد</span>
+                          )}
+                        </div>
+
+                        <div>
+                          <span className="text-slate-400 block text-[10px]">الصف الدراسي:</span>
+                          <strong className="text-white font-bold">{selectedStudentDetails.gradeName || 'تاسع عام'}</strong>
+                        </div>
+
+                        <div>
+                          <span className="text-slate-400 block text-[10px]">العنوان والمحافظة:</span>
+                          <strong className="text-white font-bold">{selectedStudentDetails.address || 'لم يُدخل العنوان بعد'}</strong>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Additional Profile Info */}
+                    <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2 text-xs">
+                      <h5 className="font-bold text-amber-300 mb-1 text-[11px]">بيانات النشاط بالمنصة:</h5>
+                      <div className="flex items-center justify-between text-slate-300">
+                        <span className="text-slate-400">تاريخ إنشاء الحساب:</span>
+                        <span className="font-mono">{selectedStudentDetails.createdAt ? new Date(selectedStudentDetails.createdAt).toLocaleString('ar-EG') : 'غير محدد'}</span>
+                      </div>
+                      <div className="flex items-center justify-between text-slate-300">
+                        <span className="text-slate-400">آخر تواجد بالمنصة:</span>
+                        <span className="font-mono text-emerald-300">{selectedStudentDetails.lastActiveAt || selectedStudentDetails.lastLoginAt ? new Date(selectedStudentDetails.lastActiveAt || selectedStudentDetails.lastLoginAt!).toLocaleString('ar-EG') : 'نشط الآن'}</span>
+                      </div>
                     </div>
                   </div>
-                  <span className="px-2.5 py-1 rounded-xl bg-amber-400 text-slate-950 font-black text-[10px]">
-                    مفعلة 📜
-                  </span>
-                </div>
+                )}
               </div>
 
               {/* Close Button */}
-              <div className="pt-2 text-left shrink-0">
+              <div className="pt-2 text-left shrink-0 border-t border-slate-800 flex items-center justify-between">
+                <span className="text-[11px] text-slate-400">لوحة تفاصيل الطالب للأدمن</span>
                 <button
                   onClick={() => setSelectedStudentDetails(null)}
                   className="px-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-extrabold text-xs transition cursor-pointer"
