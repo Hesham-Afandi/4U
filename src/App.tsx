@@ -4,7 +4,7 @@ import {
   BookOpen, Search, RotateCcw, Heart, BarChart2, Sun, Moon, 
   Home, ChevronRight, Share2, Clipboard, Copy, Award, Printer, CheckCircle, Clock,
   Download, Mic, Sparkles, Megaphone, Radio, Pause, Play, Volume2, VolumeX,
-  MessageSquare, Send, X, Flame, Sliders, Settings, LogIn, LogOut, Users, User, Mail, ShieldCheck, Crown, Lock, Bell, BellOff, RefreshCw
+  MessageSquare, Send, X, Flame, Sliders, Settings, LogIn, LogOut, Users, User, Mail, ShieldCheck, Crown, Lock, Bell, BellOff, RefreshCw, Calculator, BookMarked
 } from 'lucide-react';
 import { DB, countries } from './data';
 import { Term, Stream, Program, Grade, Subject, Unit, Lesson, AppState } from './types';
@@ -12,8 +12,10 @@ import {
   FavoritesModal, StatsModal, CertificateModal, ShareModal, 
   PlannerModal, SummaryNotesModal, ReminderSettingModal, AlarmTriggeredModal,
   VideoPlayerModal, ExamCodesModal, SubscribersModal, EmbeddedLessonViewerModal, GeneralChatModal,
-  FlashcardsModal
+  FlashcardsModal, ScientificCalculatorModal, MistakesLogModal
 } from './components/modals';
+import { mistakesService } from './services/mistakes/mistakesService';
+import { QuestionItem } from './eot/types';
 import { signInWithPopup } from 'firebase/auth';
 import { auth, googleProvider, syncUserToFirestore, syncUserStatsToFirestore, fetchAllSubscribers, fetchActiveAnnouncement, performGoogleSignIn, UserRecord, Announcement, ExamHistoryItem } from './lib/firebase';
 import { WeeklyStudyPlanner } from './components/layout';
@@ -190,6 +192,19 @@ export default function App() {
   const [showFavoritesModal, setShowFavoritesModal] = useState(false);
   const [showExamCodesModal, setShowExamCodesModal] = useState(false);
   const [showStatsModal, setShowStatsModal] = useState(false);
+  const [showCalculatorModal, setShowCalculatorModal] = useState(false);
+  const [showMistakesModal, setShowMistakesModal] = useState(false);
+  const [pendingMistakesCount, setPendingMistakesCount] = useState(0);
+
+  useEffect(() => {
+    const updateMistakesCount = () => {
+      const list = mistakesService.getMistakes();
+      setPendingMistakesCount(list.filter((m) => !m.isMastered).length);
+    };
+    updateMistakesCount();
+    window.addEventListener('student_mistakes_updated', updateMistakesCount);
+    return () => window.removeEventListener('student_mistakes_updated', updateMistakesCount);
+  }, []);
   const [showCertificateModal, setShowCertificateModal] = useState(false);
   const [showShareModal, setShowShareModal] = useState<{ title: string; url: string } | null>(null);
   const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
@@ -2683,7 +2698,7 @@ export default function App() {
 
             {/* Login Footer Contact Info */}
             <div className="mt-6 text-center text-xs text-slate-400 space-y-1">
-              <p className="font-semibold text-slate-300">أ/ هشام أفندي (Mr. Hesham Afandi) | mohammedhesham872@gmail.com | +971555642674</p>
+              <p className="font-semibold text-slate-300">Mr. Mohammed Hesham | mohammedhesham872@gmail.com | +971555642674</p>
               <p className="text-[11px] text-slate-500">© 2026 جميع الحقوق محفوظة لمنصة 4U التعليمية</p>
             </div>
 
@@ -2790,6 +2805,31 @@ export default function App() {
             >
               <Sparkles className="w-4 h-4 text-amber-300" />
               <span className="hidden sm:inline">بطاقات المراجعة 🎴</span>
+            </button>
+
+            {/* Scientific & Graphing Calculator Button */}
+            <button 
+              onClick={() => setShowCalculatorModal(true)}
+              className="bg-emerald-600/40 hover:bg-emerald-600/60 p-2 md:px-3 rounded-xl backdrop-blur-md border border-emerald-400/50 text-emerald-100 transition flex items-center gap-1.5 text-sm font-extrabold cursor-pointer shadow-md shrink-0"
+              title="الآلة الحاسبة العلمية والبيانية (رسم بياني، مصفوفات، معادلات، إحصاء)"
+            >
+              <Calculator className="w-4 h-4 text-amber-300" />
+              <span className="hidden sm:inline">آلة حاسبة علمية 🧮</span>
+            </button>
+
+            {/* Student Mistakes Log & Smart Notebook Button */}
+            <button 
+              onClick={() => setShowMistakesModal(true)}
+              className="bg-rose-600/40 hover:bg-rose-600/60 p-2 md:px-3 rounded-xl backdrop-blur-md border border-rose-400/50 text-rose-100 transition flex items-center gap-1.5 text-sm font-extrabold cursor-pointer shadow-md shrink-0 relative"
+              title="دفتر أخطائي وسجل الملاحظات الذكية"
+            >
+              <BookMarked className="w-4 h-4 text-amber-300" />
+              <span className="hidden sm:inline">دفتر أخطائي 📓</span>
+              {pendingMistakesCount > 0 && (
+                <span className="bg-rose-500 text-white font-mono text-[10px] px-1.5 py-0.2 rounded-full border border-white/50 animate-pulse">
+                  {pendingMistakesCount}
+                </span>
+              )}
             </button>
 
             {/* General Community Chat Button */}
@@ -4274,6 +4314,47 @@ export default function App() {
                               <span>📅</span>
                               <span>جدولة الدرس في جدول المذاكرة الأسبوعي</span>
                             </button>
+
+                            {/* Save Lesson to Mistakes Log Button */}
+                            <button
+                              onClick={() => {
+                                const questionItem: QuestionItem = {
+                                  id: `lesson-${appState.lesson!.id}-${Date.now()}`,
+                                  qNumber: 1,
+                                  title: appState.lesson!.title,
+                                  titleAr: appState.lesson!.title,
+                                  learningOutcome: appState.lesson!.title,
+                                  learningOutcomeAr: appState.lesson!.title,
+                                  unit: 1,
+                                  lesson: appState.lesson!.title,
+                                  page: 1,
+                                  exerciseRef: 'اختبار الحصة',
+                                  type: 'mcq',
+                                  questionTextAr: `أسئلة واختبار درس: ${appState.lesson!.title}`,
+                                  questionText: `Lesson Test: ${appState.lesson!.title}`,
+                                  solutionSteps: ['راجع الفيديو واختبار الحصة لتثبيت المفاهيم'],
+                                  finalAnswer: 'A',
+                                  correctAnswer: 'A',
+                                  options: [
+                                    { id: 'A', text: 'تم مراجعة الدرس واستيعاب قوانينه' },
+                                    { id: 'B', text: 'بحاجة إلى إعادة اختبار نفسي وحل التمارين مرة أخرى' }
+                                  ]
+                                };
+                                mistakesService.addMistake(
+                                  questionItem,
+                                  'B',
+                                  appState.subject?.name || 'المنهج الدراسي',
+                                  '12',
+                                  'EOT'
+                                );
+                                alert(`📌 تمت إضافة اختبار وملاحظات درس "${appState.lesson!.title}" بنجاح لدفتر أخطائك!`);
+                              }}
+                              className="w-full bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-900/60 text-rose-700 dark:text-rose-300 py-3 rounded-2xl font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-sm border border-rose-200 dark:border-rose-800/60 cursor-pointer"
+                              title="حفظ اختبار وملاحظات هذا الدرس في دفتر أخطائك"
+                            >
+                              <BookMarked className="w-4 h-4 text-amber-500" />
+                              <span>حفظ اختبار وملاحظات هذا الدرس في دفتر أخطائي 📌</span>
+                            </button>
                           </div>
 
                            {/* Quick Actions checklist */}
@@ -4637,6 +4718,18 @@ export default function App() {
       {/* ========================================== */}
       {/* 7. ALL MODAL WINDOWS (MODAL CONTAINER) */}
       {/* ========================================== */}
+
+      {/* MODAL: SCIENTIFIC & GRAPHING CALCULATOR MODAL */}
+      <ScientificCalculatorModal
+        isOpen={showCalculatorModal}
+        onClose={() => setShowCalculatorModal(false)}
+      />
+
+      {/* MODAL: MISTAKES LOG & SMART NOTEBOOK MODAL */}
+      <MistakesLogModal
+        isOpen={showMistakesModal}
+        onClose={() => setShowMistakesModal(false)}
+      />
 
       {/* MODAL 1: FAVORITES BANNER */}
       <FavoritesModal

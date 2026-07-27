@@ -3,9 +3,11 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   X, BookOpen, FileCheck, Clock, ArrowRight, ShieldAlert, 
   Sparkles, RotateCcw, AlertTriangle, Maximize2, Minimize2, CheckCircle2, Loader2,
-  Bot, Send, Copy, Check, MessageSquare, ListFilter, HelpCircle, RefreshCw
+  Bot, Send, Copy, Check, MessageSquare, ListFilter, HelpCircle, RefreshCw, BookMarked
 } from 'lucide-react';
 import { fetchLessonSummary, fetchLessonChatAnswer } from '../../services/ai';
+import { mistakesService } from '../../services/mistakes/mistakesService';
+import { QuestionItem } from '../../eot/types';
 
 interface EmbeddedLessonViewerModalProps {
   isOpen: boolean;
@@ -243,6 +245,47 @@ export const EmbeddedLessonViewerModal: React.FC<EmbeddedLessonViewerModalProps>
 
           {/* Right Action Bar: AI Assistant, Session Timer & Security Notice */}
           <div className="flex items-center gap-2 md:gap-3 shrink-0">
+            {/* Save to Mistakes Log Button */}
+            <button
+              onClick={() => {
+                const questionData: QuestionItem = {
+                  id: `embedded-${contentType}-${Date.now()}`,
+                  qNumber: 1,
+                  title: title,
+                  titleAr: title,
+                  learningOutcome: title,
+                  learningOutcomeAr: title,
+                  unit: 1,
+                  lesson: title,
+                  page: 1,
+                  exerciseRef: 'اختبار الشرح',
+                  type: 'mcq',
+                  questionTextAr: `${contentType === 'exam' ? 'اختبار مدمج' : 'شرح درس'}: ${title}`,
+                  questionText: `${contentType}: ${title}`,
+                  solutionSteps: ['مراجعة الملاحظات واختبار الدرس'],
+                  finalAnswer: 'تمت المراجعة',
+                  correctAnswer: 'A',
+                  options: [
+                    { id: 'A', text: 'تم استيعاب أفكار وقوانين هذا الدرس/الاختبار' },
+                    { id: 'B', text: 'أحتاج لإعادة حل واختبار نفسي في هذا الدرس مرة أخرى' }
+                  ]
+                };
+                mistakesService.addMistake(
+                  questionData,
+                  'B',
+                  subjectName || 'اختبارات الشرح والمنهج',
+                  '12',
+                  'EOT'
+                );
+                alert(`📌 تم إضافة "${title}" بنجاح إلى دفتر أخطائك وملاحظاتك الذكية!`);
+              }}
+              className="px-3 py-1.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-md"
+              title="حفظ هذا الدرس أو الاختبار في دفتر أخطائك لمراجعته لاحقاً"
+            >
+              <BookMarked className="w-4 h-4 text-amber-300" />
+              <span className="hidden md:inline">حفظ في دفتر أخطائي 📌</span>
+            </button>
+
             {/* AI Assistant Button */}
             <button
               onClick={() => setShowAiDrawer(!showAiDrawer)}

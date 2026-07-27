@@ -112,10 +112,8 @@ export const SummaryNotesModal: React.FC<SummaryNotesModalProps> = ({
                     {/* Clear Note button */}
                     <button
                       onClick={() => {
-                        if (confirm('هل أنت متأكد من رغبتك في حذف هذه الملاحظة؟')) {
-                          updateStudentNote(key, '');
-                          showToastMsg('🗑️ تم حذف الملاحظة');
-                        }
+                        updateStudentNote(key, '');
+                        showToastMsg('🗑️ تم حذف الملاحظة بنجاح');
                       }}
                       className="absolute top-3 left-3 text-gray-400 hover:text-rose-500 text-xs transition p-1 cursor-pointer"
                       title="حذف الملاحظة"

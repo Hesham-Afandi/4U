@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { QuestionItem } from '../types';
 import { MathRenderer } from './MathRenderer';
 import confetti from 'canvas-confetti';
-import { Award, CheckCircle2, XCircle, RotateCcw, Clock, Sparkles, ChevronLeft, ChevronRight, HelpCircle } from 'lucide-react';
+import { Award, CheckCircle2, XCircle, RotateCcw, Clock, Sparkles, ChevronLeft, ChevronRight, HelpCircle, BookMarked, BookmarkPlus, Check } from 'lucide-react';
+import { mistakesService } from '../../services/mistakes/mistakesService';
 
 interface QuizModeProps {
   questions: QuestionItem[];
-  onAskAi: (question: QuestionItem) => void;
+  onAskAi?: (question: QuestionItem) => void;
 }
 
 export const QuizMode: React.FC<QuizModeProps> = ({ questions, onAskAi }) => {
@@ -48,17 +49,30 @@ export const QuizMode: React.FC<QuizModeProps> = ({ questions, onAskAi }) => {
       ...prev,
       [currentQuestion.id]: optionId,
     }));
+    if (optionId !== currentQuestion.correctAnswer) {
+      mistakesService.addMistake(
+        currentQuestion, 
+        optionId, 
+        currentQuestion.subject || (currentQuestion.unit ? `الوحدة ${currentQuestion.unit}` : 'اختبارات الهياكل'), 
+        '12', 
+        'EOT'
+      );
+    }
   };
 
   const handleSubmitQuiz = () => {
     setIsSubmitted(true);
     setTimerActive(false);
 
-    // Calculate score
+    // Calculate score & auto-log mistakes
     let correctCount = 0;
     mcqQuestions.forEach((q) => {
-      if (selectedAnswers[q.id] === q.correctAnswer) {
+      const studentAns = selectedAnswers[q.id];
+      if (studentAns === q.correctAnswer) {
         correctCount += 1;
+      } else if (studentAns) {
+        // Auto save incorrect answer to student mistakes log!
+        mistakesService.addMistake(q, studentAns, 'اختبار الوزارة', '12', 'EOT2');
       }
     });
 
@@ -191,13 +205,34 @@ export const QuizMode: React.FC<QuizModeProps> = ({ questions, onAskAi }) => {
 
       {/* Question Main Card */}
       <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 space-y-5">
-        <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
-          <span className="text-xs font-bold bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-lg border border-indigo-100 dark:border-indigo-900">
-            السؤال {currentQuestion.qNumber} • الوحدة {currentQuestion.unit} ({currentQuestion.lesson})
-          </span>
-          <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold">
-            ص {currentQuestion.page} ({currentQuestion.exerciseRef})
-          </span>
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-lg border border-indigo-100 dark:border-indigo-900">
+              السؤال {currentQuestion.qNumber} • الوحدة {currentQuestion.unit} ({currentQuestion.lesson})
+            </span>
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold">
+              ص {currentQuestion.page} ({currentQuestion.exerciseRef})
+            </span>
+          </div>
+
+          <button
+            onClick={() => {
+              const selectedOpt = selectedAnswers[currentQuestion.id];
+              mistakesService.addMistake(
+                currentQuestion, 
+                selectedOpt, 
+                currentQuestion.subject || (currentQuestion.unit ? `الوحدة ${currentQuestion.unit}` : 'اختبارات الهياكل'), 
+                '12', 
+                'EOT'
+              );
+              alert('تم حفظ هذا السؤال بنجاح في دفتر أخطائك 📓');
+            }}
+            className="flex items-center gap-1 px-2.5 py-1 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-bold transition cursor-pointer"
+            title="حفظ في دفتر أخطائي"
+          >
+            <BookMarked className="w-3.5 h-3.5" />
+            حفظ في دفتر أخطائي 📌
+          </button>
         </div>
 
         {/* Question Text */}

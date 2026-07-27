@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { QuestionItem } from '../types';
 import { MathRenderer } from './MathRenderer';
 import { MathSvgDiagram } from './MathSvgDiagram';
-import { ChevronDown, ChevronUp, CheckCircle, Sparkles, Award, FileText, BookOpen } from 'lucide-react';
+import { ChevronDown, ChevronUp, CheckCircle, Sparkles, Award, FileText, BookOpen, BookMarked, Check } from 'lucide-react';
+import { mistakesService } from '../../services/mistakes/mistakesService';
 
 interface QuestionCardProps {
   question: QuestionItem;
-  onAskAi: (question: QuestionItem) => void;
+  onAskAi?: (question: QuestionItem) => void;
   showSolutionDefault?: boolean;
 }
 
@@ -17,6 +18,13 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
 }) => {
   const [showSolution, setShowSolution] = useState<boolean>(showSolutionDefault);
   const [selectedOption, setSelectedOption] = useState<'A' | 'B' | 'C' | 'D' | null>(null);
+  const [isSavedToMistakes, setIsSavedToMistakes] = useState<boolean>(false);
+
+  const handleBookmarkMistake = () => {
+    mistakesService.addMistake(question, selectedOption || undefined, 'عام');
+    setIsSavedToMistakes(true);
+    setTimeout(() => setIsSavedToMistakes(false), 2000);
+  };
 
   const isMcq = question.type === 'mcq';
 
@@ -124,7 +132,15 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 return (
                   <button
                     key={option.id}
-                    onClick={() => setSelectedOption(option.id)}
+                    onClick={() => {
+                      setSelectedOption(option.id);
+                      if (option.id !== question.correctAnswer) {
+                        const subjectLabel = question.subject || (question.unit ? `الوحدة ${question.unit}` : 'اختبارات الهياكل');
+                        mistakesService.addMistake(question, option.id, subjectLabel, '12', 'EOT');
+                        setIsSavedToMistakes(true);
+                        setTimeout(() => setIsSavedToMistakes(false), 2500);
+                      }
+                    }}
                     className={`p-3.5 rounded-xl border text-right font-medium text-sm flex items-center justify-between transition-all cursor-pointer ${btnStyle}`}
                   >
                     <span className="flex items-center gap-2">
@@ -171,6 +187,28 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
               <>
                 <ChevronDown className="w-4 h-4" />
                 عرض نموذج الحل والخطوات
+              </>
+            )}
+          </button>
+
+          <button
+            onClick={handleBookmarkMistake}
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
+              isSavedToMistakes
+                ? 'bg-rose-600 text-white border-rose-500'
+                : 'bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-900/60 border-rose-200 dark:border-rose-800/60'
+            }`}
+            title="حفظ هذا السؤال في دفتر أخطائك لمراجعته لاحقاً"
+          >
+            {isSavedToMistakes ? (
+              <>
+                <Check className="w-4 h-4 text-white" />
+                تمت الإضافة لدفتر أخطائي 📌
+              </>
+            ) : (
+              <>
+                <BookMarked className="w-4 h-4 text-rose-500 dark:text-rose-400" />
+                حفظ في دفتر أخطائي 📌
               </>
             )}
           </button>

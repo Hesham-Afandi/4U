@@ -12,3 +12,5 @@ export { SubscribersModal } from './SubscribersModal';
 export { EmbeddedLessonViewerModal } from './EmbeddedLessonViewerModal';
 export { GeneralChatModal } from './GeneralChatModal';
 export { FlashcardsModal } from './FlashcardsModal';
+export { ScientificCalculatorModal } from './ScientificCalculatorModal';
+export { MistakesLogModal } from './MistakesLogModal';
