@@ -209,7 +209,11 @@ export const SatView: React.FC<SatViewProps> = ({
       'algebra': { correct: 0, total: 0 },
       'advanced-math': { correct: 0, total: 0 },
       'data-analysis': { correct: 0, total: 0 },
-      'geometry-trig': { correct: 0, total: 0 }
+      'geometry-trig': { correct: 0, total: 0 },
+      'craft-structure': { correct: 0, total: 0 },
+      'information-ideas': { correct: 0, total: 0 },
+      'standard-english': { correct: 0, total: 0 },
+      'expression-ideas': { correct: 0, total: 0 }
     };
 
     examQuestions.forEach((q) => {

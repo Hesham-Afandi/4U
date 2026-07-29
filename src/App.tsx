@@ -4,7 +4,7 @@ import {
   BookOpen, Search, RotateCcw, Heart, BarChart2, Sun, Moon, 
   Home, ChevronRight, Share2, Clipboard, Copy, Award, Printer, CheckCircle, Clock,
   Download, Mic, Sparkles, Megaphone, Radio, Pause, Play, Volume2, VolumeX,
-  MessageSquare, Send, X, Flame, Sliders, Settings, LogIn, LogOut, Users, User, Mail, ShieldCheck, Crown, Lock, Bell, BellOff, RefreshCw, Calculator, BookMarked
+  MessageSquare, Send, X, Flame, Sliders, Settings, LogIn, LogOut, Users, User, Mail, ShieldCheck, Crown, Lock, Bell, BellOff, RefreshCw, Calculator, BookMarked, Globe
 } from 'lucide-react';
 import { DB, countries } from './data';
 import { Term, Stream, Program, Grade, Subject, Unit, Lesson, AppState } from './types';
@@ -25,6 +25,8 @@ import { extractTextFromLessonUrl } from './utils/pdfParser';
 import { getEnglishSubjectName, getEnglishGradeName, getEnglishTermName, getEnglishStreamName } from './utils/language';
 import { EotSpecsView } from './components/EotSpecsView';
 import { SatView } from './components/SatView';
+import { IgView } from './components/IgView';
+import { useChatUnread } from './hooks/useChatUnread';
 
 const DAYS_OF_WEEK = [
   { key: 'Saturday', name: 'السبت' },
@@ -247,6 +249,13 @@ export default function App() {
   const [studyPlan, setStudyPlan] = useState<any[]>([]);
   const [showPlannerModal, setShowPlannerModal] = useState(false);
   const [showGeneralChatModal, setShowGeneralChatModal] = useState(false);
+  const [activeChatRoomId, setActiveChatRoomId] = useState<string>('general');
+  const { unreadMap, totalUnreadCount, markRoomAsRead } = useChatUnread(
+    currentUser?.uid,
+    currentUser?.email,
+    showGeneralChatModal,
+    activeChatRoomId
+  );
   const [showFlashcardsModal, setShowFlashcardsModal] = useState(false);
   const [flashcardsSubject, setFlashcardsSubject] = useState('physics');
   const [logoError, setLogoError] = useState(false);
@@ -272,8 +281,19 @@ export default function App() {
     url: ''
   });
   const [activeQuote, setActiveQuote] = useState('');
-  const [activePlatformSection, setActivePlatformSection] = useState<'curriculum' | 'eot' | 'sat'>('curriculum');
+  const [activePlatformSection, setActivePlatformSection] = useState<'curriculum' | 'eot' | 'sat' | 'ig'>('curriculum');
   const [curriculumSubView, setCurriculumSubView] = useState<'landing' | 'terms'>('landing');
+
+  // --- 🌐 Global Language State (العربية / English) ---
+  const [language, setLanguage] = useState<'ar' | 'en'>(() => {
+    return (localStorage.getItem('4u_app_language') as 'ar' | 'en') || 'ar';
+  });
+
+  const toggleLanguage = () => {
+    const newLang = language === 'ar' ? 'en' : 'ar';
+    setLanguage(newLang);
+    localStorage.setItem('4u_app_language', newLang);
+  };
 
   // --- Visit Streak & Platform Active Session Timer ---
   const [visitStreak, setVisitStreak] = useState(1);
@@ -2775,6 +2795,16 @@ export default function App() {
           {/* Top Bar Action Rail */}
           <div className="flex items-center gap-2 md:gap-3 flex-wrap">
             
+            {/* Bilingual Language Switcher */}
+            <button 
+              onClick={toggleLanguage}
+              className="bg-indigo-600/40 hover:bg-indigo-600/60 p-2 md:px-3 rounded-xl backdrop-blur-md border border-indigo-400/50 text-indigo-100 transition flex items-center gap-1.5 text-sm font-extrabold cursor-pointer shadow-md shrink-0 hover:scale-105 active:scale-95"
+              title={language === 'ar' ? 'تغيير اللغة إلى الإنجليزية (English)' : 'Change Language to Arabic (العربية)'}
+            >
+              <Globe className="w-4 h-4 text-amber-300" />
+              <span>{language === 'ar' ? 'English' : 'العربية 🇪🇬'}</span>
+            </button>
+
             {/* Back button - Always visible in top header bar */}
             <button 
               onClick={handleBack}
@@ -2852,13 +2882,22 @@ export default function App() {
 
             {/* General Community Chat Button */}
             <button 
-              onClick={() => setShowGeneralChatModal(true)}
-              className="bg-amber-500/30 hover:bg-amber-500/50 p-2 md:px-3 rounded-xl backdrop-blur-md border border-amber-400/50 text-amber-200 transition flex items-center gap-1.5 text-sm font-extrabold cursor-pointer shadow-md shrink-0"
+              onClick={() => {
+                setShowGeneralChatModal(true);
+                markRoomAsRead(activeChatRoomId);
+              }}
+              className="bg-amber-500/30 hover:bg-amber-500/50 p-2 md:px-3 rounded-xl backdrop-blur-md border border-amber-400/50 text-amber-200 transition flex items-center gap-1.5 text-sm font-extrabold cursor-pointer shadow-md shrink-0 relative"
               title="الشات العام وغرف التواصل الطلابية"
             >
               <MessageSquare className="w-4 h-4 text-amber-300 animate-pulse" />
               <span className="hidden sm:inline">الشات العام 💬</span>
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
+              {Number(totalUnreadCount) > 0 ? (
+                <span className="bg-rose-500 text-white font-mono text-[10px] px-1.5 py-0.2 rounded-full border border-white/60 font-black animate-bounce shadow-lg flex items-center justify-center min-w-[18px]">
+                  {totalUnreadCount}
+                </span>
+              ) : (
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
+              )}
             </button>
 
             {/* Weekly Study Planner Button */}
@@ -3100,8 +3139,18 @@ export default function App() {
         <div id="breadcrumbs" className="max-w-7xl mx-auto px-4 md:px-6 py-4">
           <div className="flex items-center justify-between flex-wrap gap-3">
             <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 flex-wrap">
-              <button onClick={goHome} className="hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center gap-1 cursor-pointer">
-                <span>🎓</span> الرئيسية
+              <button onClick={goHome} className="hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center gap-1 cursor-pointer font-bold">
+                <span>🎓</span> {language === 'ar' ? 'الرئيسية' : 'Home'}
+              </button>
+
+              {/* Language Switcher next to Home */}
+              <button
+                onClick={toggleLanguage}
+                className="bg-indigo-600/10 hover:bg-indigo-600/20 text-indigo-600 dark:text-indigo-400 border border-indigo-500/30 px-2.5 py-1 rounded-xl text-xs font-black flex items-center gap-1 transition cursor-pointer ml-1"
+                title={language === 'ar' ? 'Switch to English' : 'التحويل للعربية'}
+              >
+                <Globe className="w-3.5 h-3.5" />
+                <span>{language === 'ar' ? 'English' : 'العربية 🇪🇬'}</span>
               </button>
 
               {appState.country && (
@@ -3187,7 +3236,7 @@ export default function App() {
                   }`}
                 >
                   <span>📚</span>
-                  <span>قسم المناهج والدروس</span>
+                  <span>{language === 'en' ? 'Curriculum & Lessons' : 'قسم المناهج والدروس'}</span>
                 </button>
 
                 <button
@@ -3199,7 +3248,7 @@ export default function App() {
                   }`}
                 >
                   <span>📜</span>
-                  <span>قسم الهياكل (EOT)</span>
+                  <span>{language === 'en' ? 'EOT Specs' : 'قسم الهياكل (EOT)'}</span>
                 </button>
 
                 <button
@@ -3211,7 +3260,19 @@ export default function App() {
                   }`}
                 >
                   <span>🎓</span>
-                  <span>قسم اختبـارات السات (SAT)</span>
+                  <span>{language === 'en' ? 'SAT Exams' : 'قسم اختبـارات السات (SAT)'}</span>
+                </button>
+
+                <button
+                  onClick={() => setActivePlatformSection('ig')}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
+                    activePlatformSection === 'ig'
+                      ? 'bg-teal-600 text-white shadow-md'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400'
+                  }`}
+                >
+                  <span>📝</span>
+                  <span>IG Exams</span>
                 </button>
               </div>
             )}
@@ -3446,6 +3507,22 @@ export default function App() {
               />
             )}
 
+            {appState.country && activePlatformSection === 'ig' && (
+              <IgView 
+                language={language}
+                onSwitchToCurriculum={() => {
+                  setActivePlatformSection('curriculum');
+                  setCurriculumSubView('terms');
+                }}
+                onSwitchToEot={() => {
+                  setActivePlatformSection('eot');
+                }}
+                onSwitchToSat={() => {
+                  setActivePlatformSection('sat');
+                }}
+              />
+            )}
+
             {appState.country && activePlatformSection === 'curriculum' && !appState.term && curriculumSubView === 'landing' && (
               <div className="fade-in space-y-8 my-6">
                 {/* Hero Card Banner */}
@@ -3459,44 +3536,57 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* THREE MAIN PLATFORM SECTIONS CARDS */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                {/* FOUR MAIN PLATFORM SECTIONS CARDS */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
                   {/* Curriculum Section Card */}
                   <div
                     onClick={() => setCurriculumSubView('terms')}
-                    className="group p-8 rounded-3xl shadow-xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-indigo-500 hover:ring-4 hover:ring-indigo-500/20 transition-all cursor-pointer flex flex-col items-center text-center justify-center space-y-4"
+                    className="group p-6 rounded-3xl shadow-xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-indigo-500 hover:ring-4 hover:ring-indigo-500/20 transition-all cursor-pointer flex flex-col items-center text-center justify-center space-y-4"
                   >
-                    <div className="w-20 h-20 rounded-3xl bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-4xl font-bold group-hover:scale-110 transition-transform">
+                    <div className="w-16 h-16 rounded-3xl bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-3xl font-bold group-hover:scale-110 transition-transform">
                       📚
                     </div>
-                    <h3 className="text-xl font-black text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                      قسم المناهج والدروس التفاعلية
+                    <h3 className="text-lg font-black text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                      قسم المناهج والدروس
                     </h3>
                   </div>
 
                   {/* EOT Specs Section Card */}
                   <div
                     onClick={() => setActivePlatformSection('eot')}
-                    className="group p-8 rounded-3xl shadow-xl border-2 border-amber-500/40 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-950 text-white hover:border-amber-400 hover:ring-4 hover:ring-amber-500/20 transition-all cursor-pointer flex flex-col items-center text-center justify-center space-y-4"
+                    className="group p-6 rounded-3xl shadow-xl border-2 border-amber-500/40 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-950 text-white hover:border-amber-400 hover:ring-4 hover:ring-amber-500/20 transition-all cursor-pointer flex flex-col items-center text-center justify-center space-y-4"
                   >
-                    <div className="w-20 h-20 rounded-3xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-4xl font-bold group-hover:scale-110 transition-transform">
+                    <div className="w-16 h-16 rounded-3xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-3xl font-bold group-hover:scale-110 transition-transform">
                       📜
                     </div>
-                    <h3 className="text-xl font-black text-amber-300 group-hover:text-amber-200 transition-colors">
-                      قسم الهياكل الامتحانية (EOT)
+                    <h3 className="text-lg font-black text-amber-300 group-hover:text-amber-200 transition-colors">
+                      قسم الهياكل (EOT)
                     </h3>
                   </div>
 
                   {/* SAT Section Card */}
                   <div
                     onClick={() => setActivePlatformSection('sat')}
-                    className="group p-8 rounded-3xl shadow-xl border-2 border-purple-500/40 bg-gradient-to-br from-slate-900 via-purple-950 to-slate-950 text-white hover:border-purple-400 hover:ring-4 hover:ring-purple-500/20 transition-all cursor-pointer flex flex-col items-center text-center justify-center space-y-4"
+                    className="group p-6 rounded-3xl shadow-xl border-2 border-purple-500/40 bg-gradient-to-br from-slate-900 via-purple-950 to-slate-950 text-white hover:border-purple-400 hover:ring-4 hover:ring-purple-500/20 transition-all cursor-pointer flex flex-col items-center text-center justify-center space-y-4"
                   >
-                    <div className="w-20 h-20 rounded-3xl bg-purple-500/20 text-purple-300 flex items-center justify-center text-4xl font-bold group-hover:scale-110 transition-transform">
+                    <div className="w-16 h-16 rounded-3xl bg-purple-500/20 text-purple-300 flex items-center justify-center text-3xl font-bold group-hover:scale-110 transition-transform">
                       🎓
                     </div>
-                    <h3 className="text-xl font-black text-purple-300 group-hover:text-purple-200 transition-colors">
-                      قسم اختبـارات السات (SAT)
+                    <h3 className="text-lg font-black text-purple-300 group-hover:text-purple-200 transition-colors">
+                      قسم السات (SAT)
+                    </h3>
+                  </div>
+
+                  {/* IG Section Card */}
+                  <div
+                    onClick={() => setActivePlatformSection('ig')}
+                    className="group p-6 rounded-3xl shadow-xl border-2 border-teal-500/40 bg-gradient-to-br from-slate-900 via-teal-950 to-slate-950 text-white hover:border-teal-400 hover:ring-4 hover:ring-teal-500/20 transition-all cursor-pointer flex flex-col items-center text-center justify-center space-y-4"
+                  >
+                    <div className="w-16 h-16 rounded-3xl bg-teal-500/20 text-teal-300 flex items-center justify-center text-3xl font-bold group-hover:scale-110 transition-transform">
+                      📝
+                    </div>
+                    <h3 className="text-lg font-black text-teal-300 group-hover:text-teal-200 transition-colors">
+                      IG Exams
                     </h3>
                   </div>
                 </div>
@@ -5211,6 +5301,9 @@ export default function App() {
         currentUser={currentUser}
         isAdmin={isAdmin}
         userGradeName={appState.grade?.name}
+        unreadMap={unreadMap}
+        onMarkRoomAsRead={markRoomAsRead}
+        onActiveRoomChange={setActiveChatRoomId}
       />
 
       {/* 24. FLASHCARDS & QUICK REVIEWS MODAL */}

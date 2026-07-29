@@ -61,6 +61,7 @@ export const MistakesLogModal: React.FC<MistakesLogModalProps> = ({
       ...mistakes.map((m) => m.subject).filter(Boolean),
       'SAT Math (رياضيات السات)',
       'SAT English (قراءة وكتابة السات)',
+      'IGCSE Maths (رياضيات النظام البريطاني)',
       'رياضيات',
       'فيزياء',
       'عام'

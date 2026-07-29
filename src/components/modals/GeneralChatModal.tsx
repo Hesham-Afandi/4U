@@ -9,6 +9,8 @@ import { collection, addDoc, onSnapshot, query, orderBy, limit, serverTimestamp,
 import { db } from '../../lib/firebase';
 import { containsProfanity, sanitizeText } from '../../utils/profanityFilter';
 
+import { CHAT_ROOMS } from '../../hooks/useChatUnread';
+
 interface ChatRoom {
   id: string;
   name: string;
@@ -16,18 +18,6 @@ interface ChatRoom {
   description: string;
   gradeBadge?: string;
 }
-
-const CHAT_ROOMS: ChatRoom[] = [
-  { id: 'general', name: 'الشات العام المفتوح', icon: '🌐', description: 'ملتقى جميع الطلاب والمعلمين من كافة الصفوف والمراحل الدراسية', gradeBadge: 'الكل' },
-  { id: 'grade12_adv', name: 'الصف 12 متقدم', icon: '🎓', description: 'غرفة النقاش وحل أسئلة وااختبارات الصف الثاني عشر متقدم', gradeBadge: '12 متقدم' },
-  { id: 'grade12_gen', name: 'الصف 12 عام', icon: '🎓', description: 'غرفة النقاش والحلول المنهجية للصف الثاني عشر عام', gradeBadge: '12 عام' },
-  { id: 'grade11_adv', name: 'الصف 11 متقدم', icon: '🎓', description: 'مساحة الحوار والمذاكرة للصف الحادي عشر متقدم', gradeBadge: '11 متقدم' },
-  { id: 'grade11_gen', name: 'الصف 11 عام', icon: '🎓', description: 'مساحة الحوار والمذاكرة للصف الحادي عشر عام', gradeBadge: '11 عام' },
-  { id: 'grade10_adv', name: 'الصف 10 متقدم', icon: '📚', description: 'مناقشات ومراجعات الصف العاشر متقدم', gradeBadge: '10 متقدم' },
-  { id: 'grade10_gen', name: 'الصف 10 عام', icon: '📚', description: 'مناقشات ومراجعات الصف العاشر عام', gradeBadge: '10 عام' },
-  { id: 'grade9_adv', name: 'الصف 9 متقدم', icon: '✏️', description: 'مساحة التواصل لطلاب الصف التاسع متقدم', gradeBadge: '9 متقدم' },
-  { id: 'grade9_gen', name: 'الصف 9 عام', icon: '✏️', description: 'مساحة التواصل لطلاب الصف التاسع عام', gradeBadge: '9 عام' }
-];
 
 export interface ChatMessage {
   id: string;
@@ -59,6 +49,9 @@ interface GeneralChatModalProps {
   } | null;
   isAdmin: boolean;
   userGradeName?: string;
+  unreadMap?: Record<string, number>;
+  onMarkRoomAsRead?: (roomId: string) => void;
+  onActiveRoomChange?: (roomId: string) => void;
 }
 
 export const GeneralChatModal: React.FC<GeneralChatModalProps> = ({
@@ -66,7 +59,10 @@ export const GeneralChatModal: React.FC<GeneralChatModalProps> = ({
   onClose,
   currentUser,
   isAdmin,
-  userGradeName
+  userGradeName,
+  unreadMap,
+  onMarkRoomAsRead,
+  onActiveRoomChange
 }) => {
   // Determine initial chat room based on user's grade
   const getInitialRoomId = () => {
@@ -122,8 +118,18 @@ export const GeneralChatModal: React.FC<GeneralChatModalProps> = ({
     if (isOpen) {
       const initial = getInitialRoomId();
       setActiveRoomId(initial);
+      onMarkRoomAsRead?.(initial);
+      onActiveRoomChange?.(initial);
     }
   }, [isOpen, userGradeName]);
+
+  // Notify parent on room change or snapshot read
+  useEffect(() => {
+    if (isOpen && activeRoomId) {
+      onMarkRoomAsRead?.(activeRoomId);
+      onActiveRoomChange?.(activeRoomId);
+    }
+  }, [isOpen, activeRoomId, onMarkRoomAsRead, onActiveRoomChange]);
 
   // Real-time Firestore message subscription
   useEffect(() => {
@@ -460,14 +466,17 @@ export const GeneralChatModal: React.FC<GeneralChatModalProps> = ({
 
           {CHAT_ROOMS.map((room) => {
             const isActive = room.id === activeRoomId;
+            const roomUnreadCount = unreadMap?.[room.id] || 0;
             return (
               <button
                 key={room.id}
                 onClick={() => {
                   setActiveRoomId(room.id);
                   setShowMediaLibrary(false);
+                  onMarkRoomAsRead?.(room.id);
+                  onActiveRoomChange?.(room.id);
                 }}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition cursor-pointer flex items-center gap-1.5 border shrink-0 ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition cursor-pointer flex items-center gap-1.5 border shrink-0 relative ${
                   isActive
                     ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white border-indigo-400 shadow-lg shadow-indigo-600/30'
                     : 'bg-slate-900 hover:bg-slate-800 text-slate-300 border-slate-800 hover:border-slate-700'
@@ -480,6 +489,11 @@ export const GeneralChatModal: React.FC<GeneralChatModalProps> = ({
                     isActive ? 'bg-amber-400 text-slate-950 font-black' : 'bg-slate-800 text-slate-400'
                   }`}>
                     {room.gradeBadge}
+                  </span>
+                )}
+                {!isActive && roomUnreadCount > 0 && (
+                  <span className="bg-rose-500 text-white font-mono text-[10px] px-1.5 py-0.2 rounded-full font-extrabold animate-pulse shadow-md min-w-[18px] text-center">
+                    {roomUnreadCount}
                   </span>
                 )}
               </button>
