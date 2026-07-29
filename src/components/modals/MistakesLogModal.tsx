@@ -54,11 +54,28 @@ export const MistakesLogModal: React.FC<MistakesLogModalProps> = ({
   const totalCount = mistakes.length;
   const masteryPercentage = totalCount > 0 ? Math.round((masteredCount / totalCount) * 100) : 0;
 
+  // Dynamically extract unique subjects from logged mistakes plus standard categories
+  const subjectOptions = Array.from(
+    new Set([
+      'all',
+      ...mistakes.map((m) => m.subject).filter(Boolean),
+      'SAT Math (رياضيات السات)',
+      'SAT English (قراءة وكتابة السات)',
+      'رياضيات',
+      'فيزياء',
+      'عام'
+    ])
+  );
+
   // Filtered list
   const filteredMistakes = mistakes.filter((item) => {
     if (activeTab === 'pending' && item.isMastered) return false;
     if (activeTab === 'mastered' && !item.isMastered) return false;
-    if (selectedSubject !== 'all' && item.subject !== selectedSubject) return false;
+    if (selectedSubject !== 'all') {
+      if (item.subject !== selectedSubject && !item.subject.toLowerCase().includes(selectedSubject.toLowerCase())) {
+        return false;
+      }
+    }
     return true;
   });
 
@@ -265,10 +282,11 @@ export const MistakesLogModal: React.FC<MistakesLogModalProps> = ({
                 onChange={(e) => setSelectedSubject(e.target.value)}
                 className="bg-transparent text-slate-200 text-xs focus:outline-none cursor-pointer"
               >
-                <option value="all" className="bg-slate-900">جميع المواد</option>
-                <option value="رياضيات" className="bg-slate-900">رياضيات</option>
-                <option value="فيزياء" className="bg-slate-900">فيزياء</option>
-                <option value="عام" className="bg-slate-900">عام</option>
+                {subjectOptions.map((subj) => (
+                  <option key={subj} value={subj} className="bg-slate-900">
+                    {subj === 'all' ? 'جميع المواد' : subj}
+                  </option>
+                ))}
               </select>
             </div>
 

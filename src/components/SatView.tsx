@@ -247,15 +247,21 @@ export const SatView: React.FC<SatViewProps> = ({
           studentAnsStr = String(uAns);
         }
 
+        const isRw = q.subject === 'reading-writing' || selectedSubject === 'reading-writing';
+        const subjectLabel = isRw ? 'SAT English (قراءة وكتابة السات)' : 'SAT Math (رياضيات السات)';
+        const titlePrefix = isRw ? 'SAT Reading & Writing' : 'SAT Math';
+        const titlePrefixAr = isRw ? 'SAT قراءة وكتابة' : 'SAT رياضيات';
+        const lessonDefault = isRw ? 'SAT Reading & Writing' : 'SAT Math';
+
         const questionItem: QuestionItem = {
           id: `SAT-${q.id}`,
           qNumber: q.id,
-          title: `SAT Math - ${q.domain}`,
-          titleAr: `SAT رياضيات - ${q.domain}`,
+          title: `${titlePrefix} - ${q.domain}`,
+          titleAr: `${titlePrefixAr} - ${q.domain}`,
           learningOutcome: q.domain,
           learningOutcomeAr: q.domain,
           unit: 1,
-          lesson: q.category || 'SAT Math',
+          lesson: q.category || lessonDefault,
           page: 1,
           exerciseRef: `SAT Model Question #${q.id}`,
           type: q.isGridIn ? 'paper' : 'mcq',
@@ -267,7 +273,7 @@ export const SatView: React.FC<SatViewProps> = ({
           finalAnswer: correctAnsStr
         };
 
-        mistakesService.addMistake(questionItem, studentAnsStr, 'SAT Math (رياضيات السات)', 'SAT', 'Digital SAT');
+        mistakesService.addMistake(questionItem, studentAnsStr, subjectLabel, 'SAT', 'Digital SAT');
       }
     });
 

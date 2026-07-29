@@ -37,10 +37,88 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   const isAnswered = userAnswer !== undefined && userAnswer !== '';
   const isCorrect = isAnswered && String(userAnswer).trim() === String(question.correctAnswer).trim();
 
+  const handleSelectOption = (idx: number) => {
+    onSelectAnswer(question.id, idx);
+    if (showInstantFeedback && question.correctAnswer !== idx) {
+      let optionsList: QuestionOption[] | undefined = undefined;
+      if (question.options) {
+        optionsList = question.options.map((opt, i) => ({
+          id: String.fromCharCode(65 + i) as 'A' | 'B' | 'C' | 'D',
+          text: lang === 'ar' ? opt.textAr : opt.textEn
+        }));
+      }
+
+      let correctAnsStr = 'A';
+      if (typeof question.correctAnswer === 'number') {
+        correctAnsStr = String.fromCharCode(65 + question.correctAnswer);
+      } else if (question.correctAnswer !== undefined) {
+        correctAnsStr = String(question.correctAnswer);
+      }
+
+      const isRw = question.subject === 'reading-writing';
+      const subjectLabel = isRw ? 'SAT English (قراءة وكتابة السات)' : 'SAT Math (رياضيات السات)';
+      const titlePrefix = isRw ? 'SAT Reading & Writing' : 'SAT Math';
+      const titlePrefixAr = isRw ? 'SAT قراءة وكتابة' : 'SAT رياضيات';
+      const lessonDefault = isRw ? 'SAT Reading & Writing' : 'SAT Math';
+
+      const questionItem: QuestionItem = {
+        id: `SAT-${question.id}`,
+        qNumber: question.id,
+        title: `${titlePrefix} - ${question.domain}`,
+        titleAr: `${titlePrefixAr} - ${question.domain}`,
+        learningOutcome: question.domain,
+        learningOutcomeAr: question.domain,
+        unit: 1,
+        lesson: question.category || lessonDefault,
+        page: 1,
+        exerciseRef: `SAT Model Question #${question.id}`,
+        type: question.isGridIn ? 'paper' : 'mcq',
+        questionText: question.questionEn,
+        questionTextAr: question.questionAr,
+        options: optionsList,
+        correctAnswer: correctAnsStr,
+        solutionSteps: question.solutionStepsAr || [question.explanationAr],
+        finalAnswer: correctAnsStr
+      };
+
+      mistakesService.addMistake(questionItem, String.fromCharCode(65 + idx), subjectLabel, 'SAT', 'Digital SAT');
+    }
+  };
+
   const handleGridInSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (gridInInput.trim()) {
-      onSelectAnswer(question.id, gridInInput.trim());
+      const val = gridInInput.trim();
+      onSelectAnswer(question.id, val);
+      if (showInstantFeedback && String(val).trim() !== String(question.correctAnswer).trim()) {
+        const isRw = question.subject === 'reading-writing';
+        const subjectLabel = isRw ? 'SAT English (قراءة وكتابة السات)' : 'SAT Math (رياضيات السات)';
+        const titlePrefix = isRw ? 'SAT Reading & Writing' : 'SAT Math';
+        const titlePrefixAr = isRw ? 'SAT قراءة وكتابة' : 'SAT رياضيات';
+        const lessonDefault = isRw ? 'SAT Reading & Writing' : 'SAT Math';
+
+        const questionItem: QuestionItem = {
+          id: `SAT-${question.id}`,
+          qNumber: question.id,
+          title: `${titlePrefix} - ${question.domain}`,
+          titleAr: `${titlePrefixAr} - ${question.domain}`,
+          learningOutcome: question.domain,
+          learningOutcomeAr: question.domain,
+          unit: 1,
+          lesson: question.category || lessonDefault,
+          page: 1,
+          exerciseRef: `SAT Model Question #${question.id}`,
+          type: 'paper',
+          questionText: question.questionEn,
+          questionTextAr: question.questionAr,
+          options: undefined,
+          correctAnswer: String(question.correctAnswer),
+          solutionSteps: question.solutionStepsAr || [question.explanationAr],
+          finalAnswer: String(question.correctAnswer)
+        };
+
+        mistakesService.addMistake(questionItem, val, subjectLabel, 'SAT', 'Digital SAT');
+      }
     }
   };
 
@@ -67,15 +145,21 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
       studentAnsStr = String(userAnswer);
     }
 
+    const isRw = question.subject === 'reading-writing';
+    const subjectLabel = isRw ? 'SAT English (قراءة وكتابة السات)' : 'SAT Math (رياضيات السات)';
+    const titlePrefix = isRw ? 'SAT Reading & Writing' : 'SAT Math';
+    const titlePrefixAr = isRw ? 'SAT قراءة وكتابة' : 'SAT رياضيات';
+    const lessonDefault = isRw ? 'SAT Reading & Writing' : 'SAT Math';
+
     const questionItem: QuestionItem = {
       id: `SAT-${question.id}`,
       qNumber: question.id,
-      title: `SAT Math - ${question.domain}`,
-      titleAr: `SAT رياضيات - ${question.domain}`,
+      title: `${titlePrefix} - ${question.domain}`,
+      titleAr: `${titlePrefixAr} - ${question.domain}`,
       learningOutcome: question.domain,
       learningOutcomeAr: question.domain,
       unit: 1,
-      lesson: question.category || 'SAT Math',
+      lesson: question.category || lessonDefault,
       page: 1,
       exerciseRef: `SAT Model Question #${question.id}`,
       type: question.isGridIn ? 'paper' : 'mcq',
@@ -87,7 +171,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
       finalAnswer: correctAnsStr
     };
 
-    mistakesService.addMistake(questionItem, studentAnsStr, 'SAT Math (رياضيات السات)', 'SAT', 'Digital SAT');
+    mistakesService.addMistake(questionItem, studentAnsStr, subjectLabel, 'SAT', 'Digital SAT');
     setSavedToMistakes(true);
     setTimeout(() => setSavedToMistakes(false), 3000);
   };
@@ -199,7 +283,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             return (
               <button
                 key={idx}
-                onClick={() => onSelectAnswer(question.id, idx)}
+                onClick={() => handleSelectOption(idx)}
                 className={btnClasses}
               >
                 <div className="flex items-center gap-3">
