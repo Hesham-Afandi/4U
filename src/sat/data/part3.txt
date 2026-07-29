@@ -1,0 +1,707 @@
+=== Module 1 - Question 1 [Problem-Solving & Data Analysis | Easy] ===
+[AR] كم ياردة تكافئ 612 بوصة؟ (1 ياردة = 36 بوصة)
+[EN] How many yards are equivalent to 612 inches? (1 yard = 36 inches)
+Choices:
+  A) 0.059 / أ) 0.059
+  B) 17 / ب) 17
+  C) 576 / ج) 576
+  D) 22,032 / د) 22,032
+Correct Answer: B
+Solution (AR): عدد الياردات = 612 ÷ 36 = 17 ياردة.
+Solution (EN): Number of yards = 612 ÷ 36 = 17 yards.
+
+----------------------------------------
+
+=== Module 1 - Question 2 [Problem-Solving & Data Analysis | Easy] ===
+[AR] يوضح الجدول نتائج استطلاع شمل 200 شخص حول مدى تكرار مشاهدتهم للأفلام في السينما. كم شخصاً أجاب بـ "أبداً" أو "تقريباً أبداً"؟
+[EN] The table gives the results of a survey of 200 people who were asked how often they see a movie in a theater. How many people responded either "never" or "almost never"?
+Choices:
+  A) 24 / أ) 24
+  B) 53 / ب) 53
+  C) 82 / ج) 82
+  D) 118 / د) 118
+Correct Answer: C
+Solution (AR): نجمع التكرار لـ "تقريباً أبداً" و "أبداً": 53 + 29 = 82 شخصاً.
+Solution (EN): Add the frequencies for "almost never" and "never": 53 + 29 = 82 people.
+
+----------------------------------------
+
+=== Module 1 - Question 3 [Algebra | Easy] ===
+[AR] ما هو مقطع المحور الصادي (y-intercept) للمستقيم الموضح في الشكل؟
+[EN] What is the y-intercept of the line graphed in the xy-plane?
+Choices:
+  A) (0, -8) / أ) (0, -8)
+  B) (0, -1/8) / ب) (0, -1/8)
+  C) (0, 0) / ج) (0, 0)
+  D) (0, 8) / د) (0, 8)
+Correct Answer: D
+Solution (AR): يتقاطع المستقيم مع المحور الصادي عند النقطة (0, 8).
+Solution (EN): The graphed line crosses the y-axis at (0, 8).
+
+----------------------------------------
+
+=== Module 1 - Question 4 [Algebra | Easy] ===
+[AR] ما قيمة p التي تحقق المعادلة 5p + 180 = 250؟
+[EN] What value of p satisfies the equation 5p + 180 = 250?
+Choices:
+  A) 14 / أ) 14
+  B) 65 / ب) 65
+  C) 86 / ج) 86
+  D) 250 / د) 250
+Correct Answer: A
+Solution (AR): 5p = 250 - 180 = 70 => p = 70 ÷ 5 = 14.
+Solution (EN): 5p = 250 - 180 = 70 => p = 70 ÷ 5 = 14.
+
+----------------------------------------
+
+=== Module 1 - Question 5 [Geometry & Trigonometry | Easy] ===
+[AR] ما مساحة مستطيل بالسنتيمترات المربعة طوله 36 سم وعرضه 34 سم؟
+[EN] What is the area, in square centimeters, of a rectangle with a length of 36 centimeters and a width of 34 centimeters?
+Choices:
+  A) 70 / أ) 70
+  B) 140 / ب) 140
+  C) 1,156 / ج) 1,156
+  D) 1,224 / د) 1,224
+Correct Answer: D
+Solution (AR): المساحة = الطول × العرض = 36 × 34 = 1,224 سم².
+Solution (EN): Area = length × width = 36 × 34 = 1,224 cm².
+
+----------------------------------------
+
+=== Module 1 - Question 6 [Problem-Solving & Data Analysis | Easy] ===
+[AR] يحتوي وعاء على 170 مكعباً. 10% منها خضراء. كم عدد المكعبات الخضراء؟
+[EN] There are 170 blocks in a container. Of these blocks, 10% are green. How many blocks in the container are green?
+Correct Answer: 17
+Solution (AR): 10% من 170 = 0.10 × 170 = 17 مكعباً.
+Solution (EN): 10% of 170 = 0.10 × 170 = 17 blocks.
+
+----------------------------------------
+
+=== Module 1 - Question 7 [Algebra | Easy] ===
+[AR] المعادلة 46 = 2a + 2b تمثل العلاقة بين أطوال أضلاع متوازي أضلاع. إذا كانت a = 9، فما قيمة b؟
+[EN] The equation 46 = 2a + 2b gives the relationship between the side lengths a and b of a certain parallelogram. If a = 9, what is the value of b?
+Correct Answer: 14
+Solution (AR): نعوض a = 9: 46 = 18 + 2b => 2b = 28 => b = 14.
+Solution (EN): Substitute a = 9: 46 = 2(9) + 2b => 46 = 18 + 2b => 2b = 28 => b = 14.
+
+----------------------------------------
+
+=== Module 1 - Question 8 [Algebra | Easy] ===
+[AR] يوضح الرسم البياني التشكيلات الممك أوزان اليوسفي والليمون التي يمكن شراؤها بمبلغ 18 دولاراً. إذا اشترى ميلفن 4 باوند من اليوسفي، فكم باوند من الليمون اشترى؟
+[EN] The graph shows possible combinations of pounds of tangerines and lemons purchased for $18. If Melvin purchased lemons and 4 pounds of tangerines for $18, how many pounds of lemons did he purchase?
+Choices:
+  A) 7 / أ) 7
+  B) 10 / ب) 10
+  C) 14 / ج) 14
+  D) 16 / د) 16
+Correct Answer: B
+Solution (AR): من الرسم البياني عند x = 4 باوند يوسفي، تكون قيمة y مساوية لـ 10 باوند ليمون.
+Solution (EN): On the graph, at x = 4 pounds of tangerines, the y-value is 10 pounds of lemons.
+
+----------------------------------------
+
+=== Module 1 - Question 9 [Geometry & Trigonometry | Easy] ===
+[AR] مساحة مربع هي 64 بوصة مربعة. ما طول ضلع هذا المربع بالبوصات؟
+[EN] The area of a square is 64 square inches. What is the side length, in inches, of this square?
+Choices:
+  A) 8 / أ) 8
+  B) 16 / ب) 16
+  C) 64 / ج) 64
+  D) 128 / د) 128
+Correct Answer: A
+Solution (AR): طول الضلع = جذر 64 = 8 بوصات.
+Solution (EN): Side length = √64 = 8 inches.
+
+----------------------------------------
+
+=== Module 1 - Question 10 [Algebra | Medium] ===
+[AR] يمتلك كونور c دولارات وماريا m دولارات. يمتلك كونور 4 أضعاف ما تمتلكه ماريا ومجموع ما معهما هو 25 دولاراً. أي نظام معادلات يمثل الموقف؟
+[EN] Connor has c dollars and Maria has m dollars. Connor has 4 times as many dollars as Maria, and together they have a total of $25.00. Which system of equations represents this situation?
+Choices:
+  A) c = 4m; c + m = 25 / أ) c = 4m؛ c + m = 25
+  B) m = 4c; c + m = 25 / ب) m = 4c؛ c + m = 25
+  C) c = 25m; c + m = 4 / ج) c = 25m؛ c + m = 4
+  D) m = 25c; c + m = 4 / د) m = 25c؛ c + m = 4
+Correct Answer: A
+Solution (AR): كونور يمتلك 4 أضعاف ماريا: c = 4m. المجموع 25: c + m = 25.
+Solution (EN): Connor has 4 times Maria => c = 4m. Total $25 => c + m = 25.
+
+----------------------------------------
+
+=== Module 1 - Question 11 [Algebra | Medium] ===
+[AR] تعطي المعادلة d = 16t المسافة d بالبوصات بعد t ثانية. ما أفضل تفسير للعدد 16 في هذا السياق؟
+[EN] d = 16t gives distance d in inches, where t is time in seconds. Which of the following is the best interpretation of 16 in this context?
+Choices:
+  A) The object moved a total of 16 inches. / أ) تحرك الجسم مسافة إجمالية قدرها 16 بوصة.
+  B) The object moved a total of 16t inches. / ب) تحرك الجسم مسافة إجمالية قدرها 16t بوصة.
+  C) The object is moving at a rate of 16 inches per second. / ج) يتحرك الجسم بمعدل 16 بوصة في الثانية.
+  D) The object is moving at a rate of 1/16 inches per second. / د) يتحرك الجسم بمعدل 1/16 بوصة في الثانية.
+Correct Answer: C
+Solution (AR): يمثل المعامل 16 معدل التغير أو السرعة وهي 16 بوصة لكل ثانية.
+Solution (EN): The coefficient 16 represents the speed or rate of motion in inches per second.
+
+----------------------------------------
+
+=== Module 1 - Question 12 [Problem-Solving & Data Analysis | Medium] ===
+[AR] يوضح رسم الانتشار درجة الحرارة y بالفهرنهايت خلال أيام x منذ 1 يونيو. في أي فترة حدثت أكبر زيادة في درجة الحرارة المسجلة؟
+[EN] The scatterplot shows temperature y in °F recorded at x days since June 1. During which period did the greatest increase in recorded temperature take place?
+Choices:
+  A) From x = 6 to x = 7 / أ) من x = 6 إلى x = 7
+  B) From x = 5 to x = 6 / ب) من x = 5 إلى x = 6
+  C) From x = 2 to x = 3 / ج) من x = 2 إلى x = 3
+  D) From x = 1 to x = 2 / د) من x = 1 إلى x = 2
+Correct Answer: D
+Solution (AR): من اليوم الأول (60 درجة) إلى اليوم الثاني (70 درجة) ارتفعت الحرارة بمقدار 10 درجات وهي أكبر زيادة.
+Solution (EN): From x = 1 (temp 60) to x = 2 (temp 70), temperature increased by 10°F, which is the steepest jump.
+
+----------------------------------------
+
+=== Module 1 - Question 13 [Problem-Solving & Data Analysis | Medium] ===
+[AR] مسافة 112 فرلونغ تكافئ كم قدماً؟ (1 فرلونغ = 220 ياردة، و 1 ياردة = 3 أقدام)
+[EN] A distance of 112 furlongs is equivalent to how many feet? (1 furlong = 220 yards and 1 yard = 3 feet)
+Correct Answer: 73920
+Solution (AR): 112 × 220 × 3 = 73,920 قدماً.
+Solution (EN): 112 furlongs = 112 × 220 yards = 24,640 yards = 24,640 × 3 feet = 73,920 feet.
+
+----------------------------------------
+
+=== Module 1 - Question 14 [Algebra | Medium] ===
+[AR] j(x) = mx + 144. للدالة الخطية j، m عدد ثابت و j(12) = 18. ما قيمة j(10)؟
+[EN] j(x) = mx + 144. For the linear function j, m is a constant and j(12) = 18. What is the value of j(10)?
+Correct Answer: 39
+Solution (AR): 12m + 144 = 18 => 12m = -126 => m = -10.5. إذن j(10) = -10.5(10) + 144 = 39.
+Solution (EN): j(12) = 12m + 144 = 18 => 12m = -126 => m = -10.5. Thus j(10) = -10.5(10) + 144 = -105 + 144 = 39.
+
+----------------------------------------
+
+=== Module 1 - Question 15 [Algebra | Medium] ===
+[AR] y = 4x - 9
+y = 19
+ما حل النظام (x, y)؟
+[EN] y = 4x - 9
+y = 19
+What is the solution (x, y) to the given system of equations?
+Choices:
+  A) (4, 19) / أ) (4, 19)
+  B) (7, 19) / ب) (7, 19)
+  C) (19, 4) / ج) (19, 4)
+  D) (19, 7) / د) (19, 7)
+Correct Answer: B
+Solution (AR): بالتعويض y = 19: 19 = 4x - 9 => 4x = 28 => x = 7. الحل هو (7, 19).
+Solution (EN): Substitute y = 19 into first equation: 19 = 4x - 9 => 4x = 28 => x = 7. Solution is (7, 19).
+
+----------------------------------------
+
+=== Module 1 - Question 16 [Advanced Math | Medium] ===
+[AR] أي مقدار مما يلي يكافئ المقدار 256w² - 676؟
+[EN] Which expression is equivalent to 256w² - 676?
+Choices:
+  A) (16w - 26)(16w - 26) / أ) (16w - 26)(16w - 26)
+  B) (8w - 13)(8w + 13) / ب) (8w - 13)(8w + 13)
+  C) (8w - 13)(8w - 13) / ج) (8w - 13)(8w - 13)
+  D) (16w - 26)(16w + 26) / د) (16w - 26)(16w + 26)
+Correct Answer: D
+Solution (AR): الفرق بين مربعين: a² - b² = (a - b)(a + b) => (16w - 26)(16w + 26).
+Solution (EN): Difference of squares: a² - b² = (a - b)(a + b). Here (16w)² - (26)² = (16w - 26)(16w + 26).
+
+----------------------------------------
+
+=== Module 1 - Question 17 [Advanced Math | Medium] ===
+[AR] سجل علماء مستويات مياه المحيط خلال 6 ساعات بنموذج قطع مكافئ رأسه (3, -12) ويمر بالنقطتين (0,0) و (6,0). أي جدول يمثل هذا النموذج؟
+[EN] Scientists recorded ocean water levels over a period of 6 hours modeled by a parabola with vertex (3, -12) passing through (0,0) and (6,0). Which table gives values of x and y based on this model?
+Choices:
+  A) (0, -12), (0, 3), (3, 6) / أ) (0, -12), (0, 3), (3, 6)
+  B) (0, 0), (3, 12), (0, -6) / ب) (0, 0), (3, 12), (0, -6)
+  C) (0, 0), (3, -12), (6, 0) / ج) (0, 0), (3, -12), (6, 0)
+  D) (0, 0), (12, 3), (-6, 0) / د) (0, 0), (12, 3), (-6, 0)
+Correct Answer: C
+Solution (AR): عند x = 0 تكون y = 0، وعند x = 3 (أدنى مستوى) تكون y = -12، وعند x = 6 تكون y = 0.
+Solution (EN): At x = 0, y = 0; at x = 3, y = -12 (lowest point); at x = 6, y = 0.
+
+----------------------------------------
+
+=== Module 1 - Question 18 [Algebra | Hard] ===
+[AR] المستقيم k معرف بالمعادلة y = 3x + 15. المستقيم j عامودي على k في المستوى xy. ما ميل المستقيم j؟
+[EN] Line k is defined by y = 3x + 15. Line j is perpendicular to line k in the xy-plane. What is the slope of line j?
+Choices:
+  A) -1/3 / أ) -1/3
+  B) -1/12 / ب) -1/12
+  C) -1/18 / ج) -1/18
+  D) -1/45 / د) -1/45
+Correct Answer: A
+Solution (AR): ميل المستقيم العمودي هو مقلوب الميل بشرط تغيير الإشارة: -1/3.
+Solution (EN): Perpendicular lines have negative reciprocal slopes. Slope of k is 3, so slope of j is -1/3.
+
+----------------------------------------
+
+=== Module 1 - Question 19 [Algebra | Hard] ===
+[AR] معادلة مبيعات متجر هي 5.48x + 7.30y = 1,277.94 حيث x عدد العلب الصغيرة و y عدد العلب الكبيرة. ما الذي يمثل سعر العلبة الصغيرة بالدولار؟
+[EN] A store sales equation is 5.48x + 7.30y = 1,277.94, where x is smaller containers sold and y is larger containers sold. What represents the price, in dollars, of each smaller container?
+Choices:
+  A) 5.48 / أ) 5.48
+  B) 7.30y / ب) 7.30y
+  C) 7.30 / ج) 7.30
+  D) 5.48x / د) 5.48x
+Correct Answer: A
+Solution (AR): المعامل المضروب في x وهو 5.48 يمثل سعر العلبة الصغيرة بالدولار.
+Solution (EN): The coefficient 5.48 multiplied by x represents the price in dollars per smaller container.
+
+----------------------------------------
+
+=== Module 1 - Question 20 [Geometry & Trigonometry | Hard] ===
+[AR] منشور مستطيل قائم أبعاده: الطول 28 سم، العرض 15 سم، الارتفاع 16 سم. ما مساحته السطحية بالسنتيمترات المربعة؟
+[EN] A right rectangular prism has a length of 28 cm, a width of 15 cm, and a height of 16 cm. What is the surface area, in cm², of the prism?
+Correct Answer: 2216
+Solution (AR): المساحة السطحية = 2(28×15 + 28×16 + 15×16) = 2(420 + 448 + 240) = 2,216 سم².
+Solution (EN): Surface Area = 2(lw + lh + wh) = 2(28×15 + 28×16 + 15×16) = 2(420 + 448 + 240) = 2(1108) = 2,216 cm².
+
+----------------------------------------
+
+=== Module 1 - Question 21 [Advanced Math | Hard] ===
+[AR] إذا كانت 3x² - 18x - 15 = 0، فما قيمة x² - 6x؟
+[EN] If 3x² - 18x - 15 = 0, what is the value of x² - 6x?
+Correct Answer: 5
+Solution (AR): بقسمة طرفي المعادلة على 3: x² - 6x - 5 = 0 => x² - 6x = 5.
+Solution (EN): Divide the given equation by 3: x² - 6x - 5 = 0 => x² - 6x = 5.
+
+----------------------------------------
+
+=== Module 1 - Question 22 [Advanced Math | Hard] ===
+[AR] أي مقدار مما يلي يكافئ المقدار (d - 6)(8d² - 3)؟
+[EN] Which expression is equivalent to (d - 6)(8d² - 3)?
+Choices:
+  A) 8d³ - 14d² - 3d + 18 / أ) 8d³ - 14d² - 3d + 18
+  B) 8d³ - 17d² + 48 / ب) 8d³ - 17d² + 48
+  C) 8d³ - 48d² - 3d + 18 / ج) 8d³ - 48d² - 3d + 18
+  D) 8d³ - 51d² + 48 / د) 8d³ - 51d² + 48
+Correct Answer: C
+Solution (AR): بفك الأقواس: d(8d²) - 3d - 48d² + 18 = 8d³ - 48d² - 3d + 18.
+Solution (EN): Expand (d - 6)(8d² - 3) = d(8d²) - d(3) - 6(8d²) + 18 = 8d³ - 48d² - 3d + 18.
+
+----------------------------------------
+
+=== Module 1 - Question 23 [Geometry & Trigonometry | Hard] ===
+[AR] مثلث قائم طولا ساقيه 28 سم و 20 سم. ما طول وتر هذا المثلث بالسنتيمترات؟
+[EN] A right triangle has legs with lengths of 28 cm and 20 cm. What is the length of this triangle's hypotenuse, in centimeters?
+Choices:
+  A) 8√6 / أ) 8√6
+  B) 4√74 / ب) 4√74
+  C) 48 / ج) 48
+  D) 1,184 / د) 1,184
+Correct Answer: B
+Solution (AR): الوتر = جذر(28² + 20²) = جذر(1184) = 4√74 سم.
+Solution (EN): Hypotenuse = √(28² + 20²) = √(784 + 400) = √1184 = √(16 × 74) = 4√74.
+
+----------------------------------------
+
+=== Module 1 - Question 24 [Problem-Solving & Data Analysis | Hard] ===
+[AR] كل جدول تكراري يمثل مجموعة بيانات للقيم (70, 80, 90, 100). أي مجموعة بيانات لها أكبر وسط حسابي؟
+أ) التكرارات: 4, 5, 6, 7
+ب) التكرارات: 6, 6, 6, 6
+ج) التكرارات: 7, 6, 6, 7
+د) التكرارات: 8, 5, 5, 8
+[EN] Each frequency table represents a data set (Values 70, 80, 90, 100). Which data set has the greatest mean?
+A) Frequencies: 4, 5, 6, 7
+B) Frequencies: 6, 6, 6, 6
+C) Frequencies: 7, 6, 6, 7
+D) Frequencies: 8, 5, 5, 8
+Choices:
+  A) Data Set A / أ) مجموعة البيانات A
+  B) Data Set B / ب) مجموعة البيانات B
+  C) Data Set C / ج) مجموعة البيانات C
+  D) Data Set D / د) مجموعة البيانات D
+Correct Answer: A
+Solution (AR): المجموعة A تتركز فيها أعلى التكرارات عند القيمة الكبرى (100) فتكون صاحبة الوسط الحسابي الأكبر.
+Solution (EN): Data set A has the highest proportion of its data points concentrated at the highest value (100), giving it the highest mean.
+
+----------------------------------------
+
+=== Module 1 - Question 25 [Algebra | Hard] ===
+[AR] 8x + 7y = 9
+24x + 21y = 27
+لكل عدد حقيقي r، أي نقطة تقع على الرسم البياني لكلا المعادلتين؟
+[EN] 8x + 7y = 9
+24x + 21y = 27
+For each real number r, which point lies on the graph of each equation in the xy-plane?
+Choices:
+  A) (r, -8r/7 + 9/7) / أ) (r, -8r/7 + 9/7)
+  B) (-8r/7 + 9/7, r) / ب) (-8r/7 + 9/7, r)
+  C) (-8r/7 + 9, 8r/7 + 27) / ج) (-8r/7 + 9, 8r/7 + 27)
+  D) (r/3 + 9, -r/3 + 27) / د) (r/3 + 9, -r/3 + 27)
+Correct Answer: A
+Solution (AR): بوضع x = r: 8r + 7y = 9 => y = -8r/7 + 9/7. النقطة هي (r, -8r/7 + 9/7).
+Solution (EN): Express y in terms of x = r: 8r + 7y = 9 => 7y = 9 - 8r => y = -8r/7 + 9/7. The point is (r, -8r/7 + 9/7).
+
+----------------------------------------
+
+=== Module 1 - Question 26 [Algebra | Hard] ===
+[AR] راتب البائع x بالإضافة إلى عمولة 11% من المبيعات s. هدفه أن يكون دخله بين 3 إلى 4 أضعاف الراتب. أي متباينة تمثل المبيعات s؟
+[EN] A salesperson earns base salary $x plus 11% commission on total sales $s. Earnings goal: at least 3 times and at most 4 times base salary. Which inequality represents all possible values of total sales s?
+Choices:
+  A) 2x ≤ s ≤ 3x / أ) 2x ≤ s ≤ 3x
+  B) 2x / 0.11 ≤ s ≤ 3x / 0.11 / ب) 2x / 0.11 ≤ s ≤ 3x / 0.11
+  C) 3x ≤ s ≤ 4x / ج) 3x ≤ s ≤ 4x
+  D) 3x / 0.11 ≤ s ≤ 4x / 0.11 / د) 3x / 0.11 ≤ s ≤ 4x / 0.11
+Correct Answer: B
+Solution (AR): الدخل الإجمالي = x + 0.11s. المتباينة: 3x ≤ x + 0.11s ≤ 4x => 2x ≤ 0.11s ≤ 3x => 2x/0.11 ≤ s ≤ 3x/0.11.
+Solution (EN): Total earnings E = x + 0.11s. We need 3x ≤ x + 0.11s ≤ 4x => 2x ≤ 0.11s ≤ 3x => 2x/0.11 ≤ s ≤ 3x/0.11.
+
+----------------------------------------
+
+=== Module 1 - Question 27 [Problem-Solving & Data Analysis | Hard] ===
+[AR] العدد a أقل بنسبة 70% من العدد الموجب b. العدد c أكبر بنسبة 60% من a. كم مرة يعادل c العدد b؟
+[EN] Number a is 70% less than positive number b. Number c is 60% greater than a. Number c is how many times b?
+Correct Answer: 0.48
+Solution (AR): a = 0.30b. c = 1.60a = 1.60(0.30b) = 0.48b. إذن c يعادل 0.48 مرة من b.
+Solution (EN): a = (1 - 0.70)b = 0.30b. c = (1 + 0.60)a = 1.60(0.30b) = 0.48b. Thus c is 0.48 times b.
+
+----------------------------------------
+
+=== Module 2 - Question 1 [Problem-Solving & Data Analysis | Easy] ===
+[AR] يحتوي كيس على 20 زراً: 8 أزرار بيضاء، 2 برتقالية، و 10 بنية. ما احتمال اختيار زر أبيض عشوائياً؟
+[EN] There are 20 buttons in a bag: 8 white, 2 orange, and 10 brown. If one is selected at random, what is the probability of selecting a white button?
+Choices:
+  A) 2 / 20 / أ) 2 / 20
+  B) 8 / 20 / ب) 8 / 20
+  C) 10 / 20 / ج) 10 / 20
+  D) 12 / 20 / د) 12 / 20
+Correct Answer: B
+Solution (AR): الاحتمال = عدد الأزرار البيضاء ÷ العدد الكلي = 8 / 20.
+Solution (EN): Probability = Number of white buttons / Total buttons = 8 / 20.
+
+----------------------------------------
+
+=== Module 2 - Question 2 [Algebra | Easy] ===
+[AR] يستغرق تحضير الشطيرة 1.5 دقيقة والسلطة 1.9 دقيقة. أمضى الموظف 46.1 دقيقة لتحضير x شطيرة و y سلطة. أي معادلة تمثل هذا الموقف؟
+[EN] It takes 1.5 minutes to prepare a sandwich and 1.9 minutes to prepare a salad. Total time spent is 46.1 minutes for x sandwiches and y salads. Which equation represents this situation?
+Choices:
+  A) 1.9x + 1.5y = 46.1 / أ) 1.9x + 1.5y = 46.1
+  B) 1.5x + 1.9y = 46.1 / ب) 1.5x + 1.9y = 46.1
+  C) x + y = 46.1 / ج) x + y = 46.1
+  D) 30.7x + 24.3y = 46.1 / د) 30.7x + 24.3y = 46.1
+Correct Answer: B
+Solution (AR): زمن الشطائر (1.5x) + زمن السلطات (1.9y) = 46.1 دقيقة.
+Solution (EN): Time for sandwiches (1.5x) + Time for salads (1.9y) = 46.1 minutes.
+
+----------------------------------------
+
+=== Module 2 - Question 3 [Problem-Solving & Data Analysis | Easy] ===
+[AR] نسبة الأقلام السوداء إلى الحمراء هي 8 إلى 1. إذا كان هناك 40 قلماً أسود، فكم قلماً أحمر في الصندوق؟
+[EN] The ratio of black pens to red pens in a box is 8 to 1. If there are 40 black pens, how many red pens are in the box?
+Choices:
+  A) 5 / أ) 5
+  B) 8 / ب) 8
+  C) 40 / ج) 40
+  D) 320 / د) 320
+Correct Answer: A
+Solution (AR): النسبة 8 : 1 => 40 ÷ 8 = 5 أقلام حمراء.
+Solution (EN): Black : Red = 8 : 1 => 40 : Red = 8 : 1 => Red = 40 ÷ 8 = 5 pens.
+
+----------------------------------------
+
+=== Module 2 - Question 4 [Advanced Math | Easy] ===
+[AR] الدالة f معرفة بالمعادلة f(x) = 100x + 2. ما قيمة f(x) عندما x = 9؟
+[EN] The function f is defined by f(x) = 100x + 2. What is the value of f(x) when x = 9?
+Choices:
+  A) 111 / أ) 111
+  B) 118 / ب) 118
+  C) 900 / ج) 900
+  D) 902 / د) 902
+Correct Answer: D
+Solution (AR): f(9) = 100(9) + 2 = 902.
+Solution (EN): f(9) = 100(9) + 2 = 900 + 2 = 902.
+
+----------------------------------------
+
+=== Module 2 - Question 5 [Algebra | Easy] ===
+[AR] كان طول الحوت 162 سم عند ولادته ويزيد بمعدل 4.8 سم شهرياً. أي معادلة تمثل الطول y بالسم بعد x شهراً؟
+[EN] A white whale was 162 cm long at birth and increased an average of 4.8 cm per month for the first 12 months. Which equation represents length y in cm after x months?
+Choices:
+  A) y = 162x / أ) y = 162x
+  B) y = 162x + 162 / ب) y = 162x + 162
+  C) y = 4.8x + 4.8 / ج) y = 4.8x + 4.8
+  D) y = 4.8x + 162 / د) y = 4.8x + 162
+Correct Answer: D
+Solution (AR): الطول الابتدائي 162 والنمو الشهري 4.8x => y = 4.8x + 162.
+Solution (EN): Initial length = 162 cm, monthly growth rate = 4.8 cm/month, so y = 4.8x + 162.
+
+----------------------------------------
+
+=== Module 2 - Question 6 [Geometry & Trigonometry | Easy] ===
+[AR] محيط مثلث متطابق الضلعين يساوي 83 بوصة. طول كل من الضلعين المتطابقين 24 بوصة. ما طول الضلع الثالث بالبوصات؟
+[EN] The perimeter of an isosceles triangle is 83 inches. Each of the two congruent sides has a length of 24 inches. What is the length, in inches, of the third side?
+Correct Answer: 35
+Solution (AR): طول الضلع الثالث = 83 - (24 + 24) = 83 - 48 = 35 بوصة.
+Solution (EN): Third side length = 83 - (24 + 24) = 83 - 48 = 35 inches.
+
+----------------------------------------
+
+=== Module 2 - Question 7 [Algebra | Easy] ===
+[AR] إذا كانت 2 + x = 60، فما قيمة المقدار 16 + 8x؟
+[EN] If 2 + x = 60, what is the value of 16 + 8x?
+Correct Answer: 480
+Solution (AR): x = 58. نعوض: 16 + 8(58) = 16 + 464 = 480.
+Solution (EN): x = 60 - 2 = 58. Then 16 + 8x = 16 + 8(58) = 16 + 464 = 480.
+
+----------------------------------------
+
+=== Module 2 - Question 8 [Problem-Solving & Data Analysis | Medium] ===
+[AR] الكثافة السكانية لمدينة هي 290 نسمة لكل ميل مربع، بإجمالي سكان 92,800 نسمة. ما مساحة المدينة بالأميال المربعة؟
+[EN] The population density of Worthington is 290 people per square mile for a total population of 92,800 people. What is the area of Worthington in square miles?
+Choices:
+  A) 102,400 / أ) 102,400
+  B) 93,090 / ب) 93,090
+  C) 320 / ج) 320
+  D) 32 / د) 32
+Correct Answer: C
+Solution (AR): المساحة = عدد السكان ÷ الكثافة السكانية = 92,800 ÷ 290 = 320 ميلاً مربعة.
+Solution (EN): Area = Total Population ÷ Population Density = 92,800 ÷ 290 = 320 square miles.
+
+----------------------------------------
+
+=== Module 2 - Question 9 [Algebra | Medium] ===
+[AR] ما هو مقطع المح المحور الصادي (y-intercept) للرسم البياني الموضح؟
+[EN] What is the y-intercept of the graph shown in the xy-plane?
+Choices:
+  A) (0, -6) / أ) (0, -6)
+  B) (-6, 0) / ب) (-6, 0)
+  C) (0, 0) / ج) (0, 0)
+  D) (-5, -5) / د) (-5, -5)
+Correct Answer: A
+Solution (AR): يتقاطع المنحنى مع المحور الصادي Y عند النقطة (0, -6).
+Solution (EN): The graphed curve crosses the y-axis at (0, -6).
+
+----------------------------------------
+
+=== Module 2 - Question 10 [Algebra | Medium] ===
+[AR] يمثل الرسم البياني عدد قطع الحلوى المغلفة خلال x ثانية. ما العدد المقدر لقطع الحلوى المغلفة في الثانية الواحدة؟
+[EN] The graph models the number of candy bars wrapped in x seconds. What is the estimated number of candy bars wrapped per second?
+Choices:
+  A) 2 / أ) 2
+  B) 40 / ب) 40
+  C) 78 / ج) 78
+  D) 80 / د) 80
+Correct Answer: B
+Solution (AR): المعدل (الميل) = 120 قطعة ÷ 3 ثواني = 40 قطعة حلوى في الثانية.
+Solution (EN): Slope = 120 bars / 3 seconds = 40 candy bars per second.
+
+----------------------------------------
+
+=== Module 2 - Question 11 [Geometry & Trigonometry | Medium] ===
+[AR] في مثلث قائم الزاوية، قياس إحدى الزاويتين الحادتين 51°. ما قياس الزاوية الحادة الأخرى بالدرجات؟
+[EN] In a right triangle, the measure of one acute angle is 51°. What is the measure, in degrees, of the other acute angle?
+Choices:
+  A) 6 / أ) 6
+  B) 39 / ب) 39
+  C) 49 / ج) 49
+  D) 51 / د) 51
+Correct Answer: B
+Solution (AR): الزاويتان الحادتان متتامتان (مجموعهما 90°): 90° - 51° = 39°.
+Solution (EN): Acute angles in a right triangle add to 90°: 90° - 51° = 39°.
+
+----------------------------------------
+
+=== Module 2 - Question 12 [Problem-Solving & Data Analysis | Medium] ===
+[AR] ما الوسط الحسابي لمجموعة البيانات: 2, 9, 14, 23, 32؟
+[EN] What is the mean of the data set: 2, 9, 14, 23, 32?
+Choices:
+  A) 14 / أ) 14
+  B) 16 / ب) 16
+  C) 17 / ج) 17
+  D) 32 / د) 32
+Correct Answer: B
+Solution (AR): الوسط الحسابي = المجموع ÷ العدد = 80 ÷ 5 = 16.
+Solution (EN): Mean = (2 + 9 + 14 + 23 + 32) ÷ 5 = 80 ÷ 5 = 16.
+
+----------------------------------------
+
+=== Module 2 - Question 13 [Advanced Math | Medium] ===
+[AR] الدالة f معرفة بـ f(x) = 6 + √x. ما قيمة f(36)؟
+[EN] The function f is defined by f(x) = 6 + √x. What is the value of f(36)?
+Correct Answer: 12
+Solution (AR): f(36) = 6 + √36 = 6 + 6 = 12.
+Solution (EN): f(36) = 6 + √36 = 6 + 6 = 12.
+
+----------------------------------------
+
+=== Module 2 - Question 14 [Algebra | Medium] ===
+[AR] x + 3y = 29
+3y = 11
+ما قيمة x في حل نظام المعادلات؟
+[EN] x + 3y = 29
+3y = 11
+The solution to the given system is (x, y). What is the value of x?
+Correct Answer: 18
+Solution (AR): بالتعويض عن 3y بـ 11: x + 11 = 29 => x = 18.
+Solution (EN): Substitute 3y = 11 into first equation: x + 11 = 29 => x = 18.
+
+----------------------------------------
+
+=== Module 2 - Question 15 [Algebra | Medium] ===
+[AR] قاد ريت بسرعة 35 ميل/ساعة لـ r ساعة وقادت جيسيكا بسرعة 40 ميل/ساعة لـ j ساعة. المسافة الكلية أقل من 220 ميلاً. أي متباينة تمثل هذا؟
+[EN] Rhett drove at 35 mph for r hours and Jessica drove at 40 mph for j hours. Total distance was under 220 miles. Which inequality represents this?
+Choices:
+  A) 35r + 40j > 220 / أ) 35r + 40j > 220
+  B) 35r + 40j < 220 / ب) 35r + 40j < 220
+  C) 40r + 35j > 220 / ج) 40r + 35j > 220
+  D) 40r + 35j < 220 / د) 40r + 35j < 220
+Correct Answer: B
+Solution (AR): المسافة التي قطعها ريت (35r) + جيسيكا (40j) < 220 ميلاً.
+Solution (EN): Distance Rhett (35r) + Distance Jessica (40j) < 220 miles.
+
+----------------------------------------
+
+=== Module 2 - Question 16 [Algebra | Medium] ===
+[AR] b = 42cf. أي معادلة تعبر عن c بدلالة b و f؟
+[EN] b = 42cf. Which equation correctly expresses c in terms of b and f?
+Choices:
+  A) c = b / (42f) / أ) c = b / (42f)
+  B) c = (b - 42) / f / ب) c = (b - 42) / f
+  C) c = 42bf / ج) c = 42bf
+  D) c = 42 - b - f / د) c = 42 - b - f
+Correct Answer: A
+Solution (AR): بقسمة الطرفين على 42f: c = b / (42f).
+Solution (EN): Divide both sides by 42f: c = b / (42f).
+
+----------------------------------------
+
+=== Module 2 - Question 17 [Algebra | Hard] ===
+[AR] البطاطس بسعر 0.69 دولار/باوند والكرفس بسعر 0.99 دولار/باوند. أنفق دافيو 5.34 دولار واشترى ضعف كمية البطاطس من الكرفس. كم باوند كرفس اشترى؟
+[EN] Potatoes cost $0.69/lb and celery costs $0.99/lb. Davio spent $5.34 total and bought twice as many pounds of celery as potatoes. How many pounds of celery did he buy?
+Choices:
+  A) 2 / أ) 2
+  B) 2.5 / ب) 2.5
+  C) 2.67 / ج) 2.67
+  D) 4 / د) 4
+Correct Answer: D
+Solution (AR): بفرض p باوند بطاطس، فإن الكرفس c = 2p. المعادلة: 0.69p + 1.98p = 5.34 => 2.67p = 5.34 => p = 2. باوندات الكرفس = 4 باوند.
+Solution (EN): Let p = lbs of potatoes, c = 2p = lbs of celery. 0.69p + 0.99(2p) = 5.34 => 2.67p = 5.34 => p = 2 lbs. Thus celery c = 2(2) = 4 lbs.
+
+----------------------------------------
+
+=== Module 2 - Question 18 [Problem-Solving & Data Analysis | Hard] ===
+[AR] في رسم الانتشار، يمر خط الأفضل مطابقة بالنقطتين (0, 8) و (10, 1). أي قيمة أقرب لميل هذا الخط؟
+[EN] In the scatterplot, a line of best fit passes near (0, 8) and (10, 1). Which value is closest to the slope of this line of best fit?
+Choices:
+  A) 7 / أ) 7
+  B) 0.7 / ب) 0.7
+  C) -0.7 / ج) -0.7
+  D) -7 / د) -7
+Correct Answer: C
+Solution (AR): الميل = (1 - 8) ÷ (10 - 0) = -7 ÷ 10 = -0.7.
+Solution (EN): Slope = (1 - 8) / (10 - 0) = -7 / 10 = -0.7.
+
+----------------------------------------
+
+=== Module 2 - Question 19 [Algebra | Hard] ===
+[AR] لمستعمرات النمل ذات x نملة عاملة، عدد اليرقات المتوقع y = 0.67x + 2.6. إذا كان هناك 58 نملة عاملة، فما العدد الأقرب لليرقات؟
+[EN] For ant colonies with x worker ants, predicted larvae y = 0.67x + 2.6. If a colony has 58 worker ants, which is closest to the predicted number of larvae?
+Choices:
+  A) 41 / أ) 41
+  B) 61 / ب) 61
+  C) 83 / ج) 83
+  D) 190 / د) 190
+Correct Answer: A
+Solution (AR): y = 0.67(58) + 2.6 = 38.86 + 2.6 = 41.46 ≈ 41.
+Solution (EN): y = 0.67(58) + 2.6 = 38.86 + 2.6 = 41.46, which is closest to 41.
+
+----------------------------------------
+
+=== Module 2 - Question 20 [Problem-Solving & Data Analysis | Hard] ===
+[AR] ما هو العدد الذي يزيد بنسبة 40% عن العدد 115؟
+[EN] What number is 40% greater than 115?
+Correct Answer: 161
+Solution (AR): العدد = 115 × 1.40 = 161.
+Solution (EN): Number = 115 × (1 + 0.40) = 115 × 1.40 = 161.
+
+----------------------------------------
+
+=== Module 2 - Question 21 [Problem-Solving & Data Analysis | Hard] ===
+[AR] نسبة j إلى k هي 11 إلى 12. إذا ضربنا j في 17، ففي أي عدد يجب ضرب k للحفاظ على نفس النسبة؟
+[EN] The ratio of j to k is 11 to 12. If j is multiplied by 17, what is k multiplied by in order to maintain the same ratio?
+Correct Answer: 17
+Solution (AR): للحفاظ على نفس النسبة يجب ضرب k في نفس العدد وهو 17.
+Solution (EN): To maintain equal ratios (j × 17) / (k × c) = j / k, we must multiply k by c = 17.
+
+----------------------------------------
+
+=== Module 2 - Question 22 [Advanced Math | Hard] ===
+[AR] دالة القيمة المتوقعة لعملة نادرة f(x) = 65(1.03)ˣ حيث x السنين بعد الشراء. ما أفضل تفسير للعبارة "f(8) تساوي تقريباً 82"؟
+[EN] Rare coin predicted value function f(x) = 65(1.03)ˣ where x is years after purchase. What is the best interpretation of "f(8) is approximately equal to 82"?
+Choices:
+  A) Value is 8% greater than previous year. / أ) القيمة أكبر بنسبة 8% عن السنة السابقة.
+  B) Value is 8 times previous year value. / ب) القيمة تعادل 8 أضعاف السنة السابقة.
+  C) Value increased by total of $82. / ج) زادت القيمة بإجمالي 82 دولاراً.
+  D) 8 years after purchase, predicted value is approximately 82 dollars. / د) بعد 8 سنوات من الشراء، القيمة المتوقعة تساوي تقريباً 82 دولاراً.
+Correct Answer: D
+Solution (AR): الدالة f(8) تعني القيمة بعد مرور 8 سنوات وتساوي 82 دولاراً.
+Solution (EN): f(8) represents the value at x = 8 years, which is approximately 82 dollars.
+
+----------------------------------------
+
+=== Module 2 - Question 23 [Algebra | Hard] ===
+[AR] جدول القيم لـ x و y: النقط (-6, n + 184) و (-3, n + 92) و (0, n). ما ميل المستقيم الذي يمثل العلاقة الخطية؟
+[EN] The table shows values of x and y: (-6, n + 184), (-3, n + 92), (0, n). What is the slope of the line representing this linear relationship?
+Choices:
+  A) -92 / 3 / أ) -92 / 3
+  B) -3 / 92 / ب) -3 / 92
+  C) (n + 92) / -3 / ج) (n + 92) / -3
+  D) (2n - 92) / 3 / د) (2n - 92) / 3
+Correct Answer: A
+Solution (AR): الميل = (تغير y) ÷ (تغير x) = -92 ÷ 3.
+Solution (EN): Slope = ((n + 92) - (n + 184)) / (-3 - (-6)) = -92 / 3.
+
+----------------------------------------
+
+=== Module 2 - Question 24 [Geometry & Trigonometry | Hard] ===
+[AR] الأسطوانة 1 نصف قطرها r وارتفاعها h. الأسطوانة 2 حجمها 392 ضعف الأسطوانة 1. أي مما يلي يمثل R و H للأسطوانة 2؟
+[EN] Cylinder 1 has radius r and height h. Cylinder 2 has volume 392 times Cylinder 1. Which could represent radius R and height H of Cylinder 2?
+Choices:
+  A) R = 8r and H = 7h / أ) R = 8r و H = 7h
+  B) R = 8r and H = 49h / ب) R = 8r و H = 49h
+  C) R = 7r and H = 8h / ج) R = 7r و H = 8h
+  D) R = 49r and H = 8h / د) R = 49r و H = 8h
+Correct Answer: C
+Solution (AR): حجم الأسطوانة الثاني = π (7r)² (8h) = 49 × 8 × π r² h = 392 V1.
+Solution (EN): V2 = π R² H = π (7r)² (8h) = π (49r²) (8h) = 392 π r² h = 392 V1.
+
+----------------------------------------
+
+=== Module 2 - Question 25 [Algebra | Hard] ===
+[AR] مضلع له 30 ضلعاً: أضلاع طولها 8 سم (عددها 5n)، وأضلاع طولها 3 سم (عددها n)، و 6 أضلاع طولها 4 سم. أي معادلة صحيحة لقيمة n؟
+[EN] Each side of a 30-sided polygon has length 8 cm (5n sides), 3 cm (n sides), or 4 cm (6 sides). Which equation must be true for n?
+Choices:
+  A) 5n + 6 = 30 / أ) 5n + 6 = 30
+  B) 6n + 6 = 30 / ب) 6n + 6 = 30
+  C) 8n + 3n + 4n = 30 / ج) 8n + 3n + 4n = 30
+  D) 8(5n) + 3n + 4(6) = 30 / د) 8(5n) + 3n + 4(6) = 30
+Correct Answer: B
+Solution (AR): عدد الأضلاع الإجمالي = 5n + n + 6 = 6n + 6 = 30.
+Solution (EN): Total number of sides = 5n + n + 6 = 6n + 6 = 30.
+
+----------------------------------------
+
+=== Module 2 - Question 26 [Problem-Solving & Data Analysis | Hard] ===
+[AR] المجموعة F تتكون من 55 عدداً بين 170 و 290. المجموعة G تضيف العدد 10 إليها. أي مما يلي يجب أن يكون أقل في المجموعة F مقارنة بالمجموعة G؟
+I. الوسط الحسابي
+II. الوسيط
+[EN] Data set F consists of 55 integers between 170 and 290. Data set G adds the integer 10. Which must be less for data set F than for data set G?
+I. The mean
+II. The median
+Choices:
+  A) I only / أ) I فقط
+  B) II only / ب) II فقط
+  C) I and II / ج) I و II
+  D) Neither I nor II / د) لا هذه ولا تلك
+Correct Answer: D
+Solution (AR): إضافة العدد 10 الصغير يخفض الوسط الحسابي والوسيط للمجموعة G، وبالتالي الوسط والوسيط لـ F هما أكبر (وليس أقل).
+Solution (EN): Adding 10 (much smaller than all other values) decreases the mean and median, so F's mean and median are greater than G's. Neither is less for F.
+
+----------------------------------------
+
+=== Module 2 - Question 27 [Geometry & Trigonometry | Hard] ===
+[AR] مخروط دائري قائم ارتفاعه 22 سم وقطر قاعدته 6 سم. حجم المخروط هو nπ سم مكعب. ما قيمة n؟
+[EN] A right circular cone has a height of 22 cm and a base with a diameter of 6 cm. The volume of this cone is nπ cm³. What is the value of n?
+Correct Answer: 66
+Solution (AR): نصف القطر r = 3 سم. الحجم = (1/3) × π × 3² × 22 = 66π سم مكعب. إذن n = 66.
+Solution (EN): Radius r = 6 ÷ 2 = 3 cm. Volume V = (1/3)π r² h = (1/3)π (3)² (22) = (1/3)π (9)(22) = 66π cm³. Thus n = 66.

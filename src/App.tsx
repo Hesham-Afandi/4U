@@ -24,6 +24,7 @@ import { STUDY_QUOTES } from './data/quotes';
 import { extractTextFromLessonUrl } from './utils/pdfParser';
 import { getEnglishSubjectName, getEnglishGradeName, getEnglishTermName, getEnglishStreamName } from './utils/language';
 import { EotSpecsView } from './components/EotSpecsView';
+import { SatView } from './components/SatView';
 
 const DAYS_OF_WEEK = [
   { key: 'Saturday', name: 'السبت' },
@@ -271,7 +272,7 @@ export default function App() {
     url: ''
   });
   const [activeQuote, setActiveQuote] = useState('');
-  const [activePlatformSection, setActivePlatformSection] = useState<'curriculum' | 'eot'>('curriculum');
+  const [activePlatformSection, setActivePlatformSection] = useState<'curriculum' | 'eot' | 'sat'>('curriculum');
   const [curriculumSubView, setCurriculumSubView] = useState<'landing' | 'terms'>('landing');
 
   // --- Visit Streak & Platform Active Session Timer ---
@@ -3022,16 +3023,6 @@ export default function App() {
               <span>حفظ التقدم</span>
             </button>
 
-            {/* Back button */}
-            <button 
-              onClick={handleBack}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-3.5 rounded-xl transition flex items-center gap-1.5 text-sm font-bold shadow-md cursor-pointer hover:scale-105 active:scale-95"
-              title="رجوع للخلف (Esc)"
-            >
-              <RotateCcw className="w-4 h-4 text-amber-300" />
-              <span>رجوع</span>
-            </button>
-
             {/* Home button */}
             <button 
               onClick={goHome}
@@ -3186,10 +3177,10 @@ export default function App() {
 
             {/* Section Switcher Tabs when country is selected */}
             {appState.country && (
-              <div className="flex items-center bg-slate-100 dark:bg-slate-800/90 p-1 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-inner">
+              <div className="flex items-center bg-slate-100 dark:bg-slate-800/90 p-1 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-inner overflow-x-auto">
                 <button
                   onClick={() => setActivePlatformSection('curriculum')}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
                     activePlatformSection === 'curriculum'
                       ? 'bg-indigo-600 text-white shadow-md'
                       : 'text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400'
@@ -3201,14 +3192,26 @@ export default function App() {
 
                 <button
                   onClick={() => setActivePlatformSection('eot')}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
                     activePlatformSection === 'eot'
                       ? 'bg-amber-500 text-slate-950 shadow-md'
                       : 'text-slate-600 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400'
                   }`}
                 >
                   <span>📜</span>
-                  <span>قسم الهياكل الامتحانية (EOT)</span>
+                  <span>قسم الهياكل (EOT)</span>
+                </button>
+
+                <button
+                  onClick={() => setActivePlatformSection('sat')}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
+                    activePlatformSection === 'sat'
+                      ? 'bg-purple-600 text-white shadow-md'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400'
+                  }`}
+                >
+                  <span>🎓</span>
+                  <span>قسم اختبـارات السات (SAT)</span>
                 </button>
               </div>
             )}
@@ -3431,6 +3434,18 @@ export default function App() {
               }} />
             )}
 
+            {appState.country && activePlatformSection === 'sat' && (
+              <SatView 
+                onSwitchToCurriculum={() => {
+                  setActivePlatformSection('curriculum');
+                  setCurriculumSubView('terms');
+                }}
+                onSwitchToEot={() => {
+                  setActivePlatformSection('eot');
+                }}
+              />
+            )}
+
             {appState.country && activePlatformSection === 'curriculum' && !appState.term && curriculumSubView === 'landing' && (
               <div className="fade-in space-y-8 my-6">
                 {/* Hero Card Banner */}
@@ -3444,17 +3459,17 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* TWO MAIN PLATFORM SECTIONS CARDS ONLY */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                {/* THREE MAIN PLATFORM SECTIONS CARDS */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
                   {/* Curriculum Section Card */}
                   <div
                     onClick={() => setCurriculumSubView('terms')}
-                    className="group p-10 rounded-3xl shadow-xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-indigo-500 hover:ring-4 hover:ring-indigo-500/20 transition-all cursor-pointer flex flex-col items-center text-center justify-center space-y-5"
+                    className="group p-8 rounded-3xl shadow-xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-indigo-500 hover:ring-4 hover:ring-indigo-500/20 transition-all cursor-pointer flex flex-col items-center text-center justify-center space-y-4"
                   >
-                    <div className="w-24 h-24 rounded-3xl bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-5xl font-bold group-hover:scale-110 transition-transform">
+                    <div className="w-20 h-20 rounded-3xl bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-4xl font-bold group-hover:scale-110 transition-transform">
                       📚
                     </div>
-                    <h3 className="text-2xl font-black text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                    <h3 className="text-xl font-black text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                       قسم المناهج والدروس التفاعلية
                     </h3>
                   </div>
@@ -3462,13 +3477,26 @@ export default function App() {
                   {/* EOT Specs Section Card */}
                   <div
                     onClick={() => setActivePlatformSection('eot')}
-                    className="group p-10 rounded-3xl shadow-xl border-2 border-amber-500/40 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-950 text-white hover:border-amber-400 hover:ring-4 hover:ring-amber-500/20 transition-all cursor-pointer flex flex-col items-center text-center justify-center space-y-5"
+                    className="group p-8 rounded-3xl shadow-xl border-2 border-amber-500/40 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-950 text-white hover:border-amber-400 hover:ring-4 hover:ring-amber-500/20 transition-all cursor-pointer flex flex-col items-center text-center justify-center space-y-4"
                   >
-                    <div className="w-24 h-24 rounded-3xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-5xl font-bold group-hover:scale-110 transition-transform">
+                    <div className="w-20 h-20 rounded-3xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-4xl font-bold group-hover:scale-110 transition-transform">
                       📜
                     </div>
-                    <h3 className="text-2xl font-black text-amber-300 group-hover:text-amber-200 transition-colors">
+                    <h3 className="text-xl font-black text-amber-300 group-hover:text-amber-200 transition-colors">
                       قسم الهياكل الامتحانية (EOT)
+                    </h3>
+                  </div>
+
+                  {/* SAT Section Card */}
+                  <div
+                    onClick={() => setActivePlatformSection('sat')}
+                    className="group p-8 rounded-3xl shadow-xl border-2 border-purple-500/40 bg-gradient-to-br from-slate-900 via-purple-950 to-slate-950 text-white hover:border-purple-400 hover:ring-4 hover:ring-purple-500/20 transition-all cursor-pointer flex flex-col items-center text-center justify-center space-y-4"
+                  >
+                    <div className="w-20 h-20 rounded-3xl bg-purple-500/20 text-purple-300 flex items-center justify-center text-4xl font-bold group-hover:scale-110 transition-transform">
+                      🎓
+                    </div>
+                    <h3 className="text-xl font-black text-purple-300 group-hover:text-purple-200 transition-colors">
+                      قسم اختبـارات السات (SAT)
                     </h3>
                   </div>
                 </div>

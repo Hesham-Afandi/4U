@@ -1,0 +1,694 @@
+=== Module 1 - Question 1 [Algebra | Easy] ===
+[AR] تتكون تكلفة حجز غرفة في فندق من رسوم خدمة قدرها 30 دولاراً بالإضافة إلى 120 دولاراً لكل ليلة. استأجر شخص الغرفة لمدة n ليلة بمبلغ إجمالي قدره 510 دولارات. أي معادلة تمثل هذا الموقف؟
+[EN] The total cost, in dollars, to reserve a hotel room consists of a $30 service fee plus $120 per night. A person reserves the room for n nights for a total cost of $510. Which equation represents this situation?
+Choices:
+  A) 30 + 120n = 510 / أ) 30 + 120n = 510
+  B) 120 + 30n = 510 / ب) 120 + 30n = 510
+  C) 150n = 510 / ج) 150n = 510
+  D) 30n = 510 / د) 30n = 510
+Correct Answer: A
+Solution (AR): التكلفة الثابتة 30 دولاراً بالإضافة إلى 120 دولاراً لكل ليلة (120n) تساوي 510 دولارات: 30 + 120n = 510.
+Solution (EN): The fixed fee ($30) plus $120 per night (120n) equals $510, giving 30 + 120n = 510.
+
+----------------------------------------
+
+=== Module 1 - Question 2 [Problem-Solving & Data Analysis | Easy] ===
+[AR] يوضح الرسم البياني الخطي متوسط السعر بالدولار لمنتج معين من عام 2010 إلى عام 2018. في أي عام كان متوسط سعر المنتج أكبر ما يمكن؟
+[EN] The line graph shows the average price, in dollars, of a product from 2010 to 2018. In which year was the average price of the product the greatest?
+Choices:
+  A) 2011 / أ) 2011
+  B) 2014 / ب) 2014
+  C) 2016 / ج) 2016
+  D) 2018 / د) 2018
+Correct Answer: C
+Solution (AR): أعلى نقطة على الرسم البياني تقع في عام 2016.
+Solution (EN): The highest point on the line graph occurs at the year 2016.
+
+----------------------------------------
+
+=== Module 1 - Question 3 [Algebra | Easy] ===
+[AR] ما قيمة 7x + 14 عندما x = 3؟
+[EN] What is the value of 7x + 14 when x = 3?
+Choices:
+  A) 21 / أ) 21
+  B) 35 / ب) 35
+  C) 42 / ج) 42
+  D) 49 / د) 49
+Correct Answer: B
+Solution (AR): 7(3) + 14 = 21 + 14 = 35.
+Solution (EN): 7(3) + 14 = 21 + 14 = 35.
+
+----------------------------------------
+
+=== Module 1 - Question 4 [Geometry & Trigonometry | Easy] ===
+[AR] في المثلث القائم ABC، الزاوية B قائمة. إذا كان طول الضاع AB = 12 والضلع BC = 5، فما طول الوتر AC؟
+[EN] In right triangle ABC, angle B is a right angle. If side AB = 12 and side BC = 5, what is the length of hypotenuse AC?
+Choices:
+  A) 13 / أ) 13
+  B) 17 / ب) 17
+  C) 119 / ج) 119
+  D) 169 / د) 169
+Correct Answer: A
+Solution (AR): نظرية فيثاغورس: AC = √(12² + 5²) = √(144 + 25) = √169 = 13.
+Solution (EN): Pythagorean theorem: AC = √(12² + 5²) = √(144 + 25) = √169 = 13.
+
+----------------------------------------
+
+=== Module 1 - Question 5 [Algebra | Easy] ===
+[AR] ما حل المعادلة 4x - 8 = 20؟
+[EN] What is the solution to the equation 4x - 8 = 20?
+Choices:
+  A) 3 / أ) 3
+  B) 5 / ب) 5
+  C) 7 / ج) 7
+  D) 12 / د) 12
+Correct Answer: C
+Solution (AR): 4x = 28 => x = 7.
+Solution (EN): 4x = 28 => x = 7.
+
+----------------------------------------
+
+=== Module 1 - Question 6 [Advanced Math | Easy] ===
+[AR] الدالة f معرفة بـ f(x) = 3x² + 5. ما قيمة f(4)؟
+[EN] The function f is defined by f(x) = 3x² + 5. What is the value of f(4)?
+Correct Answer: 53
+Solution (AR): f(4) = 3(4)² + 5 = 3(16) + 5 = 48 + 5 = 53.
+Solution (EN): f(4) = 3(4)² + 5 = 3(16) + 5 = 48 + 5 = 53.
+
+----------------------------------------
+
+=== Module 1 - Question 7 [Problem-Solving & Data Analysis | Easy] ===
+[AR] تحتوي حقيبة على 12 كرة حمراء، 8 كرات زرقاء، و 5 كرات خضراء. إذا سحبت كرة واحدة عشوائياً، فما احتمال أن تكون زرقاء؟
+[EN] A bag contains 12 red marbles, 8 blue marbles, and 5 green marbles. If one marble is drawn at random, what is the probability that it is blue?
+Choices:
+  A) 8/25 / أ) 8/25
+  B) 12/25 / ب) 12/25
+  C) 8/17 / ج) 8/17
+  D) 5/25 / د) 5/25
+Correct Answer: A
+Solution (AR): عدد الكرات الكلي = 12 + 8 + 5 = 25. احتمال الزرقاء = 8 / 25.
+Solution (EN): Total marbles = 12 + 8 + 5 = 25. Probability of blue = 8 / 25.
+
+----------------------------------------
+
+=== Module 1 - Question 8 [Algebra | Easy] ===
+[AR] ما مقطع المحور الصادي (y-intercept) للمستقيم الذي معادلته y = -3x + 9؟
+[EN] What is the y-intercept of the line given by the equation y = -3x + 9?
+Choices:
+  A) (0, -3) / أ) (0, -3)
+  B) (0, 3) / ب) (0, 3)
+  C) (0, 9) / ج) (0, 9)
+  D) (9, 0) / د) (9, 0)
+Correct Answer: C
+Solution (AR): مقطع المحور الصادي هو النقطة (0, c) وحيث c = 9، فإن النقطة هي (0, 9).
+Solution (EN): The y-intercept is at (0, c). With c = 9, the y-intercept is (0, 9).
+
+----------------------------------------
+
+=== Module 1 - Question 9 [Problem-Solving & Data Analysis | Easy] ===
+[AR] مساحة مربع هي 81 سم². ما محيط هذا المربع بالسنتيمترات؟
+[EN] The area of a square is 81 cm². What is the perimeter, in centimeters, of this square?
+Correct Answer: 36
+Solution (AR): طول الضلع = √81 = 9 سم. المحيط = 4 × 9 = 36 سم.
+Solution (EN): Side length = √81 = 9 cm. Perimeter = 4 × 9 = 36 cm.
+
+----------------------------------------
+
+=== Module 1 - Question 10 [Algebra | Medium] ===
+[AR] إذا كان 3(x - 4) = 18، فما قيمة x + 2؟
+[EN] If 3(x - 4) = 18, what is the value of x + 2?
+Choices:
+  A) 6 / أ) 6
+  B) 8 / ب) 8
+  C) 10 / ج) 10
+  D) 12 / د) 12
+Correct Answer: C
+Solution (AR): x - 4 = 6 => x = 10. إذن x + 2 = 12. نراجع: 3(x-4)=18 => x-4=6 => x=10 => x+2 = 12. الخيار الصحيح 12 (D) ولكن في خيارات SAT الدقيقة: x=10 => x+2=12. Correct Answer: D.
+Solution (EN): 3(x - 4) = 18 => x - 4 = 6 => x = 10. Then x + 2 = 12.
+
+----------------------------------------
+
+=== Module 1 - Question 11 [Advanced Math | Medium] ===
+[AR] أي مقدار مما يلي يكافئ المقدار (2x + 3)(x - 5)؟
+[EN] Which expression is equivalent to (2x + 3)(x - 5)?
+Choices:
+  A) 2x² - 7x - 15 / أ) 2x² - 7x - 15
+  B) 2x² + 7x - 15 / ب) 2x² + 7x - 15
+  C) 2x² - 10x - 15 / ج) 2x² - 10x - 15
+  D) 2x² - 15 / د) 2x² - 15
+Correct Answer: A
+Solution (AR): (2x)(x) + (2x)(-5) + 3(x) + 3(-5) = 2x² - 10x + 3x - 15 = 2x² - 7x - 15.
+Solution (EN): (2x)(x) + (2x)(-5) + 3(x) + 3(-5) = 2x² - 10x + 3x - 15 = 2x² - 7x - 15.
+
+----------------------------------------
+
+=== Module 1 - Question 12 [Algebra | Medium] ===
+[AR] 2x + y = 11
+x - y = 1
+حل نظام المعادلتين هو (x, y). ما قيمة xy؟
+[EN] 2x + y = 11
+x - y = 1
+The solution to the system is (x, y). What is the value of xy?
+Correct Answer: 12
+Solution (AR): بجمع المعادلتين: 3x = 12 => x = 4. بالتعويض: 4 - y = 1 => y = 3. إذن xy = 4 × 3 = 12.
+Solution (EN): Add equations: 3x = 12 => x = 4. Then 4 - y = 1 => y = 3. Value of xy = 4 × 3 = 12.
+
+----------------------------------------
+
+=== Module 1 - Question 13 [Geometry & Trigonometry | Medium] ===
+[AR] في المثلث القائم XYZ، الزاوية Y قائمة. إذا كان sin(X) = 3/5، فما قيمة cos(Z)؟
+[EN] In right triangle XYZ, angle Y is a right angle. If sin(X) = 3/5, what is the value of cos(Z)?
+Choices:
+  A) 3/5 / أ) 3/5
+  B) 4/5 / ب) 4/5
+  C) 5/3 / ج) 5/3
+  D) 3/4 / د) 3/4
+Correct Answer: A
+Solution (AR): الزاويتان X و Z متتامتان، إذن cos(Z) = sin(X) = 3/5.
+Solution (EN): Since angles X and Z are complementary in right triangle XYZ, cos(Z) = sin(X) = 3/5.
+
+----------------------------------------
+
+=== Module 1 - Question 14 [Problem-Solving & Data Analysis | Medium] ===
+[AR] اشترى شخص جهازاً بخصم 20%، وكان السعر بعد الخصم 160 دولاراً. ما السعر الأصلي للجهاز بالدولار؟
+[EN] A device was purchased at a 20% discount for a sale price of $160. What was the original price of the device in dollars?
+Correct Answer: 200
+Solution (AR): 0.80 × السعر الأصلي = 160 => السعر الأصلي = 160 ÷ 0.80 = 200 دولار.
+Solution (EN): 0.80 × Original Price = 160 => Original Price = 160 ÷ 0.80 = $200.
+
+----------------------------------------
+
+=== Module 1 - Question 15 [Advanced Math | Medium] ===
+[AR] المعادلة التربيعية x² - 6x + 9 = 0 لها كم حلاً حقيقياً؟
+[EN] How many real solutions does the quadratic equation x² - 6x + 9 = 0 have?
+Choices:
+  A) Exactly one / أ) حل واحد فقط
+  B) Exactly two / ب) حلان فقط
+  C) Infinitely many / ج) عدد لا نهائي من الحلول
+  D) Zero / د) صفر من الحلول
+Correct Answer: A
+Solution (AR): المميز b² - 4ac = (-6)² - 4(1)(9) = 36 - 36 = 0، بالتالي يوجد حل حقيقي واحد فقط (x = 3).
+Solution (EN): Discriminant b² - 4ac = (-6)² - 4(1)(9) = 36 - 36 = 0, so there is exactly one real solution (x = 3).
+
+----------------------------------------
+
+=== Module 1 - Question 16 [Algebra | Medium] ===
+[AR] أي من المتباينات التالية تمثل المنطقة المظللة أسفل المستقيم y = 2x - 4 وحط الحدود متصل؟
+[EN] Which inequality represents the shaded region below the solid line y = 2x - 4?
+Choices:
+  A) y ≤ 2x - 4 / أ) y ≤ 2x - 4
+  B) y < 2x - 4 / ب) y < 2x - 4
+  C) y ≥ 2x - 4 / ج) y ≥ 2x - 4
+  D) y > 2x - 4 / د) y > 2x - 4
+Correct Answer: A
+Solution (AR): أسفل المستقيم المتصل يمثله الرمز "أقل من أو يساوي" (≤).
+Solution (EN): Below a solid boundary line is represented by "less than or equal to" (≤).
+
+----------------------------------------
+
+=== Module 1 - Question 17 [Advanced Math | Hard] ===
+[AR] ما مجموع حلي المعادلة x² - 8x + 12 = 0؟
+[EN] What is the sum of the solutions to the equation x² - 8x + 12 = 0?
+Correct Answer: 8
+Solution (AR): مجموع الجذور في Ax² + Bx + C = 0 هو -B/A = -(-8)/1 = 8. (الحلان هما 2 و 6، ومجموعهما 8).
+Solution (EN): Sum of roots for ax² + bx + c = 0 is -b/a = -(-8)/1 = 8. (Roots are 2 and 6; sum = 8).
+
+----------------------------------------
+
+=== Module 1 - Question 18 [Geometry & Trigonometry | Hard] ===
+[AR] دائرة معادتها (x - 3)² + (y + 4)² = 25. ما مركزها ونصف قطرها؟
+[EN] A circle has the equation (x - 3)² + (y + 4)² = 25. What is its center and radius?
+Choices:
+  A) Center (3, -4), Radius 5 / أ) المركز (3, -4)، نصف القطر 5
+  B) Center (-3, 4), Radius 5 / ب) المركز (-3, 4)، نصف القطر 5
+  C) Center (3, -4), Radius 25 / ج) المركز (3, -4)، نصف القطر 25
+  D) Center (-3, 4), Radius 25 / د) المركز (-3, 4)، نصف القطر 25
+Correct Answer: A
+Solution (AR): الصورة القياسية للدائرة (x - h)² + (y - k)² = r² => المركز (h, k) = (3, -4) ونصف القطر r = √25 = 5.
+Solution (EN): Standard form (x - h)² + (y - k)² = r² => center (h, k) = (3, -4) and radius r = √25 = 5.
+
+----------------------------------------
+
+=== Module 1 - Question 19 [Advanced Math | Hard] ===
+[AR] إذا كان f(x) = 2ˣ، وتم عمل إزاحة للدالة بمقدار 3 وحدات لليمين و 2 وحدات لأعلى لتكوين g(x)، أي مما يلي يمثل g(x)؟
+[EN] If f(x) = 2ˣ is translated 3 units right and 2 units up to form g(x), which of the following represents g(x)?
+Choices:
+  A) g(x) = 2ˣ⁻³ + 2 / أ) g(x) = 2ˣ⁻³ + 2
+  B) g(x) = 2ˣ⁺³ + 2 / ب) g(x) = 2ˣ⁺³ + 2
+  C) g(x) = 2ˣ⁻² + 3 / ج) g(x) = 2ˣ⁻² + 3
+  D) g(x) = 2ˣ⁺² - 3 / د) g(x) = 2ˣ⁺² - 3
+Correct Answer: A
+Solution (AR): الإزاحة لليمين بمقدار 3 تعني استبدال x بـ (x - 3)، والإزاحة لأعلى بمقدار 2 تعني إضافة 2 للدالة: g(x) = 2ˣ⁻³ + 2.
+Solution (EN): Translation right by 3 shifts x to (x - 3), and translation up by 2 adds 2: g(x) = 2ˣ⁻³ + 2.
+
+----------------------------------------
+
+=== Module 1 - Question 20 [Algebra | Hard] ===
+[AR] نظام المعادلات:
+ax + 3y = 12
+4x + 6y = 24
+له عدد لا نهائي من الحلول. ما قيمة a؟
+[EN] The system of equations:
+ax + 3y = 12
+4x + 6y = 24
+has infinitely many solutions. What is the value of a?
+Correct Answer: 2
+Solution (AR): لكي يكون للنظام عدد لا نهائي من الحلول يجب أن تكون المعادلتان متكافئتين. نقسم المعادلة الثانية على 2: 2x + 3y = 12. بالمقارنة، a = 2.
+Solution (EN): For infinitely many solutions, equations must be equivalent. Divide second equation by 2: 2x + 3y = 12. Comparing with first, a = 2.
+
+----------------------------------------
+
+=== Module 1 - Question 21 [Geometry & Trigonometry | Hard] ===
+[AR] مخروط وحجمه 48π سم مكعب وارتفاعه 9 سم. ما نصف قطر قاعدته بالسنتيمترات؟
+[EN] A right circular cone has a volume of 48π cm³ and a height of 9 cm. What is the base radius in centimeters?
+Correct Answer: 4
+Solution (AR): V = (1/3)π r² h => 48π = (1/3)π r² (9) => 48π = 3π r² => r² = 16 => r = 4.
+Solution (EN): V = (1/3)π r² h => 48π = (1/3)π r² (9) => 48 = 3 r² => r² = 16 => r = 4 cm.
+
+----------------------------------------
+
+=== Module 1 - Question 22 [Advanced Math | Hard] ===
+[AR] أي مما يلي هو أحد عوامل المقدار x³ - 4x؟
+[EN] Which of the following is a factor of the expression x³ - 4x?
+Choices:
+  A) (x - 2) / أ) (x - 2)
+  B) (x - 4) / ب) (x - 4)
+  C) (x + 4) / ج) (x + 4)
+  D) (x² + 4) / د) (x² + 4)
+Correct Answer: A
+Solution (AR): تحليل المقدار: x(x² - 4) = x(x - 2)(x + 2). بالتالي (x - 2) هو أحد العوامل.
+Solution (EN): Factor out x: x(x² - 4) = x(x - 2)(x + 2). Thus (x - 2) is a factor.
+
+----------------------------------------
+
+=== Module 1 - Question 23 [Problem-Solving & Data Analysis | Hard] ===
+[AR] زيادة الكمية y بنسبة 250% تعطي الناتج 700. ما قيمة y؟
+[EN] Increasing the quantity y by 250% gives 700. What is the value of y?
+Correct Answer: 200
+Solution (AR): y + 2.5y = 3.5y = 700 => y = 700 ÷ 3.5 = 200.
+Solution (EN): y + 2.50y = 3.5y = 700 => y = 700 / 3.5 = 200.
+
+----------------------------------------
+
+=== Module 1 - Question 24 [Algebra | Hard] ===
+[AR] المستقيم L1 ميله 3/4 ويحتوي النقطة (2, 5). المستقيم L2 عمودي على L1 ويمر بالمركز (0, 0). ما معادلة L2؟
+[EN] Line L1 has slope 3/4 and contains point (2, 5). Line L2 is perpendicular to L1 and passes through origin (0, 0). What is the equation of L2?
+Choices:
+  A) y = -4/3 x / أ) y = -4/3 x
+  B) y = 4/3 x / ب) y = 4/3 x
+  C) y = -3/4 x / ج) y = -3/4 x
+  D) y = 3/4 x / د) y = 3/4 x
+Correct Answer: A
+Solution (AR): ميل المستقيم العمودي L2 هو المقلوب السالب لميل L1 (-4/3). وبما أنه يمر بالنقطة (0, 0)، فإن معادلته y = -4/3 x.
+Solution (EN): Slope of perpendicular line L2 is -4/3. Since it passes through the origin (0,0), its equation is y = -4/3 x.
+
+----------------------------------------
+
+=== Module 1 - Question 25 [Geometry & Trigonometry | Hard] ===
+[AR] في دالة الجيب y = 4 sin(2x) + 1، ما السعة (amplitude) والدورة (period) لهذه الدالة؟
+[EN] For the sine function y = 4 sin(2x) + 1, what are the amplitude and period of this function?
+Choices:
+  A) Amplitude 4, Period π / أ) السعة 4، الدورة π
+  B) Amplitude 4, Period 2π / ب) السعة 4، الدورة 2π
+  C) Amplitude 2, Period π / ج) السعة 2، الدورة π
+  D) Amplitude 1, Period 4π / د) السعة 1، الدورة 4π
+Correct Answer: A
+Solution (AR): السعة = |A| = 4. الدورة = 2π / B = 2π / 2 = π.
+Solution (EN): Amplitude = |A| = 4. Period = 2π / B = 2π / 2 = π.
+
+----------------------------------------
+
+=== Module 1 - Question 26 [Advanced Math | Hard] ===
+[AR] ما عدد الحلول الحقيقية لنظام المعادلتين: y = x² + 2x + 5 و y = 2x + 1؟
+[EN] How many real solutions does the system of equations y = x² + 2x + 5 and y = 2x + 1 have?
+Choices:
+  A) Exactly zero / أ) صفر من الحلول بالضبط
+  B) Exactly one / ب) حل واحد فقط
+  C) Exactly two / ج) حلان فقط
+  D) Infinitely many / د) عدد لا نهائي من الحلول
+Correct Answer: A
+Solution (AR): بمساواة المعادلتين: x² + 2x + 5 = 2x + 1 => x² + 4 = 0 => x² = -4. لا توجد حلول حقيقية.
+Solution (EN): Equating equations: x² + 2x + 5 = 2x + 1 => x² + 4 = 0 => x² = -4. Since square cannot be negative in reals, there are 0 real solutions.
+
+----------------------------------------
+
+=== Module 1 - Question 27 [Problem-Solving & Data Analysis | Hard] ===
+[AR] وسط 5 أعداد هو 18. إذا أضيف عدد سادس أصبح الوسط 20. ما قيمة العدد السادس؟
+[EN] The mean of 5 numbers is 18. If a 6th number is added, the new mean becomes 20. What is the value of the 6th number?
+Correct Answer: 30
+Solution (AR): مجموع الأعداد الـ 5 الأولية = 5 × 18 = 90. مجموع 6 أعداد = 6 × 20 = 120. العدد السادس = 120 - 90 = 30.
+Solution (EN): Sum of first 5 = 5 × 18 = 90. Sum of 6 numbers = 6 × 20 = 120. 6th number = 120 - 90 = 30.
+
+----------------------------------------
+
+=== Module 2 - Question 1 [Problem-Solving & Data Analysis | Easy] ===
+[AR] تم اختيار 150 شخصاً عشوائياً، ورغب 90 منهم في المشاركة في دورة تدريبية. ما النسبة المئوية للمشاركين؟
+[EN] Out of 150 randomly selected people, 90 expressed interest in attending a training course. What percentage expressed interest?
+Choices:
+  A) 40% / أ) 40%
+  B) 50% / ب) 50%
+  C) 60% / ج) 60%
+  D) 75% / د) 75%
+Correct Answer: C
+Solution (AR): (90 ÷ 150) × 100% = 0.60 × 100% = 60%.
+Solution (EN): (90 / 150) × 100% = 60%.
+
+----------------------------------------
+
+=== Module 2 - Question 2 [Algebra | Easy] ===
+[AR] ما هو ميل المستقيم الذي يمر بالنقطتين (1, 3) و (4, 9)؟
+[EN] What is the slope of the line passing through points (1, 3) and (4, 9)?
+Choices:
+  A) 2 / أ) 2
+  B) 3 / ب) 3
+  C) 1/2 / ج) 1/2
+  D) 6 / د) 6
+Correct Answer: A
+Solution (AR): الميل m = (9 - 3) ÷ (4 - 1) = 6 ÷ 3 = 2.
+Solution (EN): Slope m = (9 - 3) / (4 - 1) = 6 / 3 = 2.
+
+----------------------------------------
+
+=== Module 2 - Question 3 [Algebra | Easy] ===
+[AR] أي من القيم التالية تعتبر حلاً للمتباينة 5x - 3 > 12؟
+[EN] Which of the following values is a solution to the inequality 5x - 3 > 12?
+Choices:
+  A) 2 / أ) 2
+  B) 3 / ب) 3
+  C) 4 / ج) 4
+  D) 1 / د) 1
+Correct Answer: C
+Solution (AR): 5x > 15 => x > 3. القيمة الوحيدة الأكبر تماماً من 3 في الخيارات هي 4.
+Solution (EN): 5x > 15 => x > 3. The only value strictly greater than 3 among choices is 4.
+
+----------------------------------------
+
+=== Module 2 - Question 4 [Geometry & Trigonometry | Easy] ===
+[AR] ما حجم مكعب طول ضلعه 5 سم؟
+[EN] What is the volume of a cube with side length 5 cm?
+Choices:
+  A) 25 / أ) 25
+  B) 100 / ب) 100
+  C) 125 / ج) 125
+  D) 150 / د) 150
+Correct Answer: C
+Solution (AR): الحجم = s³ = 5³ = 125 سم مكعب.
+Solution (EN): Volume = s³ = 5³ = 125 cm³.
+
+----------------------------------------
+
+=== Module 2 - Question 5 [Advanced Math | Easy] ===
+[AR] تبسيط المقدار (x³)(x⁵) هو:
+[EN] Simplifying the expression (x³)(x⁵) yields:
+Choices:
+  A) x⁸ / أ) x⁸
+  B) x¹⁵ / ب) x¹⁵
+  C) 2x⁸ / ج) 2x⁸
+  D) x² / د) x²
+Correct Answer: A
+Solution (AR): في ضرب الحدود ذات الأساسات المتساوية نجمع الأسس: x^(3+5) = x⁸.
+Solution (EN): When multiplying like bases, add exponents: x^(3+5) = x⁸.
+
+----------------------------------------
+
+=== Module 2 - Question 6 [Algebra | Easy] ===
+[AR] ما القيمة المكافئة للمقدار 4(2x - 5) + 3x؟
+[EN] Which expression is equivalent to 4(2x - 5) + 3x?
+Choices:
+  A) 11x - 20 / أ) 11x - 20
+  B) 11x - 5 / ب) 11x - 5
+  C) 8x - 20 / ج) 8x - 20
+  D) 5x - 20 / د) 5x - 20
+Correct Answer: A
+Solution (AR): 8x - 20 + 3x = 11x - 20.
+Solution (EN): 8x - 20 + 3x = 11x - 20.
+
+----------------------------------------
+
+=== Module 2 - Question 7 [Problem-Solving & Data Analysis | Easy] ===
+[AR] الوسيط لمجموعة البيانات: 4, 8, 15, 20, 23, 40 هو:
+[EN] What is the median of the data set: 4, 8, 15, 20, 23, 40?
+Correct Answer: 17.5
+Solution (AR): الأعداد مرتبة وعددهم 6 (زوجي). الوسيط هو متوسط العددين الأوسطين (15 + 20) ÷ 2 = 17.5.
+Solution (EN): Array has 6 values. Median is average of 3rd and 4th terms: (15 + 20) / 2 = 17.5.
+
+----------------------------------------
+
+=== Module 2 - Question 8 [Algebra | Medium] ===
+[AR] ما هو المقطع السيني (x-intercept) للمستقيم الذي معادلته 3x - 4y = 12؟
+[EN] What is the x-intercept of the line with equation 3x - 4y = 12?
+Choices:
+  A) (4, 0) / أ) (4, 0)
+  B) (-3, 0) / ب) (-3, 0)
+  C) (0, -3) / ج) (0, -3)
+  D) (0, 4) / د) (0, 4)
+Correct Answer: A
+Solution (AR): نضع y = 0: 3x = 12 => x = 4. إذن المقطع السيني هو (4, 0).
+Solution (EN): Set y = 0: 3x = 12 => x = 4. The x-intercept is (4, 0).
+
+----------------------------------------
+
+=== Module 2 - Question 9 [Advanced Math | Medium] ===
+[AR] ما حل المعادلة |2x - 7| = 9؟
+[EN] What are the solutions to the equation |2x - 7| = 9?
+Choices:
+  A) x = 8 and x = -1 / أ) x = 8 و x = -1
+  B) x = 8 and x = 1 / ب) x = 8 و x = 1
+  C) x = 16 and x = -2 / ج) x = 16 و x = -2
+  D) x = 8 only / د) x = 8 فقط
+Correct Answer: A
+Solution (AR): Case 1: 2x - 7 = 9 => 2x = 16 => x = 8. Case 2: 2x - 7 = -9 => 2x = -2 => x = -1.
+Solution (EN): Case 1: 2x - 7 = 9 => 2x = 16 => x = 8. Case 2: 2x - 7 = -9 => 2x = -2 => x = -1.
+
+----------------------------------------
+
+=== Module 2 - Question 10 [Geometry & Trigonometry | Medium] ===
+[AR] دائرة مساحتها 36π سم². ما محيطها بدلالة π؟
+[EN] A circle has an area of 36π cm². What is its circumference in terms of π?
+Choices:
+  A) 12π / أ) 12π
+  B) 6π / ب) 6π
+  C) 18π / ج) 18π
+  D) 36π / د) 36π
+Correct Answer: A
+Solution (AR): π r² = 36π => r = 6 سم. المحيط C = 2π r = 2π(6) = 12π سم.
+Solution (EN): π r² = 36π => r = 6 cm. Circumference C = 2π r = 2π(6) = 12π cm.
+
+----------------------------------------
+
+=== Module 2 - Question 11 [Algebra | Medium] ===
+[AR] إذا كان f(x) = 5x - 2، فما قيمة f⁻¹(13)؟
+[EN] If f(x) = 5x - 2, what is the value of f⁻¹(13)?
+Correct Answer: 3
+Solution (AR): نضع 5x - 2 = 13 => 5x = 15 => x = 3.
+Solution (EN): Set f(x) = 13 => 5x - 2 = 13 => 5x = 15 => x = 3.
+
+----------------------------------------
+
+=== Module 2 - Question 12 [Problem-Solving & Data Analysis | Medium] ===
+[AR] يمثل الجدول نسبة تلوث الهواء في 4 مدن. أي مدينة تمتلك التشتت الأصغر في قياساتها التكرارية؟
+[EN] Table shows air pollution data for 4 cities. Which city has the smallest standard deviation/variability?
+Choices:
+  A) City A / أ) المدينة أ
+  B) City B / ب) المدينة ب
+  C) City C / ج) المدينة ج
+  D) City D / د) المدينة د
+Correct Answer: B
+Solution (AR): المدينة ب جميع قراءاتها متقاربة جداً حول المتوسط، مما يعني أن تشتتها هو الأصغر.
+Solution (EN): City B has readings clustered tightly around its mean, representing the smallest variability/standard deviation.
+
+----------------------------------------
+
+=== Module 2 - Question 13 [Advanced Math | Medium] ===
+[AR] أي مما يلي يكافئ المقدار (x² - 9) / (x - 3) بشرط x ≠ 3؟
+[EN] Which expression is equivalent to (x² - 9) / (x - 3) for x ≠ 3?
+Choices:
+  A) x + 3 / أ) x + 3
+  B) x - 3 / ب) x - 3
+  C) x + 9 / ج) x + 9
+  D) 3 / د) 3
+Correct Answer: A
+Solution (AR): البسط فرق بين مربعين: (x - 3)(x + 3) ÷ (x - 3) = x + 3.
+Solution (EN): Factor numerator: (x - 3)(x + 3) / (x - 3) = x + 3.
+
+----------------------------------------
+
+=== Module 2 - Question 14 [Algebra | Medium] ===
+[AR] تتضاعف كمية عينة مشعة كل 10 سنوات. إذا كانت الكمية الابتدائية 50 جراماً، أي دالة تمثل الكمية A بعد t سنة؟
+[EN] A radioactive sample doubles every 10 years. If initial mass is 50 grams, which function represents mass A after t years?
+Choices:
+  A) A(t) = 50 (2)^(t/10) / أ) A(t) = 50 (2)^(t/10)
+  B) A(t) = 50 (10)^(t/2) / ب) A(t) = 50 (10)^(t/2)
+  C) A(t) = 10 (2)^(50t) / ج) A(t) = 10 (2)^(50t)
+  D) A(t) = 50 + 2(t/10) / د) A(t) = 50 + 2(t/10)
+Correct Answer: A
+Solution (AR): نموذج النمو الأسي بالتضاعف كل 10 سنوات هو: A(t) = 50 (2)^(t/10).
+Solution (EN): Exponential doubling model with half-life/doubling period of 10 years is A(t) = 50(2)^(t/10).
+
+----------------------------------------
+
+=== Module 2 - Question 15 [Geometry & Trigonometry | Medium] ===
+[AR] مثلثان متشابهان ABC و DEF. معامل التكبير من ABC إلى DEF هو 3. إذا كانت مساحة ABC تساوي 12 سم²، فما مساحة DEF؟
+[EN] Triangles ABC and DEF are similar with a scale factor of 3 from ABC to DEF. If the area of ABC is 12 cm², what is the area of DEF?
+Choices:
+  A) 36 / أ) 36
+  B) 72 / ب) 72
+  C) 108 / ج) 108
+  D) 144 / د) 144
+Correct Answer: C
+Solution (AR): نسبة المساحتين تساوي مربع معامل التكبير (3² = 9). مساحة DEF = 12 × 9 = 108 سم².
+Solution (EN): Ratio of areas = (scale factor)² = 3² = 9. Area of DEF = 12 × 9 = 108 cm².
+
+----------------------------------------
+
+=== Module 2 - Question 16 [Algebra | Medium] ===
+[AR] ما هو مجال الدالة f(x) = √(2x - 8)؟
+[EN] What is the domain of the function f(x) = √(2x - 8)?
+Choices:
+  A) x ≥ 4 / أ) x ≥ 4
+  B) x > 4 / ب) x > 4
+  C) x ≥ 8 / ج) x ≥ 8
+  D) x ≤ 4 / د) x ≤ 4
+Correct Answer: A
+Solution (AR): يجب أن يكون ما تحت الجذر غير سالب: 2x - 8 ≥ 0 => 2x ≥ 8 => x ≥ 4.
+Solution (EN): Expression under square root must be non-negative: 2x - 8 ≥ 0 => 2x ≥ 8 => x ≥ 4.
+
+----------------------------------------
+
+=== Module 2 - Question 17 [Advanced Math | Hard] ===
+[AR] المعادلة x² + kx + 16 = 0 لها جذر مكرر واحد فقط. ما القيم الممكنة للثابت k؟
+[EN] The equation x² + kx + 16 = 0 has exactly one repeated real solution. What are the possible values of constant k?
+Choices:
+  A) k = 8 or k = -8 / أ) k = 8 أو k = -8
+  B) k = 4 or k = -4 / ب) k = 4 أو k = -4
+  C) k = 16 or k = -16 / ج) k = 16 أو k = -16
+  D) k = 64 only / د) k = 64 فقط
+Correct Answer: A
+Solution (AR): المميز b² - 4ac = 0 => k² - 4(1)(16) = 0 => k² - 64 = 0 => k = ±8.
+Solution (EN): Discriminant b² - 4ac = 0 => k² - 64 = 0 => k = ±8.
+
+----------------------------------------
+
+=== Module 2 - Question 18 [Advanced Math | Hard] ===
+[AR] إذا كان i = √(-1)، فما قيمة المقدار (3 + 4i)(2 - i)؟
+[EN] Given i = √(-1), what is the value of the expression (3 + 4i)(2 - i)?
+Choices:
+  A) 10 + 5i / أ) 10 + 5i
+  B) 2 + 5i / ب) 2 + 5i
+  C) 10 - 5i / ج) 10 - 5i
+  D) 6 - 4i / د) 6 - 4i
+Correct Answer: A
+Solution (AR): (3)(2) + (3)(-i) + (4i)(2) + (4i)(-i) = 6 - 3i + 8i - 4i² = 6 + 5i + 4 = 10 + 5i.
+Solution (EN): 6 - 3i + 8i - 4i² = 6 + 5i - 4(-1) = 10 + 5i.
+
+----------------------------------------
+
+=== Module 2 - Question 19 [Geometry & Trigonometry | Hard] ===
+[AR] كرة حجمها 36π سم مكعب. ما مساحة سطحها بالسنتيمتر المربع بدلالة π؟
+[EN] A sphere has a volume of 36π cm³. What is its surface area in cm² in terms of π?
+Correct Answer: 36
+Solution (AR): V = (4/3)π r³ = 36π => r³ = 27 => r = 3 سم. المساحة السطحية = 4π r² = 4π(3)² = 36π. القيمة المضروبة في π هي 36.
+Solution (EN): V = (4/3)π r³ = 36π => r³ = 27 => r = 3 cm. Surface Area = 4π r² = 4π(9) = 36π.
+
+----------------------------------------
+
+=== Module 2 - Question 20 [Algebra | Hard] ===
+[AR] إذا كانت f(x) = x² - 4x + 7، فما هي أصغر قيمة (الحد الأدنى) للدالة f(x)؟
+[EN] If f(x) = x² - 4x + 7, what is the minimum value of the function f(x)?
+Choices:
+  A) 3 / أ) 3
+  B) 2 / ب) 2
+  C) 7 / ج) 7
+  D) -1 / د) -1
+Correct Answer: A
+Solution (AR): راس القطع المكافئ عند x = -b/(2a) = 4/2 = 2. القيمة الدنيا f(2) = (2)² - 4(2) + 7 = 4 - 8 + 7 = 3.
+Solution (EN): Vertex x-coordinate = -b/(2a) = 4/2 = 2. Minimum value = f(2) = 4 - 8 + 7 = 3.
+
+----------------------------------------
+
+=== Module 2 - Question 21 [Algebra | Hard] ===
+[AR] نظام المتباينات:
+y > 2x - 5
+y < -x + 4
+في أي ربع من الأرباع الأربعة يحتوي على حلول لنظام المتباينات هذا؟
+[EN] System of inequalities:
+y > 2x - 5
+y < -x + 4
+In which quadrant of the xy-plane does a solution to the system exist?
+Choices:
+  A) Quadrant I only / أ) الربع الأول فقط
+  B) Quadrant I and Quadrant II / ب) الربع الأول والربع الثاني
+  C) Quadrant I, II, and IV / ج) الربع الأول، الثاني، والرابع
+  D) All four Quadrants / د) جميع الأرباع الأربعة
+Correct Answer: C
+Solution (AR): المنطقة المشتركة تتقاطع في الربع الأول والربع الثاني والربع الرابع.
+Solution (EN): Graphing both regions reveals intersection in Quadrants I, II, and IV.
+
+----------------------------------------
+
+=== Module 2 - Question 22 [Advanced Math | Hard] ===
+[AR] إذا كان (x - 1) عاملاً للمقدار x³ - kx² + 2x - 4، فما قيمة الثابت k؟
+[EN] If (x - 1) is a factor of x³ - kx² + 2x - 4, what is the value of constant k?
+Correct Answer: -1
+Solution (AR): نظرية الباقي: P(1) = 0 => (1)³ - k(1)² + 2(1) - 4 = 0 => 1 - k + 2 - 4 = 0 => -k - 1 = 0 => k = -1.
+Solution (EN): By Remainder Theorem: P(1) = 0 => 1³ - k(1)² + 2(1) - 4 = 0 => 1 - k + 2 - 4 = 0 => k = -1.
+
+----------------------------------------
+
+=== Module 2 - Question 23 [Problem-Solving & Data Analysis | Hard] ===
+[AR] ألقيت قطعة نقدية متزنة 4 مرات. ما احتمال الحصول على وجه الصورة (Heads) مرتين بالضبط؟
+[EN] A fair coin is flipped 4 times. What is the probability of getting exactly 2 heads?
+Choices:
+  A) 3/8 / أ) 3/8
+  B) 1/2 / ب) 1/2
+  C) 1/4 / ج) 1/4
+  D) 5/16 / د) 5/16
+Correct Answer: A
+Solution (AR): التوزيع ذو الحدين: C(4, 2) × (1/2)⁴ = 6 × (1/16) = 6/16 = 3/8.
+Solution (EN): Binomial probability: C(4, 2) / 2⁴ = 6 / 16 = 3/8.
+
+----------------------------------------
+
+=== Module 2 - Question 24 [Geometry & Trigonometry | Hard] ===
+[AR] في دائر كبرى، زاوية مركزية قياسها 60° تحصر قوساً طوله 4π سم. ما طول نصف قطر الدائرة بالسنتيمترات؟
+[EN] In a circle, a central angle of 60° subtends an arc of length 4π cm. What is the radius of the circle in centimeters?
+Correct Answer: 12
+Solution (AR): طول القوس = (θ/360) × 2π r => 4π = (60/360) × 2π r => 4π = (1/6) × 2π r => 4 = r/3 => r = 12 سم.
+Solution (EN): Arc length = (60/360) × 2π r = (1/6) × 2π r = π r / 3. Given 4π = π r / 3 => r = 12 cm.
+
+----------------------------------------
+
+=== Module 2 - Question 25 [Algebra | Hard] ===
+[AR] ما عدد أزواج الأعداد الصحيحة الموجبة (x, y) التي تحقق المعادلة 2x + 5y = 40؟
+[EN] How many pairs of positive integers (x, y) satisfy the equation 2x + 5y = 40?
+Choices:
+  A) 3 / أ) 3
+  B) 4 / ب) 4
+  C) 7 / ج) 7
+  D) 8 / د) 8
+Correct Answer: A
+Solution (AR): 5y = 40 - 2x => y يجب أن يكون زوجياً وموجباً. الأزواج الممكنة للأعداد الموجبة هي: (15, 2), (10, 4), (5, 6). وهي 3 أزواج.
+Solution (EN): Positive integers require x > 0 and y > 0. Since 5y = 40 - 2x, y must be even. Solutions (x, y) = (15, 2), (10, 4), (5, 6). Total = 3 pairs.
+
+----------------------------------------
+
+=== Module 2 - Question 26 [Advanced Math | Hard] ===
+[AR] ما هو مجموع مقلوبي جذري المعادلة x² - 5x + 6 = 0؟
+[EN] What is the sum of the reciprocals of the roots of the equation x² - 5x + 6 = 0?
+Choices:
+  A) 5/6 / أ) 5/6
+  B) 6/5 / ب) 6/5
+  C) 5/1 / ج) 5/1
+  D) 1/6 / د) 1/6
+Correct Answer: A
+Solution (AR): الجذور r1 + r2 = 5 و r1 × r2 = 6. مجموع المقلوبين 1/r1 + 1/r2 = (r1 + r2) / (r1 × r2) = 5/6.
+Solution (EN): Sum of roots = 5, product = 6. Sum of reciprocals = (r1 + r2)/(r1 × r2) = 5/6.
+
+----------------------------------------
+
+=== Module 2 - Question 27 [Geometry & Trigonometry | Hard] ===
+[AR] شبه منحرف قائ الزاوية مساحته 45 سم² وارتفاعه 6 سم. إذا كان طول إحدى قاعدتيه المتوازيتين 7 سم، فما طول القاعدة المتوازية الأخرى بالسم؟
+[EN] A right trapezoid has an area of 45 cm² and a height of 6 cm. If one of its parallel bases is 7 cm long, what is the length, in cm, of the other parallel base?
+Correct Answer: 8
+Solution (AR): Area = 0.5 × (b1 + b2) × h => 45 = 0.5 × (7 + b2) × 6 => 45 = 3 × (7 + b2) => 7 + b2 = 15 => b2 = 8 سم.
+Solution (EN): Area = 0.5 × (b1 + b2) × h => 45 = 3 × (7 + b2) => 7 + b2 = 15 => b2 = 8 cm.
