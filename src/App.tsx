@@ -3136,9 +3136,9 @@ export default function App() {
 
       {/* Breadcrumbs & Section Selector */}
       {(appState.country || appState.term || appState.stream || appState.grade || appState.subject || appState.unit || appState.lesson) && (
-        <div id="breadcrumbs" className="max-w-7xl mx-auto px-4 md:px-6 py-4">
-          <div className="flex items-center justify-between flex-wrap gap-3">
-            <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 flex-wrap">
+        <div id="breadcrumbs" className="max-w-7xl mx-auto px-4 md:px-6 py-4 w-full max-w-full overflow-hidden">
+          <div className="flex items-center justify-between flex-wrap gap-3 max-w-full">
+            <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 flex-wrap max-w-full">
               <button onClick={goHome} className="hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center gap-1 cursor-pointer font-bold">
                 <span>🎓</span> {language === 'ar' ? 'الرئيسية' : 'Home'}
               </button>
@@ -3226,7 +3226,7 @@ export default function App() {
 
             {/* Section Switcher Tabs when country is selected */}
             {appState.country && (
-              <div className="flex items-center bg-slate-100 dark:bg-slate-800/90 p-1 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-inner overflow-x-auto">
+              <div className="flex items-center bg-slate-100 dark:bg-slate-800/90 p-1 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-inner overflow-x-auto max-w-full w-full sm:w-auto shrink-0 touch-pan-x scrollbar-none">
                 <button
                   onClick={() => setActivePlatformSection('curriculum')}
                   className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
@@ -4718,7 +4718,7 @@ export default function App() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed top-24 left-4 md:left-10 z-50 w-80 bg-white dark:bg-gray-950/95 border-2 border-emerald-500/30 rounded-3xl p-5 shadow-2xl text-right font-sans backdrop-blur-md"
+            className="fixed top-20 md:top-24 left-3 right-3 sm:right-auto sm:left-6 md:left-10 z-50 w-auto sm:w-80 max-w-[calc(100vw-24px)] bg-white dark:bg-gray-950/95 border-2 border-emerald-500/30 rounded-3xl p-5 shadow-2xl text-right font-sans backdrop-blur-md"
           >
             {/* Header */}
             <div className="flex items-center justify-between border-b border-emerald-500/10 pb-3 mb-3">
@@ -5101,7 +5101,7 @@ export default function App() {
             initial={{ opacity: 0, y: 50, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.95 }}
-            className="fixed bottom-24 right-6 z-50 w-[92vw] sm:w-[420px] h-[520px] bg-white dark:bg-slate-900 border-2 border-indigo-100 dark:border-slate-800 rounded-3xl shadow-2xl flex flex-col overflow-hidden text-right font-sans backdrop-blur-md"
+            className="fixed bottom-20 sm:bottom-24 right-3 left-3 sm:left-auto sm:right-6 z-50 sm:w-[420px] max-w-[calc(100vw-24px)] h-[500px] sm:h-[520px] bg-white dark:bg-slate-900 border-2 border-indigo-100 dark:border-slate-800 rounded-3xl shadow-2xl flex flex-col overflow-hidden text-right font-sans backdrop-blur-md"
           >
             {/* Header */}
             <div className="bg-gradient-to-r from-indigo-600 to-violet-700 p-4 text-white flex items-center justify-between shadow-md">
