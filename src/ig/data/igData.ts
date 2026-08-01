@@ -2,6 +2,10 @@ import { IgExamBoard, IgSubject, IgQuestion } from '../types';
 import { QUESTIONS_2004_MJ } from './questions2004MJ';
 import { QUESTIONS_2003_MJ } from './questions2003MJ';
 import { QUESTIONS_2004_ON } from './questions2004ON';
+import { QUESTIONS_2005 } from './questions2005';
+import { QUESTIONS_2006 } from './questions2006';
+import { QUESTIONS_2007 } from './questions2007';
+import { QUESTIONS_2008 } from './questions2008';
 
 export const IG_BOARDS: IgExamBoard[] = [
   {
@@ -1777,6 +1781,10 @@ export const IG_MATHS_QUESTIONS: IgQuestion[] = [
   },
   ...QUESTIONS_2004_MJ,
   ...QUESTIONS_2003_MJ,
-  ...QUESTIONS_2004_ON
+  ...QUESTIONS_2004_ON,
+  ...QUESTIONS_2005,
+  ...QUESTIONS_2006,
+  ...QUESTIONS_2007,
+  ...QUESTIONS_2008
 ];
 
