@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { 
   IgBoardId, 
   IgLevelId, 
@@ -69,6 +69,27 @@ export const IgView: React.FC<IgViewProps> = ({
   const [examAnswers, setExamAnswers] = useState<Record<string, string>>({});
   const [examIndex, setExamIndex] = useState<number>(0);
   const [examSubmitted, setExamSubmitted] = useState<boolean>(false);
+  const [examTimeLeft, setExamTimeLeft] = useState<number>(0);
+
+  // Timer countdown effect for exam
+  useEffect(() => {
+    let interval: NodeJS.Timeout | undefined;
+    if (isExamRunning && examTimeLeft > 0) {
+      interval = setInterval(() => {
+        setExamTimeLeft(prev => {
+          if (prev <= 1) {
+            setIsExamRunning(false);
+            setExamSubmitted(true);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isExamRunning, examTimeLeft]);
 
   // Active Board Object
   const currentBoard = useMemo(() => {
@@ -160,6 +181,53 @@ export const IgView: React.FC<IgViewProps> = ({
       saveQuestionToMistakes(q, ansId);
     }
   };
+
+  // Exam Helper Functions
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const handleStartExam = () => {
+    const timeMinutes = Math.max(15, filteredQuestions.length * 2);
+    setExamIndex(0);
+    setExamAnswers({});
+    setExamSubmitted(false);
+    setIsExamRunning(true);
+    setExamTimeLeft(timeMinutes * 60);
+  };
+
+  const handleSubmitExam = () => {
+    setIsExamRunning(false);
+    setExamSubmitted(true);
+  };
+
+  const handleSelectExamAnswer = (qId: string, ansId: string) => {
+    if (!isExamRunning || examSubmitted) return;
+    setExamAnswers(prev => ({ ...prev, [qId]: ansId }));
+  };
+
+  const examResults = useMemo(() => {
+    let correct = 0;
+    let wrong = 0;
+    let unanswered = 0;
+    filteredQuestions.forEach(q => {
+      const userAns = examAnswers[q.id];
+      if (!userAns) {
+        unanswered++;
+      } else if (userAns === q.correctAnswer) {
+        correct++;
+      } else {
+        wrong++;
+      }
+    });
+    const total = filteredQuestions.length;
+    const percentage = total > 0 ? Math.round((correct / total) * 100) : 0;
+    return { correct, wrong, unanswered, total, percentage };
+  }, [filteredQuestions, examAnswers]);
+
+  const currentExamQuestion = filteredQuestions[examIndex] || filteredQuestions[0];
 
   return (
     <div className="fade-in space-y-8 my-6">
@@ -684,6 +752,415 @@ export const IgView: React.FC<IgViewProps> = ({
                     )}
                   </div>
                 )}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* TAB CONTENT: TIMED EXAM MODE */}
+        {activeTab === 'exam' && (
+          <div className="space-y-6">
+            {filteredQuestions.length === 0 ? (
+              <div className="p-8 text-center bg-slate-50 dark:bg-slate-800/50 rounded-3xl border border-slate-200 dark:border-slate-700">
+                <AlertCircle className="w-12 h-12 text-slate-400 mx-auto mb-3" />
+                <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">
+                  لا توجد أسئلة مطابقة للفلتر المحدد
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                  جرب اختيار "جميع السنوات" أو تغيير كلمة البحث لبدء الاختبار الموقوت.
+                </p>
+              </div>
+            ) : !isExamRunning && !examSubmitted ? (
+              /* 1. LAUNCHPAD / EXAM INTRO CARD */
+              <div className="bg-gradient-to-br from-teal-900 via-slate-900 to-indigo-950 p-6 md:p-10 rounded-3xl text-white shadow-2xl border border-teal-500/30 space-y-6">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-6">
+                  <div>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 border border-teal-500/30 text-xs font-bold mb-2">
+                      <Clock className="w-3.5 h-3.5" />
+                      <span>اختبار موقوت - محاكاة للامتحان الحقيقي</span>
+                    </span>
+                    <h3 className="text-2xl md:text-3xl font-black text-white">
+                      اختبار {currentSubject.nameEn} ({currentBoard.nameEn})
+                    </h3>
+                    <p className="text-xs md:text-sm text-slate-300 mt-1">
+                      اختبر نفسك تحت ضغط الوقت مع تقييم تلقائي فوري بعد التسليم
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    <div className="px-4 py-2.5 rounded-2xl bg-white/10 border border-white/15 text-center">
+                      <span className="block text-[10px] text-slate-400 font-bold">عدد الأسئلة</span>
+                      <span className="text-lg font-black text-teal-300">{filteredQuestions.length} سؤال</span>
+                    </div>
+                    <div className="px-4 py-2.5 rounded-2xl bg-white/10 border border-white/15 text-center">
+                      <span className="block text-[10px] text-slate-400 font-bold">الوقت المخصص</span>
+                      <span className="text-lg font-black text-amber-300">
+                        {Math.max(15, filteredQuestions.length * 2)} دقيقة
+                      </span>
+                    </div>
+                    <div className="px-4 py-2.5 rounded-2xl bg-white/10 border border-white/15 text-center">
+                      <span className="block text-[10px] text-slate-400 font-bold">السنة والورقة</span>
+                      <span className="text-xs font-bold text-white">
+                        {selectedYear === 'all' ? 'جميع السنوات' : selectedYear} - {selectedPaper === 'all' ? 'جميع الأوراق' : selectedPaper}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white/5 p-5 rounded-2xl border border-white/10 space-y-3">
+                  <h4 className="text-sm font-extrabold text-amber-300 flex items-center gap-1.5">
+                    <AlertCircle className="w-4 h-4" />
+                    <span>تعليمات وضوابط الاختبار الموقوت:</span>
+                  </h4>
+                  <ul className="space-y-2 text-xs text-slate-300 list-disc list-inside leading-relaxed">
+                    <li>يتم حساب الوقت تنازلياً فور الضغط على زر "ابدأ الاختبار الموقوت الآن".</li>
+                    <li>يمكنك التنقل بين الأسئلة وتعديل إجابتك بحرية كاملة قبل انتهاء الوقت المحدَّد.</li>
+                    <li>لن تظهر الإجابات الصحيحة أو خطوات الحل أثناء الاختبار حتى تسليمه.</li>
+                    <li>عند انتهاء الوقت أو الضغط على "تسليم الاختبار" ستحصل على تقرير مفصل بنتيجة أدائك.</li>
+                  </ul>
+                </div>
+
+                <div className="flex justify-center pt-2">
+                  <button
+                    onClick={handleStartExam}
+                    className="px-8 py-4 rounded-2xl bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-white font-black text-base md:text-lg shadow-xl shadow-teal-500/25 transition cursor-pointer flex items-center gap-3 active:scale-95"
+                  >
+                    <span>🚀 ابدأ الاختبار الموقوت الآن</span>
+                    <Clock className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+            ) : isExamRunning && !examSubmitted ? (
+              /* 2. RUNNING EXAM SCREEN */
+              <div className="space-y-6">
+                {/* TIMER & CONTROLS STICKY BAR */}
+                <div className="bg-white dark:bg-slate-900 p-4 md:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md flex flex-wrap items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className={`px-4 py-2 rounded-xl flex items-center gap-2 font-black text-base md:text-lg ${
+                      examTimeLeft < 300 
+                        ? 'bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-500/30 animate-pulse'
+                        : 'bg-teal-500/10 text-teal-700 dark:text-teal-300 border border-teal-500/20'
+                    }`}>
+                      <Clock className="w-5 h-5" />
+                      <span>{formatTime(examTimeLeft)}</span>
+                    </div>
+
+                    <span className="text-xs font-bold px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                      سؤال {examIndex + 1} من {filteredQuestions.length}
+                    </span>
+
+                    <span className="text-xs font-bold px-3 py-1.5 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">
+                      أجبتَ عن {Object.keys(examAnswers).length} / {filteredQuestions.length}
+                    </span>
+                  </div>
+
+                  <button
+                    onClick={handleSubmitExam}
+                    className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-black text-xs md:text-sm shadow-md transition cursor-pointer flex items-center gap-2"
+                  >
+                    <CheckCircle2 className="w-4 h-4" />
+                    <span>📥 إنهاء وتسليم الاختبار</span>
+                  </button>
+                </div>
+
+                {/* QUESTION NUMBER PILLS NAVIGATION */}
+                <div className="bg-slate-50 dark:bg-slate-800/50 p-3 rounded-2xl border border-slate-200 dark:border-slate-700 flex items-center gap-1.5 overflow-x-auto">
+                  <span className="text-xs font-bold text-slate-500 shrink-0 ml-2">انتقال سريع:</span>
+                  {filteredQuestions.map((q, idx) => {
+                    const isAnswered = Boolean(examAnswers[q.id]);
+                    const isCurrent = idx === examIndex;
+                    return (
+                      <button
+                        key={q.id}
+                        onClick={() => setExamIndex(idx)}
+                        className={`w-8 h-8 rounded-xl font-extrabold text-xs shrink-0 transition flex items-center justify-center cursor-pointer ${
+                          isCurrent
+                            ? 'bg-teal-600 text-white shadow-md ring-2 ring-teal-500/30'
+                            : isAnswered
+                            ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30'
+                            : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:border-teal-400'
+                        }`}
+                      >
+                        {idx + 1}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* CURRENT EXAM QUESTION CARD */}
+                {currentExamQuestion && (
+                  <div className="bg-slate-50 dark:bg-slate-950/60 p-6 md:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-6 shadow-lg">
+                    {/* Header badges */}
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-4">
+                      <div className="flex items-center gap-2">
+                        <span className="px-3 py-1 bg-teal-500/10 text-teal-600 dark:text-teal-400 text-xs font-extrabold rounded-full border border-teal-500/20">
+                          {currentExamQuestion.code}
+                        </span>
+                        <span className="px-3 py-1 bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-xs font-bold rounded-full">
+                          {currentExamQuestion.paper}
+                        </span>
+                        <span className="px-3 py-1 bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs font-bold rounded-full">
+                          سنة {currentExamQuestion.year}
+                        </span>
+                      </div>
+                      <span className="text-xs font-bold text-slate-500">
+                        الموضوع: {currentExamQuestion.topicEn}
+                      </span>
+                    </div>
+
+                    {/* Question Content */}
+                    <div className="space-y-3">
+                      {currentExamQuestion.diagramSvg && (
+                        <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-inner flex flex-col items-center justify-center my-3">
+                          {currentExamQuestion.diagramTitle && (
+                            <span className="text-xs font-black text-teal-600 dark:text-teal-400 mb-2">
+                              {currentExamQuestion.diagramTitle}
+                            </span>
+                          )}
+                          <div 
+                            className="w-full flex justify-center max-w-md overflow-x-auto text-slate-800 dark:text-slate-200"
+                            dangerouslySetInnerHTML={{ __html: currentExamQuestion.diagramSvg }}
+                          />
+                        </div>
+                      )}
+
+                      <div className="text-base md:text-lg font-bold text-slate-900 dark:text-slate-100 leading-relaxed dir-ltr text-left">
+                        {currentExamQuestion.questionEn}
+                      </div>
+                      {currentExamQuestion.questionAr && (
+                        <div className="text-sm font-medium text-slate-600 dark:text-slate-400 leading-relaxed text-right border-t border-slate-200/60 dark:border-slate-800/60 pt-2">
+                          {currentExamQuestion.questionAr}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Options Grid (No correct/wrong feedback while exam is running) */}
+                    {currentExamQuestion.options && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+                        {currentExamQuestion.options.map((opt) => {
+                          const isSelected = examAnswers[currentExamQuestion.id] === opt.id;
+                          return (
+                            <button
+                              key={opt.id}
+                              onClick={() => handleSelectExamAnswer(currentExamQuestion.id, opt.id)}
+                              className={`p-4 rounded-2xl border-2 transition text-left cursor-pointer font-bold text-sm flex items-center justify-between ${
+                                isSelected
+                                  ? 'bg-teal-500/15 border-teal-500 text-teal-800 dark:text-teal-200 shadow-md ring-2 ring-teal-500/20'
+                                  : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-teal-400 text-slate-800 dark:text-slate-200'
+                              }`}
+                            >
+                              <div className="flex items-center gap-3 dir-ltr">
+                                <span className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black shrink-0 ${
+                                  isSelected 
+                                    ? 'bg-teal-600 text-white' 
+                                    : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                                }`}>
+                                  {opt.id}
+                                </span>
+                                <span>{opt.textEn}</span>
+                              </div>
+                              {isSelected && (
+                                <span className="text-xs font-extrabold text-teal-600 dark:text-teal-400">
+                                  محدد ✅
+                                </span>
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {/* Navigation Buttons */}
+                    <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-800">
+                      <button
+                        onClick={() => setExamIndex(prev => Math.max(0, prev - 1))}
+                        disabled={examIndex === 0}
+                        className="px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-700 dark:text-slate-300 disabled:opacity-40 transition flex items-center gap-1.5 cursor-pointer"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                        <span>السؤال السابق</span>
+                      </button>
+
+                      {examIndex < filteredQuestions.length - 1 ? (
+                        <button
+                          onClick={() => setExamIndex(prev => Math.min(filteredQuestions.length - 1, prev + 1))}
+                          className="px-6 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs shadow transition flex items-center gap-1.5 cursor-pointer"
+                        >
+                          <span>السؤال التالي</span>
+                          <ChevronLeft className="w-4 h-4" />
+                        </button>
+                      ) : (
+                        <button
+                          onClick={handleSubmitExam}
+                          className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow transition flex items-center gap-1.5 cursor-pointer"
+                        >
+                          <CheckCircle2 className="w-4 h-4" />
+                          <span>إنهاء وتسليم الاختبار الآن</span>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              /* 3. SUBMITTED EXAM RESULTS & FULL REVIEW */
+              <div className="space-y-6">
+                {/* CERTIFICATE & SCORE CARD */}
+                <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-6 md:p-8 rounded-3xl text-white shadow-xl border border-indigo-500/30 space-y-6">
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div className="text-center md:text-right space-y-2">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-bold border border-indigo-500/30">
+                        <Award className="w-3.5 h-3.5" />
+                        <span>تقرير أداء الاختبار الموقوت</span>
+                      </span>
+                      <h3 className="text-2xl md:text-3xl font-black text-white">
+                        نتيجة اختبار {currentSubject.nameEn} - Cambridge
+                      </h3>
+                      <p className="text-xs text-slate-300">
+                        تم تصحيح جميع إجاباتك تلقائياً وفق نماذج الإجابة المعتمدة
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <div className="w-24 h-24 rounded-full bg-gradient-to-br from-teal-500 to-emerald-600 flex flex-col items-center justify-center shadow-xl border-4 border-white/20">
+                        <span className="text-2xl font-black">{examResults.percentage}%</span>
+                        <span className="text-[10px] font-bold text-white/80">النسبة المئوية</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div className="p-4 rounded-2xl bg-white/10 border border-white/10 text-center">
+                      <span className="block text-xs text-slate-300 font-bold">إجمالي الأسئلة</span>
+                      <span className="text-xl font-black text-white">{examResults.total}</span>
+                    </div>
+                    <div className="p-4 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 text-center">
+                      <span className="block text-xs text-emerald-300 font-bold">إجابات صحيحة</span>
+                      <span className="text-xl font-black text-emerald-400">{examResults.correct}</span>
+                    </div>
+                    <div className="p-4 rounded-2xl bg-rose-500/20 border border-rose-500/30 text-center">
+                      <span className="block text-xs text-rose-300 font-bold">إجابات خاطئة</span>
+                      <span className="text-xl font-black text-rose-400">{examResults.wrong}</span>
+                    </div>
+                    <div className="p-4 rounded-2xl bg-amber-500/20 border border-amber-500/30 text-center">
+                      <span className="block text-xs text-amber-300 font-bold">غير مجاب عنها</span>
+                      <span className="text-xl font-black text-amber-400">{examResults.unanswered}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                    <button
+                      onClick={handleStartExam}
+                      className="px-6 py-3 rounded-2xl bg-teal-600 hover:bg-teal-700 text-white font-extrabold text-sm shadow-md transition cursor-pointer flex items-center gap-2"
+                    >
+                      <RotateCcw className="w-4 h-4" />
+                      <span>إعادة نفس الاختبار الموقوت</span>
+                    </button>
+                    <button
+                      onClick={() => setActiveTab('practice')}
+                      className="px-6 py-3 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-extrabold text-sm border border-white/15 transition cursor-pointer flex items-center gap-2"
+                    >
+                      <span>العودة للتمرين التفاعلي ←</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* FULL REVIEW OF ALL EXAM QUESTIONS */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-black text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                    <span>📑</span> مراجعة تفصيلية لجميع أسئلة الاختبار مع خطوات الحل
+                  </h3>
+
+                  <div className="space-y-4">
+                    {filteredQuestions.map((q, idx) => {
+                      const userAns = examAnswers[q.id];
+                      const isCorrect = userAns === q.correctAnswer;
+                      const isSkipped = !userAns;
+
+                      return (
+                        <div
+                          key={q.id}
+                          className={`p-6 rounded-3xl border-2 space-y-4 transition ${
+                            isCorrect
+                              ? 'bg-emerald-500/5 border-emerald-500/30 dark:bg-emerald-500/10'
+                              : isSkipped
+                              ? 'bg-amber-500/5 border-amber-500/30 dark:bg-amber-500/10'
+                              : 'bg-rose-500/5 border-rose-500/30 dark:bg-rose-500/10'
+                          }`}
+                        >
+                          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
+                            <div className="flex items-center gap-2">
+                              <span className="w-7 h-7 rounded-lg bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-xs font-black">
+                                {idx + 1}
+                              </span>
+                              <span className="text-xs font-extrabold text-slate-800 dark:text-slate-200">
+                                {q.code} - سنة {q.year} ({q.paper})
+                              </span>
+                            </div>
+
+                            <div className="flex items-center gap-2">
+                              {isCorrect ? (
+                                <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-extrabold">
+                                  إجابة صحيحة ✅
+                                </span>
+                              ) : isSkipped ? (
+                                <span className="px-3 py-1 rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-300 text-xs font-extrabold">
+                                  لم تتم الإجابة ⚠️
+                                </span>
+                              ) : (
+                                <span className="px-3 py-1 rounded-full bg-rose-500/20 text-rose-700 dark:text-rose-300 text-xs font-extrabold">
+                                  إجابة خاطئة ❌
+                                </span>
+                              )}
+
+                              {!isCorrect && (
+                                <button
+                                  onClick={() => saveQuestionToMistakes(q, userAns || '')}
+                                  className={`px-3 py-1 rounded-xl text-xs font-bold border transition flex items-center gap-1 cursor-pointer ${
+                                    savedToMistakes[q.id]
+                                      ? 'bg-emerald-600 text-white border-emerald-500'
+                                      : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-amber-400'
+                                  }`}
+                                >
+                                  <Bookmark className="w-3.5 h-3.5" />
+                                  <span>{savedToMistakes[q.id] ? 'محفـوظ ✅' : 'حفظ لأخطائي'}</span>
+                                </button>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="text-sm md:text-base font-bold text-slate-900 dark:text-slate-100 dir-ltr text-left">
+                            {q.questionEn}
+                          </div>
+
+                          <div className="flex flex-wrap items-center gap-4 text-xs font-bold pt-1">
+                            <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800">
+                              <span className="text-slate-500">إجابتك: </span>
+                              <span className={isCorrect ? 'text-emerald-600 font-extrabold' : 'text-rose-600 font-extrabold'}>
+                                {userAns || 'بدون إجابة'}
+                              </span>
+                            </div>
+                            <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
+                              <span>الإجابة الصحيحة: </span>
+                              <span className="font-black">({q.correctAnswer})</span>
+                            </div>
+                          </div>
+
+                          {q.solutionStepsAr && (
+                            <div className="p-4 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-1.5 text-xs">
+                              <span className="block font-black text-teal-600 dark:text-teal-400 mb-1">خطوات الحل:</span>
+                              {q.solutionStepsAr.map((st, sidx) => (
+                                <div key={sidx} className="text-slate-700 dark:text-slate-300 font-medium">
+                                  • {st}
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
             )}
           </div>

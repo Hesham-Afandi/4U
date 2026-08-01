@@ -52,9 +52,9 @@ export const IG_BOARDS: IgExamBoard[] = [
 
 export const IG_CAMBRIDGE_SUBJECTS: IgSubject[] = [
   { id: 'maths', code: '0580', nameEn: 'Maths', nameAr: 'الرياضيات', icon: '📐', status: 'available', hasQuestions: true },
-  { id: 'chemistry', code: '0620', nameEn: 'Chemistry 0620', nameAr: 'الكيمياء', icon: '🧪', status: 'available' },
-  { id: 'physics', code: '0625', nameEn: 'Physics 0625', nameAr: 'الفيزياء', icon: '⚡', status: 'available' },
-  { id: 'biology', code: '0610', nameEn: 'Biology', nameAr: 'الأحياء', icon: '🧬', status: 'available' },
+  { id: 'chemistry', code: '0620', nameEn: 'Chemistry 0620', nameAr: 'الكيمياء', icon: '🧪', status: 'coming_soon' },
+  { id: 'physics', code: '0625', nameEn: 'Physics 0625', nameAr: 'الفيزياء', icon: '⚡', status: 'coming_soon' },
+  { id: 'biology', code: '0610', nameEn: 'Biology', nameAr: 'الأحياء', icon: '🧬', status: 'coming_soon' },
   { id: 'accounting', code: '0452', nameEn: 'Accounting', nameAr: 'المحاسبة', icon: '📊', status: 'coming_soon' },
   { id: 'arabic', code: '0544', nameEn: 'Arabic', nameAr: 'اللغة العربية', icon: '🕌', status: 'coming_soon' },
   { id: 'art_design', code: '0400', nameEn: 'Art And Design', nameAr: 'الفنون والتصميم', icon: '🎨', status: 'coming_soon' },
