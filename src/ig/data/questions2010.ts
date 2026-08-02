@@ -1,0 +1,465 @@
+import { IgQuestion } from '../types';
+
+export const QUESTIONS_2010: IgQuestion[] = [
+  // ==========================================
+  // MAY/JUNE 2010 - PAPER 1 (Core 0580/01)
+  // ==========================================
+  {
+    id: 'IG-2010-MJ-11-01',
+    code: '0580/11/M/J/10 Q1',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2010,
+    session: 'May/June',
+    paper: 'Paper 1 (Core)',
+    topicEn: 'Time & Timetables',
+    topicAr: 'حساب الوقت والرحلات',
+    questionEn: 'A ferry leaves for Crete at 07:30. The journey takes 2 hours 48 minutes. When does the ferry arrive?',
+    questionAr: 'عبارة تغادر إلى كريت الساعة 07:30، والرحلة تستغرق ساعتين و48 دقيقة. متى تصل العبارة؟',
+    options: [
+      { id: 'A', textEn: '10:18', textAr: '10:18' },
+      { id: 'B', textEn: '09:78', textAr: '09:78' },
+      { id: 'C', textEn: '10:30', textAr: '10:30' },
+      { id: 'D', textEn: '10:08', textAr: '10:08' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: '07:30 + 2 hours = 09:30. 09:30 + 48 minutes = 10:18.',
+    explanationAr: '07:30 + ساعتان = 09:30. 09:30 + 48 دقيقة = 10:18.',
+    solutionStepsEn: ['07:30 + 2h = 09:30.', '09:30 + 48m = 10:18.'],
+    solutionStepsAr: ['07:30 + ساعتان = 09:30.', '09:30 + 48 دقيقة = 10:18.'],
+    marks: 1
+  },
+  {
+    id: 'IG-2010-MJ-11-02',
+    code: '0580/11/M/J/10 Q2',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2010,
+    session: 'May/June',
+    paper: 'Paper 1 (Core)',
+    topicEn: 'Ordering Numbers & Inequalities',
+    topicAr: 'ترتيب الأعداد والمتباينات',
+    questionEn: '(a) Order the numbers from smallest to largest: 0.43, 4/9, 41%. (b) Which statement is true? (sin 30° ≠ 0.5, 42 > 16, 0.3 < 1/3)',
+    questionAr: '(أ) رتب الأعداد من الأصغر: 0.43, 4/9, 41%. (ب) أي العبارات التالية صحيحة؟ (sin 30° ≠ 0.5 / 42 > 16 / 0.3 < 1/3)',
+    options: [
+      { id: 'A', textEn: '(a) 41%, 0.43, 4/9; (b) 0.3 < 1/3 is true', textAr: '(أ) 41%, 0.43, 4/9؛ (ب) 0.3 < 1/3 صحيحة' },
+      { id: 'B', textEn: '(a) 4/9, 0.43, 41%; (b) sin 30° ≠ 0.5 is true', textAr: '(أ) 4/9, 0.43, 41%؛ (ب) sin 30° ≠ 0.5 صحيحة' },
+      { id: 'C', textEn: '(a) 41%, 4/9, 0.43; (b) 42 > 16 is true', textAr: '(أ) 41%, 4/9, 0.43؛ (ب) 42 > 16 صحيحة' },
+      { id: 'D', textEn: '(a) 0.43, 41%, 4/9; (b) 0.3 < 1/3 is true', textAr: '(أ) 0.43, 41%, 4/9؛ (ب) 0.3 < 1/3 صحيحة' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: '41% = 0.41. 4/9 = 0.444... So smallest is 41%, then 0.43, then 4/9. Also 0.3 = 3/10 < 1/3 = 0.333... is true.',
+    explanationAr: '41% = 0.41، و 4/9 = 0.444... إذن الترتيب 41% ثم 0.43 ثم 4/9. والعبارة الصحيحة هي 0.3 < 1/3.',
+    solutionStepsEn: ['41% = 0.41 < 0.43 < 0.444...', '0.3 < 0.333...'],
+    solutionStepsAr: ['41% < 0.43 < 4/9', '0.3 < 1/3'],
+    marks: 2
+  },
+  {
+    id: 'IG-2010-MJ-11-04',
+    code: '0580/11/M/J/10 Q4',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2010,
+    session: 'May/June',
+    paper: 'Paper 1 (Core)',
+    topicEn: 'Straight Line Equations',
+    topicAr: 'معادلة الخط المستقيم والتوازي',
+    questionEn: 'Write the equation of the straight line parallel to y = 4x + 1 and passing through the point (0, -3).',
+    questionAr: 'اكتب معادلة الخط المستقيم الموازي لـ y = 4x + 1 ويمر بالنقطة (0, -3).',
+    options: [
+      { id: 'A', textEn: 'y = 4x - 3', textAr: 'y = 4x - 3' },
+      { id: 'B', textEn: 'y = -4x - 3', textAr: 'y = -4x - 3' },
+      { id: 'C', textEn: 'y = 4x + 3', textAr: 'y = 4x + 3' },
+      { id: 'D', textEn: 'y = -0.25x - 3', textAr: 'y = -0.25x - 3' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Parallel lines have the same gradient m = 4. Passing through (0, -3) means y-intercept c = -3. So equation is y = 4x - 3.',
+    explanationAr: 'المستقيم الموازي له نفس الميل m = 4. المرور بالنقطة (0, -3) يعني المقطع الصادي c = -3. إذن المعادلة y = 4x - 3.',
+    solutionStepsEn: ['m = 4 (parallel to y = 4x + 1)', 'c = -3 (passes through (0, -3))', 'y = 4x - 3'],
+    solutionStepsAr: ['الميل m = 4', 'المقطع الصادي c = -3', 'y = 4x - 3'],
+    marks: 2
+  },
+  {
+    id: 'IG-2010-MJ-11-05',
+    code: '0580/11/M/J/10 Q5',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2010,
+    session: 'May/June',
+    paper: 'Paper 1 (Core)',
+    topicEn: 'Bearings',
+    topicAr: 'زوايا الاتجاه (Bearings)',
+    questionEn: 'The bearing of P from M is 107°. What is the bearing of M from P?',
+    questionAr: 'زاوية اتجاه P من M هي 107°. ما هي زاوية اتجاه M من P؟',
+    options: [
+      { id: 'A', textEn: '287°', textAr: '287°' },
+      { id: 'B', textEn: '073°', textAr: '073°' },
+      { id: 'C', textEn: '197°', textAr: '197°' },
+      { id: 'D', textEn: '347°', textAr: '347°' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Reverse bearing = 107° + 180° = 287°.',
+    explanationAr: 'الاتجاه العكسي = 107° + 180° = 287°.',
+    solutionStepsEn: ['107° < 180° => add 180°', '107° + 180° = 287°'],
+    solutionStepsAr: ['نضيف 180° إلى 107°', '107 + 180 = 287°'],
+    marks: 2
+  },
+  {
+    id: 'IG-2010-MJ-11-08',
+    code: '0580/11/M/J/10 Q8',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2010,
+    session: 'May/June',
+    paper: 'Paper 1 (Core)',
+    topicEn: 'Algebraic Equations & Perimeter',
+    topicAr: 'المعادلات الجبرية والمحيط',
+    questionEn: 'The sides of a triangle are x, (x+3), and (2x-7) cm. Its perimeter is 52 cm. (a) Write an equation in terms of x. (b) Find the value of x.',
+    questionAr: 'أضلاع مثلث هي x, (x+3), (2x-7) ومحيطه 52 سم. (أ) اكتب معادلة بدلالة x. (ب) أوجد قيمة x.',
+    options: [
+      { id: 'A', textEn: '(a) 4x - 4 = 52; (b) x = 14', textAr: '(أ) 4x - 4 = 52؛ (ب) x = 14' },
+      { id: 'B', textEn: '(a) 4x + 4 = 52; (b) x = 12', textAr: '(أ) 4x + 4 = 52؛ (ب) x = 12' },
+      { id: 'C', textEn: '(a) 4x - 4 = 52; (b) x = 13', textAr: '(أ) 4x - 4 = 52؛ (ب) x = 13' },
+      { id: 'D', textEn: '(a) 3x - 4 = 52; (b) x = 18', textAr: '(أ) 3x - 4 = 52؛ (ب) x = 18' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'x + (x+3) + (2x-7) = 4x - 4 = 52. Solving: 4x = 56 => x = 14.',
+    explanationAr: 'مجموع الأضلاع = x + x + 3 + 2x - 7 = 4x - 4 = 52. إذن 4x = 56 ومنه x = 14.',
+    solutionStepsEn: ['x + x + 3 + 2x - 7 = 52', '4x - 4 = 52 => 4x = 56', 'x = 14'],
+    solutionStepsAr: ['4x - 4 = 52', '4x = 56', 'x = 14'],
+    marks: 3
+  },
+  {
+    id: 'IG-2010-MJ-11-13',
+    code: '0580/11/M/J/10 Q13',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2010,
+    session: 'May/June',
+    paper: 'Paper 1 (Core)',
+    topicEn: 'Simultaneous Equations',
+    topicAr: 'حل المعادلات الآتية',
+    questionEn: 'Solve the simultaneous equations: 2x - y = 9 and 7x + 2y = 26.',
+    questionAr: 'حل المعادلتين آنياً: 2x - y = 9 و 7x + 2y = 26.',
+    options: [
+      { id: 'A', textEn: 'x = 4, y = -1', textAr: 'x = 4, y = -1' },
+      { id: 'B', textEn: 'x = 3, y = -3', textAr: 'x = 3, y = -3' },
+      { id: 'C', textEn: 'x = 5, y = 1', textAr: 'x = 5, y = 1' },
+      { id: 'D', textEn: 'x = 4, y = 1', textAr: 'x = 4, y = 1' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Multiply first equation by 2: 4x - 2y = 18. Add to second equation: 11x = 44 => x = 4. Substitute x = 4: 2(4) - y = 9 => y = -1.',
+    explanationAr: 'بضرب المعادلة الأولى في 2: 4x - 2y = 18. بالجمع مع الثانية: 11x = 44 ومنه x = 4. بالتعويض نجد y = -1.',
+    solutionStepsEn: ['4x - 2y = 18', '+ 7x + 2y = 26 => 11x = 44 => x = 4', 'y = 2(4) - 9 = -1'],
+    solutionStepsAr: ['4x - 2y = 18', '11x = 44 => x = 4', 'y = 8 - 9 = -1'],
+    marks: 3
+  },
+  {
+    id: 'IG-2010-MJ-11-14',
+    code: '0580/11/M/J/10 Q14',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2010,
+    session: 'May/June',
+    paper: 'Paper 1 (Core)',
+    topicEn: 'Circle Theorems & Tangents',
+    topicAr: 'زوايا الدائرة والمماس والقطر',
+    questionEn: 'A, B, C lie on circle center O. BC is a diameter, SCT is tangent at C. Angle ACB = 54°. Find: (a) angle BCT, (b) angle COA, (c) angle CAB, (d) angle ABC.',
+    questionAr: 'A, B, C تقع على دائرة مركزها O، BC قطر، SCT مماس عند C. الزاوية ACB = 54°. أوجد: (أ) BCT، (ب) COA، (ج) CAB، (د) ABC.',
+    options: [
+      { id: 'A', textEn: '(a) 90°; (b) 72°; (c) 90°; (d) 36°', textAr: '(أ) 90°؛ (ب) 72°؛ (ج) 90°؛ (د) 36°' },
+      { id: 'B', textEn: '(a) 90°; (b) 108°; (c) 90°; (d) 36°', textAr: '(أ) 90°؛ (ب) 108°؛ (ج) 90°؛ (د) 36°' },
+      { id: 'C', textEn: '(a) 90°; (b) 72°; (c) 54°; (d) 36°', textAr: '(أ) 90°؛ (ب) 72°؛ (ج) 54°؛ (د) 36°' },
+      { id: 'D', textEn: '(a) 45°; (b) 72°; (c) 90°; (d) 36°', textAr: '(أ) 45°؛ (ب) 72°؛ (ج) 90°؛ (د) 36°' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Tangent SCT is perpendicular to diameter BC => BCT = 90°. Angle CAB in a semicircle = 90°. ABC = 180° - 90° - 54° = 36°. Angle COA = 2 × ABC = 72°.',
+    explanationAr: 'المماس عمودي على القطر => BCT = 90°. الزاوية CAB المحيطية في نصف دائرة = 90°. الزاوية ABC = 90 - 54 = 36°. الزاوية المركزية COA = 2 × 36 = 72°.',
+    solutionStepsEn: ['(a) BCT = 90° (tangent perp to radius)', '(c) CAB = 90° (angle in semicircle)', '(d) ABC = 90 - 54 = 36°', '(b) COA = 2 × ABC = 72°'],
+    solutionStepsAr: ['(أ) BCT = 90°', '(ج) CAB = 90°', '(د) ABC = 36°', '(ب) COA = 72°'],
+    marks: 4
+  },
+
+  // ==========================================
+  // MAY/JUNE 2010 - PAPER 2 (Extended 0580/02)
+  // ==========================================
+  {
+    id: 'IG-2010-MJ-21-01',
+    code: '0580/21/M/J/10 Q1',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2010,
+    session: 'May/June',
+    paper: 'Paper 2 (Extended)',
+    topicEn: 'Ordering Real Numbers',
+    topicAr: 'ترتيب الأعداد الحقيقية والكسور',
+    questionEn: 'Write the numbers in order of size, smallest first: π, 22/7, 3.14, √(10).',
+    questionAr: 'رتب الأعداد من الأصغر إلى الأكبر: π, 22/7, 3.14, √(10).',
+    options: [
+      { id: 'A', textEn: '3.14, π, 22/7, √(10)', textAr: '3.14, π, 22/7, √(10)' },
+      { id: 'B', textEn: '3.14, 22/7, π, √(10)', textAr: '3.14, 22/7, π, √(10)' },
+      { id: 'C', textEn: '3.14, π, √(10), 22/7', textAr: '3.14, π, √(10), 22/7' },
+      { id: 'D', textEn: 'π, 3.14, 22/7, √(10)', textAr: 'π, 3.14, 22/7, √(10)' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: '3.14 = 3.1400... π ≈ 3.14159... 22/7 ≈ 3.14285... √(10) ≈ 3.1622... So order is 3.14, π, 22/7, √(10).',
+    explanationAr: '3.14 < π (3.14159) < 22/7 (3.1428) < جذر 10 (3.1622).',
+    solutionStepsEn: ['3.14 = 3.1400', 'π = 3.1416', '22/7 = 3.1429', '√(10) = 3.1623'],
+    solutionStepsAr: ['3.14 < 3.1416 < 3.1429 < 3.1623'],
+    marks: 2
+  },
+  {
+    id: 'IG-2010-MJ-21-04',
+    code: '0580/21/M/J/10 Q4',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2010,
+    session: 'May/June',
+    paper: 'Paper 2 (Extended)',
+    topicEn: 'Speed, Distance & Time Conversion',
+    topicAr: 'تحويل وحدات السرعة وحساب الطول',
+    questionEn: 'A car travelling at 108 km/h passes a building in exactly 1 second. Calculate the length of the building in metres.',
+    questionAr: 'سيارة تسير بسرعة 108 كم/س تمر بمبنى في ثانية واحدة تماماً. ما طول المبنى بالأمتار؟',
+    options: [
+      { id: 'A', textEn: '30 m', textAr: '30 م' },
+      { id: 'B', textEn: '108 m', textAr: '108 م' },
+      { id: 'C', textEn: '300 m', textAr: '300 م' },
+      { id: 'D', textEn: '18 m', textAr: '18 م' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: '108 km/h = (108 × 1000) / 3600 m/s = 30 m/s. In 1 second, it travels 30 metres.',
+    explanationAr: 'السرعة بالمتر/ثانية = 108 × 1000 ÷ 3600 = 30 م/ث. إذن في ثانية واحدة تقطع 30 متراً.',
+    solutionStepsEn: ['108 km/h = 108,000 m / 3600 s = 30 m/s', 'Length = speed × time = 30 × 1 = 30 m'],
+    solutionStepsAr: ['108 × 1000 ÷ 3600 = 30 م/ث', 'الطول = 30 × 1 = 30 متراً'],
+    marks: 2
+  },
+  {
+    id: 'IG-2010-MJ-21-11',
+    code: '0580/21/M/J/10 Q11',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2010,
+    session: 'May/June',
+    paper: 'Paper 2 (Extended)',
+    topicEn: 'Changing the Subject of a Formula',
+    topicAr: 'تغيير موضوع الصيغة الجبرية',
+    questionEn: 'Make d the subject of the formula: w = (2c + 5d) / (4d).',
+    questionAr: 'اجعل d موضوعاً للصيغة: w = (2c + 5d) / (4d).',
+    options: [
+      { id: 'A', textEn: 'd = 2c / (4w - 5)', textAr: 'd = 2c / (4w - 5)' },
+      { id: 'B', textEn: 'd = 2c / (4w + 5)', textAr: 'd = 2c / (4w + 5)' },
+      { id: 'C', textEn: 'd = (2c + 5) / (4w)', textAr: 'd = (2c + 5) / (4w)' },
+      { id: 'D', textEn: 'd = c / (2w - 5)', textAr: 'd = c / (2w - 5)' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Multiply by 4d: 4dw = 2c + 5d => 4dw - 5d = 2c => d(4w - 5) = 2c => d = 2c / (4w - 5).',
+    explanationAr: 'بالضرب في 4d: 4dw = 2c + 5d. بنقل الحدود: 4dw - 5d = 2c ومنه d(4w - 5) = 2c إذن d = 2c / (4w - 5).',
+    solutionStepsEn: ['4dw = 2c + 5d', '4dw - 5d = 2c', 'd(4w - 5) = 2c => d = 2c / (4w - 5)'],
+    solutionStepsAr: ['4dw = 2c + 5d', 'd(4w - 5) = 2c', 'd = 2c / (4w - 5)'],
+    marks: 3
+  },
+  {
+    id: 'IG-2010-MJ-21-13',
+    code: '0580/21/M/J/10 Q13',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2010,
+    session: 'May/June',
+    paper: 'Paper 2 (Extended)',
+    topicEn: 'Simultaneous Equations with Fractions',
+    topicAr: 'حل المعادلات الآتية بالكسور',
+    questionEn: 'Solve the simultaneous equations: x/2 + y/7 = 2 and x/2 - y/7 = 17.',
+    questionAr: 'حل المعادلتين آنياً: x/2 + y/7 = 2 و x/2 - y/7 = 17.',
+    options: [
+      { id: 'A', textEn: 'x = 19, y = -52.5', textAr: 'x = 19, y = -52.5' },
+      { id: 'B', textEn: 'x = 19, y = 52.5', textAr: 'x = 19, y = 52.5' },
+      { id: 'C', textEn: 'x = 9.5, y = -52.5', textAr: 'x = 9.5, y = -52.5' },
+      { id: 'D', textEn: 'x = 19, y = -35', textAr: 'x = 19, y = -35' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Add the two equations: x = 19. Subtract second from first: 2(y/7) = -15 => y/7 = -7.5 => y = -52.5.',
+    explanationAr: 'بجمع المعادلتين: x = 19. بطرح الثانية من الأولى: 2y/7 = -15 ومنه y = -52.5.',
+    solutionStepsEn: ['(x/2 + y/7) + (x/2 - y/7) = 2 + 17 => x = 19', '19/2 + y/7 = 2 => y/7 = -7.5 => y = -52.5'],
+    solutionStepsAr: ['بالجمع: x = 19', 'بالتعويض: y/7 = -7.5 => y = -52.5'],
+    marks: 3
+  },
+  {
+    id: 'IG-2010-MJ-21-20',
+    code: '0580/21/M/J/10 Q20',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2010,
+    session: 'May/June',
+    paper: 'Paper 2 (Extended)',
+    topicEn: 'Composite & Inverse Functions',
+    topicAr: 'تركيب الدوال والدالة العكسية',
+    questionEn: 'f(x) = (x - 1)³, g(x) = (x - 1)², h(x) = 3x + 1. Find: (a) fg(-1), (b) gh(x) in simplest form, (c) f⁻¹(x).',
+    questionAr: 'f(x) = (x - 1)³, g(x) = (x - 1)², h(x) = 3x + 1. أوجد: (أ) fg(-1)، (ب) gh(x) في أبسط صورة، (ج) f⁻¹(x).',
+    options: [
+      { id: 'A', textEn: '(a) 27; (b) 9x²; (c) x^(1/3) + 1', textAr: '(أ) 27؛ (ب) 9x²؛ (ج) x^(1/3) + 1' },
+      { id: 'B', textEn: '(a) -27; (b) 9x²; (c) x^(1/3) - 1', textAr: '(أ) -27؛ (ب) 9x²؛ (ج) x^(1/3) - 1' },
+      { id: 'C', textEn: '(a) 27; (b) 9x² + 6x + 1; (c) x^(1/3) + 1', textAr: '(أ) 27؛ (ب) 9x² + 6x + 1؛ (ج) x^(1/3) + 1' },
+      { id: 'D', textEn: '(a) 8; (b) 9x²; (c) x^(1/3) + 1', textAr: '(أ) 8؛ (ب) 9x²؛ (ج) x^(1/3) + 1' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: '(a) g(-1) = (-2)² = 4 => f(4) = 3³ = 27. (b) gh(x) = g(3x+1) = (3x+1 - 1)² = 9x². (c) y = (x - 1)³ => y^(1/3) = x - 1 => f⁻¹(x) = x^(1/3) + 1.',
+    explanationAr: '(أ) g(-1) = 4 إذن f(4) = 27. (ب) gh(x) = (3x+1-1)² = 9x². (ج) f⁻¹(x) = x^(1/3) + 1.',
+    solutionStepsEn: ['(a) g(-1) = 4 => f(4) = 27', '(b) (3x+1-1)² = 9x²', '(c) y = (x-1)³ => x = ∛y + 1'],
+    solutionStepsAr: ['(أ) g(-1) = 4 => f(4) = 27', '(ب) gh(x) = 9x²', '(ج) f⁻¹(x) = x^(1/3) + 1'],
+    marks: 6
+  },
+
+  // ==========================================
+  // MAY/JUNE 2010 - PAPER 4 (Extended 0580/04)
+  // ==========================================
+  {
+    id: 'IG-2010-MJ-41-01',
+    code: '0580/41/M/J/10 Q1',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2010,
+    session: 'May/June',
+    paper: 'Paper 4 (Extended)',
+    topicEn: 'Ratios, Percentage & School Concert Finance',
+    topicAr: 'النسب والمئويات وتكاليف الحفلة المدرسية',
+    questionEn: 'School has 220 boys and 280 girls. (a) Ratio boys:girls in simplest form. (b) Ratio students:teachers = 25:2. Find number of teachers. (c) Concert tickets: $5 adult, $2 student. Total = $1420 for 410 tickets sold. Find number of student tickets. (d) Concert cost $1050, revenue $1420. Find percentage profit.',
+    questionAr: 'مدرسة بها 220 ولداً و 280 بنتاً. (أ) أوجد النسبة أولاد : بنات في أبسط صورة. (ب) نسبة الطلاب : المعلمين = 25 : 2. أوجد عدد المعلمين. (ج) تذاكر الحفلة: 5$ للبالغ و 2$ للطالب. الإجمالي 1420$ لـ 410 تذاكر. أوجد عدد تذاكر الطلاب. (د) التكلفة 1050$ والإيراد 1420$. احسب النسبة المئوية للربح.',
+    options: [
+      { id: 'A', textEn: '(a) 11:14; (b) 40 teachers; (c) 210 student tickets; (d) 35.2%', textAr: '(أ) 11:14؛ (ب) 40 معلماً؛ (ج) 210 تذاكر طلاب؛ (د) 35.2%' },
+      { id: 'B', textEn: '(a) 11:14; (b) 40 teachers; (c) 200 student tickets; (d) 35.2%', textAr: '(أ) 11:14؛ (ب) 40 معلماً؛ (ج) 200 تذكرة طلاب؛ (د) 35.2%' },
+      { id: 'C', textEn: '(a) 11:14; (b) 45 teachers; (c) 210 student tickets; (d) 30.0%', textAr: '(أ) 11:14؛ (ب) 45 معلماً؛ (ج) 210 تذاكر طلاب؛ (د) 30.0%' },
+      { id: 'D', textEn: '(a) 11:14; (b) 40 teachers; (c) 210 student tickets; (d) 26.1%', textAr: '(أ) 11:14؛ (ب) 40 معلماً؛ (ج) 210 تذاكر طلاب؛ (د) 26.1%' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: '(a) 220:280 = 22:28 = 11:14. (b) Total students = 500. Teachers = 500 × 2/25 = 40. (c) Let x = student tickets => 2x + 5(410 - x) = 1420 => 2050 - 3x = 1420 => 3x = 630 => x = 210. (d) Profit = 1420 - 1050 = 370. % profit = (370/1050) × 100 = 35.24% ≈ 35.2%.',
+    explanationAr: '(أ) 11:14. (ب) الطلاب 500 إذن المعلمون = 40. (ج) 2x + 5(410 - x) = 1420 ومنه 3x = 630 إذن التذاكر = 210. (د) الربح 370 ÷ 1050 × 100 = 35.2%.',
+    solutionStepsEn: ['(a) 220/280 = 11:14', '(b) 500 × 2/25 = 40 teachers', '(c) 2s + 5(410-s) = 1420 => s = 210', '(d) (370 / 1050) × 100 = 35.2%'],
+    solutionStepsAr: ['(أ) 11:14', '(ب) 500 × 2 ÷ 25 = 40', '(ج) 2x + 5(410 - x) = 1420 => x = 210', '(د) 370 ÷ 1050 × 100 = 35.2%'],
+    marks: 13
+  },
+  {
+    id: 'IG-2010-MJ-41-08',
+    code: '0580/41/M/J/10 Q8',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2010,
+    session: 'May/June',
+    paper: 'Paper 4 (Extended)',
+    topicEn: 'Exponential & Quadratic Functions',
+    topicAr: 'الدوال الأسية والتربيعية والحلول البيانية',
+    questionEn: 'f(x) = 2^x and g(x) = x(4 - x). (a) Complete table of values. (b) Draw graphs of y = f(x) and y = g(x). (c) Use your graphs to solve: (i) f(x) = g(x), (ii) g(x) = 3.',
+    questionAr: 'f(x) = 2^x و g(x) = x(4 - x). (أ) أكمل جدول القيم. (ب) ارسم منحنى y = f(x) و y = g(x). (ج) استخدم الرسم البياني لحل: (i) f(x) = g(x)، (ii) g(x) = 3.',
+    options: [
+      { id: 'A', textEn: '(c)(i) x ≈ 1.4 and 2.6; (ii) x = 1 and 3', textAr: '(ج)(i) x ≈ 1.4 و 2.6؛ (ii) x = 1 و 3' },
+      { id: 'B', textEn: '(c)(i) x ≈ 1.0 and 3.0; (ii) x = 1 and 3', textAr: '(ج)(i) x ≈ 1.0 و 3.0؛ (ii) x = 1 و 3' },
+      { id: 'C', textEn: '(c)(i) x ≈ 1.4 and 2.6; (ii) x = 2 and 4', textAr: '(ج)(i) x ≈ 1.4 و 2.6؛ (ii) x = 2 و 4' },
+      { id: 'D', textEn: '(c)(i) x ≈ 1.8 and 2.2; (ii) x = 1 and 3', textAr: '(ج)(i) x ≈ 1.8 و 2.2؛ (ii) x = 1 و 3' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'The curves y = 2^x and y = 4x - x² intersect at x ≈ 1.38 and x ≈ 2.60 (accepted around 1.4 and 2.6). For x(4 - x) = 3 => x² - 4x + 3 = 0 => (x-1)(x-3) = 0 => x = 1 and x = 3.',
+    explanationAr: 'تقاطع المنحنيين يحدث عند x ≈ 1.4 و x ≈ 2.6. حل x(4-x) = 3 يعطي المعادلة (x-1)(x-3)=0 ومنه x = 1 و x = 3.',
+    solutionStepsEn: ['(c)(i) Intersection points at x ≈ 1.4 and 2.6.', '(c)(ii) x(4-x) = 3 => x² - 4x + 3 = 0 => x = 1, 3.'],
+    solutionStepsAr: ['(ج)(i) من التقاطع البياني: x ≈ 1.4 و x ≈ 2.6.', '(ج)(ii) x² - 4x + 3 = 0 => x = 1 أو 3.'],
+    marks: 15
+  },
+
+  // ==========================================
+  // OCT/NOV 2010 - PAPER 1 (Core 0580/11)
+  // ==========================================
+  {
+    id: 'IG-2010-ON-11-01',
+    code: '0580/11/O/N/10 Q1',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2010,
+    session: 'Oct/Nov',
+    paper: 'Paper 1 (Core)',
+    topicEn: 'Directed Numbers & Temperature Change',
+    topicAr: 'الأعداد الموجهة وتغير درجات الحرارة',
+    questionEn: 'On Monday the temperature was -3 °C. On Tuesday the temperature fell by 5 °C. Write down the temperature on Tuesday.',
+    questionAr: 'يوم الإثنين كانت درجة الحرارة -3 °C. وفي يوم الثلاثاء انخفضت بمقدار 5 °C. اكتب درجة الحرارة يوم الثلاثاء.',
+    options: [
+      { id: 'A', textEn: '-8 °C', textAr: '-8 °C' },
+      { id: 'B', textEn: '2 °C', textAr: '2 °C' },
+      { id: 'C', textEn: '-2 °C', textAr: '-2 °C' },
+      { id: 'D', textEn: '-15 °C', textAr: '-15 °C' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: '-3 °C minus 5 °C = -8 °C.',
+    explanationAr: '-3 - 5 = -8 °C.',
+    solutionStepsEn: ['-3 - 5 = -8 °C'],
+    solutionStepsAr: ['-3 - 5 = -8 °C'],
+    marks: 1
+  },
+  {
+    id: 'IG-2010-ON-11-08',
+    code: '0580/11/O/N/10 Q8',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2010,
+    session: 'Oct/Nov',
+    paper: 'Paper 1 (Core)',
+    topicEn: 'Ratio & Mass of Alloy',
+    topicAr: 'النسب وكتلة النحاس في سبيكة',
+    questionEn: 'Steel:Copper ratio by mass is 108:7. Total mass of coin = 230 mg. Calculate mass of copper.',
+    questionAr: 'النسبة بين كتلة الفولاذ وكتلة النحاس 108 : 7. الكتلة الكلية للعملة 230 ملغ. احسب كتلة النحاس.',
+    options: [
+      { id: 'A', textEn: '14 mg', textAr: '14 ملغ' },
+      { id: 'B', textEn: '7 mg', textAr: '7 ملغ' },
+      { id: 'C', textEn: '21 mg', textAr: '21 ملغ' },
+      { id: 'D', textEn: '14.9 mg', textAr: '14.9 ملغ' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Total parts = 108 + 7 = 115. Copper = (7/115) × 230 = 14 mg.',
+    explanationAr: 'مجموع الأجزاء = 115. النحاس = (7 ÷ 115) × 230 = 14 مليجراماً.',
+    solutionStepsEn: ['108 + 7 = 115 parts', '230 × (7 / 115) = 14 mg'],
+    solutionStepsAr: ['مجموع الأجزاء = 115', '230 × 7 ÷ 115 = 14 ملغ'],
+    marks: 2
+  },
+
+  // ==========================================
+  // OCT/NOV 2010 - PAPER 4 (Extended 0580/41)
+  // ==========================================
+  {
+    id: 'IG-2010-ON-41-01',
+    code: '0580/41/O/N/10 Q1',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2010,
+    session: 'Oct/Nov',
+    paper: 'Paper 4 (Extended)',
+    topicEn: 'Ratios, Percentage Increase & Ticket Sales',
+    topicAr: 'النسب المئوية ومبيعات التذاكر والزيادة المالية',
+    questionEn: 'In 2008, total tickets sold = 3136. Ratio children:adults = 17:32. (a)(i) Find number of child tickets. (ii) Child ticket = $2, Adult = $4.50. Show total money = $11,392. (b) In 2009, money collected = $12,748. Find percentage increase from 2008. (c) In 2008 ($11,392) was 28% more than 2007. Find money collected in 2007.',
+    questionAr: 'في 2008، التذاكر المباعة 3136 بنسبة أطفال:بالغين = 17 : 32. (أ)(i) كم تذكرة أطفال؟ (ii) الطفل $2 والبالغ $4.50. أثبت أن الإجمالي 11,392$. (ب) في 2009 الإجمالي 12,748$. احسب النسبة المئوية للزيادة. (ج) إجمالي 2008 كان أكبر بـ 28% من 2007. احسب إجمالي 2007.',
+    options: [
+      { id: 'A', textEn: '(a)(i) 1088 child tickets; (b) 11.9% increase; (c) $8900 in 2007', textAr: '(أ)(i) 1088 تذكرة أطفال؛ (ب) زيادة 11.9%؛ (ج) $8900 في 2007' },
+      { id: 'B', textEn: '(a)(i) 1088 child tickets; (b) 12.5% increase; (c) $8800 in 2007', textAr: '(أ)(i) 1088 تذكرة أطفال؛ (ب) زيادة 12.5%؛ (ج) $8800 في 2007' },
+      { id: 'C', textEn: '(a)(i) 1000 child tickets; (b) 11.9% increase; (c) $8900 in 2007', textAr: '(أ)(i) 1000 تذكرة أطفال؛ (ب) زيادة 11.9%؛ (ج) $8900 في 2007' },
+      { id: 'D', textEn: '(a)(i) 1088 child tickets; (b) 11.9% increase; (c) $9000 in 2007', textAr: '(أ)(i) 1088 تذكرة أطفال؛ (ب) زيادة 11.9%؛ (ج) $9000 في 2007' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Child tickets = (17/49) × 3136 = 1088. Adults = 2048. Money = 1088(2) + 2048(4.5) = $11,392. Increase % = ((12748 - 11392)/11392) × 100% = 11.90% ≈ 11.9%. 2007 money = 11392 / 1.28 = $8900.',
+    explanationAr: 'تذاكر الأطفال = (17 ÷ 49) × 3136 = 1088. الإجمالي = $11,392. النسبة المئوية للزيادة = (1356 ÷ 11392) × 100 = 11.9%. إجمالي 2007 = 11392 ÷ 1.28 = $8900.',
+    solutionStepsEn: ['(a)(i) 3136 × 17/49 = 1088', '(b) (1356 / 11392) × 100 = 11.9%', '(c) 11392 / 1.28 = $8900'],
+    solutionStepsAr: ['(أ)(i) 3136 × 17 ÷ 49 = 1088', '(ب) 1356 ÷ 11392 × 100 = 11.9%', '(ج) 11392 ÷ 1.28 = $8900'],
+    marks: 10
+  }
+];

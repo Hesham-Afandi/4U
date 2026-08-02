@@ -6,6 +6,11 @@ import { QUESTIONS_2005 } from './questions2005';
 import { QUESTIONS_2006 } from './questions2006';
 import { QUESTIONS_2007 } from './questions2007';
 import { QUESTIONS_2008 } from './questions2008';
+import { QUESTIONS_2009 } from './questions2009';
+import { QUESTIONS_2010 } from './questions2010';
+import { QUESTIONS_2011 } from './questions2011';
+import { QUESTIONS_2012 } from './questions2012';
+import { QUESTIONS_2013 } from './questions2013';
 
 export const IG_BOARDS: IgExamBoard[] = [
   {
@@ -1785,6 +1790,11 @@ export const IG_MATHS_QUESTIONS: IgQuestion[] = [
   ...QUESTIONS_2005,
   ...QUESTIONS_2006,
   ...QUESTIONS_2007,
-  ...QUESTIONS_2008
+  ...QUESTIONS_2008,
+  ...QUESTIONS_2009,
+  ...QUESTIONS_2010,
+  ...QUESTIONS_2011,
+  ...QUESTIONS_2012,
+  ...QUESTIONS_2013
 ];
 
