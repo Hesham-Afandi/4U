@@ -1,0 +1,2 @@
+// Kuwait curriculum placeholder
+export {};

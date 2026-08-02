@@ -64,6 +64,9 @@ export const generateCurriculum = (
     case 'Saudi':
       countryAr = 'السعودية';
       break;
+    case 'Kuwait':
+      countryAr = 'الكويت';
+      break;
     case 'Egypt':
       countryAr = 'مصر';
       break;

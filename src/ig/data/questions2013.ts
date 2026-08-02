@@ -1,4 +1,4 @@
-import { IgQuestion } from '../../types';
+import { IgQuestion } from '../types';
 
 export const QUESTIONS_2013: IgQuestion[] = [
   // ==========================================

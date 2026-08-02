@@ -45,6 +45,7 @@ const DAYS_OF_WEEK = [
 const COUNTRY_INFO: Record<string, { name: string; flag: string }> = {
   UAE: { name: 'الإمارات العربية المتحدة', flag: '🇦🇪' },
   Saudi: { name: 'المملكة العربية السعودية', flag: '🇸🇦' },
+  Kuwait: { name: 'دولة الكويت', flag: '🇰🇼' },
   Egypt: { name: 'جمهورية مصر العربية', flag: '🇪🇬' },
   Oman: { name: 'سلطنة عمان', flag: '🇴🇲' },
   Qatar: { name: 'دولة قطر', flag: '🇶🇦' },
@@ -3488,7 +3489,7 @@ export default function App() {
             )}
 
             {/* VIEW 1: HOME (SELECT SECTION OR TERMS) */}
-            {appState.country && activePlatformSection === 'eot' && (
+            {appState.country === 'UAE' && activePlatformSection === 'eot' && (
               <EotSpecsView onSwitchToCurriculum={() => {
                 setActivePlatformSection('curriculum');
                 setCurriculumSubView('terms');
@@ -3499,7 +3500,7 @@ export default function App() {
               <SatView 
                 onSwitchToCurriculum={() => {
                   setActivePlatformSection('curriculum');
-                  setCurriculumSubView('terms');
+                  setCurriculumSubView(appState.country === 'UAE' ? 'terms' : 'landing');
                 }}
                 onSwitchToEot={() => {
                   setActivePlatformSection('eot');
@@ -3512,7 +3513,7 @@ export default function App() {
                 language={language}
                 onSwitchToCurriculum={() => {
                   setActivePlatformSection('curriculum');
-                  setCurriculumSubView('terms');
+                  setCurriculumSubView(appState.country === 'UAE' ? 'terms' : 'landing');
                 }}
                 onSwitchToEot={() => {
                   setActivePlatformSection('eot');
@@ -3523,7 +3524,7 @@ export default function App() {
               />
             )}
 
-            {appState.country && activePlatformSection === 'curriculum' && !appState.term && curriculumSubView === 'landing' && (
+            {appState.country === 'UAE' && activePlatformSection === 'curriculum' && !appState.term && curriculumSubView === 'landing' && (
               <div className="fade-in space-y-8 my-6">
                 {/* Hero Card Banner */}
                 <div className="gradient-primary rounded-3xl p-8 md:p-10 text-white shadow-xl relative overflow-hidden">
@@ -3593,7 +3594,7 @@ export default function App() {
               </div>
             )}
 
-            {appState.country && activePlatformSection === 'curriculum' && !appState.term && curriculumSubView === 'terms' && (
+            {appState.country === 'UAE' && activePlatformSection === 'curriculum' && !appState.term && curriculumSubView === 'terms' && (
               <div className="fade-in space-y-8">
                 <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
                   <h3 className="text-2xl font-black text-gray-800 dark:text-white flex items-center gap-2">
@@ -3641,6 +3642,45 @@ export default function App() {
                   progress={progress}
                   showToastMsg={showToastMsg}
                 />
+              </div>
+            )}
+
+            {appState.country && appState.country !== 'UAE' && (activePlatformSection === 'curriculum' || activePlatformSection === 'eot') && (
+              <div className="fade-in space-y-8 my-6">
+                {/* Hero Card Banner */}
+                <div className="gradient-primary rounded-3xl p-8 md:p-10 text-white shadow-xl relative overflow-hidden">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.1),transparent_50%)] pointer-events-none" />
+                  <div className="text-center md:text-right relative z-10 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div>
+                      <h2 className="text-2xl md:text-4xl font-black mb-2 leading-tight text-amber-300 flex items-center justify-center md:justify-start gap-3">
+                        <span>{COUNTRY_INFO[appState.country]?.flag || '🌍'}</span>
+                        <span>مرحباً بك في قسم {COUNTRY_INFO[appState.country]?.name || appState.country}</span>
+                      </h2>
+                      <p className="text-sm md:text-base opacity-90 font-medium">
+                        منصة 4U التعليمية — المناهج والاختبارات الدولية
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => navigateTo({ country: undefined, term: undefined, stream: undefined, grade: undefined, subject: undefined, unit: undefined, lesson: undefined })}
+                      className="bg-white/15 hover:bg-white/25 border border-white/20 text-white font-bold px-4 py-2.5 rounded-2xl text-xs md:text-sm transition-all shadow-sm shrink-0 cursor-pointer"
+                    >
+                      ← تغيير الدولة
+                    </button>
+                  </div>
+                </div>
+
+                {/* Empty State Notice for Country Curriculum */}
+                <div className="bg-white dark:bg-slate-900 border-2 border-dashed border-amber-400/70 dark:border-amber-500/40 rounded-3xl p-8 md:p-12 text-center max-w-3xl mx-auto my-6 shadow-sm">
+                  <div className="w-20 h-20 bg-amber-500/15 text-amber-500 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-5 shadow-inner">
+                    🚧
+                  </div>
+                  <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white mb-3">
+                    إن شاء الله قريباً سيتم إضافة المنهج
+                  </h3>
+                  <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed max-w-lg mx-auto font-medium">
+                    نعمل حالياً على إعداد وتجهيز المناهج الدراسية الخاصة بـ <span className="font-bold text-amber-600 dark:text-amber-400">{COUNTRY_INFO[appState.country]?.name || appState.country}</span> لتكون متاحة قريباً على المنصة.
+                  </p>
+                </div>
               </div>
             )}
 

@@ -150,7 +150,7 @@ export const WeeklyStudyPlanner: React.FC<WeeklyStudyPlannerProps> = ({
                                     if (parts) {
                                       let countryVal = 'UAE';
                                       let offset = 0;
-                                      if (['UAE', 'Saudi', 'Egypt', 'Oman', 'Qatar', 'Bahrain'].includes(parts[0])) {
+                                      if (['UAE', 'Saudi', 'Kuwait', 'Egypt', 'Oman', 'Qatar', 'Bahrain'].includes(parts[0])) {
                                         countryVal = parts[0];
                                         offset = 1;
                                       }
