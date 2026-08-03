@@ -14,6 +14,12 @@ import { QUESTIONS_2013 } from './questions2013';
 import { QUESTIONS_2014 } from './questions2014';
 import { QUESTIONS_2015 } from './questions2015';
 import { QUESTIONS_2015_ON } from './questions2015_on';
+import { QUESTIONS_2016 } from './questions2016';
+import { QUESTIONS_2017 } from './questions2017';
+import { QUESTIONS_2018 } from './questions2018';
+import { QUESTIONS_2019 } from './questions2019';
+import { QUESTIONS_2020 } from './questions2020';
+import { QUESTIONS_2021 } from './questions2021';
 
 export const IG_BOARDS: IgExamBoard[] = [
   {
@@ -1801,6 +1807,12 @@ export const IG_MATHS_QUESTIONS: IgQuestion[] = [
   ...QUESTIONS_2013,
   ...QUESTIONS_2014,
   ...QUESTIONS_2015,
-  ...QUESTIONS_2015_ON
+  ...QUESTIONS_2015_ON,
+  ...QUESTIONS_2016,
+  ...QUESTIONS_2017,
+  ...QUESTIONS_2018,
+  ...QUESTIONS_2019,
+  ...QUESTIONS_2020,
+  ...QUESTIONS_2021
 ];
 

@@ -229,6 +229,35 @@ export const IgView: React.FC<IgViewProps> = ({
 
   const currentExamQuestion = filteredQuestions[examIndex] || filteredQuestions[0];
 
+  // Notice for subjects/branches without exams yet
+  const renderEmptyStateNotice = () => (
+    <div className="text-center py-16 px-6 space-y-4 bg-gradient-to-b from-slate-50 to-white dark:from-slate-800/40 dark:to-slate-900 rounded-3xl border border-dashed border-slate-300 dark:border-slate-700 shadow-sm">
+      <div className="w-16 h-16 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center mx-auto">
+        <Clock className="w-8 h-8 animate-pulse" />
+      </div>
+      <h3 className="text-xl font-black text-slate-800 dark:text-slate-200">
+        (إن شاء الله قريبا سيتوفر الإمتحان)
+      </h3>
+      <p className="text-xs md:text-sm text-slate-600 dark:text-slate-300 max-w-xl mx-auto leading-relaxed font-bold">
+        يجب العلم أن هذا الفرع فقط في الرياضيات (Cambridge IGCSE 0580) موجودة امتحاناته، أما باقي فروع امتحانات الـ IG في الرياضيات والمواد الأخرى ليست موجودة حالياً — (إن شاء الله قريبا سيتوفر الإمتحان).
+      </p>
+      <div className="pt-3">
+        <button
+          onClick={() => {
+            setSelectedBoardId('cambridge');
+            setSelectedLevelId('o_level_igcse');
+            setSelectedSubjectId('maths');
+            setSelectedYear('all');
+            setSelectedPaper('all');
+          }}
+          className="px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white font-extrabold text-xs md:text-sm rounded-2xl shadow-lg shadow-teal-500/20 transition cursor-pointer inline-flex items-center gap-2"
+        >
+          <span>← الانتقال إلى امتحانات الرياضيات المتاحة (Cambridge IGCSE 0580)</span>
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <div className="fade-in space-y-8 my-6">
       {/* 1. HERO BANNER BAR */}
@@ -449,13 +478,13 @@ export const IgView: React.FC<IgViewProps> = ({
                 <span className={`text-sm font-extrabold underline decoration-amber-500/50 ${isSelected ? 'text-teal-700 dark:text-teal-300' : 'text-amber-900 dark:text-amber-400'}`}>
                   {sub.nameEn}
                 </span>
-                {sub.status === 'available' ? (
+                {sub.status === 'available' && selectedBoardId === 'cambridge' && selectedLevelId === 'o_level_igcse' ? (
                   <span className="text-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 rounded-full font-bold">
                     ✅ متاح للتصفح
                   </span>
                 ) : (
-                  <span className="text-[10px] bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400 px-2 py-0.5 rounded-full font-semibold">
-                    قريباً
+                  <span className="text-[10px] bg-amber-500/15 text-amber-700 dark:text-amber-300 px-2 py-0.5 rounded-full font-extrabold leading-tight">
+                    (إن شاء الله قريبا سيتوفر الإمتحان)
                   </span>
                 )}
               </button>
@@ -567,15 +596,7 @@ export const IgView: React.FC<IgViewProps> = ({
         {activeTab === 'practice' && (
           <div className="space-y-6">
             {filteredQuestions.length === 0 ? (
-              <div className="text-center py-12 space-y-3 bg-slate-50 dark:bg-slate-800/40 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700">
-                <AlertCircle className="w-10 h-10 text-slate-400 mx-auto" />
-                <h3 className="text-base font-bold text-slate-700 dark:text-slate-300">
-                  لا تتوفر أسئلة مطابقة للبحث لهذه المادة حالياً
-                </h3>
-                <p className="text-xs text-slate-500 max-w-md mx-auto">
-                  يمكنك اختيار مادة Maths لـ Cambridge O-Level أو تعديل الفلاتر لاستعراض أسئلة سنوات أخرى.
-                </p>
-              </div>
+              renderEmptyStateNotice()
             ) : (
               <div className="space-y-6">
                 {/* Question Selector Carousel */}
@@ -761,15 +782,7 @@ export const IgView: React.FC<IgViewProps> = ({
         {activeTab === 'exam' && (
           <div className="space-y-6">
             {filteredQuestions.length === 0 ? (
-              <div className="p-8 text-center bg-slate-50 dark:bg-slate-800/50 rounded-3xl border border-slate-200 dark:border-slate-700">
-                <AlertCircle className="w-12 h-12 text-slate-400 mx-auto mb-3" />
-                <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">
-                  لا توجد أسئلة مطابقة للفلتر المحدد
-                </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                  جرب اختيار "جميع السنوات" أو تغيير كلمة البحث لبدء الاختبار الموقوت.
-                </p>
-              </div>
+              renderEmptyStateNotice()
             ) : !isExamRunning && !examSubmitted ? (
               /* 1. LAUNCHPAD / EXAM INTRO CARD */
               <div className="bg-gradient-to-br from-teal-900 via-slate-900 to-indigo-950 p-6 md:p-10 rounded-3xl text-white shadow-2xl border border-teal-500/30 space-y-6">
@@ -1173,7 +1186,10 @@ export const IgView: React.FC<IgViewProps> = ({
               <span>📋</span> قائمة الامتحانات المتاحة مرتبة حسب السنوات (2002 - 2021)
             </h3>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredQuestions.length === 0 ? (
+              renderEmptyStateNotice()
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {yearsList.map((yr) => {
                 const yearQuestions = IG_MATHS_QUESTIONS.filter(q => q.year === yr);
                 const qCount = yearQuestions.length;
@@ -1207,6 +1223,7 @@ export const IgView: React.FC<IgViewProps> = ({
                 );
               })}
             </div>
+            )}
           </div>
         )}
       </div>
