@@ -26,6 +26,7 @@ import { getEnglishSubjectName, getEnglishGradeName, getEnglishTermName, getEngl
 import { EotSpecsView } from './components/EotSpecsView';
 import { SatView } from './components/SatView';
 import { IgView } from './components/IgView';
+import { MsExamsView } from './components/MsExamsView';
 import { useChatUnread } from './hooks/useChatUnread';
 
 const DAYS_OF_WEEK = [
@@ -282,7 +283,7 @@ export default function App() {
     url: ''
   });
   const [activeQuote, setActiveQuote] = useState('');
-  const [activePlatformSection, setActivePlatformSection] = useState<'curriculum' | 'eot' | 'sat' | 'ig'>('curriculum');
+  const [activePlatformSection, setActivePlatformSection] = useState<'curriculum' | 'eot' | 'sat' | 'ig' | 'ms'>('curriculum');
   const [curriculumSubView, setCurriculumSubView] = useState<'landing' | 'terms'>('landing');
 
   // --- 🌐 Global Language State (العربية / English) ---
@@ -3275,6 +3276,18 @@ export default function App() {
                   <span>📝</span>
                   <span>IG Exams</span>
                 </button>
+
+                <button
+                  onClick={() => setActivePlatformSection('ms')}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
+                    activePlatformSection === 'ms'
+                      ? 'bg-blue-600 text-white shadow-md'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400'
+                  }`}
+                >
+                  <span>💻</span>
+                  <span>{language === 'en' ? 'MS Exams' : 'اختبارات مايكروسوفت (MS Exams)'}</span>
+                </button>
               </div>
             )}
           </div>
@@ -3524,6 +3537,25 @@ export default function App() {
               />
             )}
 
+            {appState.country && activePlatformSection === 'ms' && (
+              <MsExamsView
+                language={language}
+                onSwitchToCurriculum={() => {
+                  setActivePlatformSection('curriculum');
+                  setCurriculumSubView(appState.country === 'UAE' ? 'terms' : 'landing');
+                }}
+                onSwitchToEot={() => {
+                  setActivePlatformSection('eot');
+                }}
+                onSwitchToSat={() => {
+                  setActivePlatformSection('sat');
+                }}
+                onSwitchToIg={() => {
+                  setActivePlatformSection('ig');
+                }}
+              />
+            )}
+
             {appState.country === 'UAE' && activePlatformSection === 'curriculum' && !appState.term && curriculumSubView === 'landing' && (
               <div className="fade-in space-y-8 my-6">
                 {/* Hero Card Banner */}
@@ -3537,8 +3569,8 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* FOUR MAIN PLATFORM SECTIONS CARDS */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+                {/* MAIN PLATFORM SECTIONS CARDS */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
                   {/* Curriculum Section Card */}
                   <div
                     onClick={() => setCurriculumSubView('terms')}
@@ -3588,6 +3620,19 @@ export default function App() {
                     </div>
                     <h3 className="text-lg font-black text-teal-300 group-hover:text-teal-200 transition-colors">
                       IG Exams
+                    </h3>
+                  </div>
+
+                  {/* MS Exams Section Card */}
+                  <div
+                    onClick={() => setActivePlatformSection('ms')}
+                    className="group p-6 rounded-3xl shadow-xl border-2 border-blue-500/40 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-950 text-white hover:border-blue-400 hover:ring-4 hover:ring-blue-500/20 transition-all cursor-pointer flex flex-col items-center text-center justify-center space-y-4"
+                  >
+                    <div className="w-16 h-16 rounded-3xl bg-blue-500/20 text-blue-300 flex items-center justify-center text-3xl font-bold group-hover:scale-110 transition-transform">
+                      💻
+                    </div>
+                    <h3 className="text-lg font-black text-blue-300 group-hover:text-blue-200 transition-colors">
+                      اختبارات مايكروسوفت (MS Exams)
                     </h3>
                   </div>
                 </div>
