@@ -7,6 +7,7 @@ import {
 import { 
   IG_BOARDS, 
   IG_CAMBRIDGE_SUBJECTS, 
+  IG_EDEXCEL_SUBJECTS,
   IG_MATHS_QUESTIONS 
 } from '../ig/data/igData';
 import { mistakesService } from '../services/mistakes/mistakesService';
@@ -96,10 +97,16 @@ export const IgView: React.FC<IgViewProps> = ({
     return IG_BOARDS.find(b => b.id === selectedBoardId) || IG_BOARDS[0];
   }, [selectedBoardId]);
 
+  // Active Subjects List
+  const activeSubjects = useMemo(() => {
+    if (selectedBoardId === 'edexcel') return IG_EDEXCEL_SUBJECTS;
+    return IG_CAMBRIDGE_SUBJECTS;
+  }, [selectedBoardId]);
+
   // Active Subject Object
   const currentSubject = useMemo(() => {
-    return IG_CAMBRIDGE_SUBJECTS.find(s => s.id === selectedSubjectId) || IG_CAMBRIDGE_SUBJECTS[0];
-  }, [selectedSubjectId]);
+    return activeSubjects.find(s => s.id === selectedSubjectId) || activeSubjects[0];
+  }, [activeSubjects, selectedSubjectId]);
 
   // Available Years list from 2021 down to 2002
   const yearsList = useMemo(() => {
@@ -236,15 +243,14 @@ export const IgView: React.FC<IgViewProps> = ({
         <Clock className="w-8 h-8 animate-pulse" />
       </div>
       <h3 className="text-xl font-black text-slate-800 dark:text-slate-200">
-        (إن شاء الله قريبا سيتوفر الإمتحان)
+        امتحانات هذه المادة قيد التجهيز
       </h3>
       <p className="text-xs md:text-sm text-slate-600 dark:text-slate-300 max-w-xl mx-auto leading-relaxed font-bold">
-        يجب العلم أن هذا الفرع فقط في الرياضيات (Cambridge IGCSE 0580) موجودة امتحاناته، أما باقي فروع امتحانات الـ IG في الرياضيات والمواد الأخرى ليست موجودة حالياً — (إن شاء الله قريبا سيتوفر الإمتحان).
+        امتحانات هذه المادة ستتوفر قريباً إن شاء الله. يمكنك ممارسة امتحانات الرياضيات المتاحة حالياً على المنصة.
       </p>
       <div className="pt-3">
         <button
           onClick={() => {
-            setSelectedBoardId('cambridge');
             setSelectedLevelId('o_level_igcse');
             setSelectedSubjectId('maths');
             setSelectedYear('all');
@@ -252,7 +258,7 @@ export const IgView: React.FC<IgViewProps> = ({
           }}
           className="px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white font-extrabold text-xs md:text-sm rounded-2xl shadow-lg shadow-teal-500/20 transition cursor-pointer inline-flex items-center gap-2"
         >
-          <span>← الانتقال إلى امتحانات الرياضيات المتاحة (Cambridge IGCSE 0580)</span>
+          <span>← الانتقال إلى امتحانات الرياضيات المتاحة</span>
         </button>
       </div>
     </div>
@@ -456,13 +462,13 @@ export const IgView: React.FC<IgViewProps> = ({
             <p className="text-xs text-slate-500 dark:text-slate-400">اضغط على المادة للانتقال لبنك الأسئلة والاختبارات المقسمة بالسنوات</p>
           </div>
           <span className="text-xs font-bold px-3 py-1 rounded-full bg-teal-500/10 text-teal-600 dark:text-teal-400 border border-teal-500/20">
-            {IG_CAMBRIDGE_SUBJECTS.length} مواد متاحة
+            {activeSubjects.length} مواد متاحة
           </span>
         </div>
 
         {/* Subjects 4-column Grid matching Image 2 */}
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
-          {IG_CAMBRIDGE_SUBJECTS.map((sub) => {
+          {activeSubjects.map((sub) => {
             const isSelected = sub.id === selectedSubjectId;
             return (
               <button
@@ -478,13 +484,13 @@ export const IgView: React.FC<IgViewProps> = ({
                 <span className={`text-sm font-extrabold underline decoration-amber-500/50 ${isSelected ? 'text-teal-700 dark:text-teal-300' : 'text-amber-900 dark:text-amber-400'}`}>
                   {sub.nameEn}
                 </span>
-                {sub.status === 'available' && selectedBoardId === 'cambridge' && selectedLevelId === 'o_level_igcse' ? (
+                {sub.status === 'available' ? (
                   <span className="text-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 rounded-full font-bold">
                     ✅ متاح للتصفح
                   </span>
                 ) : (
                   <span className="text-[10px] bg-amber-500/15 text-amber-700 dark:text-amber-300 px-2 py-0.5 rounded-full font-extrabold leading-tight">
-                    (إن شاء الله قريبا سيتوفر الإمتحان)
+                    قيد التجهيز
                   </span>
                 )}
               </button>

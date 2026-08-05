@@ -1,0 +1,246 @@
+import { IgQuestion } from '../types';
+
+export const EDEXCEL_2018: IgQuestion[] = [
+  // =========================================================================
+  // PEARSON EDEXCEL IGCSE MATHEMATICS A — JANUARY 2018 — PAPER 4HR / 1F / 2F
+  // =========================================================================
+  {
+    id: 'ED-2018-4HR-01',
+    code: '4MA0/4HR Jan 2018 Q1',
+    subjectId: 'maths',
+    boardId: 'edexcel',
+    levelId: 'o_level_igcse',
+    year: 2018,
+    session: 'Jan',
+    paper: 'Paper 4HR (Higher)',
+    topicEn: 'Percentage Reduction & Proportion',
+    topicAr: 'التخفيض المئوي والنسبة',
+    questionEn: 'In a sale, normal prices are reduced by 12%.\n(a) The normal price of a shirt is $36. Work out the sale price.\n(b) 180 items were sold in total, and 81 of them were shirts. Write the number of shirts sold as a percentage of the total number of items.',
+    questionAr: 'في تخفيضات، يتم تخفيض الأسعار العادية بنسبة 12%.\n(أ) السعر العادي لقميص هو 36 دولاراً. احسب سعر التخفيض.\n(ب) تم بيع 180 قطعة إجمالاً، منها 81 قميصاً. اكتب عدد القمصان المباعة كنسبة مئوية من الإجمالي.',
+    options: [
+      { id: 'A', textEn: '(a) $31.68; (b) 45%', textAr: '(أ) 31.68$؛ (ب) 45%' },
+      { id: 'B', textEn: '(a) $31.68; (b) 42%', textAr: '(أ) 31.68$؛ (ب) 42%' },
+      { id: 'C', textEn: '(a) $32.00; (b) 45%', textAr: '(أ) 32.00$؛ (ب) 45%' },
+      { id: 'D', textEn: '(a) $28.80; (b) 40%', textAr: '(أ) 28.80$؛ (ب) 40%' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: '(a) Sale price = 36 × (1 - 0.12) = 36 × 0.88 = $31.68. (b) Percentage of shirts = (81 / 180) × 100% = 45%.',
+    explanationAr: '(أ) سعر التخفيض = 36 × 0.88 = 31.68$. (ب) النسبة المئوية للقمصان = (81 ÷ 180) × 100% = 45%.',
+    solutionStepsEn: ['Sale price = 36 × 0.88 = $31.68', 'Percentage = (81 / 180) × 100 = 45%'],
+    solutionStepsAr: ['سعر الخصم = 31.68$', 'النسبة = 45%'],
+    marks: 5
+  },
+  {
+    id: 'ED-2018-4HR-02',
+    code: '4MA0/4HR Jan 2018 Q2',
+    subjectId: 'maths',
+    boardId: 'edexcel',
+    levelId: 'o_level_igcse',
+    year: 2018,
+    session: 'Jan',
+    paper: 'Paper 4HR (Higher)',
+    topicEn: 'Area of Compound Shape & Prism Volume',
+    topicAr: 'مساحة الشكل المركب وحجم المنشور',
+    questionEn: 'A 2D shape A consists of rectangles with dimensions: 3 cm by 6 cm and 8 cm by 2 cm.\n(a) Calculate the total area of shape A.\n(b) A prism has cross-section area A and a volume of 350 cm³. Calculate the length h of the prism.',
+    questionAr: 'شكل ثنائي الأبعاد A يتكون من مستطيلين بأبعاد: 3 سم في 6 سم و 8 سم في 2 سم.\n(أ) احسب المساحة الكلية للشكل A.\n(ب) منشور مقطعه العرضي هو الشكل A وحجمه 350 سم³. احسب طول المنشور h.',
+    options: [
+      { id: 'A', textEn: '(a) 34 cm²; (b) h = 10.29 cm', textAr: '(أ) 34 سم²؛ (ب) h = 10.29 سم' },
+      { id: 'B', textEn: '(a) 34 cm²; (b) h = 10.00 cm', textAr: '(أ) 34 سم²؛ (ب) h = 10.00 سم' },
+      { id: 'C', textEn: '(a) 30 cm²; (b) h = 11.67 cm', textAr: '(أ) 30 سم²؛ (ب) h = 11.67 سم' },
+      { id: 'D', textEn: '(a) 32 cm²; (b) h = 10.94 cm', textAr: '(أ) 32 سم²؛ (ب) h = 10.94 سم' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: '(a) Total Area = (3 × 6) + (8 × 2) = 18 + 16 = 34 cm². (b) Volume = Area × height => 350 = 34 × h => h = 350 / 34 = 10.294... ≈ 10.29 cm.',
+    explanationAr: '(أ) المساحة الكلية = 18 + 16 = 34 سم². (ب) الارتفاع h = الحجم ÷ المساحة = 350 ÷ 34 = 10.29 سم.',
+    solutionStepsEn: ['Area = 18 + 16 = 34 cm²', 'Length h = 350 / 34 ≈ 10.29 cm'],
+    solutionStepsAr: ['المساحة = 34 سم²', 'الطول h = 350 ÷ 34 = 10.29 سم'],
+    marks: 5
+  },
+  {
+    id: 'ED-2018-4HR-03',
+    code: '4MA0/4HR Jan 2018 Q3',
+    subjectId: 'maths',
+    boardId: 'edexcel',
+    levelId: 'o_level_igcse',
+    year: 2018,
+    session: 'Jan',
+    paper: 'Paper 4HR (Higher)',
+    topicEn: 'Coordinates & Midpoint',
+    topicAr: 'الإحداثيات ومنتصف القطعة المستقيمة',
+    questionEn: 'A = (1, 3) and B = (7, 8). Find the coordinates of the midpoint of AB.',
+    questionAr: 'A = (1, 3) و B = (7, 8). أوجد إحداثيات منتصف القطعة المستقيمة AB.',
+    options: [
+      { id: 'A', textEn: '(4, 5.5)', textAr: '(4, 5.5)' },
+      { id: 'B', textEn: '(3, 2.5)', textAr: '(3, 2.5)' },
+      { id: 'C', textEn: '(4, 5.0)', textAr: '(4, 5.0)' },
+      { id: 'D', textEn: '(3.5, 5.5)', textAr: '(3.5, 5.5)' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Midpoint = ((x₁ + x₂)/2, (y₁ + y₂)/2) = ((1 + 7)/2, (3 + 8)/2) = (8/2, 11/2) = (4, 5.5).',
+    explanationAr: 'منتصف القطعة المستقيمة = ((1 + 7)÷2, (3 + 8)÷2) = (4, 5.5).',
+    solutionStepsEn: ['x = (1 + 7) / 2 = 4', 'y = (3 + 8) / 2 = 5.5', 'Midpoint = (4, 5.5)'],
+    solutionStepsAr: ['x = 4', 'y = 5.5', 'المنتصف = (4, 5.5)'],
+    marks: 2
+  },
+  {
+    id: 'ED-2018-4HR-04',
+    code: '4MA0/4HR Jan 2018 Q4',
+    subjectId: 'maths',
+    boardId: 'edexcel',
+    levelId: 'o_level_igcse',
+    year: 2018,
+    session: 'Jan',
+    paper: 'Paper 4HR (Higher)',
+    topicEn: 'Ratio & Shared Quantities',
+    topicAr: 'النسبة والكميات المشتركة',
+    questionEn: 'A bag contains 400 counters (red and green only). The ratio of red counters to green counters is 5 : 3. How many more red counters than green counters are in the bag?',
+    questionAr: 'حقيبة تحتوي على 400 عداد (أحمر وأخضر فقط). نسبة العدادات الحمراء إلى الخضراء هي 5 : 3. كم يزيد عدد العدادات الحمراء عن الخضراء؟',
+    options: [
+      { id: 'A', textEn: '100 counters', textAr: '100 عداد' },
+      { id: 'B', textEn: '250 counters', textAr: '250 عداداً' },
+      { id: 'C', textEn: '150 counters', textAr: '150 عداداً' },
+      { id: 'D', textEn: '80 counters', textAr: '80 عداداً' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Total parts = 5 + 3 = 8. Value of 1 part = 400 / 8 = 50. Red counters = 5 × 50 = 250, Green counters = 3 × 50 = 150. Difference = 250 - 150 = 100.',
+    explanationAr: 'مجموع الأجزاء = 5 + 3 = 8 أجزاء. قيمة الجزء = 400 ÷ 8 = 50. الأحمر = 250، الأخضر = 150. الفرق = 250 - 150 = 100.',
+    solutionStepsEn: ['Total parts = 5 + 3 = 8', 'Value of 1 part = 400 / 8 = 50', 'Difference parts = 5 - 3 = 2', 'Difference = 2 × 50 = 100'],
+    solutionStepsAr: ['النسبة = 5 : 3 إذن الفرق جزءان', 'قيمة الجزء = 50', 'الفرق = 2 × 50 = 100'],
+    marks: 3
+  },
+  {
+    id: 'ED-2018-4HR-08',
+    code: '4MA0/4HR Jan 2018 Q8',
+    subjectId: 'maths',
+    boardId: 'edexcel',
+    levelId: 'o_level_igcse',
+    year: 2018,
+    session: 'Jan',
+    paper: 'Paper 4HR (Higher)',
+    topicEn: 'Right-Angled Trigonometry',
+    topicAr: 'حساب المثلثات القائم',
+    questionEn: 'In a right-angled triangle ABC, AB = 8.4 cm and angle A = 20°. Calculate the length of side BC opposite angle A correct to 3 significant figures.',
+    questionAr: 'في مثلث قائم الزاوية ABC، طول AB المجاور للزاوية A يساوي 8.4 سم والزاوية A = 20°. احسب طول الضلع المقابل BC مقرباً لأقرب 3 أرقام معنوية.',
+    diagramSvg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 180" class="w-full max-w-sm mx-auto bg-slate-50 dark:bg-slate-900 rounded-xl p-2"><path d="M 40 140 L 230 140 L 230 70 Z" fill="none" stroke="#0d9488" stroke-width="3"/><rect x="215" y="125" width="15" height="15" fill="none" stroke="#0d9488" stroke-width="2"/><text x="25" y="145" fill="#334155" font-size="14" font-weight="bold">A</text><text x="235" y="145" fill="#334155" font-size="14" font-weight="bold">B</text><text x="235" y="65" fill="#334155" font-size="14" font-weight="bold">C</text><text x="135" y="160" fill="#0d9488" font-size="13" font-weight="bold">8.4 cm</text><text x="240" y="105" fill="#e11d48" font-size="14" font-weight="bold">BC = ?</text><text x="65" y="132" fill="#0369a1" font-size="12" font-weight="bold">20°</text></svg>',
+    options: [
+      { id: 'A', textEn: '3.06 cm', textAr: '3.06 سم' },
+      { id: 'B', textEn: '2.87 cm', textAr: '2.87 سم' },
+      { id: 'C', textEn: '3.24 cm', textAr: '3.24 سم' },
+      { id: 'D', textEn: '8.94 cm', textAr: '8.94 سم' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'tan(20°) = BC / 8.4 => BC = 8.4 × tan(20°) = 8.4 × 0.36397... = 3.057... ≈ 3.06 cm.',
+    explanationAr: 'ظل الزاوية tan(20°) = BC ÷ 8.4 => BC = 8.4 × tan(20°) = 3.06 سم.',
+    solutionStepsEn: ['tan(20°) = BC / 8.4', 'BC = 8.4 × tan(20°) ≈ 3.06 cm'],
+    solutionStepsAr: ['tan(20°) = المقابل / المجاور', 'BC = 8.4 × 0.364 = 3.06 سم'],
+    marks: 3
+  },
+  {
+    id: 'ED-2018-1F-15',
+    code: '4MA0/1F Jan 2018 Q15',
+    subjectId: 'maths',
+    boardId: 'edexcel',
+    levelId: 'o_level_igcse',
+    year: 2018,
+    session: 'Jan',
+    paper: 'Paper 1F (Foundation)',
+    topicEn: 'Prime Factor Decomposition',
+    topicAr: 'التحليل إلى العوامل الأولية',
+    questionEn: 'Write 360 as a product of powers of its prime factors.',
+    questionAr: 'اكتب العدد 360 كحاصل ضرب قوى عوامله الأولية.',
+    options: [
+      { id: 'A', textEn: '2³ × 3² × 5', textAr: '2³ × 3² × 5' },
+      { id: 'B', textEn: '2² × 3³ × 5', textAr: '2² × 3³ × 5' },
+      { id: 'C', textEn: '2⁴ × 3 × 5', textAr: '2⁴ × 3 × 5' },
+      { id: 'D', textEn: '2³ × 3 × 15', textAr: '2³ × 3 × 15' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: '360 = 36 × 10 = (2² × 3²) × (2 × 5) = 2³ × 3² × 5.',
+    explanationAr: '360 = 2³ × 3² × 5.',
+    solutionStepsEn: ['360 = 36 × 10', '360 = (2² × 3²) × (2 × 5) = 2³ × 3² × 5'],
+    solutionStepsAr: ['360 = 2³ × 3² × 5'],
+    marks: 2
+  },
+  {
+    id: 'ED-2018-2F-22',
+    code: '4MA0/2F Jan 2018 Q22',
+    subjectId: 'maths',
+    boardId: 'edexcel',
+    levelId: 'o_level_igcse',
+    year: 2018,
+    session: 'Jan',
+    paper: 'Paper 2F (Foundation)',
+    topicEn: 'Circle Circumference',
+    topicAr: 'محيط الدائرة',
+    questionEn: 'A circle has a diameter of 18 cm. Calculate the circumference of the circle correct to 3 significant figures.',
+    questionAr: 'دائرة قطرها 18 سم. احسب محيط الدائرة مقرباً لأقرب 3 أرقام معنوية.',
+    options: [
+      { id: 'A', textEn: '56.5 cm', textAr: '56.5 سم' },
+      { id: 'B', textEn: '113 cm', textAr: '113 سم' },
+      { id: 'C', textEn: '254 cm²', textAr: '254 سم²' },
+      { id: 'D', textEn: '56.8 cm', textAr: '56.8 سم' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Circumference = π × d = π × 18 = 56.548... ≈ 56.5 cm.',
+    explanationAr: 'محيط الدائرة = π × القطر = π × 18 = 56.5 سم.',
+    solutionStepsEn: ['C = π × d', 'C = 18π ≈ 56.5 cm'],
+    solutionStepsAr: ['المحيط = π × القطر', 'المحيط = 18 × 3.14159 ≈ 56.5 سم'],
+    marks: 2
+  },
+
+  // =========================================================================
+  // PEARSON EDEXCEL IGCSE MATHEMATICS A — MAY/JUNE 2018 — PAPER 4H / 4HR
+  // =========================================================================
+  {
+    id: 'ED-2018-MJ-4H-01',
+    code: '4MA0/4H May 2018 Q1',
+    subjectId: 'maths',
+    boardId: 'edexcel',
+    levelId: 'o_level_igcse',
+    year: 2018,
+    session: 'May/June',
+    paper: 'Paper 4H (Higher)',
+    topicEn: 'Algebraic Form & Expression',
+    topicAr: 'الصيغ والتعبير الجبري',
+    questionEn: 'Mike buys c pens for 24 cents each and r rulers for 37 cents each. The total cost is T cents. Write down a formula for T in terms of c and r.',
+    questionAr: 'اشترى مايك عدد c قلام بسعر 24 سنتاً للقلم الواحد، وعدد r مساطر بسعر 37 سنتاً للمسطرة الواحدة. وكانت التكلفة الإجمالية T سنتاً. اكتب صيغة تعبر عن T بدلالة c و r.',
+    options: [
+      { id: 'A', textEn: 'T = 24c + 37r', textAr: 'T = 24c + 37r' },
+      { id: 'B', textEn: 'T = 37c + 24r', textAr: 'T = 37c + 24r' },
+      { id: 'C', textEn: 'T = 61(c + r)', textAr: 'T = 61(c + r)' },
+      { id: 'D', textEn: 'T = (c/24) + (r/37)', textAr: 'T = (c/24) + (r/37)' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Cost of c pens = 24 × c = 24c. Cost of r rulers = 37 × r = 37r. Total cost T = 24c + 37r.',
+    explanationAr: 'تكلفة الأقلام = 24c. تكلفة المساطر = 37r. التكلفة الإجمالية T = 24c + 37r.',
+    solutionStepsEn: ['Pens cost = 24c', 'Rulers cost = 37r', 'T = 24c + 37r'],
+    solutionStepsAr: ['الأقلام = 24c', 'المساطر = 37r', 'T = 24c + 37r'],
+    marks: 3
+  },
+  {
+    id: 'ED-2018-MJ-4H-02',
+    code: '4MA0/4H May 2018 Q2',
+    subjectId: 'maths',
+    boardId: 'edexcel',
+    levelId: 'o_level_igcse',
+    year: 2018,
+    session: 'May/June',
+    paper: 'Paper 4H (Higher)',
+    topicEn: 'Speed, Distance & Time Conversion',
+    topicAr: 'حسابات السرعة والزمن والمسافة',
+    questionEn: 'A bus travels a distance of 165 km at an average speed of 50 km/h. Work out the time taken by the bus in hours and minutes.',
+    questionAr: 'قطعت حافلة مسافة 165 كم بمتوسط سرعة 50 كم/ساعة. احسب الزمن الذي استغرقته الحافلة بالساعات والدقائق.',
+    options: [
+      { id: 'A', textEn: '3 hours 18 minutes', textAr: '3 ساعات و18 دقيقة' },
+      { id: 'B', textEn: '3 hours 30 minutes', textAr: '3 ساعات و30 دقيقة' },
+      { id: 'C', textEn: '3 hours 15 minutes', textAr: '3 ساعات و15 دقيقة' },
+      { id: 'D', textEn: '3 hours 20 minutes', textAr: '3 ساعات و20 دقيقة' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Time = Distance / Speed = 165 / 50 = 3.3 hours. 0.3 hours = 0.3 × 60 = 18 minutes => 3 hours 18 minutes.',
+    explanationAr: 'الزمن = المسافة ÷ السرعة = 165 ÷ 50 = 3.3 ساعة. 0.3 ساعة = 0.3 × 60 = 18 دقيقة => 3 ساعات و 18 دقيقة.',
+    solutionStepsEn: ['Time = 165 / 50 = 3.3 hours', '0.3 × 60 = 18 minutes', 'Time = 3 hours 18 minutes'],
+    solutionStepsAr: ['الزمن = 3.3 ساعة', 'الكسر العشرى = 18 دقيقة', '3 ساعات و18 دقيقة'],
+    marks: 3
+  }
+];

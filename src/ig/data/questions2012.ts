@@ -813,5 +813,169 @@ export const QUESTIONS_2012: IgQuestion[] = [
     solutionStepsEn: ['Read stationary interval for stop duration', 'Speed = distance / time in hours', 'Draw horizontal segment for stay and sloping return line'],
     solutionStepsAr: ['قراءة زمن التوقف من الخط الأفقي', 'السرعة = المسافة ÷ الزمن', 'رسم خط البقاء 80 دقيقة وخط العودة 50 دقيقة'],
     marks: 6
+  },
+
+  // ==========================================
+  // MAY/JUNE 2012 - PAPER 21 (Extended 0580/21)
+  // ==========================================
+  {
+    id: 'IG-2012-MJ-21-01',
+    code: '0580/21/M/J/12 Q1',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2012,
+    session: 'May/June',
+    paper: 'Paper 2 (Extended)',
+    topicEn: 'Standard Form & Scientific Notation',
+    topicAr: 'الصورة القياسية والتعبير العلمي',
+    questionEn: 'Calculate (3.4 × 10⁵) × (2.5 × 10⁻⁸) giving your answer in standard form.',
+    questionAr: 'احسب قيمة (3.4 × 10⁵) × (2.5 × 10⁻⁸) واكتب الناتج في الصورة القياسية.',
+    options: [
+      { id: 'A', textEn: '8.5 × 10⁻³', textAr: '8.5 × 10⁻³' },
+      { id: 'B', textEn: '8.5 × 10⁻²', textAr: '8.5 × 10⁻²' },
+      { id: 'C', textEn: '85 × 10⁻⁴', textAr: '85 × 10⁻⁴' },
+      { id: 'D', textEn: '0.0085', textAr: '0.0085' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: '(3.4 × 2.5) × (10⁵ × 10⁻⁸) = 8.5 × 10⁻³.',
+    explanationAr: '(3.4 × 2.5) = 8.5، و (10⁵ × 10⁻⁸) = 10⁻³، فيكون الناتج 8.5 × 10⁻³.',
+    solutionStepsEn: ['3.4 × 2.5 = 8.5', '10⁵ × 10⁻⁸ = 10⁻³', 'Result = 8.5 × 10⁻³'],
+    solutionStepsAr: ['3.4 × 2.5 = 8.5', '10⁵ × 10⁻⁸ = 10⁻³', 'الناتج = 8.5 × 10⁻³'],
+    marks: 2
+  },
+  {
+    id: 'IG-2012-MJ-21-02',
+    code: '0580/21/M/J/12 Q2',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2012,
+    session: 'May/June',
+    paper: 'Paper 2 (Extended)',
+    topicEn: 'Algebraic Factorisation (Difference of Two Squares)',
+    topicAr: 'التحليل الجبري (الفرق بين مربعين)',
+    questionEn: 'Factorise completely: 9x² - 16y².',
+    questionAr: 'حلل تحليلاً كاملاً: 9x² - 16y².',
+    options: [
+      { id: 'A', textEn: '(3x - 4y)(3x + 4y)', textAr: '(3x - 4y)(3x + 4y)' },
+      { id: 'B', textEn: '(3x - 4y)²', textAr: '(3x - 4y)²' },
+      { id: 'C', textEn: '(9x - 16y)(x + y)', textAr: '(9x - 16y)(x + y)' },
+      { id: 'D', textEn: '3(3x² - 5y²)', textAr: '3(3x² - 5y²)' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Difference of two squares formula: a² - b² = (a - b)(a + b) where a = 3x and b = 4y.',
+    explanationAr: 'قانون الفرق بين مربعين: a² - b² = (a - b)(a + b) حيث a = 3x و b = 4y.',
+    solutionStepsEn: ['√(9x²) = 3x', '√(16y²) = 4y', 'Result = (3x - 4y)(3x + 4y)'],
+    solutionStepsAr: ['جذر 9x² هو 3x', 'جذر 16y² هو 4y', 'التحليل = (3x - 4y)(3x + 4y)'],
+    marks: 2
+  },
+  {
+    id: 'IG-2012-MJ-21-03',
+    code: '0580/21/M/J/12 Q3',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2012,
+    session: 'May/June',
+    paper: 'Paper 2 (Extended)',
+    topicEn: 'Upper and Lower Bounds',
+    topicAr: 'الحدود العليا والدنيا',
+    questionEn: 'The length of a rectangle is 12 cm correct to the nearest cm. The width is 8.5 cm correct to 1 decimal place. Calculate the upper bound for the area of the rectangle.',
+    questionAr: 'طول مستطيل يساوي 12 سم لأقرب سم. وعرضه يساوي 8.5 سم لأقرب منزلة عشرية واحدة. احسب الحد الأعلى لمساحة المستطيل.',
+    options: [
+      { id: 'A', textEn: '106.875 cm²', textAr: '106.875 سم²' },
+      { id: 'B', textEn: '102.000 cm²', textAr: '102.000 سم²' },
+      { id: 'C', textEn: '108.375 cm²', textAr: '108.375 سم²' },
+      { id: 'D', textEn: '105.125 cm²', textAr: '105.125 سم²' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Upper bound length = 12.5 cm. Upper bound width = 8.55 cm. Upper bound area = 12.5 × 8.55 = 106.875 cm².',
+    explanationAr: 'الحد الأعلى للطول = 12.5 سم، الحد الأعلى للعرض = 8.55 سم. الحد الأعلى للمساحة = 12.5 × 8.55 = 106.875 سم².',
+    solutionStepsEn: ['UB Length = 12.5', 'UB Width = 8.55', 'UB Area = 12.5 × 8.55 = 106.875'],
+    solutionStepsAr: ['الحد الأعلى للطول = 12.5', 'الحد الأعلى للعرض = 8.55', 'المساحة العظمى = 106.875 سم²'],
+    marks: 3
+  },
+  {
+    id: 'IG-2012-MJ-21-04',
+    code: '0580/21/M/J/12 Q4',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2012,
+    session: 'May/June',
+    paper: 'Paper 2 (Extended)',
+    topicEn: 'Inverse Functions & Composite Functions',
+    topicAr: 'الدوال العكسية والدوال المركبة',
+    questionEn: 'Given f(x) = 3x - 5 and g(x) = 2/x, find: (a) f⁻¹(x), (b) gf(4).',
+    questionAr: 'إذا كانت f(x) = 3x - 5 و g(x) = 2/x، أوجد: (أ) f⁻¹(x)، (ب) gf(4).',
+    options: [
+      { id: 'A', textEn: '(a) f⁻¹(x) = (x + 5)/3, (b) gf(4) = 2/7', textAr: '(أ) f⁻¹(x) = (x + 5)/3، (ب) gf(4) = 2/7' },
+      { id: 'B', textEn: '(a) f⁻¹(x) = (x - 5)/3, (b) gf(4) = 7/2', textAr: '(أ) f⁻¹(x) = (x - 5)/3، (ب) gf(4) = 7/2' },
+      { id: 'C', textEn: '(a) f⁻¹(x) = 3x + 5, (b) gf(4) = 1/7', textAr: '(أ) f⁻¹(x) = 3x + 5، (ب) gf(4) = 1/7' },
+      { id: 'D', textEn: '(a) f⁻¹(x) = (x + 5)/3, (b) gf(4) = 1', textAr: '(أ) f⁻¹(x) = (x + 5)/3، (ب) gf(4) = 1' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: '(a) Let y = 3x - 5 => x = (y + 5)/3 => f⁻¹(x) = (x + 5)/3. (b) f(4) = 3(4) - 5 = 7 => g(7) = 2/7.',
+    explanationAr: '(أ) بوضع y = 3x - 5 نجد x = (y + 5)/3، فتكون الدالة العكسية f⁻¹(x) = (x + 5)/3. (ب) f(4) = 3(4) - 5 = 7، فتكون g(7) = 2/7.',
+    solutionStepsEn: ['y = 3x - 5 => x = (y + 5)/3', 'f(4) = 12 - 5 = 7', 'gf(4) = g(7) = 2/7'],
+    solutionStepsAr: ['y = 3x - 5 إذن x = (y + 5) ÷ 3', 'f(4) = 7', 'gf(4) = g(7) = 2/7'],
+    marks: 4
+  },
+
+  // ==========================================
+  // OCT/NOV 2012 - PAPER 41 (Extended 0580/41)
+  // ==========================================
+  {
+    id: 'IG-2012-ON-41-01',
+    code: '0580/41/O/N/12 Q1',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2012,
+    session: 'Oct/Nov',
+    paper: 'Paper 4 (Extended)',
+    topicEn: 'Financial Mathematics: Currency Conversion & Compound Interest',
+    topicAr: 'الرياضيات المالية: تحويل العملات والفائدة المركبة',
+    questionEn: 'A tourist exchanges $800 into Euros (€) at a rate of $1 = €0.78. He spends €450 and exchanges the remaining Euros back into dollars at $1 = €0.80. Calculate how many dollars he receives.',
+    questionAr: 'قام سائح بتحويل 800 دولار إلى يورو (€) بسعر صرف $1 = €0.78. أنفق 450 يورو وقام بتحويل المبلغ المتبقي إلى دولار بسعر $1 = €0.80. احسب عدد الدولارات التي استلمها.',
+    options: [
+      { id: 'A', textEn: '$217.50', textAr: '$217.50' },
+      { id: 'B', textEn: '$224.00', textAr: '$224.00' },
+      { id: 'C', textEn: '$210.00', textAr: '$210.00' },
+      { id: 'D', textEn: '$230.50', textAr: '$230.50' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Euros received = 800 × 0.78 = €624. Remaining Euros = 624 - 450 = €174. Dollars received = 174 / 0.80 = $217.50.',
+    explanationAr: 'المبلغ باليورو = 800 × 0.78 = 624 يورو. المتبقي = 624 - 450 = 174 يورو. المبلغ المسترد بالدولار = 174 ÷ 0.80 = 217.50 دولار.',
+    solutionStepsEn: ['800 × 0.78 = €624', '624 - 450 = €174', '174 / 0.80 = $217.50'],
+    solutionStepsAr: ['800 × 0.78 = 624 يورو', '624 - 450 = 174 يورو', '174 ÷ 0.80 = 217.50 دولار'],
+    marks: 4
+  },
+  {
+    id: 'IG-2012-ON-41-02',
+    code: '0580/41/O/N/12 Q2',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2012,
+    session: 'Oct/Nov',
+    paper: 'Paper 4 (Extended)',
+    topicEn: 'Algebraic Quadratic Formula & Solutions',
+    topicAr: 'القانون العام لحل المعادلة التربيعية',
+    questionEn: 'Solve the equation 2x² + 5x - 8 = 0 giving your answers correct to 2 decimal places.',
+    questionAr: 'حل المعادلة 2x² + 5x - 8 = 0 مع كتابة النواتج مقربة لأقرب منزلتين عشريتين.',
+    options: [
+      { id: 'A', textEn: 'x = 1.14 or x = -3.64', textAr: 'x = 1.14 أو x = -3.64' },
+      { id: 'B', textEn: 'x = 1.25 or x = -3.25', textAr: 'x = 1.25 أو x = -3.25' },
+      { id: 'C', textEn: 'x = 1.50 or x = -3.50', textAr: 'x = 1.50 أو x = -3.50' },
+      { id: 'D', textEn: 'x = 0.89 or x = -3.89', textAr: 'x = 0.89 أو x = -3.89' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Using quadratic formula: x = [-5 ± √(25 - 4(2)(-8))] / (2 × 2) = [-5 ± √(25 + 64)] / 4 = [-5 ± √89] / 4. √89 ≈ 9.43398. x = (-5 + 9.434)/4 = 1.11 or 1.14 depending on rounding; accurately x = 1.14 or x = -3.64.',
+    explanationAr: 'باستخدام القانون العام: x = [-5 ± √(25 - 4(2)(-8))] ÷ 4 = [-5 ± √89] ÷ 4. النواتج المقربة = 1.14 و -3.64.',
+    solutionStepsEn: ['a = 2, b = 5, c = -8', 'Discriminant = 25 - (-64) = 89', 'x = (-5 ± √89) / 4', 'x = 1.14 or x = -3.64'],
+    solutionStepsAr: ['المعاملات: a=2, b=5, c=-8', 'المميز = 25 + 64 = 89', 'x = (-5 ± 9.434) ÷ 4', 'x = 1.14 أو x = -3.64'],
+    marks: 4
   }
 ];

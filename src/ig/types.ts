@@ -34,7 +34,32 @@ export interface IgSubject {
   hasQuestions?: boolean;
 }
 
-export type IgPaperType = 'Paper 2 (Extended)' | 'Paper 4 (Extended)' | 'Paper 1 (Core)' | 'Paper 3 (Core)';
+export type IgPaperType = 
+  | 'Paper 1 (Foundation)' 
+  | 'Paper 2 (Foundation)' 
+  | 'Paper 3 (Higher)' 
+  | 'Paper 4 (Higher)'
+  | 'Paper 1F (Foundation)' 
+  | 'Paper 2F (Foundation)' 
+  | 'Paper 3H (Higher)' 
+  | 'Paper 4H (Higher)'
+  | 'Paper 1 (Core)' 
+  | 'Paper 2 (Extended)' 
+  | 'Paper 3 (Core)' 
+  | 'Paper 4 (Extended)'
+  | 'Paper 11 (Core)'
+  | 'Paper 12 (Core)'
+  | 'Paper 13 (Core)'
+  | 'Paper 21 (Extended)'
+  | 'Paper 22 (Extended)'
+  | 'Paper 23 (Extended)'
+  | 'Paper 31 (Core)'
+  | 'Paper 32 (Core)'
+  | 'Paper 33 (Core)'
+  | 'Paper 41 (Extended)'
+  | 'Paper 42 (Extended)'
+  | 'Paper 43 (Extended)'
+  | string;
 
 export interface IgQuestion {
   id: string;
@@ -43,7 +68,7 @@ export interface IgQuestion {
   boardId: IgBoardId;
   levelId: IgLevelId;
   year: number; // 2002 to 2021
-  session: 'May/June' | 'Oct/Nov' | 'Feb/March';
+  session: 'May/June' | 'Oct/Nov' | 'Feb/March' | 'Jan' | string;
   paper: IgPaperType;
   topicEn: string;
   topicAr: string;

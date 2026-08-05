@@ -20,6 +20,15 @@ import { QUESTIONS_2018 } from './questions2018';
 import { QUESTIONS_2019 } from './questions2019';
 import { QUESTIONS_2020 } from './questions2020';
 import { QUESTIONS_2021 } from './questions2021';
+import { EDEXCEL_2011 } from './edexcel2011';
+import { EDEXCEL_2012 } from './edexcel2012';
+import { EDEXCEL_2013 } from './edexcel2013';
+import { EDEXCEL_2014 } from './edexcel2014';
+import { EDEXCEL_2015 } from './edexcel2015';
+import { EDEXCEL_2016 } from './edexcel2016';
+import { EDEXCEL_2017 } from './edexcel2017';
+import { EDEXCEL_2018 } from './edexcel2018';
+import { QUESTIONS_2019_ON } from './questions2019_ON';
 
 export const IG_BOARDS: IgExamBoard[] = [
   {
@@ -85,6 +94,14 @@ export const IG_CAMBRIDGE_SUBJECTS: IgSubject[] = [
   { id: 'lit_english', code: '0472', nameEn: 'Literature in English', nameAr: 'الدراسات الأدبية بالإنجليزية', icon: '📖', status: 'coming_soon' },
   { id: 'sociology', code: '0495', nameEn: 'Sociology', nameAr: 'علم الاجتماع', icon: '👥', status: 'coming_soon' },
   { id: 'travel_tourism', code: '0471', nameEn: 'Travel and Tourism', nameAr: 'السياحة والسفر', icon: '✈️', status: 'coming_soon' },
+];
+
+export const IG_EDEXCEL_SUBJECTS: IgSubject[] = [
+  { id: 'maths', code: '4MA0/4MB1', nameEn: 'Mathematics A', nameAr: 'الرياضيات (Mathematics A)', icon: '📐', status: 'available', hasQuestions: true },
+  { id: 'further_maths', code: '4PM1', nameEn: 'Further Pure Maths', nameAr: 'الرياضيات البحتة المتقدمة', icon: '🧮', status: 'coming_soon' },
+  { id: 'physics', code: '4PH1', nameEn: 'Physics', nameAr: 'الفيزياء', icon: '⚡', status: 'coming_soon' },
+  { id: 'chemistry', code: '4CH1', nameEn: 'Chemistry', nameAr: 'الكيمياء', icon: '🧪', status: 'coming_soon' },
+  { id: 'biology', code: '4BI1', nameEn: 'Biology', nameAr: 'الأحياء', icon: '🧬', status: 'coming_soon' },
 ];
 
 export const IG_MATHS_QUESTIONS: IgQuestion[] = [
@@ -1813,6 +1830,15 @@ export const IG_MATHS_QUESTIONS: IgQuestion[] = [
   ...QUESTIONS_2018,
   ...QUESTIONS_2019,
   ...QUESTIONS_2020,
-  ...QUESTIONS_2021
+  ...QUESTIONS_2021,
+  ...EDEXCEL_2011,
+  ...EDEXCEL_2012,
+  ...EDEXCEL_2013,
+  ...EDEXCEL_2014,
+  ...EDEXCEL_2015,
+  ...EDEXCEL_2016,
+  ...EDEXCEL_2017,
+  ...EDEXCEL_2018,
+  ...QUESTIONS_2019_ON
 ];
 
