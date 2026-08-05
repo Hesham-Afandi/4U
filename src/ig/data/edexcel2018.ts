@@ -2,10 +2,10 @@ import { IgQuestion } from '../types';
 
 export const EDEXCEL_2018: IgQuestion[] = [
   // =========================================================================
-  // PEARSON EDEXCEL IGCSE MATHEMATICS A — JANUARY 2018 — PAPER 4HR / 1F / 2F
+  // PEARSON EDEXCEL IGCSE MATHEMATICS A — JANUARY 2018
   // =========================================================================
   {
-    id: 'ED-2018-4HR-01',
+    id: 'ED-2018-JAN-4HR-01',
     code: '4MA0/4HR Jan 2018 Q1',
     subjectId: 'maths',
     boardId: 'edexcel',
@@ -24,14 +24,14 @@ export const EDEXCEL_2018: IgQuestion[] = [
       { id: 'D', textEn: '(a) $28.80; (b) 40%', textAr: '(أ) 28.80$؛ (ب) 40%' }
     ],
     correctAnswer: 'A',
-    explanationEn: '(a) Sale price = 36 × (1 - 0.12) = 36 × 0.88 = $31.68. (b) Percentage of shirts = (81 / 180) × 100% = 45%.',
-    explanationAr: '(أ) سعر التخفيض = 36 × 0.88 = 31.68$. (ب) النسبة المئوية للقمصان = (81 ÷ 180) × 100% = 45%.',
+    explanationEn: '(a) Sale price = 36 × (1 - 0.12) = $31.68. (b) Percentage = (81 / 180) × 100% = 45%.',
+    explanationAr: '(أ) سعر التخفيض = 36 × 0.88 = 31.68$. (ب) النسبة = (81 ÷ 180) × 100% = 45%.',
     solutionStepsEn: ['Sale price = 36 × 0.88 = $31.68', 'Percentage = (81 / 180) × 100 = 45%'],
     solutionStepsAr: ['سعر الخصم = 31.68$', 'النسبة = 45%'],
     marks: 5
   },
   {
-    id: 'ED-2018-4HR-02',
+    id: 'ED-2018-JAN-4HR-02',
     code: '4MA0/4HR Jan 2018 Q2',
     subjectId: 'maths',
     boardId: 'edexcel',
@@ -41,8 +41,8 @@ export const EDEXCEL_2018: IgQuestion[] = [
     paper: 'Paper 4HR (Higher)',
     topicEn: 'Area of Compound Shape & Prism Volume',
     topicAr: 'مساحة الشكل المركب وحجم المنشور',
-    questionEn: 'A 2D shape A consists of rectangles with dimensions: 3 cm by 6 cm and 8 cm by 2 cm.\n(a) Calculate the total area of shape A.\n(b) A prism has cross-section area A and a volume of 350 cm³. Calculate the length h of the prism.',
-    questionAr: 'شكل ثنائي الأبعاد A يتكون من مستطيلين بأبعاد: 3 سم في 6 سم و 8 سم في 2 سم.\n(أ) احسب المساحة الكلية للشكل A.\n(ب) منشور مقطعه العرضي هو الشكل A وحجمه 350 سم³. احسب طول المنشور h.',
+    questionEn: 'Shape A consists of rectangles measuring 3 cm by 6 cm and 8 cm by 2 cm.\n(a) Calculate the total area of shape A.\n(b) A prism has cross-section area A and volume 350 cm³. Find its length h.',
+    questionAr: 'شكل A يتكون من مستطيلين بأبعاد 3 سم × 6 سم و 8 سم × 2 سم.\n(أ) احسب المساحة الكلية للشكل A.\n(ب) منشور مقطعه العرضي A وحجمه 350 سم³. أوجد طوله h.',
     options: [
       { id: 'A', textEn: '(a) 34 cm²; (b) h = 10.29 cm', textAr: '(أ) 34 سم²؛ (ب) h = 10.29 سم' },
       { id: 'B', textEn: '(a) 34 cm²; (b) h = 10.00 cm', textAr: '(أ) 34 سم²؛ (ب) h = 10.00 سم' },
@@ -50,14 +50,14 @@ export const EDEXCEL_2018: IgQuestion[] = [
       { id: 'D', textEn: '(a) 32 cm²; (b) h = 10.94 cm', textAr: '(أ) 32 سم²؛ (ب) h = 10.94 سم' }
     ],
     correctAnswer: 'A',
-    explanationEn: '(a) Total Area = (3 × 6) + (8 × 2) = 18 + 16 = 34 cm². (b) Volume = Area × height => 350 = 34 × h => h = 350 / 34 = 10.294... ≈ 10.29 cm.',
-    explanationAr: '(أ) المساحة الكلية = 18 + 16 = 34 سم². (ب) الارتفاع h = الحجم ÷ المساحة = 350 ÷ 34 = 10.29 سم.',
-    solutionStepsEn: ['Area = 18 + 16 = 34 cm²', 'Length h = 350 / 34 ≈ 10.29 cm'],
-    solutionStepsAr: ['المساحة = 34 سم²', 'الطول h = 350 ÷ 34 = 10.29 سم'],
+    explanationEn: '(a) Area = (3×6) + (8×2) = 18 + 16 = 34 cm². (b) h = 350 / 34 = 10.29 cm.',
+    explanationAr: '(أ) المساحة = 18 + 16 = 34 سم². (ب) الارتفاع = 350 ÷ 34 = 10.29 سم.',
+    solutionStepsEn: ['Area = 18 + 16 = 34 cm²', 'h = 350 / 34 ≈ 10.29 cm'],
+    solutionStepsAr: ['المساحة = 34 سم²', 'الطول = 10.29 سم'],
     marks: 5
   },
   {
-    id: 'ED-2018-4HR-03',
+    id: 'ED-2018-JAN-4HR-03',
     code: '4MA0/4HR Jan 2018 Q3',
     subjectId: 'maths',
     boardId: 'edexcel',
@@ -76,14 +76,14 @@ export const EDEXCEL_2018: IgQuestion[] = [
       { id: 'D', textEn: '(3.5, 5.5)', textAr: '(3.5, 5.5)' }
     ],
     correctAnswer: 'A',
-    explanationEn: 'Midpoint = ((x₁ + x₂)/2, (y₁ + y₂)/2) = ((1 + 7)/2, (3 + 8)/2) = (8/2, 11/2) = (4, 5.5).',
+    explanationEn: 'Midpoint = ((1+7)/2, (3+8)/2) = (4, 5.5).',
     explanationAr: 'منتصف القطعة المستقيمة = ((1 + 7)÷2, (3 + 8)÷2) = (4, 5.5).',
-    solutionStepsEn: ['x = (1 + 7) / 2 = 4', 'y = (3 + 8) / 2 = 5.5', 'Midpoint = (4, 5.5)'],
-    solutionStepsAr: ['x = 4', 'y = 5.5', 'المنتصف = (4, 5.5)'],
+    solutionStepsEn: ['x = (1 + 7) / 2 = 4', 'y = (3 + 8) / 2 = 5.5'],
+    solutionStepsAr: ['x = 4', 'y = 5.5'],
     marks: 2
   },
   {
-    id: 'ED-2018-4HR-04',
+    id: 'ED-2018-JAN-4HR-04',
     code: '4MA0/4HR Jan 2018 Q4',
     subjectId: 'maths',
     boardId: 'edexcel',
@@ -91,10 +91,10 @@ export const EDEXCEL_2018: IgQuestion[] = [
     year: 2018,
     session: 'Jan',
     paper: 'Paper 4HR (Higher)',
-    topicEn: 'Ratio & Shared Quantities',
-    topicAr: 'النسبة والكميات المشتركة',
-    questionEn: 'A bag contains 400 counters (red and green only). The ratio of red counters to green counters is 5 : 3. How many more red counters than green counters are in the bag?',
-    questionAr: 'حقيبة تحتوي على 400 عداد (أحمر وأخضر فقط). نسبة العدادات الحمراء إلى الخضراء هي 5 : 3. كم يزيد عدد العدادات الحمراء عن الخضراء؟',
+    topicEn: 'Ratio & Difference',
+    topicAr: 'النسبة والفرق',
+    questionEn: 'A bag contains 400 counters (red and green only) in ratio red:green = 5:3. How many more red counters than green counters are in the bag?',
+    questionAr: 'حقيبة تحتوي على 400 عداد (أحمر وأخضر فقط) بنسبة أحمر:أخضر = 5:3. كم يزيد عدد العدادات الحمراء عن الخضراء؟',
     options: [
       { id: 'A', textEn: '100 counters', textAr: '100 عداد' },
       { id: 'B', textEn: '250 counters', textAr: '250 عداداً' },
@@ -102,14 +102,14 @@ export const EDEXCEL_2018: IgQuestion[] = [
       { id: 'D', textEn: '80 counters', textAr: '80 عداداً' }
     ],
     correctAnswer: 'A',
-    explanationEn: 'Total parts = 5 + 3 = 8. Value of 1 part = 400 / 8 = 50. Red counters = 5 × 50 = 250, Green counters = 3 × 50 = 150. Difference = 250 - 150 = 100.',
-    explanationAr: 'مجموع الأجزاء = 5 + 3 = 8 أجزاء. قيمة الجزء = 400 ÷ 8 = 50. الأحمر = 250، الأخضر = 150. الفرق = 250 - 150 = 100.',
-    solutionStepsEn: ['Total parts = 5 + 3 = 8', 'Value of 1 part = 400 / 8 = 50', 'Difference parts = 5 - 3 = 2', 'Difference = 2 × 50 = 100'],
-    solutionStepsAr: ['النسبة = 5 : 3 إذن الفرق جزءان', 'قيمة الجزء = 50', 'الفرق = 2 × 50 = 100'],
+    explanationEn: 'Total parts = 8. 1 part = 400 / 8 = 50. Difference = (5 - 3) × 50 = 100.',
+    explanationAr: 'مجموع الأجزاء = 8. قيمة الجزء = 50. الفرق = 2 × 50 = 100 عداد.',
+    solutionStepsEn: ['Parts = 5 + 3 = 8', 'Value of 1 part = 50', 'Difference = 2 × 50 = 100'],
+    solutionStepsAr: ['الأجزاء = 8', 'قيمة الجزء = 50', 'الفرق = 100'],
     marks: 3
   },
   {
-    id: 'ED-2018-4HR-08',
+    id: 'ED-2018-JAN-4HR-08',
     code: '4MA0/4HR Jan 2018 Q8',
     subjectId: 'maths',
     boardId: 'edexcel',
@@ -119,8 +119,8 @@ export const EDEXCEL_2018: IgQuestion[] = [
     paper: 'Paper 4HR (Higher)',
     topicEn: 'Right-Angled Trigonometry',
     topicAr: 'حساب المثلثات القائم',
-    questionEn: 'In a right-angled triangle ABC, AB = 8.4 cm and angle A = 20°. Calculate the length of side BC opposite angle A correct to 3 significant figures.',
-    questionAr: 'في مثلث قائم الزاوية ABC، طول AB المجاور للزاوية A يساوي 8.4 سم والزاوية A = 20°. احسب طول الضلع المقابل BC مقرباً لأقرب 3 أرقام معنوية.',
+    questionEn: 'In right-angled triangle ABC, AB = 8.4 cm and angle A = 20°. Calculate the length of side BC opposite angle A to 3 s.f.',
+    questionAr: 'في مثلث قائم الزاوية ABC، المجاور AB = 8.4 سم والزاوية A = 20°. احسب طول الضلع المقابل BC لأقرب 3 أرقام معنوية.',
     diagramSvg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 180" class="w-full max-w-sm mx-auto bg-slate-50 dark:bg-slate-900 rounded-xl p-2"><path d="M 40 140 L 230 140 L 230 70 Z" fill="none" stroke="#0d9488" stroke-width="3"/><rect x="215" y="125" width="15" height="15" fill="none" stroke="#0d9488" stroke-width="2"/><text x="25" y="145" fill="#334155" font-size="14" font-weight="bold">A</text><text x="235" y="145" fill="#334155" font-size="14" font-weight="bold">B</text><text x="235" y="65" fill="#334155" font-size="14" font-weight="bold">C</text><text x="135" y="160" fill="#0d9488" font-size="13" font-weight="bold">8.4 cm</text><text x="240" y="105" fill="#e11d48" font-size="14" font-weight="bold">BC = ?</text><text x="65" y="132" fill="#0369a1" font-size="12" font-weight="bold">20°</text></svg>',
     options: [
       { id: 'A', textEn: '3.06 cm', textAr: '3.06 سم' },
@@ -129,14 +129,14 @@ export const EDEXCEL_2018: IgQuestion[] = [
       { id: 'D', textEn: '8.94 cm', textAr: '8.94 سم' }
     ],
     correctAnswer: 'A',
-    explanationEn: 'tan(20°) = BC / 8.4 => BC = 8.4 × tan(20°) = 8.4 × 0.36397... = 3.057... ≈ 3.06 cm.',
-    explanationAr: 'ظل الزاوية tan(20°) = BC ÷ 8.4 => BC = 8.4 × tan(20°) = 3.06 سم.',
-    solutionStepsEn: ['tan(20°) = BC / 8.4', 'BC = 8.4 × tan(20°) ≈ 3.06 cm'],
-    solutionStepsAr: ['tan(20°) = المقابل / المجاور', 'BC = 8.4 × 0.364 = 3.06 سم'],
+    explanationEn: 'tan(20°) = BC / 8.4 => BC = 8.4 × tan(20°) = 3.057... ≈ 3.06 cm.',
+    explanationAr: 'BC = 8.4 × tan(20°) = 3.06 سم.',
+    solutionStepsEn: ['tan(20°) = BC / 8.4', 'BC = 8.4 × tan(20°) = 3.06 cm'],
+    solutionStepsAr: ['BC = 8.4 × tan(20°) = 3.06 سم'],
     marks: 3
   },
   {
-    id: 'ED-2018-1F-15',
+    id: 'ED-2018-JAN-1F-15',
     code: '4MA0/1F Jan 2018 Q15',
     subjectId: 'maths',
     boardId: 'edexcel',
@@ -155,14 +155,14 @@ export const EDEXCEL_2018: IgQuestion[] = [
       { id: 'D', textEn: '2³ × 3 × 15', textAr: '2³ × 3 × 15' }
     ],
     correctAnswer: 'A',
-    explanationEn: '360 = 36 × 10 = (2² × 3²) × (2 × 5) = 2³ × 3² × 5.',
+    explanationEn: '360 = 36 × 10 = 2³ × 3² × 5.',
     explanationAr: '360 = 2³ × 3² × 5.',
-    solutionStepsEn: ['360 = 36 × 10', '360 = (2² × 3²) × (2 × 5) = 2³ × 3² × 5'],
+    solutionStepsEn: ['360 = 36 × 10', '360 = 2³ × 3² × 5'],
     solutionStepsAr: ['360 = 2³ × 3² × 5'],
     marks: 2
   },
   {
-    id: 'ED-2018-2F-22',
+    id: 'ED-2018-JAN-2F-22',
     code: '4MA0/2F Jan 2018 Q22',
     subjectId: 'maths',
     boardId: 'edexcel',
@@ -172,7 +172,7 @@ export const EDEXCEL_2018: IgQuestion[] = [
     paper: 'Paper 2F (Foundation)',
     topicEn: 'Circle Circumference',
     topicAr: 'محيط الدائرة',
-    questionEn: 'A circle has a diameter of 18 cm. Calculate the circumference of the circle correct to 3 significant figures.',
+    questionEn: 'A circle has a diameter of 18 cm. Calculate the circumference of the circle correct to 3 s.f.',
     questionAr: 'دائرة قطرها 18 سم. احسب محيط الدائرة مقرباً لأقرب 3 أرقام معنوية.',
     options: [
       { id: 'A', textEn: '56.5 cm', textAr: '56.5 سم' },
@@ -181,15 +181,15 @@ export const EDEXCEL_2018: IgQuestion[] = [
       { id: 'D', textEn: '56.8 cm', textAr: '56.8 سم' }
     ],
     correctAnswer: 'A',
-    explanationEn: 'Circumference = π × d = π × 18 = 56.548... ≈ 56.5 cm.',
-    explanationAr: 'محيط الدائرة = π × القطر = π × 18 = 56.5 سم.',
+    explanationEn: 'Circumference = π × 18 = 56.548... ≈ 56.5 cm.',
+    explanationAr: 'محيط الدائرة = π × 18 = 56.5 سم.',
     solutionStepsEn: ['C = π × d', 'C = 18π ≈ 56.5 cm'],
-    solutionStepsAr: ['المحيط = π × القطر', 'المحيط = 18 × 3.14159 ≈ 56.5 سم'],
+    solutionStepsAr: ['المحيط = π × القطر = 56.5 سم'],
     marks: 2
   },
 
   // =========================================================================
-  // PEARSON EDEXCEL IGCSE MATHEMATICS A — MAY/JUNE 2018 — PAPER 4H / 4HR
+  // PEARSON EDEXCEL IGCSE MATHEMATICS A — MAY/JUNE 2018
   // =========================================================================
   {
     id: 'ED-2018-MJ-4H-01',
@@ -203,7 +203,7 @@ export const EDEXCEL_2018: IgQuestion[] = [
     topicEn: 'Algebraic Form & Expression',
     topicAr: 'الصيغ والتعبير الجبري',
     questionEn: 'Mike buys c pens for 24 cents each and r rulers for 37 cents each. The total cost is T cents. Write down a formula for T in terms of c and r.',
-    questionAr: 'اشترى مايك عدد c قلام بسعر 24 سنتاً للقلم الواحد، وعدد r مساطر بسعر 37 سنتاً للمسطرة الواحدة. وكانت التكلفة الإجمالية T سنتاً. اكتب صيغة تعبر عن T بدلالة c و r.',
+    questionAr: 'اشترى مايك c أقلام بسعر 24 سنتاً للقلم الواحد، و r مساطر بسعر 37 سنتاً للمسطرة. وكانت التكلفة الإجمالية T سنتاً. اكتب صيغة تعبر عن T بدلالة c و r.',
     options: [
       { id: 'A', textEn: 'T = 24c + 37r', textAr: 'T = 24c + 37r' },
       { id: 'B', textEn: 'T = 37c + 24r', textAr: 'T = 37c + 24r' },
@@ -211,10 +211,10 @@ export const EDEXCEL_2018: IgQuestion[] = [
       { id: 'D', textEn: 'T = (c/24) + (r/37)', textAr: 'T = (c/24) + (r/37)' }
     ],
     correctAnswer: 'A',
-    explanationEn: 'Cost of c pens = 24 × c = 24c. Cost of r rulers = 37 × r = 37r. Total cost T = 24c + 37r.',
-    explanationAr: 'تكلفة الأقلام = 24c. تكلفة المساطر = 37r. التكلفة الإجمالية T = 24c + 37r.',
+    explanationEn: 'Cost = 24c + 37r.',
+    explanationAr: 'التكلفة الإجمالية T = 24c + 37r.',
     solutionStepsEn: ['Pens cost = 24c', 'Rulers cost = 37r', 'T = 24c + 37r'],
-    solutionStepsAr: ['الأقلام = 24c', 'المساطر = 37r', 'T = 24c + 37r'],
+    solutionStepsAr: ['التكلفة الإجمالية T = 24c + 37r'],
     marks: 3
   },
   {
@@ -237,10 +237,140 @@ export const EDEXCEL_2018: IgQuestion[] = [
       { id: 'D', textEn: '3 hours 20 minutes', textAr: '3 ساعات و20 دقيقة' }
     ],
     correctAnswer: 'A',
-    explanationEn: 'Time = Distance / Speed = 165 / 50 = 3.3 hours. 0.3 hours = 0.3 × 60 = 18 minutes => 3 hours 18 minutes.',
-    explanationAr: 'الزمن = المسافة ÷ السرعة = 165 ÷ 50 = 3.3 ساعة. 0.3 ساعة = 0.3 × 60 = 18 دقيقة => 3 ساعات و 18 دقيقة.',
-    solutionStepsEn: ['Time = 165 / 50 = 3.3 hours', '0.3 × 60 = 18 minutes', 'Time = 3 hours 18 minutes'],
-    solutionStepsAr: ['الزمن = 3.3 ساعة', 'الكسر العشرى = 18 دقيقة', '3 ساعات و18 دقيقة'],
+    explanationEn: 'Time = 165 / 50 = 3.3 hours = 3 hours and (0.3 × 60) mins = 3 hours 18 minutes.',
+    explanationAr: 'الزمن = 165 ÷ 50 = 3.3 ساعة = 3 ساعات و 18 دقيقة.',
+    solutionStepsEn: ['Time = 165 / 50 = 3.3 h', '0.3 × 60 = 18 mins', 'Time = 3 h 18 mins'],
+    solutionStepsAr: ['الزمن = 3.3 ساعة', '0.3 × 60 = 18 دقيقة', 'النتيجة = 3 ساعات و 18 دقيقة'],
+    marks: 3
+  },
+  {
+    id: 'ED-2018-MJ-3H-01',
+    code: '4MA1/3H May 2018 Q1',
+    subjectId: 'maths',
+    boardId: 'edexcel',
+    levelId: 'o_level_igcse',
+    year: 2018,
+    session: 'May/June',
+    paper: 'Paper 3H (Higher)',
+    topicEn: 'Calculator Evaluation & Significant Figures',
+    topicAr: 'استخدام الحاسبة والأرقام المعنوية',
+    questionEn: 'Calculate (56 + 983) / (42 - 6.28)².\n(a) Write down all figures on your calculator display.\n(b) Give your answer correct to 2 significant figures.',
+    questionAr: 'احسب المقدار (56 + 983) ÷ (42 - 6.28)².\n(أ) اكتب جميع أرقام الآلة الحاسبة.\n(ب) أعطِ الإجابة مقربة لأقرب رقمين معنويين.',
+    options: [
+      { id: 'A', textEn: '(a) 0.814328...; (b) 0.81', textAr: '(أ) 0.814328...؛ (ب) 0.81' },
+      { id: 'B', textEn: '(a) 0.814328...; (b) 0.814', textAr: '(أ) 0.814328...؛ (ب) 0.814' },
+      { id: 'C', textEn: '(a) 0.79521...; (b) 0.80', textAr: '(أ) 0.79521...؛ (ب) 0.80' },
+      { id: 'D', textEn: '(a) 1.2501...; (b) 1.3', textAr: '(أ) 1.2501...؛ (ب) 1.3' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Numerator = 1039. Denominator = (35.72)² = 1275.9184. Division = 1039 / 1275.9184 = 0.814315... Correct to 2 s.f. = 0.81.',
+    explanationAr: 'البسط = 1039. المقام = 1275.9184. الناتج = 0.814315... ولأقرب رقمين معنويين = 0.81.',
+    solutionStepsEn: ['Numerator = 1039', 'Denominator = 35.72² = 1275.9184', 'Result = 0.814315...', '2 s.f. = 0.81'],
+    solutionStepsAr: ['البسط = 1039', 'المقام = 1275.9184', 'الناتج = 0.81'],
+    marks: 3
+  },
+  {
+    id: 'ED-2018-MJ-2FR-24',
+    code: '4MA1/2FR May 2018 Q24',
+    subjectId: 'maths',
+    boardId: 'edexcel',
+    levelId: 'o_level_igcse',
+    year: 2018,
+    session: 'May/June',
+    paper: 'Paper 2FR (Foundation)',
+    topicEn: 'Prime Factorisation',
+    topicAr: 'التحليل إلى العوامل الأولية',
+    questionEn: 'Write 280 as a product of powers of its prime factors.',
+    questionAr: 'اكتب العدد 280 كحاصل ضرب قوى عوامله الأولية.',
+    options: [
+      { id: 'A', textEn: '2³ × 5 × 7', textAr: '2³ × 5 × 7' },
+      { id: 'B', textEn: '2² × 5² × 7', textAr: '2² × 5² × 7' },
+      { id: 'C', textEn: '2⁴ × 35', textAr: '2⁴ × 35' },
+      { id: 'D', textEn: '2³ × 35', textAr: '2³ × 35' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: '280 = 28 × 10 = (2² × 7) × (2 × 5) = 2³ × 5 × 7.',
+    explanationAr: '280 = 2³ × 5 × 7.',
+    solutionStepsEn: ['280 ÷ 2 = 140', '140 ÷ 2 = 70', '70 ÷ 2 = 35', '35 = 5 × 7', '280 = 2³ × 5 × 7'],
+    solutionStepsAr: ['280 = 2³ × 5 × 7'],
+    marks: 3
+  },
+  {
+    id: 'ED-2018-MJ-3H-05',
+    code: '4MA1/3H May 2018 Q5',
+    subjectId: 'maths',
+    boardId: 'edexcel',
+    levelId: 'o_level_igcse',
+    year: 2018,
+    session: 'May/June',
+    paper: 'Paper 3H (Higher)',
+    topicEn: 'Simultaneous Linear Equations',
+    topicAr: 'المعادلات الخطية الآنية',
+    questionEn: 'Solve the simultaneous equations:\n3x + 2y = 17\n2x - y = 2',
+    questionAr: 'حل نظام المعادلتين الآنيتين:\n3x + 2y = 17\n2x - y = 2',
+    options: [
+      { id: 'A', textEn: 'x = 3, y = 4', textAr: 'x = 3, y = 4' },
+      { id: 'B', textEn: 'x = 4, y = 3', textAr: 'x = 4, y = 3' },
+      { id: 'C', textEn: 'x = 5, y = 1', textAr: 'x = 5, y = 1' },
+      { id: 'D', textEn: 'x = 2, y = 5.5', textAr: 'x = 2, y = 5.5' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Multiply second equation by 2: 4x - 2y = 4. Add to first: 7x = 21 => x = 3. Substitute x = 3: 2(3) - y = 2 => y = 4.',
+    explanationAr: 'بضرب المعادلة الثانية في 2: 4x - 2y = 4. بالجمع مع الأولى: 7x = 21 => x = 3. بالتعويض: y = 4.',
+    solutionStepsEn: ['2x - y = 2 => y = 2x - 2', '3x + 2(2x - 2) = 17', '7x - 4 = 17 => 7x = 21 => x = 3', 'y = 2(3) - 2 = 4'],
+    solutionStepsAr: ['7x = 21 => x = 3', 'y = 4'],
+    marks: 3
+  },
+  {
+    id: 'ED-2018-MJ-4H-12',
+    code: '4MA1/4H May 2018 Q12',
+    subjectId: 'maths',
+    boardId: 'edexcel',
+    levelId: 'o_level_igcse',
+    year: 2018,
+    session: 'May/June',
+    paper: 'Paper 4H (Higher)',
+    topicEn: 'Cumulative Frequency & Interquartile Range',
+    topicAr: 'التكرار التراكمي والمدى الربيعي',
+    questionEn: 'A cumulative frequency graph for 80 students\' test marks shows median = 54, upper quartile Q3 = 68, and lower quartile Q1 = 42. Work out the interquartile range (IQR).',
+    questionAr: 'منحنى التكرار التراكمي لدرجات 80 طالباً يوضح أن الوسيط = 54، الربيع الأعلى Q3 = 68، والربيع الأدنى Q1 = 42. احسب المدى الربيعي (IQR).',
+    options: [
+      { id: 'A', textEn: 'IQR = 26', textAr: 'المدى الربيعي = 26' },
+      { id: 'B', textEn: 'IQR = 14', textAr: 'المدى الربيعي = 14' },
+      { id: 'C', textEn: 'IQR = 28', textAr: 'المدى الربيعي = 28' },
+      { id: 'D', textEn: 'IQR = 12', textAr: 'المدى الربيعي = 12' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'IQR = Q3 - Q1 = 68 - 42 = 26.',
+    explanationAr: 'المدى الربيعي = الربيع الأعلى - الربيع الأدنى = 68 - 42 = 26.',
+    solutionStepsEn: ['IQR = Q3 - Q1', 'IQR = 68 - 42 = 26'],
+    solutionStepsAr: ['المدى الربيعي = 68 - 42 = 26'],
+    marks: 2
+  },
+  {
+    id: 'ED-2018-MJ-3H-18',
+    code: '4MA1/3H May 2018 Q18',
+    subjectId: 'maths',
+    boardId: 'edexcel',
+    levelId: 'o_level_igcse',
+    year: 2018,
+    session: 'May/June',
+    paper: 'Paper 3H (Higher)',
+    topicEn: 'Quadratic Formula & Exact Roots',
+    topicAr: 'القانون العام للمعادلة التربيعية',
+    questionEn: 'Solve 3x² - 5x - 1 = 0. Give your solutions correct to 3 significant figures.',
+    questionAr: 'حل المعادلة التربيعية 3x² - 5x - 1 = 0. أعطِ الإجابة مقربة لأقرب 3 أرقام معنوية.',
+    options: [
+      { id: 'A', textEn: 'x = 1.85 or x = -0.180', textAr: 'x = 1.85 أو x = -0.180' },
+      { id: 'B', textEn: 'x = 1.76 or x = -0.210', textAr: 'x = 1.76 أو x = -0.210' },
+      { id: 'C', textEn: 'x = 2.12 or x = -0.120', textAr: 'x = 2.12 أو x = -0.120' },
+      { id: 'D', textEn: 'x = 1.85 or x = 0.180', textAr: 'x = 1.85 أو x = 0.180' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'a = 3, b = -5, c = -1. x = (5 ± √(25 - 4(3)(-1))) / 6 = (5 ± √37) / 6. x = (5 + 6.08276)/6 = 1.847... ≈ 1.85; x = (5 - 6.08276)/6 = -0.1804... ≈ -0.180.',
+    explanationAr: 'باستخدام القانون العام: x = (5 ± √37) ÷ 6. الجذران هما 1.85 و -0.180.',
+    solutionStepsEn: ['a = 3, b = -5, c = -1', 'x = (5 ± √37) / 6', 'x ≈ 1.85 or x ≈ -0.180'],
+    solutionStepsAr: ['x = (5 ± √37) / 6', 'x = 1.85 أو x = -0.180'],
     marks: 3
   }
 ];

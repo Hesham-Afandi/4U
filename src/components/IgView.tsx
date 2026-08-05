@@ -28,26 +28,184 @@ import {
   AlertCircle,
   Calculator,
   Layers,
-  GraduationCap
+  GraduationCap,
+  ExternalLink,
+  Maximize2,
+  Minimize2,
+  X
 } from 'lucide-react';
 
 interface IgViewProps {
   onSwitchToCurriculum?: () => void;
   onSwitchToEot?: () => void;
   onSwitchToSat?: () => void;
+  onOpenMistakesModal?: () => void;
   language?: 'ar' | 'en';
 }
+
+export interface EmbeddedExamLink {
+  year: string;
+  session: string;
+  sessionNameAr: string;
+  sessionNameEn: string;
+  titleAr: string;
+  titleEn: string;
+  url: string;
+}
+
+export const EMBEDDED_EXAM_LINKS: Record<string, Record<string, EmbeddedExamLink>> = {
+  '2021': {
+    'jun': {
+      year: '2021',
+      session: 'jun',
+      sessionNameAr: 'دورة يونيو (June 2021)',
+      sessionNameEn: 'June 2021',
+      titleAr: 'امتحانات Pearson Edexcel June 2021',
+      titleEn: 'Pearson Edexcel June 2021',
+      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Ju21/'
+    },
+    'jan': {
+      year: '2021',
+      session: 'jan',
+      sessionNameAr: 'دورة يناير (January 2021)',
+      sessionNameEn: 'January 2021',
+      titleAr: 'امتحانات Pearson Edexcel January 2021',
+      titleEn: 'Pearson Edexcel January 2021',
+      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jan21/'
+    }
+  },
+  '2020': {
+    'oct': {
+      year: '2020',
+      session: 'oct',
+      sessionNameAr: 'دورة أكتوبر (October 2020)',
+      sessionNameEn: 'October 2020',
+      titleAr: 'امتحانات Pearson Edexcel October 2020',
+      titleEn: 'Pearson Edexcel October 2020',
+      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Oct20/'
+    },
+    'jan': {
+      year: '2020',
+      session: 'jan',
+      sessionNameAr: 'دورة يناير (January 2020)',
+      sessionNameEn: 'January 2020',
+      titleAr: 'امتحانات Pearson Edexcel January 2020',
+      titleEn: 'Pearson Edexcel January 2020',
+      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jan20/'
+    }
+  },
+  '2019': {
+    'jun': {
+      year: '2019',
+      session: 'jun',
+      sessionNameAr: 'دورة يونيو (June 2019)',
+      sessionNameEn: 'June 2019',
+      titleAr: 'امتحانات Pearson Edexcel June 2019',
+      titleEn: 'Pearson Edexcel June 2019',
+      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jun19/'
+    },
+    'jan': {
+      year: '2019',
+      session: 'jan',
+      sessionNameAr: 'دورة يناير (January 2019)',
+      sessionNameEn: 'January 2019',
+      titleAr: 'امتحانات Pearson Edexcel January 2019',
+      titleEn: 'Pearson Edexcel January 2019',
+      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jan19/'
+    }
+  },
+  '2018': {
+    'jun': {
+      year: '2018',
+      session: 'jun',
+      sessionNameAr: 'دورة يونيو (June 2018)',
+      sessionNameEn: 'June 2018',
+      titleAr: 'امتحانات Pearson Edexcel June 2018',
+      titleEn: 'Pearson Edexcel June 2018',
+      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jun18/'
+    }
+  },
+  '2013': {
+    'jun': {
+      year: '2013',
+      session: 'jun',
+      sessionNameAr: 'دورة يونيو (June 2013)',
+      sessionNameEn: 'June 2013',
+      titleAr: 'امتحانات Pearson Edexcel June 2013',
+      titleEn: 'Pearson Edexcel June 2013',
+      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jun13/'
+    },
+    'jan': {
+      year: '2013',
+      session: 'jan',
+      sessionNameAr: 'دورة يناير (January 2013)',
+      sessionNameEn: 'January 2013',
+      titleAr: 'امتحانات Pearson Edexcel January 2013',
+      titleEn: 'Pearson Edexcel January 2013',
+      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jan13/'
+    }
+  },
+  '2012': {
+    'jun': {
+      year: '2012',
+      session: 'jun',
+      sessionNameAr: 'دورة يونيو (June 2012)',
+      sessionNameEn: 'June 2012',
+      titleAr: 'امتحانات Pearson Edexcel June 2012',
+      titleEn: 'Pearson Edexcel June 2012',
+      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jun12/'
+    },
+    'jan': {
+      year: '2012',
+      session: 'jan',
+      sessionNameAr: 'دورة يناير (January 2012)',
+      sessionNameEn: 'January 2012',
+      titleAr: 'امتحانات Pearson Edexcel January 2012',
+      titleEn: 'Pearson Edexcel January 2012',
+      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jan12/'
+    }
+  },
+  '2011': {
+    'jun': {
+      year: '2011',
+      session: 'jun',
+      sessionNameAr: 'دورة يونيو (June 2011)',
+      sessionNameEn: 'June 2011',
+      titleAr: 'امتحانات Pearson Edexcel June 2011',
+      titleEn: 'Pearson Edexcel June 2011',
+      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jun11/'
+    }
+  }
+};
 
 export const IgView: React.FC<IgViewProps> = ({
   onSwitchToCurriculum,
   onSwitchToEot,
   onSwitchToSat,
+  onOpenMistakesModal,
   language = 'ar'
 }) => {
   // Active Board & Level
   const [selectedBoardId, setSelectedBoardId] = useState<IgBoardId>('cambridge');
   const [selectedLevelId, setSelectedLevelId] = useState<IgLevelId>('o_level_igcse');
   
+  // View Mode: 'main' hub
+  const [viewMode, setViewMode] = useState<'main'>('main');
+
+  // Fullscreen Iframe State
+  const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
+
+  // Keyboard shortcut listener to exit fullscreen on ESC press
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsFullScreen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   // Active Subject
   const [selectedSubjectId, setSelectedSubjectId] = useState<string>('maths');
 
@@ -56,8 +214,26 @@ export const IgView: React.FC<IgViewProps> = ({
 
   // Filter States
   const [selectedYear, setSelectedYear] = useState<string>('all');
+  const [selectedSession, setSelectedSession] = useState<string>('jun');
   const [selectedPaper, setSelectedPaper] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
+
+  // Keep selectedSession valid whenever selectedYear changes
+  useEffect(() => {
+    if (EMBEDDED_EXAM_LINKS[selectedYear]) {
+      const available = Object.keys(EMBEDDED_EXAM_LINKS[selectedYear]);
+      if (!available.includes(selectedSession)) {
+        setSelectedSession(available[0]);
+      }
+    }
+  }, [selectedYear]);
+
+  // Active Embedded Exam Link lookup
+  const activeEmbeddedExam = useMemo(() => {
+    if (!EMBEDDED_EXAM_LINKS[selectedYear]) return null;
+    const yearSessions = EMBEDDED_EXAM_LINKS[selectedYear];
+    return yearSessions[selectedSession] || Object.values(yearSessions)[0];
+  }, [selectedYear, selectedSession]);
 
   // Practice Mode State
   const [practiceIndex, setPracticeIndex] = useState<number>(0);
@@ -113,6 +289,13 @@ export const IgView: React.FC<IgViewProps> = ({
     const years = Array.from({ length: 2021 - 2002 + 1 }, (_, i) => 2021 - i);
     return years;
   }, []);
+
+  // Dynamic paper options based on selected board
+  const availablePaperOptions = useMemo(() => {
+    const boardQuestions = IG_MATHS_QUESTIONS.filter(q => q.boardId === selectedBoardId);
+    const papers = Array.from(new Set(boardQuestions.map(q => q.paper))).filter(Boolean).sort();
+    return papers;
+  }, [selectedBoardId]);
 
   // Filtered Questions Dataset
   const filteredQuestions = useMemo(() => {
@@ -208,6 +391,14 @@ export const IgView: React.FC<IgViewProps> = ({
   const handleSubmitExam = () => {
     setIsExamRunning(false);
     setExamSubmitted(true);
+
+    // Automatically save all incorrect & unanswered questions to mistakes notebook
+    filteredQuestions.forEach(q => {
+      const userAns = examAnswers[q.id];
+      if (!userAns || userAns !== q.correctAnswer) {
+        saveQuestionToMistakes(q, userAns || 'لم يتم الإجابة');
+      }
+    });
   };
 
   const handleSelectExamAnswer = (qId: string, ansId: string) => {
@@ -555,7 +746,7 @@ export const IgView: React.FC<IgViewProps> = ({
         </div>
 
         {/* FILTER BAR: SEARCH & YEARS (2002 - 2021) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-200 dark:border-slate-700">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-200 dark:border-slate-700">
           {/* Search */}
           <div className="relative">
             <Search className="w-4 h-4 text-slate-400 absolute right-3 top-3.5" />
@@ -577,11 +768,34 @@ export const IgView: React.FC<IgViewProps> = ({
               className="w-full p-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 cursor-pointer"
             >
               <option value="all">جميع السنوات (2002 - 2021)</option>
-              {yearsList.map((y) => (
-                <option key={y} value={y}>امتحانات سنة {y}</option>
-              ))}
+              {yearsList.map((y) => {
+                const hasEmbedded = Boolean(EMBEDDED_EXAM_LINKS[y.toString()]);
+                return (
+                  <option key={y} value={y}>
+                    امتحانات سنة {y} {hasEmbedded ? '🌐 (تفاعلي)' : ''}
+                  </option>
+                );
+              })}
             </select>
           </div>
+
+          {/* Session / Month Selector (Visible when selected year has embedded links) */}
+          {EMBEDDED_EXAM_LINKS[selectedYear] && (
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-slate-600 dark:text-slate-400 shrink-0">الدورة / الشهر:</span>
+              <select
+                value={selectedSession}
+                onChange={(e) => setSelectedSession(e.target.value)}
+                className="w-full p-2 bg-white dark:bg-slate-900 border border-teal-500/50 rounded-xl text-xs font-black text-teal-700 dark:text-teal-300 focus:outline-none focus:ring-2 focus:ring-teal-500 cursor-pointer shadow-sm"
+              >
+                {Object.values(EMBEDDED_EXAM_LINKS[selectedYear]).map((sess) => (
+                  <option key={sess.session} value={sess.session}>
+                    {sess.sessionNameAr}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           {/* Paper Type Selector */}
           <div className="flex items-center gap-2">
@@ -591,15 +805,95 @@ export const IgView: React.FC<IgViewProps> = ({
               onChange={(e) => setSelectedPaper(e.target.value)}
               className="w-full p-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 cursor-pointer"
             >
-              <option value="all">جميع الأوراق (Paper 2 & 4)</option>
-              <option value="Paper 2 (Extended)">Paper 2 (Extended)</option>
-              <option value="Paper 4 (Extended)">Paper 4 (Extended)</option>
+              <option value="all">جميع الأوراق الامتحانية</option>
+              {availablePaperOptions.map((paper) => (
+                <option key={paper} value={paper}>{paper}</option>
+              ))}
             </select>
           </div>
         </div>
 
-        {/* TAB CONTENT: PRACTICE MODE */}
-        {activeTab === 'practice' && (
+        {/* EMBEDDED IFRAME OR STANDARD TABS */}
+        {activeEmbeddedExam ? (
+          <div className={`space-y-4 pt-2 ${isFullScreen ? 'fixed inset-0 z-50 bg-slate-950 p-3 md:p-5 flex flex-col h-screen w-screen space-y-3' : ''}`}>
+            <div className="bg-gradient-to-r from-teal-950 via-slate-900 to-indigo-950 text-white p-4 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-3 shadow-md border border-teal-500/30">
+              <div className="flex flex-col md:flex-row md:items-center gap-3">
+                <div className="flex items-center gap-2.5">
+                  <span className="text-xl">🌐</span>
+                  <div>
+                    <h3 className="text-sm font-black text-white">{activeEmbeddedExam.titleAr}</h3>
+                    <p className="text-xs text-teal-200 font-medium">
+                      {isFullScreen 
+                        ? 'وضع الشاشة الكاملة مفعّل — اضغط ESC أو انقر زر الخروج للعودة' 
+                        : `يتم عرض بنك امتحانات ${activeEmbeddedExam.sessionNameAr} المعتمد مباشرة داخل الصفحة`
+                      }
+                    </p>
+                  </div>
+                </div>
+
+                {/* Session Switcher Pills if selected year has multiple sessions */}
+                {EMBEDDED_EXAM_LINKS[selectedYear] && Object.keys(EMBEDDED_EXAM_LINKS[selectedYear]).length > 1 && (
+                  <div className="flex items-center gap-1.5 bg-slate-900/80 p-1 rounded-xl border border-teal-500/30 shrink-0">
+                    {Object.values(EMBEDDED_EXAM_LINKS[selectedYear]).map((sess) => (
+                      <button
+                        key={sess.session}
+                        onClick={() => setSelectedSession(sess.session)}
+                        className={`px-3 py-1 rounded-lg text-xs font-black transition cursor-pointer ${
+                          selectedSession === sess.session
+                            ? 'bg-teal-500 text-slate-950 shadow'
+                            : 'text-slate-300 hover:text-white hover:bg-slate-800'
+                        }`}
+                      >
+                        {sess.sessionNameAr}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="flex items-center gap-2 shrink-0">
+                {!isFullScreen && (
+                  <button
+                    onClick={() => setSelectedYear('all')}
+                    className="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs rounded-xl shadow transition flex items-center gap-1 cursor-pointer border border-slate-700"
+                  >
+                    <span>عرض باقي السنوات</span>
+                  </button>
+                )}
+                <button
+                  onClick={() => setIsFullScreen(!isFullScreen)}
+                  className="px-4 py-2 bg-teal-500 hover:bg-teal-600 text-slate-950 font-black text-xs rounded-xl shadow transition flex items-center gap-2 cursor-pointer"
+                  title="تبديل وضع الشاشة الكاملة (أو اضغط ESC)"
+                >
+                  {isFullScreen ? (
+                    <>
+                      <Minimize2 className="w-4 h-4" />
+                      <span>خروج من ملء الشاشة (ESC)</span>
+                    </>
+                  ) : (
+                    <>
+                      <Maximize2 className="w-4 h-4" />
+                      <span>عرض ملء الشاشة ⛶</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            <div className={`w-full bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden ${isFullScreen ? 'flex-1 h-full' : 'h-[850px]'}`}>
+              <iframe
+                key={activeEmbeddedExam.url}
+                src={activeEmbeddedExam.url}
+                title={activeEmbeddedExam.titleEn}
+                className="w-full h-full border-0"
+                allow="fullscreen"
+              />
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* TAB CONTENT: PRACTICE MODE */}
+            {activeTab === 'practice' && (
           <div className="space-y-6">
             {filteredQuestions.length === 0 ? (
               renderEmptyStateNotice()
@@ -1081,7 +1375,30 @@ export const IgView: React.FC<IgViewProps> = ({
                     >
                       <span>العودة للتمرين التفاعلي ←</span>
                     </button>
+                    {onOpenMistakesModal && (
+                      <button
+                        onClick={onOpenMistakesModal}
+                        className="px-6 py-3 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-sm shadow-md transition cursor-pointer flex items-center gap-2"
+                      >
+                        <Bookmark className="w-4 h-4" />
+                        <span>فتح دفتر أخطائي 📖</span>
+                      </button>
+                    )}
                   </div>
+
+                  {(examResults.wrong > 0 || examResults.unanswered > 0) && (
+                    <div className="bg-amber-500/15 border border-amber-500/30 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-right">
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl">📖</span>
+                        <div>
+                          <h4 className="text-xs font-black text-amber-300">مربوط تلقائياً بـ "دفتر أخطائي"</h4>
+                          <p className="text-[11px] text-slate-200 font-medium">
+                            تم توثيق وحفظ ({examResults.wrong + examResults.unanswered}) سؤالاً خاطئاً أو غير مجاب تلقائياً لمراجعتها لاحقاً.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* FULL REVIEW OF ALL EXAM QUESTIONS */}
@@ -1231,6 +1548,8 @@ export const IgView: React.FC<IgViewProps> = ({
             </div>
             )}
           </div>
+        )}
+          </>
         )}
       </div>
     </div>

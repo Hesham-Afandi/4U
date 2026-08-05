@@ -28,6 +28,10 @@ import { EDEXCEL_2015 } from './edexcel2015';
 import { EDEXCEL_2016 } from './edexcel2016';
 import { EDEXCEL_2017 } from './edexcel2017';
 import { EDEXCEL_2018 } from './edexcel2018';
+import { EDEXCEL_2019 } from './edexcel2019';
+import { EDEXCEL_2020 } from './edexcel2020';
+import { EDEXCEL_2021 } from './edexcel2021';
+import { EDEXCEL_2021_JUNE } from './edexcel2021June';
 import { QUESTIONS_2019_ON } from './questions2019_ON';
 
 export const IG_BOARDS: IgExamBoard[] = [
@@ -1839,6 +1843,10 @@ export const IG_MATHS_QUESTIONS: IgQuestion[] = [
   ...EDEXCEL_2016,
   ...EDEXCEL_2017,
   ...EDEXCEL_2018,
+  ...EDEXCEL_2019,
+  ...EDEXCEL_2020,
+  ...EDEXCEL_2021,
+  ...EDEXCEL_2021_JUNE,
   ...QUESTIONS_2019_ON
 ];
 

@@ -3524,6 +3524,7 @@ export default function App() {
             {appState.country && activePlatformSection === 'ig' && (
               <IgView 
                 language={language}
+                onOpenMistakesModal={() => setShowMistakesModal(true)}
                 onSwitchToCurriculum={() => {
                   setActivePlatformSection('curriculum');
                   setCurriculumSubView(appState.country === 'UAE' ? 'terms' : 'landing');
