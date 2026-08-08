@@ -44,6 +44,7 @@ interface IgViewProps {
 }
 
 export interface EmbeddedExamLink {
+  board?: string;
   year: string;
   session: string;
   sessionNameAr: string;
@@ -53,127 +54,638 @@ export interface EmbeddedExamLink {
   url: string;
 }
 
-export const EMBEDDED_EXAM_LINKS: Record<string, Record<string, EmbeddedExamLink>> = {
-  '2021': {
-    'jun': {
-      year: '2021',
-      session: 'jun',
-      sessionNameAr: 'دورة يونيو (June 2021)',
-      sessionNameEn: 'June 2021',
-      titleAr: 'امتحانات Pearson Edexcel June 2021',
-      titleEn: 'Pearson Edexcel June 2021',
-      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Ju21/'
+export const EMBEDDED_EXAM_LINKS: Record<string, Record<string, Record<string, EmbeddedExamLink>>> = {
+  'edexcel': {
+    '2021': {
+      'jun': {
+        year: '2021',
+        session: 'jun',
+        sessionNameAr: 'دورة يونيو (June 2021)',
+        sessionNameEn: 'June 2021',
+        titleAr: 'امتحانات Pearson Edexcel June 2021',
+        titleEn: 'Pearson Edexcel June 2021',
+        url: 'https://hesham-afandi.github.io/Ig-Edexcel-Ju21/'
+      },
+      'jan': {
+        year: '2021',
+        session: 'jan',
+        sessionNameAr: 'دورة يناير (January 2021)',
+        sessionNameEn: 'January 2021',
+        titleAr: 'امتحانات Pearson Edexcel January 2021',
+        titleEn: 'Pearson Edexcel January 2021',
+        url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jan21/'
+      }
     },
-    'jan': {
-      year: '2021',
-      session: 'jan',
-      sessionNameAr: 'دورة يناير (January 2021)',
-      sessionNameEn: 'January 2021',
-      titleAr: 'امتحانات Pearson Edexcel January 2021',
-      titleEn: 'Pearson Edexcel January 2021',
-      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jan21/'
-    }
-  },
-  '2020': {
-    'oct': {
-      year: '2020',
-      session: 'oct',
-      sessionNameAr: 'دورة أكتوبر (October 2020)',
-      sessionNameEn: 'October 2020',
-      titleAr: 'امتحانات Pearson Edexcel October 2020',
-      titleEn: 'Pearson Edexcel October 2020',
-      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Oct20/'
+    '2020': {
+      'oct': {
+        year: '2020',
+        session: 'oct',
+        sessionNameAr: 'دورة أكتوبر (October 2020)',
+        sessionNameEn: 'October 2020',
+        titleAr: 'امتحانات Pearson Edexcel October 2020',
+        titleEn: 'Pearson Edexcel October 2020',
+        url: 'https://hesham-afandi.github.io/Ig-Edexcel-Oct20/'
+      },
+      'jan': {
+        year: '2020',
+        session: 'jan',
+        sessionNameAr: 'دورة يناير (January 2020)',
+        sessionNameEn: 'January 2020',
+        titleAr: 'امتحانات Pearson Edexcel January 2020',
+        titleEn: 'Pearson Edexcel January 2020',
+        url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jan20/'
+      }
     },
-    'jan': {
-      year: '2020',
-      session: 'jan',
-      sessionNameAr: 'دورة يناير (January 2020)',
-      sessionNameEn: 'January 2020',
-      titleAr: 'امتحانات Pearson Edexcel January 2020',
-      titleEn: 'Pearson Edexcel January 2020',
-      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jan20/'
-    }
-  },
-  '2019': {
-    'jun': {
-      year: '2019',
-      session: 'jun',
-      sessionNameAr: 'دورة يونيو (June 2019)',
-      sessionNameEn: 'June 2019',
-      titleAr: 'امتحانات Pearson Edexcel June 2019',
-      titleEn: 'Pearson Edexcel June 2019',
-      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jun19/'
+    '2019': {
+      'jun': {
+        year: '2019',
+        session: 'jun',
+        sessionNameAr: 'دورة يونيو (June 2019)',
+        sessionNameEn: 'June 2019',
+        titleAr: 'امتحانات Pearson Edexcel June 2019',
+        titleEn: 'Pearson Edexcel June 2019',
+        url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jun19/'
+      },
+      'jan': {
+        year: '2019',
+        session: 'jan',
+        sessionNameAr: 'دورة يناير (January 2019)',
+        sessionNameEn: 'January 2019',
+        titleAr: 'امتحانات Pearson Edexcel January 2019',
+        titleEn: 'Pearson Edexcel January 2019',
+        url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jan19/'
+      }
     },
-    'jan': {
-      year: '2019',
-      session: 'jan',
-      sessionNameAr: 'دورة يناير (January 2019)',
-      sessionNameEn: 'January 2019',
-      titleAr: 'امتحانات Pearson Edexcel January 2019',
-      titleEn: 'Pearson Edexcel January 2019',
-      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jan19/'
-    }
-  },
-  '2018': {
-    'jun': {
-      year: '2018',
-      session: 'jun',
-      sessionNameAr: 'دورة يونيو (June 2018)',
-      sessionNameEn: 'June 2018',
-      titleAr: 'امتحانات Pearson Edexcel June 2018',
-      titleEn: 'Pearson Edexcel June 2018',
-      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jun18/'
-    }
-  },
-  '2013': {
-    'jun': {
-      year: '2013',
-      session: 'jun',
-      sessionNameAr: 'دورة يونيو (June 2013)',
-      sessionNameEn: 'June 2013',
-      titleAr: 'امتحانات Pearson Edexcel June 2013',
-      titleEn: 'Pearson Edexcel June 2013',
-      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jun13/'
+    '2018': {
+      'jun': {
+        year: '2018',
+        session: 'jun',
+        sessionNameAr: 'دورة يونيو (June 2018)',
+        sessionNameEn: 'June 2018',
+        titleAr: 'امتحانات Pearson Edexcel June 2018',
+        titleEn: 'Pearson Edexcel June 2018',
+        url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jun18/'
+      },
+      'jan': {
+        year: '2018',
+        session: 'jan',
+        sessionNameAr: 'دورة يناير (January 2018)',
+        sessionNameEn: 'January 2018',
+        titleAr: 'امتحانات Pearson Edexcel January 2018',
+        titleEn: 'Pearson Edexcel January 2018',
+        url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jan18/'
+      }
     },
-    'jan': {
-      year: '2013',
-      session: 'jan',
-      sessionNameAr: 'دورة يناير (January 2013)',
-      sessionNameEn: 'January 2013',
-      titleAr: 'امتحانات Pearson Edexcel January 2013',
-      titleEn: 'Pearson Edexcel January 2013',
-      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jan13/'
-    }
-  },
-  '2012': {
-    'jun': {
-      year: '2012',
-      session: 'jun',
-      sessionNameAr: 'دورة يونيو (June 2012)',
-      sessionNameEn: 'June 2012',
-      titleAr: 'امتحانات Pearson Edexcel June 2012',
-      titleEn: 'Pearson Edexcel June 2012',
-      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jun12/'
+    '2017': {
+      'jun': {
+        year: '2017',
+        session: 'jun',
+        sessionNameAr: 'دورة يونيو (June 2017)',
+        sessionNameEn: 'June 2017',
+        titleAr: 'امتحانات Pearson Edexcel June 2017',
+        titleEn: 'Pearson Edexcel June 2017',
+        url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jun17/'
+      },
+      'jan': {
+        year: '2017',
+        session: 'jan',
+        sessionNameAr: 'دورة يناير (January 2017)',
+        sessionNameEn: 'January 2017',
+        titleAr: 'امتحانات Pearson Edexcel January 2017',
+        titleEn: 'Pearson Edexcel January 2017',
+        url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jan17/'
+      }
     },
-    'jan': {
-      year: '2012',
-      session: 'jan',
-      sessionNameAr: 'دورة يناير (January 2012)',
-      sessionNameEn: 'January 2012',
-      titleAr: 'امتحانات Pearson Edexcel January 2012',
-      titleEn: 'Pearson Edexcel January 2012',
-      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jan12/'
+    '2016': {
+      'jun': {
+        year: '2016',
+        session: 'jun',
+        sessionNameAr: 'دورة يونيو (June 2016)',
+        sessionNameEn: 'June 2016',
+        titleAr: 'امتحانات Pearson Edexcel June 2016',
+        titleEn: 'Pearson Edexcel June 2016',
+        url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jun16/'
+      },
+      'jan': {
+        year: '2016',
+        session: 'jan',
+        sessionNameAr: 'دورة يناير (January 2016)',
+        sessionNameEn: 'January 2016',
+        titleAr: 'امتحانات Pearson Edexcel January 2016',
+        titleEn: 'Pearson Edexcel January 2016',
+        url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jan16/'
+      }
+    },
+    '2015': {
+      'jun': {
+        year: '2015',
+        session: 'jun',
+        sessionNameAr: 'دورة يونيو (June 2015)',
+        sessionNameEn: 'June 2015',
+        titleAr: 'امتحانات Pearson Edexcel June 2015',
+        titleEn: 'Pearson Edexcel June 2015',
+        url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jun15/'
+      },
+      'jan': {
+        year: '2015',
+        session: 'jan',
+        sessionNameAr: 'دورة يناير (January 2015)',
+        sessionNameEn: 'January 2015',
+        titleAr: 'امتحانات Pearson Edexcel January 2015',
+        titleEn: 'Pearson Edexcel January 2015',
+        url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jan15/'
+      }
+    },
+    '2014': {
+      'jun': {
+        year: '2014',
+        session: 'jun',
+        sessionNameAr: 'دورة يونيو (June 2014)',
+        sessionNameEn: 'June 2014',
+        titleAr: 'امتحانات Pearson Edexcel June 2014',
+        titleEn: 'Pearson Edexcel June 2014',
+        url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jun14/'
+      },
+      'jan': {
+        year: '2014',
+        session: 'jan',
+        sessionNameAr: 'دورة يناير (January 2014)',
+        sessionNameEn: 'January 2014',
+        titleAr: 'امتحانات Pearson Edexcel January 2014',
+        titleEn: 'Pearson Edexcel January 2014',
+        url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jan14/'
+      }
+    },
+    '2013': {
+      'jun': {
+        year: '2013',
+        session: 'jun',
+        sessionNameAr: 'دورة يونيو (June 2013)',
+        sessionNameEn: 'June 2013',
+        titleAr: 'امتحانات Pearson Edexcel June 2013',
+        titleEn: 'Pearson Edexcel June 2013',
+        url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jun13/'
+      },
+      'jan': {
+        year: '2013',
+        session: 'jan',
+        sessionNameAr: 'دورة يناير (January 2013)',
+        sessionNameEn: 'January 2013',
+        titleAr: 'امتحانات Pearson Edexcel January 2013',
+        titleEn: 'Pearson Edexcel January 2013',
+        url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jan13/'
+      }
+    },
+    '2012': {
+      'jun': {
+        year: '2012',
+        session: 'jun',
+        sessionNameAr: 'دورة يونيو (June 2012)',
+        sessionNameEn: 'June 2012',
+        titleAr: 'امتحانات Pearson Edexcel June 2012',
+        titleEn: 'Pearson Edexcel June 2012',
+        url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jun12/'
+      },
+      'jan': {
+        year: '2012',
+        session: 'jan',
+        sessionNameAr: 'دورة يناير (January 2012)',
+        sessionNameEn: 'January 2012',
+        titleAr: 'امتحانات Pearson Edexcel January 2012',
+        titleEn: 'Pearson Edexcel January 2012',
+        url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jan12/'
+      }
+    },
+    '2011': {
+      'jun': {
+        year: '2011',
+        session: 'jun',
+        sessionNameAr: 'دورة يونيو (June 2011)',
+        sessionNameEn: 'June 2011',
+        titleAr: 'امتحانات Pearson Edexcel June 2011',
+        titleEn: 'Pearson Edexcel June 2011',
+        url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jun11/'
+      }
     }
   },
-  '2011': {
-    'jun': {
-      year: '2011',
-      session: 'jun',
-      sessionNameAr: 'دورة يونيو (June 2011)',
-      sessionNameEn: 'June 2011',
-      titleAr: 'امتحانات Pearson Edexcel June 2011',
-      titleEn: 'Pearson Edexcel June 2011',
-      url: 'https://hesham-afandi.github.io/Ig-Edexcel-Jun11/'
+  'cambridge': {
+    '2021': {
+      'mj': {
+        board: 'cambridge',
+        year: '2021',
+        session: 'mj',
+        sessionNameAr: 'دورة مايو/يونيو (May/June 2021)',
+        sessionNameEn: 'May/June 2021',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics May/June 2021',
+        titleEn: 'Cambridge IGCSE Mathematics May/June 2021',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-MJ21/'
+      },
+      'on': {
+        board: 'cambridge',
+        year: '2021',
+        session: 'on',
+        sessionNameAr: 'دورة أكتوبر/نوفمبر (Oct/Nov 2021)',
+        sessionNameEn: 'Oct/Nov 2021',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics Oct/Nov 2021',
+        titleEn: 'Cambridge IGCSE Mathematics Oct/Nov 2021',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-ON21/'
+      }
+    },
+    '2020': {
+      'mj': {
+        board: 'cambridge',
+        year: '2020',
+        session: 'mj',
+        sessionNameAr: 'دورة مايو/يونيو (May/June 2020)',
+        sessionNameEn: 'May/June 2020',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics May/June 2020',
+        titleEn: 'Cambridge IGCSE Mathematics May/June 2020',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-MJ20/'
+      },
+      'on': {
+        board: 'cambridge',
+        year: '2020',
+        session: 'on',
+        sessionNameAr: 'دورة أكتوبر/نوفمبر (Oct/Nov 2020)',
+        sessionNameEn: 'Oct/Nov 2020',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics Oct/Nov 2020',
+        titleEn: 'Cambridge IGCSE Mathematics Oct/Nov 2020',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-ON20/'
+      }
+    },
+    '2019': {
+      'mj': {
+        board: 'cambridge',
+        year: '2019',
+        session: 'mj',
+        sessionNameAr: 'دورة مايو/يونيو (May/June 2019)',
+        sessionNameEn: 'May/June 2019',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics May/June 2019',
+        titleEn: 'Cambridge IGCSE Mathematics May/June 2019',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-MJ19/'
+      },
+      'on': {
+        board: 'cambridge',
+        year: '2019',
+        session: 'on',
+        sessionNameAr: 'دورة أكتوبر/نوفمبر (Oct/Nov 2019)',
+        sessionNameEn: 'Oct/Nov 2019',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics Oct/Nov 2019',
+        titleEn: 'Cambridge IGCSE Mathematics Oct/Nov 2019',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-ON19/'
+      }
+    },
+    '2018': {
+      'mj': {
+        board: 'cambridge',
+        year: '2018',
+        session: 'mj',
+        sessionNameAr: 'دورة مايو/يونيو (May/June 2018)',
+        sessionNameEn: 'May/June 2018',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics May/June 2018',
+        titleEn: 'Cambridge IGCSE Mathematics May/June 2018',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-MJ18/'
+      },
+      'on': {
+        board: 'cambridge',
+        year: '2018',
+        session: 'on',
+        sessionNameAr: 'دورة أكتوبر/نوفمبر (Oct/Nov 2018)',
+        sessionNameEn: 'Oct/Nov 2018',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics Oct/Nov 2018',
+        titleEn: 'Cambridge IGCSE Mathematics Oct/Nov 2018',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-ON18/'
+      }
+    },
+    '2017': {
+      'mj': {
+        board: 'cambridge',
+        year: '2017',
+        session: 'mj',
+        sessionNameAr: 'دورة مايو/يونيو (May/June 2017)',
+        sessionNameEn: 'May/June 2017',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics May/June 2017',
+        titleEn: 'Cambridge IGCSE Mathematics May/June 2017',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-MJ17/'
+      },
+      'on': {
+        board: 'cambridge',
+        year: '2017',
+        session: 'on',
+        sessionNameAr: 'دورة أكتوبر/نوفمبر (Oct/Nov 2017)',
+        sessionNameEn: 'Oct/Nov 2017',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics Oct/Nov 2017',
+        titleEn: 'Cambridge IGCSE Mathematics Oct/Nov 2017',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-ON17/'
+      }
+    },
+    '2016': {
+      'mj': {
+        board: 'cambridge',
+        year: '2016',
+        session: 'mj',
+        sessionNameAr: 'دورة مايو/يونيو (May/June 2016)',
+        sessionNameEn: 'May/June 2016',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics May/June 2016',
+        titleEn: 'Cambridge IGCSE Mathematics May/June 2016',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-MJ16/'
+      },
+      'on': {
+        board: 'cambridge',
+        year: '2016',
+        session: 'on',
+        sessionNameAr: 'دورة أكتوبر/نوفمبر (Oct/Nov 2016)',
+        sessionNameEn: 'Oct/Nov 2016',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics Oct/Nov 2016',
+        titleEn: 'Cambridge IGCSE Mathematics Oct/Nov 2016',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-ON16/'
+      }
+    },
+    '2015': {
+      'mj': {
+        board: 'cambridge',
+        year: '2015',
+        session: 'mj',
+        sessionNameAr: 'دورة مايو/يونيو (May/June 2015)',
+        sessionNameEn: 'May/June 2015',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics May/June 2015',
+        titleEn: 'Cambridge IGCSE Mathematics May/June 2015',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-MJ15/'
+      },
+      'on': {
+        board: 'cambridge',
+        year: '2015',
+        session: 'on',
+        sessionNameAr: 'دورة أكتوبر/نوفمبر (Oct/Nov 2015)',
+        sessionNameEn: 'Oct/Nov 2015',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics Oct/Nov 2015',
+        titleEn: 'Cambridge IGCSE Mathematics Oct/Nov 2015',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-ON15/'
+      }
+    },
+    '2014': {
+      'mj': {
+        board: 'cambridge',
+        year: '2014',
+        session: 'mj',
+        sessionNameAr: 'دورة مايو/يونيو (May/June 2014)',
+        sessionNameEn: 'May/June 2014',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics May/June 2014',
+        titleEn: 'Cambridge IGCSE Mathematics May/June 2014',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-MJ14/'
+      },
+      'on': {
+        board: 'cambridge',
+        year: '2014',
+        session: 'on',
+        sessionNameAr: 'دورة أكتوبر/نوفمبر (Oct/Nov 2014)',
+        sessionNameEn: 'Oct/Nov 2014',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics Oct/Nov 2014',
+        titleEn: 'Cambridge IGCSE Mathematics Oct/Nov 2014',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-ON14/'
+      }
+    },
+    '2013': {
+      'mj': {
+        board: 'cambridge',
+        year: '2013',
+        session: 'mj',
+        sessionNameAr: 'دورة مايو/يونيو (May/June 2013)',
+        sessionNameEn: 'May/June 2013',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics May/June 2013',
+        titleEn: 'Cambridge IGCSE Mathematics May/June 2013',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-MJ13/'
+      },
+      'on': {
+        board: 'cambridge',
+        year: '2013',
+        session: 'on',
+        sessionNameAr: 'دورة أكتوبر/نوفمبر (Oct/Nov 2013)',
+        sessionNameEn: 'Oct/Nov 2013',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics Oct/Nov 2013',
+        titleEn: 'Cambridge IGCSE Mathematics Oct/Nov 2013',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-ON13/'
+      }
+    },
+    '2012': {
+      'mj': {
+        board: 'cambridge',
+        year: '2012',
+        session: 'mj',
+        sessionNameAr: 'دورة مايو/يونيو (May/June 2012)',
+        sessionNameEn: 'May/June 2012',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics May/June 2012',
+        titleEn: 'Cambridge IGCSE Mathematics May/June 2012',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-MJ12/'
+      },
+      'on': {
+        board: 'cambridge',
+        year: '2012',
+        session: 'on',
+        sessionNameAr: 'دورة أكتوبر/نوفمبر (Oct/Nov 2012)',
+        sessionNameEn: 'Oct/Nov 2012',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics Oct/Nov 2012',
+        titleEn: 'Cambridge IGCSE Mathematics Oct/Nov 2012',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-ON12/'
+      }
+    },
+    '2011': {
+      'mj': {
+        board: 'cambridge',
+        year: '2011',
+        session: 'mj',
+        sessionNameAr: 'دورة مايو/يونيو (May/June 2011)',
+        sessionNameEn: 'May/June 2011',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics May/June 2011',
+        titleEn: 'Cambridge IGCSE Mathematics May/June 2011',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-MJ11/'
+      },
+      'on': {
+        board: 'cambridge',
+        year: '2011',
+        session: 'on',
+        sessionNameAr: 'دورة أكتوبر/نوفمبر (Oct/Nov 2011)',
+        sessionNameEn: 'Oct/Nov 2011',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics Oct/Nov 2011',
+        titleEn: 'Cambridge IGCSE Mathematics Oct/Nov 2011',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-ON11/'
+      }
+    },
+    '2010': {
+      'mj': {
+        board: 'cambridge',
+        year: '2010',
+        session: 'mj',
+        sessionNameAr: 'دورة مايو/يونيو (May/June 2010)',
+        sessionNameEn: 'May/June 2010',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics May/June 2010',
+        titleEn: 'Cambridge IGCSE Mathematics May/June 2010',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-MJ10/'
+      },
+      'on': {
+        board: 'cambridge',
+        year: '2010',
+        session: 'on',
+        sessionNameAr: 'دورة أكتوبر/نوفمبر (Oct/Nov 2010)',
+        sessionNameEn: 'Oct/Nov 2010',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics Oct/Nov 2010',
+        titleEn: 'Cambridge IGCSE Mathematics Oct/Nov 2010',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-ON10/'
+      }
+    },
+    '2009': {
+      'mj': {
+        board: 'cambridge',
+        year: '2009',
+        session: 'mj',
+        sessionNameAr: 'دورة مايو/يونيو (May/June 2009)',
+        sessionNameEn: 'May/June 2009',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics May/June 2009',
+        titleEn: 'Cambridge IGCSE Mathematics May/June 2009',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-MJ09/'
+      },
+      'on': {
+        board: 'cambridge',
+        year: '2009',
+        session: 'on',
+        sessionNameAr: 'دورة أكتوبر/نوفمبر (Oct/Nov 2009)',
+        sessionNameEn: 'Oct/Nov 2009',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics Oct/Nov 2009',
+        titleEn: 'Cambridge IGCSE Mathematics Oct/Nov 2009',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-ON09/'
+      }
+    },
+    '2008': {
+      'mj': {
+        board: 'cambridge',
+        year: '2008',
+        session: 'mj',
+        sessionNameAr: 'دورة مايو/يونيو (May/June 2008)',
+        sessionNameEn: 'May/June 2008',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics May/June 2008',
+        titleEn: 'Cambridge IGCSE Mathematics May/June 2008',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-MJ08/'
+      },
+      'on': {
+        board: 'cambridge',
+        year: '2008',
+        session: 'on',
+        sessionNameAr: 'دورة أكتوبر/نوفمبر (Oct/Nov 2008)',
+        sessionNameEn: 'Oct/Nov 2008',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics Oct/Nov 2008',
+        titleEn: 'Cambridge IGCSE Mathematics Oct/Nov 2008',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-ON08/'
+      }
+    },
+    '2007': {
+      'mj': {
+        board: 'cambridge',
+        year: '2007',
+        session: 'mj',
+        sessionNameAr: 'دورة مايو/يونيو (May/June 2007)',
+        sessionNameEn: 'May/June 2007',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics May/June 2007',
+        titleEn: 'Cambridge IGCSE Mathematics May/June 2007',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-MJ07/'
+      },
+      'on': {
+        board: 'cambridge',
+        year: '2007',
+        session: 'on',
+        sessionNameAr: 'دورة أكتوبر/نوفمبر (Oct/Nov 2007)',
+        sessionNameEn: 'Oct/Nov 2007',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics Oct/Nov 2007',
+        titleEn: 'Cambridge IGCSE Mathematics Oct/Nov 2007',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-ON07/'
+      }
+    },
+    '2006': {
+      'mj': {
+        board: 'cambridge',
+        year: '2006',
+        session: 'mj',
+        sessionNameAr: 'دورة مايو/يونيو (May/June 2006)',
+        sessionNameEn: 'May/June 2006',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics May/June 2006',
+        titleEn: 'Cambridge IGCSE Mathematics May/June 2006',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-MJ06/'
+      },
+      'on': {
+        board: 'cambridge',
+        year: '2006',
+        session: 'on',
+        sessionNameAr: 'دورة أكتوبر/نوفمبر (Oct/Nov 2006)',
+        sessionNameEn: 'Oct/Nov 2006',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics Oct/Nov 2006',
+        titleEn: 'Cambridge IGCSE Mathematics Oct/Nov 2006',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-ON06/'
+      }
+    },
+    '2005': {
+      'mj': {
+        board: 'cambridge',
+        year: '2005',
+        session: 'mj',
+        sessionNameAr: 'دورة مايو/يونيو (May/June 2005)',
+        sessionNameEn: 'May/June 2005',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics May/June 2005',
+        titleEn: 'Cambridge IGCSE Mathematics May/June 2005',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-MJ05/'
+      },
+      'on': {
+        board: 'cambridge',
+        year: '2005',
+        session: 'on',
+        sessionNameAr: 'دورة أكتوبر/نوفمبر (Oct/Nov 2005)',
+        sessionNameEn: 'Oct/Nov 2005',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics Oct/Nov 2005',
+        titleEn: 'Cambridge IGCSE Mathematics Oct/Nov 2005',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-ON05/'
+      }
+    },
+    '2004': {
+      'mj': {
+        board: 'cambridge',
+        year: '2004',
+        session: 'mj',
+        sessionNameAr: 'دورة مايو/يونيو (May/June 2004)',
+        sessionNameEn: 'May/June 2004',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics May/June 2004',
+        titleEn: 'Cambridge IGCSE Mathematics May/June 2004',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-MJ04/'
+      },
+      'on': {
+        board: 'cambridge',
+        year: '2004',
+        session: 'on',
+        sessionNameAr: 'دورة أكتوبر/نوفمبر (Oct/Nov 2004)',
+        sessionNameEn: 'Oct/Nov 2004',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics Oct/Nov 2004',
+        titleEn: 'Cambridge IGCSE Mathematics Oct/Nov 2004',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-ON04/'
+      }
+    },
+    '2003': {
+      'mj': {
+        board: 'cambridge',
+        year: '2003',
+        session: 'mj',
+        sessionNameAr: 'دورة مايو/يونيو (May/June 2003)',
+        sessionNameEn: 'May/June 2003',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics May/June 2003',
+        titleEn: 'Cambridge IGCSE Mathematics May/June 2003',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-MJ03/'
+      },
+      'on': {
+        board: 'cambridge',
+        year: '2003',
+        session: 'on',
+        sessionNameAr: 'دورة أكتوبر/نوفمبر (Oct/Nov 2003)',
+        sessionNameEn: 'Oct/Nov 2003',
+        titleAr: 'امتحانات Cambridge IGCSE Mathematics Oct/Nov 2003',
+        titleEn: 'Cambridge IGCSE Mathematics Oct/Nov 2003',
+        url: 'https://hesham-afandi.github.io/Ig-Cambridge-ON03/'
+      }
     }
   }
 };
@@ -218,22 +730,27 @@ export const IgView: React.FC<IgViewProps> = ({
   const [selectedPaper, setSelectedPaper] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  // Keep selectedSession valid whenever selectedYear changes
+  // Get current board embedded links
+  const currentBoardEmbeddedLinks: Record<string, Record<string, EmbeddedExamLink>> = useMemo(() => {
+    return EMBEDDED_EXAM_LINKS[selectedBoardId] || {};
+  }, [selectedBoardId]);
+
+  // Keep selectedSession valid whenever selectedYear or selectedBoardId changes
   useEffect(() => {
-    if (EMBEDDED_EXAM_LINKS[selectedYear]) {
-      const available = Object.keys(EMBEDDED_EXAM_LINKS[selectedYear]);
+    if (currentBoardEmbeddedLinks[selectedYear]) {
+      const available = Object.keys(currentBoardEmbeddedLinks[selectedYear]);
       if (!available.includes(selectedSession)) {
         setSelectedSession(available[0]);
       }
     }
-  }, [selectedYear]);
+  }, [selectedYear, selectedBoardId, currentBoardEmbeddedLinks]);
 
   // Active Embedded Exam Link lookup
   const activeEmbeddedExam = useMemo(() => {
-    if (!EMBEDDED_EXAM_LINKS[selectedYear]) return null;
-    const yearSessions = EMBEDDED_EXAM_LINKS[selectedYear];
+    if (!currentBoardEmbeddedLinks[selectedYear]) return null;
+    const yearSessions = currentBoardEmbeddedLinks[selectedYear];
     return yearSessions[selectedSession] || Object.values(yearSessions)[0];
-  }, [selectedYear, selectedSession]);
+  }, [currentBoardEmbeddedLinks, selectedYear, selectedSession]);
 
   // Practice Mode State
   const [practiceIndex, setPracticeIndex] = useState<number>(0);
@@ -769,7 +1286,7 @@ export const IgView: React.FC<IgViewProps> = ({
             >
               <option value="all">جميع السنوات (2002 - 2021)</option>
               {yearsList.map((y) => {
-                const hasEmbedded = Boolean(EMBEDDED_EXAM_LINKS[y.toString()]);
+                const hasEmbedded = Boolean(currentBoardEmbeddedLinks[y.toString()]);
                 return (
                   <option key={y} value={y}>
                     امتحانات سنة {y} {hasEmbedded ? '🌐 (تفاعلي)' : ''}
@@ -780,7 +1297,7 @@ export const IgView: React.FC<IgViewProps> = ({
           </div>
 
           {/* Session / Month Selector (Visible when selected year has embedded links) */}
-          {EMBEDDED_EXAM_LINKS[selectedYear] && (
+          {currentBoardEmbeddedLinks[selectedYear] && (
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold text-slate-600 dark:text-slate-400 shrink-0">الدورة / الشهر:</span>
               <select
@@ -788,7 +1305,7 @@ export const IgView: React.FC<IgViewProps> = ({
                 onChange={(e) => setSelectedSession(e.target.value)}
                 className="w-full p-2 bg-white dark:bg-slate-900 border border-teal-500/50 rounded-xl text-xs font-black text-teal-700 dark:text-teal-300 focus:outline-none focus:ring-2 focus:ring-teal-500 cursor-pointer shadow-sm"
               >
-                {Object.values(EMBEDDED_EXAM_LINKS[selectedYear]).map((sess) => (
+                {(Object.values(currentBoardEmbeddedLinks[selectedYear]) as EmbeddedExamLink[]).map((sess) => (
                   <option key={sess.session} value={sess.session}>
                     {sess.sessionNameAr}
                   </option>
@@ -832,9 +1349,9 @@ export const IgView: React.FC<IgViewProps> = ({
                 </div>
 
                 {/* Session Switcher Pills if selected year has multiple sessions */}
-                {EMBEDDED_EXAM_LINKS[selectedYear] && Object.keys(EMBEDDED_EXAM_LINKS[selectedYear]).length > 1 && (
+                {currentBoardEmbeddedLinks[selectedYear] && Object.keys(currentBoardEmbeddedLinks[selectedYear]).length > 1 && (
                   <div className="flex items-center gap-1.5 bg-slate-900/80 p-1 rounded-xl border border-teal-500/30 shrink-0">
-                    {Object.values(EMBEDDED_EXAM_LINKS[selectedYear]).map((sess) => (
+                    {(Object.values(currentBoardEmbeddedLinks[selectedYear]) as EmbeddedExamLink[]).map((sess) => (
                       <button
                         key={sess.session}
                         onClick={() => setSelectedSession(sess.session)}
