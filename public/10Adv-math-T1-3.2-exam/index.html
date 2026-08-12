@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Grade 10 Advanced Math - Lesson 3-2: Dividing Polynomials (10Adv-math-T1-3.2-exam)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght=400;600;700;900&family=Inter:wght=400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        body.en-mode { font-family: 'Inter', sans-serif; }
+        .correct { background-color: #dcfce7 !important; border-color: #16a34a !important; }
+        .incorrect { background-color: #fee2e2 !important; border-color: #dc2626 !important; }
+        .formula { font-family: 'Times New Roman', serif; letter-spacing: 0.5px; direction: ltr; display: inline-block; font-style: italic; }
+        .timer-warning { color: #dc2626 !important; animation: pulse 1s infinite; }
+        @keyframes pulse { 50% { opacity: 0.7; } }
+        @media print { .no-print { display: none !important; } }
+        .success-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.875rem; }
+        .grade-excellent { background: #dcfce7; color: #166534; }
+        .grade-good { background: #fef3c7; color: #92400e; }
+        .grade-pass { background: #dbeafe; color: #1e40af; }
+        .grade-fail { background: #fee2e2; color: #991b1b; }
+        .lang-switch {
+            position: fixed; top: 16px; left: 16px; z-index: 100;
+            background: white; padding: 6px; border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; gap: 4px;
+            border: 2px solid #0d9488;
+        }
+        [dir="ltr"] .lang-switch { left: auto; right: 16px; }
+        .lang-btn {
+            padding: 6px 14px; border-radius: 20px; cursor: pointer; font-weight: bold;
+            transition: all 0.3s; border: none; font-size: 0.875rem;
+            background: transparent; color: #6b7280;
+        }
+        .lang-btn.active { background: #0d9488; color: white; box-shadow: 0 2px 6px rgba(13,148,136,0.4); }
+        .lang-btn:hover:not(.active) { background: #f0fdfa; color: #0d9488; }
+        .shuffle-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 md:p-8 min-h-screen">
+
+    <div class="lang-switch no-print">
+        <button class="lang-btn active" onclick="setLanguage('ar')" id="btn-ar">عربي</button>
+        <button class="lang-btn" onclick="setLanguage('en')" id="btn-en">EN</button>
+    </div>
+
+    <div id="timer-container" class="max-w-4xl mx-auto mb-4 text-center no-print">
+        <div class="bg-white p-4 rounded-xl shadow-md inline-block border-2 border-teal-100">
+            <span class="text-gray-600 ml-2" data-ar="⏱️ الوقت المتبقي:" data-en="⏱️ Time Remaining:">⏱️ الوقت المتبقي:</span>
+            <span id="timer" class="text-2xl font-bold text-teal-600 font-mono">60:00</span>
+            <span class="shuffle-badge" data-ar="🔀 أسئلة عشوائية" data-en="🔀 Random Questions">🔀 أسئلة عشوائية</span>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto mb-6 flex flex-wrap gap-3 justify-center no-print">
+        <button onclick="toggleAnswers()" class="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="👁️ إظهار / إخفاء الإجابات" data-en="👁️ Show / Hide Answers">👁️ إظهار / إخفاء الإجابات</button>
+        <button onclick="window.print()" class="bg-gray-800 hover:bg-gray-900 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="🖨️ طباعة / PDF" data-en="🖨️ Print / PDF">🖨️ طباعة / PDF</button>
+        <button onclick="reshuffleExam()" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="🔀 إعادة خلط الأسئلة" data-en="🔀 Reshuffle Questions">🔀 إعادة خلط الأسئلة</button>
+    </div>
+
+    <header class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-md mb-8 border-r-4 border-teal-600">
+        <div class="text-center">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2" data-ar="⚡ رياضيات الصف العاشر متقدم" data-en="⚡ Grade 10 Advanced Mathematics">⚡ رياضيات الصف العاشر متقدم</h1>
+            <h2 class="text-lg text-teal-600 font-semibold" data-ar="الدرس 3-2: قسمة كثيرات الحدود (الفصل الدراسي الأول)" data-en="Lesson 3-2: Dividing Polynomials (Term 1)">الدرس 3-2: قسمة كثيرات الحدود (الفصل الدراسي الأول)</h2>
+            <p class="text-sm text-gray-600 mt-2" data-ar="اختبار شامل يغطي قسمة كثيرة حدود على أحادية حد، واستخدام القسمة المطولة والقسمة التركيبية لإيجاد ناتج وباقي القسمة الكسرية." data-en="Lesson 3-2: Dividing Polynomials complete interactive test aligned with Ministry syllabus.">اختبار شامل يغطي قسمة كثيرة حدود على أحادية حد، واستخدام القسمة المطولة والقسمة التركيبية لإيجاد ناتج وباقي القسمة الكسرية.</p>
+            <p class="text-xs text-orange-600 mt-2 font-semibold" data-ar="⚠️ ملاحظة: يتم خلط ترتيب الأسئلة والخيارات تلقائياً مع كل تحديث للصفحة" data-en="⚠️ Note: Questions and options are randomly shuffled on every page refresh">⚠️ ملاحظة: يتم خلط ترتيب الأسئلة والخيارات تلقائياً مع كل تحديث للصفحة</p>
+        </div>
+        <div class="mt-4 flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+            <span><span data-ar="📅 التاريخ:" data-en="📅 Date:">📅 التاريخ:</span> <input type="text" class="border-b border-gray-400 bg-transparent w-28 text-center"></span>
+            <span><span data-ar="👤 الاسم:" data-en="👤 Name:">👤 الاسم:</span> <input type="text" id="studentName" class="border-b border-gray-400 bg-transparent w-32 text-center" placeholder="Enter name"></span>
+            <span><span data-ar="🏫 الشعبة:" data-en="🏫 Class:">🏫 الشعبة:</span> <input type="text" id="studentClass" class="border-b border-gray-400 bg-transparent w-28 text-center" placeholder="Class"></span>
+            <span><span data-ar="⏱️ المدة: 60 دقيقة" data-en="⏱️ Duration: 60 min">⏱️ المدة: 60 دقيقة</span></span>
+            <span><span data-ar="📊 המجموع: 100 درجة" data-en="📊 Total: 100 pts">📊 المجموع: 100 درجة</span></span>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto space-y-8" id="exam-content"></main>
+
+    <div class="text-center no-print pb-8 mt-8">
+        <button onclick="gradeExam()" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-lg px-10 py-4 rounded-xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer" data-ar="📝 تسليم وتصحيح الامتحان" data-en="📝 Submit & Grade Exam">📝 تسليم وتصحيح الامتحان</button>
+    </div>
+
+    <div id="results-panel" class="max-w-4xl mx-auto mt-8 bg-white p-8 rounded-2xl shadow-2xl border-t-4 border-emerald-500 hidden no-print">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center" data-ar="📊 نتائج الامتحان" data-en="📊 Exam Results">📊 نتائج الامتحان</h2>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div class="bg-blue-50 p-4 rounded-xl text-center"><p data-ar="اسم الطالب" data-en="Student Name">اسم الطالب</p><p id="res-name" class="font-bold text-xl text-teal-700">-</p></div>
+            <div class="bg-purple-50 p-4 rounded-xl text-center"><p data-ar="التاريخ" data-en="Date">التاريخ</p><p id="res-date" class="font-bold text-xl text-purple-700">-</p></div>
+            <div class="bg-emerald-50 p-4 rounded-xl text-center"><p data-ar="المجموع" data-en="Score">المجموع</p><p id="res-total" class="font-bold text-3xl text-emerald-600">0 / 100</p></div>
+        </div>
+        <div class="text-center mb-6">
+            <span id="success-badge" class="success-badge grade-excellent">-</span>
+            <p id="success-percent" class="text-4xl font-bold text-emerald-600 mt-2">100%</p>
+            <p class="text-sm text-gray-500" data-ar="نسبة النجاح" data-en="Success Rate">نسبة النجاح</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-xl mb-6">
+            <h3 class="font-bold text-lg mb-4 text-gray-800" data-ar="📈 تفصيل الأداء حسب القسم:" data-en="📈 Performance Breakdown:">📈 تفصيل الأداء حسب القسم:</h3>
+            <div class="space-y-3">
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="الجزء الأول: المفاهيم والقواعد الأساسية والتعريفات" data-en="Part 1: Basic Concepts, Rules, and Definitions">الجزء الأول: المفاهيم والقواعد الأساسية والتعريفات</span>
+                    <span id="sec1-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="الجزء الثاني: العمليات الحسابية والحلول العددية الدقيقة" data-en="Part 2: Calculations and Exact Numerical Solutions">الجزء الثاني: العمليات الحسابية والحلول العددية الدقيقة</span>
+                    <span id="sec2-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="الجزء الثالث: المهارات المتقدمة والتطبيقات والمسائل" data-en="Part 3: Advanced Skills, Applications, and Problems">الجزء الثالث: المهارات المتقدمة والتطبيقات والمسائل</span>
+                    <span id="sec3-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="الجزء الرابع: النمذجة الرياضية والتمثيل البياني والمسائل العملية" data-en="Part 4: Mathematical Modeling, Graphing, and Practical Problems">الجزء الرابع: النمذجة الرياضية والتمثيل البياني والمسائل العملية</span>
+                    <span id="sec4-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="الجزء الخامس: مهارات التفكير العليا والتحليل والربط المنطقي" data-en="Part 5: Higher-Order Thinking, Analysis, and Logical Connections">الجزء الخامس: مهارات التفكير العليا والتحليل والربط المنطقي</span>
+                    <span id="sec5-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mb-6">
+            <button id="sendEmailBtn" onclick="sendResultsToEmail()" class="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white text-lg px-8 py-3 rounded-xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer" data-ar="📧 إرسال النتائج للمعلم" data-en="📧 Send Results to Teacher">📧 إرسال النتائج للمعلم</button>
+            <p id="emailStatus" class="text-sm mt-2 text-center font-medium"></p>
+        </div>
+        <div class="flex gap-3 justify-center">
+            <button onclick="window.print()" class="bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold" data-ar="🖨️ طباعة النتائج" data-en="🖨️ Print Results">🖨️ طباعة النتائج</button>
+        </div>
+    </div>
+
+    <footer class="max-w-4xl mx-auto mt-10 mb-8 text-center text-gray-500 text-sm no-print">
+        © <span data-ar="رياضيات الصف 10 متقدم | الدرس 3-2: قسمة كثيرات الحدود" data-en="Grade 10 Advanced Math | Lesson 3-2: Dividing Polynomials">رياضيات الصف 10 متقدم | الدرس 3-2: قسمة كثيرات الحدود</span> | Platform 4U Education
+    </footer>
+
+<script>
+const PUBLIC_KEY = "Rb3Lq8tXaFmc5YHUH";
+const SERVICE_ID = "service_w15m64i";
+const TEMPLATE_ID = "template_5b0u2tq";
+const TARGET_EMAIL = "mohammedhesham872@gmail.com";
+
+emailjs.init(PUBLIC_KEY);
+
+const originalExamData = {
+    "title_ar": "الدرس 3-2: قسمة كثيرات الحدود",
+    "title_en": "Lesson 3-2: Dividing Polynomials",
+    "desc_ar": "اختبار شامل يغطي قسمة كثيرة حدود على أحادية حد، واستخدام القسمة المطولة والقسمة التركيبية لإيجاد ناتج وباقي القسمة الكسرية.",
+    "sections": [
+        {
+            "title": {
+                "ar": "🔹 الجزء الأول: قسمة كثيرة حدود على أحادية حد بتبسيط كل كسر منفرد",
+                "en": "🔹 Part 1: قسمة كثيرة حدود على أحادية حد بتبسيط كل كسر منفرد"
+            },
+            "questions": [
+                {
+                    "q": {
+                        "ar": "أوجد درجة كثيرة الحدود التالية: <span class='formula'>2x^4 - 1x + 3</span>.",
+                        "en": "Find the degree of the following polynomial: <span class='formula'>2x^4 - 1x + 3</span>."
+                    },
+                    "options": [
+                        {
+                            "ar": "الدرجة 4",
+                            "en": "Degree 4"
+                        },
+                        {
+                            "ar": "الدرجة 3",
+                            "en": "Degree 3"
+                        },
+                        {
+                            "ar": "الدرجة 5",
+                            "en": "Degree 5"
+                        },
+                        {
+                            "ar": "الدرجة 2",
+                            "en": "Degree 2"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "درجة كثيرة الحدود هي أعلى أس للمتغير x في الحدود المكونة لها، وهو 4.",
+                        "en": "The degree of a polynomial is the highest exponent of the variable x, which is 4."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "بسط التعبير التالي بجمع كثيرات الحدود: <span class='formula'>(2x² + 4x + 5) + (5x² + 4x + 6)</span>",
+                        "en": "Simplify the following expression by adding the polynomials: <span class='formula'>(2x² + 4x + 5) + (5x² + 4x + 6)</span>"
+                    },
+                    "options": [
+                        {
+                            "ar": "<span class='formula'>7x² + 8x + 11</span>",
+                            "en": "<span class='formula'>7x² + 8x + 11</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>3x² + 8x + 11</span>",
+                            "en": "<span class='formula'>3x² + 8x + 11</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>7x² + 0x + 11</span>",
+                            "en": "<span class='formula'>7x² + 0x + 11</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>7x² + 8x + 1</span>",
+                            "en": "<span class='formula'>7x² + 8x + 1</span>"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "نجمع الحدود المتشابهة: <span class='formula'>(2+5)x² + (4+4)x + (5+6) = 7x² + 8x + 11</span>.",
+                        "en": "Combine like terms: <span class='formula'>(2+5)x² + (4+4)x + (5+6) = 7x² + 8x + 11</span>."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "بسط التعبير الجبري بطرح كثيرات الحدود: <span class='formula'>(6x² + 8x + 9) - (3x² + 2x + 3)</span>",
+                        "en": "Simplify the algebraic expression by subtracting the polynomials: <span class='formula'>(6x² + 8x + 9) - (3x² + 2x + 3)</span>"
+                    },
+                    "options": [
+                        {
+                            "ar": "<span class='formula'>3x² + 6x + 6</span>",
+                            "en": "<span class='formula'>3x² + 6x + 6</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>9x² + 6x + 6</span>",
+                            "en": "<span class='formula'>9x² + 6x + 6</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>3x² + 10x + 6</span>",
+                            "en": "<span class='formula'>3x² + 10x + 6</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>3x² + 6x + 12</span>",
+                            "en": "<span class='formula'>3x² + 6x + 12</span>"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "نوزع الإشارة السالبة ثم نجمع الحدود المتشابهة: <span class='formula'>(6-3)x² + (8-2)x + (9-3) = 3x² + 6x + 6</span>.",
+                        "en": "Distribute the negative sign then combine like terms: <span class='formula'>(6-3)x² + (8-2)x + (9-3) = 3x² + 6x + 6</span>."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "أوجد ناتج ضرب ثنائيتي الحدود التاليتين: <span class='formula'>(2x + 3)(2x + 2)</span>.",
+                        "en": "Find the product of the following binomials: <span class='formula'>(2x + 3)(2x + 2)</span>."
+                    },
+                    "options": [
+                        {
+                            "ar": "<span class='formula'>4x² + 10x + 6</span>",
+                            "en": "<span class='formula'>4x² + 10x + 6</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>4x² + 2x + 6</span>",
+                            "en": "<span class='formula'>4x² + 2x + 6</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>4x² + 10x + 5</span>",
+                            "en": "<span class='formula'>4x² + 10x + 5</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>4x² + 10x + 6</span>",
+                            "en": "<span class='formula'>4x² + 10x + 6</span>"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "باستخدام طريقة التوزيع أو FOIL: <span class='formula'>(2x · 2x) + (2x · 2) + (3 · 2x) + (3 · 2) = 4x² + 10x + 6</span>.",
+                        "en": "Using FOIL method: <span class='formula'>(2x · 2x) + (2x · 2) + (3 · 2x) + (3 · 2) = 4x² + 10x + 6</span>."
+                    }
+                }
+            ]
+        },
+        {
+            "title": {
+                "ar": "🔹 الجزء الثاني: استخدام القسمة المطولة (Long Division) لقسمة كثيرات الحدود",
+                "en": "🔹 Part 2: استخدام القسمة المطولة (Long Division) لقسمة كثيرات الحدود"
+            },
+            "questions": [
+                {
+                    "q": {
+                        "ar": "أوجد درجة كثيرة الحدود التالية: <span class='formula'>8x^6 - 7x + 13</span>.",
+                        "en": "Find the degree of the following polynomial: <span class='formula'>8x^6 - 7x + 13</span>."
+                    },
+                    "options": [
+                        {
+                            "ar": "الدرجة 6",
+                            "en": "Degree 6"
+                        },
+                        {
+                            "ar": "الدرجة 5",
+                            "en": "Degree 5"
+                        },
+                        {
+                            "ar": "الدرجة 7",
+                            "en": "Degree 7"
+                        },
+                        {
+                            "ar": "الدرجة 8",
+                            "en": "Degree 8"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "درجة كثيرة الحدود هي أعلى أس للمتغير x في الحدود المكونة لها، وهو 6.",
+                        "en": "The degree of a polynomial is the highest exponent of the variable x, which is 6."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "بسط التعبير التالي بجمع كثيرات الحدود: <span class='formula'>(4x² + 3x + 9) + (5x² + 2x + 3)</span>",
+                        "en": "Simplify the following expression by adding the polynomials: <span class='formula'>(4x² + 3x + 9) + (5x² + 2x + 3)</span>"
+                    },
+                    "options": [
+                        {
+                            "ar": "<span class='formula'>9x² + 5x + 12</span>",
+                            "en": "<span class='formula'>9x² + 5x + 12</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>1x² + 5x + 12</span>",
+                            "en": "<span class='formula'>1x² + 5x + 12</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>9x² + 1x + 12</span>",
+                            "en": "<span class='formula'>9x² + 1x + 12</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>9x² + 5x + 6</span>",
+                            "en": "<span class='formula'>9x² + 5x + 6</span>"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "نجمع الحدود المتشابهة: <span class='formula'>(4+5)x² + (3+2)x + (9+3) = 9x² + 5x + 12</span>.",
+                        "en": "Combine like terms: <span class='formula'>(4+5)x² + (3+2)x + (9+3) = 9x² + 5x + 12</span>."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "بسط التعبير الجبري بطرح كثيرات الحدود: <span class='formula'>(6x² + 9x + 7) - (1x² + 2x + 3)</span>",
+                        "en": "Simplify the algebraic expression by subtracting the polynomials: <span class='formula'>(6x² + 9x + 7) - (1x² + 2x + 3)</span>"
+                    },
+                    "options": [
+                        {
+                            "ar": "<span class='formula'>5x² + 7x + 4</span>",
+                            "en": "<span class='formula'>5x² + 7x + 4</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>7x² + 7x + 4</span>",
+                            "en": "<span class='formula'>7x² + 7x + 4</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>5x² + 11x + 4</span>",
+                            "en": "<span class='formula'>5x² + 11x + 4</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>5x² + 7x + 10</span>",
+                            "en": "<span class='formula'>5x² + 7x + 10</span>"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "نوزع الإشارة السالبة ثم نجمع الحدود المتشابهة: <span class='formula'>(6-1)x² + (9-2)x + (7-3) = 5x² + 7x + 4</span>.",
+                        "en": "Distribute the negative sign then combine like terms: <span class='formula'>(6-1)x² + (9-2)x + (7-3) = 5x² + 7x + 4</span>."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "أوجد ناتج ضرب ثنائيتي الحدود التاليتين: <span class='formula'>(4x + 2)(3x + 3)</span>.",
+                        "en": "Find the product of the following binomials: <span class='formula'>(4x + 2)(3x + 3)</span>."
+                    },
+                    "options": [
+                        {
+                            "ar": "<span class='formula'>12x² + 18x + 6</span>",
+                            "en": "<span class='formula'>12x² + 18x + 6</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>12x² + 6x + 6</span>",
+                            "en": "<span class='formula'>12x² + 6x + 6</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>12x² + 18x + 5</span>",
+                            "en": "<span class='formula'>12x² + 18x + 5</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>7x² + 18x + 6</span>",
+                            "en": "<span class='formula'>7x² + 18x + 6</span>"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "باستخدام طريقة التوزيع أو FOIL: <span class='formula'>(4x · 3x) + (4x · 3) + (2 · 3x) + (2 · 3) = 12x² + 18x + 6</span>.",
+                        "en": "Using FOIL method: <span class='formula'>(4x · 3x) + (4x · 3) + (2 · 3x) + (2 · 3) = 12x² + 18x + 6</span>."
+                    }
+                }
+            ]
+        },
+        {
+            "title": {
+                "ar": "🔹 الجزء الثالث: استخدام القسمة التركيبية (Synthetic Division) لقسمة كثيرات الحدود",
+                "en": "🔹 Part 3: استخدام القسمة التركيبية (Synthetic Division) لقسمة كثيرات الحدود"
+            },
+            "questions": [
+                {
+                    "q": {
+                        "ar": "أوجد درجة كثيرة الحدود التالية: <span class='formula'>5x^6 - 4x + 9</span>.",
+                        "en": "Find the degree of the following polynomial: <span class='formula'>5x^6 - 4x + 9</span>."
+                    },
+                    "options": [
+                        {
+                            "ar": "الدرجة 6",
+                            "en": "Degree 6"
+                        },
+                        {
+                            "ar": "الدرجة 5",
+                            "en": "Degree 5"
+                        },
+                        {
+                            "ar": "الدرجة 7",
+                            "en": "Degree 7"
+                        },
+                        {
+                            "ar": "الدرجة 5",
+                            "en": "Degree 5"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "درجة كثيرة الحدود هي أعلى أس للمتغير x في الحدود المكونة لها، وهو 6.",
+                        "en": "The degree of a polynomial is the highest exponent of the variable x, which is 6."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "بسط التعبير التالي بجمع كثيرات الحدود: <span class='formula'>(3x² + 5x + 5) + (2x² + 5x + 1)</span>",
+                        "en": "Simplify the following expression by adding the polynomials: <span class='formula'>(3x² + 5x + 5) + (2x² + 5x + 1)</span>"
+                    },
+                    "options": [
+                        {
+                            "ar": "<span class='formula'>5x² + 10x + 6</span>",
+                            "en": "<span class='formula'>5x² + 10x + 6</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>1x² + 10x + 6</span>",
+                            "en": "<span class='formula'>1x² + 10x + 6</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>5x² + 0x + 6</span>",
+                            "en": "<span class='formula'>5x² + 0x + 6</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>5x² + 10x + 4</span>",
+                            "en": "<span class='formula'>5x² + 10x + 4</span>"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "نجمع الحدود المتشابهة: <span class='formula'>(3+2)x² + (5+5)x + (5+1) = 5x² + 10x + 6</span>.",
+                        "en": "Combine like terms: <span class='formula'>(3+2)x² + (5+5)x + (5+1) = 5x² + 10x + 6</span>."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "بسط التعبير الجبري بطرح كثيرات الحدود: <span class='formula'>(5x² + 7x + 10) - (1x² + 2x + 2)</span>",
+                        "en": "Simplify the algebraic expression by subtracting the polynomials: <span class='formula'>(5x² + 7x + 10) - (1x² + 2x + 2)</span>"
+                    },
+                    "options": [
+                        {
+                            "ar": "<span class='formula'>4x² + 5x + 8</span>",
+                            "en": "<span class='formula'>4x² + 5x + 8</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>6x² + 5x + 8</span>",
+                            "en": "<span class='formula'>6x² + 5x + 8</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>4x² + 9x + 8</span>",
+                            "en": "<span class='formula'>4x² + 9x + 8</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>4x² + 5x + 12</span>",
+                            "en": "<span class='formula'>4x² + 5x + 12</span>"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "نوزع الإشارة السالبة ثم نجمع الحدود المتشابهة: <span class='formula'>(5-1)x² + (7-2)x + (10-2) = 4x² + 5x + 8</span>.",
+                        "en": "Distribute the negative sign then combine like terms: <span class='formula'>(5-1)x² + (7-2)x + (10-2) = 4x² + 5x + 8</span>."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "أوجد ناتج ضرب ثنائيتي الحدود التاليتين: <span class='formula'>(3x + 3)(2x + 4)</span>.",
+                        "en": "Find the product of the following binomials: <span class='formula'>(3x + 3)(2x + 4)</span>."
+                    },
+                    "options": [
+                        {
+                            "ar": "<span class='formula'>6x² + 18x + 12</span>",
+                            "en": "<span class='formula'>6x² + 18x + 12</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>6x² + 6x + 12</span>",
+                            "en": "<span class='formula'>6x² + 6x + 12</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>6x² + 18x + 7</span>",
+                            "en": "<span class='formula'>6x² + 18x + 7</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>5x² + 18x + 12</span>",
+                            "en": "<span class='formula'>5x² + 18x + 12</span>"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "باستخدام طريقة التوزيع أو FOIL: <span class='formula'>(3x · 2x) + (3x · 4) + (3 · 2x) + (3 · 4) = 6x² + 18x + 12</span>.",
+                        "en": "Using FOIL method: <span class='formula'>(3x · 2x) + (3x · 4) + (3 · 2x) + (3 · 4) = 6x² + 18x + 12</span>."
+                    }
+                }
+            ]
+        },
+        {
+            "title": {
+                "ar": "🔹 الجزء الرابع: التعرف على شكل الباقي وكتابة ناتج القسمة الكسرية بدقة",
+                "en": "🔹 Part 4: التعرف على شكل الباقي وكتابة ناتج القسمة الكسرية بدقة"
+            },
+            "questions": [
+                {
+                    "q": {
+                        "ar": "احسب القيمة العددية الدقيقة للتعبير الرياضي التالي عند التعويض المباشر: <span class='formula'>8a - 1</span> إذا كان <span class='formula'>a = 6</span>.",
+                        "en": "Evaluate the exact numerical value of the following mathematical expression: <span class='formula'>8a - 1</span> if <span class='formula'>a = 6</span>."
+                    },
+                    "options": [
+                        {
+                            "ar": "<span class='formula'>47</span>",
+                            "en": "<span class='formula'>47</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>48</span>",
+                            "en": "<span class='formula'>48</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>41</span>",
+                            "en": "<span class='formula'>41</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>48</span>",
+                            "en": "<span class='formula'>48</span>"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "نعوض بـ 6 بدلاً من المتغير a: <span class='formula'>8(6) - 1 = 48 - 1 = 47</span>.",
+                        "en": "Substitute 6 for the variable a: <span class='formula'>8(6) - 1 = 48 - 1 = 47</span>."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "احسب القيمة العددية الدقيقة للتعبير الرياضي التالي عند التعويض المباشر: <span class='formula'>4a - 3</span> إذا كان <span class='formula'>a = 5</span>.",
+                        "en": "Evaluate the exact numerical value of the following mathematical expression: <span class='formula'>4a - 3</span> if <span class='formula'>a = 5</span>."
+                    },
+                    "options": [
+                        {
+                            "ar": "<span class='formula'>17</span>",
+                            "en": "<span class='formula'>17</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>20</span>",
+                            "en": "<span class='formula'>20</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>12</span>",
+                            "en": "<span class='formula'>12</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>20</span>",
+                            "en": "<span class='formula'>20</span>"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "نعوض بـ 5 بدلاً من المتغير a: <span class='formula'>4(5) - 3 = 20 - 3 = 17</span>.",
+                        "en": "Substitute 5 for the variable a: <span class='formula'>4(5) - 3 = 20 - 3 = 17</span>."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "احسب القيمة العددية الدقيقة للتعبير الرياضي التالي عند التعويض المباشر: <span class='formula'>4a - 6</span> إذا كان <span class='formula'>a = 3</span>.",
+                        "en": "Evaluate the exact numerical value of the following mathematical expression: <span class='formula'>4a - 6</span> if <span class='formula'>a = 3</span>."
+                    },
+                    "options": [
+                        {
+                            "ar": "<span class='formula'>6</span>",
+                            "en": "<span class='formula'>6</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>12</span>",
+                            "en": "<span class='formula'>12</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>3</span>",
+                            "en": "<span class='formula'>3</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>12</span>",
+                            "en": "<span class='formula'>12</span>"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "نعوض بـ 3 بدلاً من المتغير a: <span class='formula'>4(3) - 6 = 12 - 6 = 6</span>.",
+                        "en": "Substitute 3 for the variable a: <span class='formula'>4(3) - 6 = 12 - 6 = 6</span>."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "احسب القيمة العددية الدقيقة للتعبير الرياضي التالي عند التعويض المباشر: <span class='formula'>4a - 3</span> إذا كان <span class='formula'>a = 4</span>.",
+                        "en": "Evaluate the exact numerical value of the following mathematical expression: <span class='formula'>4a - 3</span> if <span class='formula'>a = 4</span>."
+                    },
+                    "options": [
+                        {
+                            "ar": "<span class='formula'>13</span>",
+                            "en": "<span class='formula'>13</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>16</span>",
+                            "en": "<span class='formula'>16</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>9</span>",
+                            "en": "<span class='formula'>9</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>16</span>",
+                            "en": "<span class='formula'>16</span>"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "نعوض بـ 4 بدلاً من المتغير a: <span class='formula'>4(4) - 3 = 16 - 3 = 13</span>.",
+                        "en": "Substitute 4 for the variable a: <span class='formula'>4(4) - 3 = 16 - 3 = 13</span>."
+                    }
+                }
+            ]
+        },
+        {
+            "title": {
+                "ar": "🔹 الجزء الخامس: التعامل مع المقسوم عليه الذي معامله الرئيسي لا يساوي واحد",
+                "en": "🔹 Part 5: التعامل مع المقسوم عليه الذي معامله الرئيسي لا يساوي واحد"
+            },
+            "questions": [
+                {
+                    "q": {
+                        "ar": "احسب القيمة العددية الدقيقة للتعبير الرياضي التالي عند التعويض المباشر: <span class='formula'>3a - 9</span> إذا كان <span class='formula'>a = 6</span>.",
+                        "en": "Evaluate the exact numerical value of the following mathematical expression: <span class='formula'>3a - 9</span> if <span class='formula'>a = 6</span>."
+                    },
+                    "options": [
+                        {
+                            "ar": "<span class='formula'>9</span>",
+                            "en": "<span class='formula'>9</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>18</span>",
+                            "en": "<span class='formula'>18</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>3</span>",
+                            "en": "<span class='formula'>3</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>18</span>",
+                            "en": "<span class='formula'>18</span>"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "نعوض بـ 6 بدلاً من المتغير a: <span class='formula'>3(6) - 9 = 18 - 9 = 9</span>.",
+                        "en": "Substitute 6 for the variable a: <span class='formula'>3(6) - 9 = 18 - 9 = 9</span>."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "احسب القيمة العددية الدقيقة للتعبير الرياضي التالي عند التعويض المباشر: <span class='formula'>7a - 8</span> إذا كان <span class='formula'>a = 3</span>.",
+                        "en": "Evaluate the exact numerical value of the following mathematical expression: <span class='formula'>7a - 8</span> if <span class='formula'>a = 3</span>."
+                    },
+                    "options": [
+                        {
+                            "ar": "<span class='formula'>13</span>",
+                            "en": "<span class='formula'>13</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>21</span>",
+                            "en": "<span class='formula'>21</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>10</span>",
+                            "en": "<span class='formula'>10</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>21</span>",
+                            "en": "<span class='formula'>21</span>"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "نعوض بـ 3 بدلاً من المتغير a: <span class='formula'>7(3) - 8 = 21 - 8 = 13</span>.",
+                        "en": "Substitute 3 for the variable a: <span class='formula'>7(3) - 8 = 21 - 8 = 13</span>."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "احسب القيمة العددية الدقيقة للتعبير الرياضي التالي عند التعويض المباشر: <span class='formula'>7a - 10</span> إذا كان <span class='formula'>a = 6</span>.",
+                        "en": "Evaluate the exact numerical value of the following mathematical expression: <span class='formula'>7a - 10</span> if <span class='formula'>a = 6</span>."
+                    },
+                    "options": [
+                        {
+                            "ar": "<span class='formula'>32</span>",
+                            "en": "<span class='formula'>32</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>42</span>",
+                            "en": "<span class='formula'>42</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>26</span>",
+                            "en": "<span class='formula'>26</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>42</span>",
+                            "en": "<span class='formula'>42</span>"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "نعوض بـ 6 بدلاً من المتغير a: <span class='formula'>7(6) - 10 = 42 - 10 = 32</span>.",
+                        "en": "Substitute 6 for the variable a: <span class='formula'>7(6) - 10 = 42 - 10 = 32</span>."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "احسب القيمة العددية الدقيقة للتعبير الرياضي التالي عند التعويض المباشر: <span class='formula'>6a - 7</span> إذا كان <span class='formula'>a = 4</span>.",
+                        "en": "Evaluate the exact numerical value of the following mathematical expression: <span class='formula'>6a - 7</span> if <span class='formula'>a = 4</span>."
+                    },
+                    "options": [
+                        {
+                            "ar": "<span class='formula'>17</span>",
+                            "en": "<span class='formula'>17</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>24</span>",
+                            "en": "<span class='formula'>24</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>13</span>",
+                            "en": "<span class='formula'>13</span>"
+                        },
+                        {
+                            "ar": "<span class='formula'>24</span>",
+                            "en": "<span class='formula'>24</span>"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "نعوض بـ 4 بدلاً من المتغير a: <span class='formula'>6(4) - 7 = 24 - 7 = 17</span>.",
+                        "en": "Substitute 4 for the variable a: <span class='formula'>6(4) - 7 = 24 - 7 = 17</span>."
+                    }
+                }
+            ]
+        }
+    ]
+};
+
+function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+let examData;
+let correctAnswersMap = {};
+let currentLang = 'ar';
+let timeRemaining = 3600;
+let timerInterval;
+
+function prepareShuffledExam() {
+    examData = JSON.parse(JSON.stringify(originalExamData));
+    correctAnswersMap = {};
+    let globalIdx = 0;
+    
+    examData.sections.forEach((section) => {
+        section.questions = shuffleArray(section.questions);
+        
+        section.questions.forEach((q) => {
+            const optionsWithCorrect = q.options.map((opt, idx) => ({
+                option: opt,
+                isCorrect: idx === q.correct
+            }));
+            
+            const shuffledOptions = shuffleArray(optionsWithCorrect);
+            q.options = shuffledOptions.map(o => o.option);
+            
+            const newCorrectIndex = shuffledOptions.findIndex(o => o.isCorrect);
+            q.correct = newCorrectIndex;
+            
+            correctAnswersMap[globalIdx] = String.fromCharCode(97 + newCorrectIndex);
+            globalIdx++;
+        });
+    });
+}
+
+function reshuffleExam() {
+    prepareShuffledExam();
+    renderExam();
+    document.querySelectorAll('input[type="radio"]:checked').forEach(r => r.checked = false);
+    document.getElementById('results-panel').classList.add('hidden');
+    document.querySelectorAll('.correct, .incorrect').forEach(el => {
+        el.classList.remove('correct', 'incorrect');
+    });
+    alert(currentLang === 'ar' 
+        ? '🔀 تم إعادة خلط الأسئلة والخيارات بنجاح!' 
+        : '🔀 Questions and options have been reshuffled successfully!');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    
+    document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    
+    document.body.classList.toggle('en-mode', lang === 'en');
+    
+    document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+    });
+    
+    renderExam();
+}
+
+function renderExam() {
+    const container = document.getElementById('exam-content');
+    const labels = {
+        ar: { option: ['أ', 'ب', 'ج', 'د'], answer: '✅ الإجابة الصحيحة:' },
+        en: { option: ['A', 'B', 'C', 'D'], answer: '✅ Correct Answer:' }
+    };
+    const lbl = labels[currentLang];
+    const isRTL = currentLang === 'ar';
+    
+    let html = '';
+    let globalIdx = 0;
+    
+    examData.sections.forEach((section) => {
+        html += `
+        <section class="bg-white p-6 rounded-xl shadow-lg">
+            <h2 class="text-xl font-bold mb-4 text-teal-700">${section.title[currentLang]}</h2>
+            <ol class="space-y-4 text-sm">`;
+            
+        section.questions.forEach((q) => {
+            const borderSide = isRTL ? 'border-r-4 pr-4' : 'border-l-4 pl-4';
+            html += `
+                <li class="${borderSide} border-teal-500 py-2" id="q-${globalIdx}">
+                    <strong>${globalIdx + 1}.</strong> ${q.q[currentLang]}<br>`;
+                    
+            q.options.forEach((opt, oIdx) => {
+                const radioSide = isRTL ? 'mr-4 ml-2' : 'ml-4 mr-2';
+                html += `
+                    <label class="cursor-pointer block mt-1 ${isRTL ? 'mr-4' : 'ml-4'}">
+                        <input type="radio" name="q${globalIdx}" value="${String.fromCharCode(97 + oIdx)}" class="${radioSide}"> 
+                        ${lbl.option[oIdx]}) ${opt[currentLang]}
+                    </label>`;
+            });
+            
+            html += `
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">
+                        ${lbl.answer} ${lbl.option[q.correct]}) ${q.options[q.correct][currentLang]} — ${q.answer[currentLang]}
+                    </div>
+                </li>`;
+            globalIdx++;
+        });
+        
+        html += `
+            </ol>
+        </section>`;
+    });
+    
+    container.innerHTML = html;
+}
+
+function startTimer() {
+    document.getElementById('timer-container').style.display = 'block';
+    timerInterval = setInterval(() => {
+        timeRemaining--;
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+        const timerEl = document.getElementById('timer');
+        timerEl.textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+        if (timeRemaining <= 300) timerEl.classList.add('timer-warning');
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            alert(currentLang === 'ar' ? "انتهى الوقت! سيتم تسليم الامتحان تلقائياً." : "Time's up! Exam will be submitted automatically.");
+            gradeExam();
+        }
+    }, 1000);
+}
+
+function toggleAnswers() {
+    document.querySelectorAll('.answer-box').forEach(el => el.classList.toggle('hidden'));
+}
+
+function gradeExam() {
+    let correctCount = 0;
+    let sec1 = 0, sec2 = 0, sec3 = 0, sec4 = 0, sec5 = 0;
+    
+    for (let i = 0; i < 20; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        const li = document.getElementById(`q-${i}`);
+        const correctAnswer = correctAnswersMap[i];
+        
+        if (li) {
+            const isCorrect = selected && selected.value === correctAnswer;
+            
+            if (isCorrect) {
+                correctCount++;
+                li.classList.add('correct');
+                li.classList.remove('incorrect');
+            } else {
+                li.classList.add('incorrect');
+                li.classList.remove('correct');
+            }
+
+            if (isCorrect) {
+                if (i < 4) sec1++;
+                else if (i < 8) sec2++;
+                else if (i < 12) sec3++;
+                else if (i < 16) sec4++;
+                else sec5++;
+            }
+        }
+    }
+
+    const score = (correctCount / 20) * 100;
+    const successRate = Math.round(score);
+    
+    document.getElementById('res-total').textContent = `${successRate} / 100`;
+    document.getElementById('res-name').textContent = document.getElementById('studentName').value || (currentLang === 'ar' ? 'طالب' : 'Student');
+    document.getElementById('res-date').textContent = new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-AE' : 'en-US');
+    
+    document.getElementById('sec1-score').textContent = `${sec1}/4`;
+    document.getElementById('sec2-score').textContent = `${sec2}/4`;
+    document.getElementById('sec3-score').textContent = `${sec3}/4`;
+    document.getElementById('sec4-score').textContent = `${sec4}/4`;
+    document.getElementById('sec5-score').textContent = `${sec5}/4`;
+    
+    const badge = document.getElementById('success-badge');
+    const percent = document.getElementById('success-percent');
+    percent.textContent = `${successRate}%`;
+    
+    if (currentLang === 'ar') {
+        if (successRate >= 90) { badge.textContent = 'ممتاز'; badge.className = 'success-badge grade-excellent'; }
+        else if (successRate >= 75) { badge.textContent = 'جيد جداً'; badge.className = 'success-badge grade-good'; }
+        else if (successRate >= 50) { badge.textContent = 'جيد'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = 'يحتاج تحسين'; badge.className = 'success-badge grade-fail'; }
+    } else {
+        if (successRate >= 90) { badge.textContent = 'Excellent'; badge.className = 'success-badge grade-excellent'; }
+        else if (successRate >= 75) { badge.textContent = 'Very Good'; badge.className = 'success-badge grade-good'; }
+        else if (successRate >= 50) { badge.textContent = 'Good'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = 'Needs Improvement'; badge.className = 'success-badge grade-fail'; }
+    }
+    
+    document.getElementById('results-panel').classList.remove('hidden');
+    document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('sendEmailBtn').classList.remove('hidden');
+}
+
+function sendResultsToEmail() {
+    const btn = document.getElementById('sendEmailBtn');
+    const status = document.getElementById('emailStatus');
+    btn.disabled = true;
+    btn.textContent = currentLang === 'ar' ? '⏳ جاري الإرسال...' : '📤 Sending...';
+
+    const name = document.getElementById('studentName').value || 'N/A';
+    const studentClass = document.getElementById('studentClass').value || 'N/A';
+    const date = document.querySelector('input[type="text"]').value || new Date().toLocaleDateString();
+    const score = document.getElementById('res-total').textContent;
+    const successRate = document.getElementById('success-percent').textContent;
+    const badge = document.getElementById('success-badge').textContent;
+
+    const sectionNames = {
+        ar: [
+            "الجزء الأول: المفاهيم والقواعد الأساسية والتعريفات",
+            "الجزء الثاني: العمليات الحسابية والحلول العددية الدقيقة",
+            "الجزء الثالث: المهارات المتقدمة والتطبيقات والمسائل",
+            "الجزء الرابع: النمذجة الرياضية والتمثيل البياني والمسائل العملية",
+            "الجزء الخامس: مهارات التفكير العليا والتحليل والربط المنطقي"
+        ],
+        en: [
+            "Part 1: Basic Concepts, Rules, and Definitions",
+            "Part 2: Calculations and Exact Numerical Solutions",
+            "Part 3: Advanced Skills, Applications, and Problems",
+            "Part 4: Mathematical Modeling, Graphing, and Practical Problems",
+            "Part 5: Higher-Order Thinking, Analysis, and Logical Connections"
+        ]
+    };
+    const currentSectionNames = sectionNames[currentLang];
+
+    let answersHTML = `
+        <div style="font-family: 'Segoe UI', Tahoma, Arial, sans-serif; direction: \${currentLang === 'ar' ? 'rtl' : 'ltr'}; text-align: \${currentLang === 'ar' ? 'right' : 'left'};">
+            <div style="background: linear-gradient(135deg, #0d9488, #0891b2); color: white; padding: 20px; border-radius: 10px 10px 0 0; text-align: center;">
+                <h2 style="margin: 0; font-size: 22px;">⚡ \${currentLang === 'ar' ? 'نتيجة امتحان الرياضيات والتحليل التفاعلي' : 'Math Interactive Exam Result'}</h2>
+                <p style="margin: 5px 0 0 0; opacity: 0.9;">\${currentLang === 'ar' ? 'رياضيات الصف العاشر متقدم | الفصل الدراسي الأول' : 'Grade 10 Advanced Math | Term 1'}</p>
+                <p style="margin: 5px 0 0 0; font-size: 12px; opacity: 0.8;">🔀 \${currentLang === 'ar' ? 'تم خلط الأسئلة تلقائياً' : 'Questions were randomly shuffled'}</p>
+            </div>
+            
+            <div style="background: #f0fdfa; padding: 15px; border: 1px solid #99f6e4;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">\${currentLang === 'ar' ? '👤 الاسم:' : '👤 Name:'}</td>
+                        <td style="padding: 8px;">\${name}</td>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">\${currentLang === 'ar' ? '🏫 الشعبة:' : '🏫 Class:'}</td>
+                        <td style="padding: 8px;">\${studentClass}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">\${currentLang === 'ar' ? '📅 التاريخ:' : '📅 Date:'}</td>
+                        <td style="padding: 8px;">\${date}</td>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">\${currentLang === 'ar' ? '🏆 التقدير:' : '🏆 Grade:'}</td>
+                        <td style="padding: 8px;">\${badge}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="background: white; padding: 20px; text-align: center; border-bottom: 2px solid #e5e7eb;">
+                <div style="display: inline-block; margin: 0 15px;">
+                    <div style="font-size: 32px; font-weight: bold; color: #0d9488;">\${score}</div>
+                    <div style="color: #6b7280; font-size: 13px;">\${currentLang === 'ar' ? 'الدرجة الكلية' : 'Total Score'}</div>
+                </div>
+                <div style="display: inline-block; margin: 0 15px;">
+                    <div style="font-size: 32px; font-weight: bold; color: #059669;">\${successRate}%</div>
+                    <div style="color: #6b7280; font-size: 13px;">\${currentLang === 'ar' ? 'نسبة النجاح' : 'Success Rate'}</div>
+                </div>
+            </div>
+
+            <h3 style="background: #f3f4f6; padding: 12px; margin: 0; color: #1f2937; border-bottom: 2px solid #d1d5db;">
+                \${currentLang === 'ar' ? '📝 تفاصيل الإجابات' : '📝 Answer Details'}
+            </h3>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="background: #0d9488; color: white;">
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 8%;">#</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 32%;">\${currentLang === 'ar' ? 'القسم' : 'Section'}</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 15%;">\${currentLang === 'ar' ? 'الإجابة' : 'Answer'}</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 15%;">\${currentLang === 'ar' ? 'الصحيحة' : 'Correct'}</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 15%;">\${currentLang === 'ar' ? 'النتيجة' : 'Status'}</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    let sectionScores = [sec1, sec2, sec3, sec4, sec5];
+    let sectionTotals = [4, 4, 4, 4, 4];
+
+    for (let i = 0; i < 20; i++) {
+        const selected = document.querySelector(`input[name="q\${i}"]:checked`);
+        const selectedValue = selected ? selected.value : '-';
+        const correctValue = correctAnswersMap[i];
+        const isCorrect = selectedValue === correctValue;
+        
+        const sectionIndex = Math.floor(i / 4);
+
+        const rowBg = i % 2 === 0 ? '#f9fafb' : '#ffffff';
+        const statusBg = isCorrect ? '#dcfce7' : '#fee2e2';
+        const statusColor = isCorrect ? '#166534' : '#991b1b';
+        const statusIcon = isCorrect ? '✅' : '❌';
+        const statusText = isCorrect 
+            ? (currentLang === 'ar' ? 'صحيح' : 'Correct') 
+            : (currentLang === 'ar' ? 'خطأ' : 'Wrong');
+
+        answersHTML += `
+            <tr style="background: \${rowBg};">
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold;">\${i + 1}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb;">\${currentSectionNames[sectionIndex]}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold;">\${selectedValue.toUpperCase()}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold; color: #059669;">\${correctValue.toUpperCase()}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; background: \${statusBg}; color: \${statusColor}; font-weight: bold;">
+                    \${statusIcon} \${statusText}
+                </td>
+            </tr>
+        `;
+    }
+
+    answersHTML += `
+                </tbody>
+            </table>
+
+            <h3 style="background: #f3f4f6; padding: 12px; margin: 0; color: #1f2937; border-bottom: 2px solid #d1d5db; border-top: 3px solid #0d9488;">
+                📊 \${currentLang === 'ar' ? 'تفصيل الأداء' : 'Performance Breakdown'}
+            </h3>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="background: #7c3aed; color: white;">
+                        <th style="padding: 10px; border: 1px solid #6d28d9;">\${currentLang === 'ar' ? 'القسم' : 'Section'}</th>
+                        <th style="padding: 10px; border: 1px solid #6d28d9; width: 20%;">\${currentLang === 'ar' ? 'النتيجة' : 'Score'}</th>
+                        <th style="padding: 10px; border: 1px solid #6d28d9; width: 20%;">\${currentLang === 'ar' ? 'النسبة' : 'Percentage'}</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    for (let i = 0; i < 5; i++) {
+        const percentage = Math.round((sectionScores[i] / sectionTotals[i]) * 100);
+        const barColor = percentage >= 75 ? '#10b981' : percentage >= 50 ? '#f59e0b' : '#ef4444';
+        const rowBg = i % 2 === 0 ? '#f9fafb' : '#ffffff';
+        
+        answersHTML += `
+            <tr style="background: \${rowBg};">
+                <td style="padding: 10px; border: 1px solid #e5e7eb; font-weight: 600;">\${currentSectionNames[i]}</td>
+                <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold; color: #0d9488;">
+                    \${sectionScores[i]} / \${sectionTotals[i]}
+                </td>
+                <td style="padding: 10px; border: 1px solid #e5e7eb;">
+                    <div style="background: #e5e7eb; border-radius: 10px; overflow: hidden; height: 20px; position: relative;">
+                        <div style="background: \${barColor}; width: \${percentage}%; height: 100%;"></div>
+                        <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 11px; font-weight: bold; color: #1f2937;">
+                            \${percentage}%
+                        </span>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }
+
+    answersHTML += `
+                </tbody>
+            </table>
+
+            <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 15px; border-radius: 0 0 10px 10px; border-top: 2px solid #f59e0b;">
+                <p style="margin: 0; color: #78350f; text-align: center; font-size: 13px;">
+                    💡 <strong>\${currentLang === 'ar' ? 'ملاحظة:' : 'Note:'}</strong> 
+                    \${currentLang === 'ar' 
+                        ? 'تم إرسال هذا التقرير تلقائياً من منصة 4U التعليمية | Mr. Mohammed Hesham' 
+                        : 'This report was automatically sent from 4U Educational Platform | Mr. Mohammed Hesham'}
+                </p>
+            </div>
+        </div>
+    `;
+
+    const templateParams = {
+        to_email: TARGET_EMAIL,
+        student_name: name,
+        student_class: studentClass,
+        exam_date: date,
+        total_score: score,
+        success_rate: successRate,
+        grade: badge,
+        answers_table: answersHTML
+    };
+
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
+        .then(() => {
+            status.textContent = currentLang === 'ar' 
+                ? '✅ تم إرسال النتائج بنجاح!' 
+                : '✅ Results sent successfully!';
+            status.style.color = '#059669';
+            btn.textContent = currentLang === 'ar' ? '✓ تم الإرسال' : '✓ Sent';
+        })
+        .catch(err => {
+            status.textContent = currentLang === 'ar' 
+                ? '❌ فشل الإرسال، حاول مرة أخرى' 
+                : '❌ Failed to send, try again';
+            status.style.color = '#dc2626';
+            btn.disabled = false;
+            btn.textContent = currentLang === 'ar' ? '📧 إعادة المحاولة' : '📧 Retry Send';
+            console.error('EmailJS Error:', err);
+        });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    prepareShuffledExam();
+    renderExam();
+    startTimer();
+    console.log('🔀 تم خلط الأسئلة والخيارات عشوائياً!');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Grade 10 Advanced Physics - Unit 1: Periodic Motion (Simple Harmonic Motion, Hooke's Law & Pendulum) (10Adv-phy-T1-1.1-exam)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght=400;600;700;900&family=Inter:wght=400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        body.en-mode { font-family: 'Inter', sans-serif; }
+        .correct { background-color: #dcfce7 !important; border-color: #16a34a !important; }
+        .incorrect { background-color: #fee2e2 !important; border-color: #dc2626 !important; }
+        .formula { font-family: 'Times New Roman', serif; letter-spacing: 0.5px; direction: ltr; display: inline-block; font-style: italic; }
+        .timer-warning { color: #dc2626 !important; animation: pulse 1s infinite; }
+        @keyframes pulse { 50% { opacity: 0.7; } }
+        @media print { .no-print { display: none !important; } }
+        .success-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.875rem; }
+        .grade-excellent { background: #dcfce7; color: #166534; }
+        .grade-good { background: #fef3c7; color: #92400e; }
+        .grade-pass { background: #dbeafe; color: #1e40af; }
+        .grade-fail { background: #fee2e2; color: #991b1b; }
+        .lang-switch {
+            position: fixed; top: 16px; left: 16px; z-index: 100;
+            background: white; padding: 6px; border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; gap: 4px;
+            border: 2px solid #0d9488;
+        }
+        [dir="ltr"] .lang-switch { left: auto; right: 16px; }
+        .lang-btn {
+            padding: 6px 14px; border-radius: 20px; cursor: pointer; font-weight: bold;
+            transition: all 0.3s; border: none; font-size: 0.875rem;
+            background: transparent; color: #6b7280;
+        }
+        .lang-btn.active { background: #0d9488; color: white; box-shadow: 0 2px 6px rgba(13,148,136,0.4); }
+        .lang-btn:hover:not(.active) { background: #f0fdfa; color: #0d9488; }
+        .shuffle-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 md:p-8 min-h-screen">
+
+    <div class="lang-switch no-print">
+        <button class="lang-btn active" onclick="setLanguage('ar')" id="btn-ar">عربي</button>
+        <button class="lang-btn" onclick="setLanguage('en')" id="btn-en">EN</button>
+    </div>
+
+    <div id="timer-container" class="max-w-4xl mx-auto mb-4 text-center no-print">
+        <div class="bg-white p-4 rounded-xl shadow-md inline-block border-2 border-teal-100">
+            <span class="text-gray-600 ml-2" data-ar="⏱️ الوقت المتبقي:" data-en="⏱️ Time Remaining:">⏱️ الوقت المتبقي:</span>
+            <span id="timer" class="text-2xl font-bold text-teal-600 font-mono">60:00</span>
+            <span class="shuffle-badge" data-ar="🔀 أسئلة عشوائية" data-en="🔀 Random Questions">🔀 أسئلة عشوائية</span>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto mb-6 flex flex-wrap gap-3 justify-center no-print">
+        <button onclick="toggleAnswers()" class="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="👁️ إظهار / إخفاء الإجابات" data-en="👁️ Show / Hide Answers">👁️ إظهار / إخفاء الإجابات</button>
+        <button onclick="window.print()" class="bg-gray-800 hover:bg-gray-900 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="🖨️ طباعة / PDF" data-en="🖨️ Print / PDF">🖨️ طباعة / PDF</button>
+        <button onclick="reshuffleExam()" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="🔀 إعادة خلط الأسئلة" data-en="🔀 Reshuffle Questions">🔀 إعادة خلط الأسئلة</button>
+    </div>
+
+    <header class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-md mb-8 border-r-4 border-teal-600">
+        <div class="text-center">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2" data-ar="⚡ فيزياء الصف العاشر متقدم" data-en="⚡ Grade 10 Advanced Physicsematics">⚡ فيزياء الصف العاشر متقدم</h1>
+            <h2 class="text-lg text-teal-600 font-semibold" data-ar="الوحدة 1: الحركة الدورية (الحركة التوافقية وقانون هوك والبندول ورنين الزنبرك) (الفصل الدراسي الأول)" data-en="Unit 1: Periodic Motion (Simple Harmonic Motion, Hooke's Law & Pendulum) (Term 1)">الوحدة 1: الحركة الدورية (الحركة التوافقية وقانون هوك والبندول ورنين الزنبرك) (الفصل الدراسي الأول)</h2>
+            <p class="text-sm text-gray-600 mt-2" data-ar="اختبار تقييمي تفاعلي شامل يغطي مفاهيم الحركة التوافقية البسيطة وقانون هوك وثابت الزنبرك وطاقة الوضع المرونية وقوانين البندول البسيط ومفهوم الرنين الميكانيكي وتطبيقاته." data-en="Unit 1: Periodic Motion (Simple Harmonic Motion, Hooke's Law & Pendulum) complete interactive test aligned with Ministry syllabus.">اختبار تقييمي تفاعلي شامل يغطي مفاهيم الحركة التوافقية البسيطة وقانون هوك وثابت الزنبرك وطاقة الوضع المرونية وقوانين البندول البسيط ومفهوم الرنين الميكانيكي وتطبيقاته.</p>
+            <p class="text-xs text-orange-600 mt-2 font-semibold" data-ar="⚠️ ملاحظة: يتم خلط ترتيب الأسئلة والخيارات تلقائياً مع كل تحديث للصفحة" data-en="⚠️ Note: Questions and options are randomly shuffled on every page refresh">⚠️ ملاحظة: يتم خلط ترتيب الأسئلة والخيارات تلقائياً مع كل تحديث للصفحة</p>
+        </div>
+        <div class="mt-4 flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+            <span><span data-ar="📅 التاريخ:" data-en="📅 Date:">📅 التاريخ:</span> <input type="text" class="border-b border-gray-400 bg-transparent w-28 text-center"></span>
+            <span><span data-ar="👤 الاسم:" data-en="👤 Name:">👤 الاسم:</span> <input type="text" id="studentName" class="border-b border-gray-400 bg-transparent w-32 text-center" placeholder="Enter name"></span>
+            <span><span data-ar="🏫 الشعبة:" data-en="🏫 Class:">🏫 الشعبة:</span> <input type="text" id="studentClass" class="border-b border-gray-400 bg-transparent w-28 text-center" placeholder="Class"></span>
+            <span><span data-ar="⏱️ المدة: 60 دقيقة" data-en="⏱️ Duration: 60 min">⏱️ المدة: 60 دقيقة</span></span>
+            <span><span data-ar="📊 המجموع: 100 درجة" data-en="📊 Total: 100 pts">📊 المجموع: 100 درجة</span></span>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto space-y-8" id="exam-content"></main>
+
+    <div class="text-center no-print pb-8 mt-8">
+        <button onclick="gradeExam()" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-lg px-10 py-4 rounded-xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer" data-ar="📝 تسليم وتصحيح الامتحان" data-en="📝 Submit & Grade Exam">📝 تسليم وتصحيح الامتحان</button>
+    </div>
+
+    <div id="results-panel" class="max-w-4xl mx-auto mt-8 bg-white p-8 rounded-2xl shadow-2xl border-t-4 border-emerald-500 hidden no-print">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center" data-ar="📊 نتائج الامتحان" data-en="📊 Exam Results">📊 نتائج الامتحان</h2>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div class="bg-blue-50 p-4 rounded-xl text-center"><p data-ar="اسم الطالب" data-en="Student Name">اسم الطالب</p><p id="res-name" class="font-bold text-xl text-teal-700">-</p></div>
+            <div class="bg-purple-50 p-4 rounded-xl text-center"><p data-ar="التاريخ" data-en="Date">التاريخ</p><p id="res-date" class="font-bold text-xl text-purple-700">-</p></div>
+            <div class="bg-emerald-50 p-4 rounded-xl text-center"><p data-ar="المجموع" data-en="Score">المجموع</p><p id="res-total" class="font-bold text-3xl text-emerald-600">0 / 100</p></div>
+        </div>
+        <div class="text-center mb-6">
+            <span id="success-badge" class="success-badge grade-excellent">-</span>
+            <p id="success-percent" class="text-4xl font-bold text-emerald-600 mt-2">100%</p>
+            <p class="text-sm text-gray-500" data-ar="نسبة النجاح" data-en="Success Rate">نسبة النجاح</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-xl mb-6">
+            <h3 class="font-bold text-lg mb-4 text-gray-800" data-ar="📈 تفصيل الأداء حسب القسم:" data-en="📈 Performance Breakdown:">📈 تفصيل الأداء حسب القسم:</h3>
+            <div class="space-y-3">
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="الجزء الأول: المفاهيم والقواعد الأساسية والتعريفات" data-en="Part 1: Basic Concepts, Rules, and Definitions">الجزء الأول: المفاهيم والقواعد الأساسية والتعريفات</span>
+                    <span id="sec1-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="الجزء الثاني: العمليات الحسابية والحلول العددية الدقيقة" data-en="Part 2: Calculations and Exact Numerical Solutions">الجزء الثاني: العمليات الحسابية والحلول العددية الدقيقة</span>
+                    <span id="sec2-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="الجزء الثالث: المهارات المتقدمة والتطبيقات والمسائل" data-en="Part 3: Advanced Skills, Applications, and Problems">الجزء الثالث: المهارات المتقدمة والتطبيقات والمسائل</span>
+                    <span id="sec3-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="الجزء الرابع: النمذجة الرياضية والتمثيل البياني والمسائل العملية" data-en="Part 4: Physicsematical Modeling, Graphing, and Practical Problems">الجزء الرابع: النمذجة الرياضية والتمثيل البياني والمسائل العملية</span>
+                    <span id="sec4-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="الجزء الخامس: مهارات التفكير العليا والتحليل والربط المنطقي" data-en="Part 5: Higher-Order Thinking, Analysis, and Logical Connections">الجزء الخامس: مهارات التفكير العليا والتحليل والربط المنطقي</span>
+                    <span id="sec5-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mb-6">
+            <button id="sendEmailBtn" onclick="sendResultsToEmail()" class="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white text-lg px-8 py-3 rounded-xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer" data-ar="📧 إرسال النتائج للمعلم" data-en="📧 Send Results to Teacher">📧 إرسال النتائج للمعلم</button>
+            <p id="emailStatus" class="text-sm mt-2 text-center font-medium"></p>
+        </div>
+        <div class="flex gap-3 justify-center">
+            <button onclick="window.print()" class="bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold" data-ar="🖨️ طباعة النتائج" data-en="🖨️ Print Results">🖨️ طباعة النتائج</button>
+        </div>
+    </div>
+
+    <footer class="max-w-4xl mx-auto mt-10 mb-8 text-center text-gray-500 text-sm no-print">
+        © <span data-ar="فيزياء الصف 11 عام | الوحدة 1: الحركة الدورية (الحركة التوافقية وقانون هوك والبندول ورنين الزنبرك)" data-en="Grade 10 Advanced Physics | Unit 1: Periodic Motion (Simple Harmonic Motion, Hooke's Law & Pendulum)">فيزياء الصف 11 عام | الوحدة 1: الحركة الدورية (الحركة التوافقية وقانون هوك والبندول ورنين الزنبرك)</span> | Platform 4U Education
+    </footer>
+
+<script>
+const PUBLIC_KEY = "Rb3Lq8tXaFmc5YHUH";
+const SERVICE_ID = "service_w15m64i";
+const TEMPLATE_ID = "template_5b0u2tq";
+const TARGET_EMAIL = "mohammedhesham872@gmail.com";
+
+emailjs.init(PUBLIC_KEY);
+
+const originalExamData = {
+    "title_ar": "الوحدة 1: الحركة الدورية (الحركة التوافقية وقانون هوك والبندول ورنين الزنبرك)",
+    "title_en": "Unit 1: Periodic Motion (Simple Harmonic Motion, Hooke's Law & Pendulum)",
+    "desc_ar": "اختبار تقييمي تفاعلي شامل يغطي مفاهيم الحركة التوافقية البسيطة وقانون هوك وثابت الزنبرك وطاقة الوضع المرونية وقوانين البندول البسيط ومفهوم الرنين الميكانيكي وتطبيقاته.",
+    "sections": [
+        {
+            "title": {
+                "ar": "🔹 الجزء الأول: الحركة التوافقية البسيطة والاهتزازات",
+                "en": "🔹 Part 1: Simple Harmonic Motion & Oscillations"
+            },
+            "questions": [
+                {
+                    "q": {
+                        "ar": "أي من الحركات التالية تعبر عن حركة دورية تتكرر في دورة منتظمة؟",
+                        "en": "Which of the following motions represents periodic motion repeating in a regular cycle?"
+                    },
+                    "options": [
+                        {
+                            "ar": "أرجوحة تتحرك ذهاباً وإياباً في مسارها",
+                            "en": "A swing moving back and forth in its path"
+                        },
+                        {
+                            "ar": "سيارة تسير في خط مستقيم بسرعة ثابتة",
+                            "en": "A car moving in a straight line with constant speed"
+                        },
+                        {
+                            "ar": "سقوط حجر سقوطاً حراً نحو الأرض",
+                            "en": "A stone falling freely towards the ground"
+                        },
+                        {
+                            "ar": "رصاصة منطلقة من مدفع بسرعة عالية",
+                            "en": "A bullet fired from a cannon with high speed"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "الحركة الدورية هي الحركة التي تتكرر في دورات منتظمة مثل الأرجوحة والبندول.",
+                        "en": "Periodic motion is motion that repeats in regular cycles, like a swing or a pendulum."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "في الحركة التوافقية البسيطة، تتناسب القوة المعيدة التي تعيد الجسم إلى موضع اتزانه طردياً مع:",
+                        "en": "In simple harmonic motion, the restoring force that returns the object to its equilibrium position is directly proportional to:"
+                    },
+                    "options": [
+                        {
+                            "ar": "إزاحة الجسم عن موضع الاتزان",
+                            "en": "The displacement of the body from the equilibrium position"
+                        },
+                        {
+                            "ar": "سرعة الجسم المتجهة أثناء حركته",
+                            "en": "The velocity of the body during its motion"
+                        },
+                        {
+                            "ar": "كتلة الجسم المهتز الكلية",
+                            "en": "The total mass of the vibrating body"
+                        },
+                        {
+                            "ar": "ثابت قوة الجاذبية الأرضية المعياري",
+                            "en": "The standard gravitational force constant"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "تنص قوانين الحركة التوافقية البسيطة على أن القوة المعيدة تتناسب طردياً مع الإزاحة وتعاكسها في الاتجاه.",
+                        "en": "Simple harmonic motion laws state that the restoring force is directly proportional to displacement and opposite in direction."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "تسمى أقصى مسافة يتحركها الجسم المهتز يميناً أو يساراً عن موضع اتزانه بـ:",
+                        "en": "The maximum distance the vibrating body moves to the right or left from its equilibrium position is called:"
+                    },
+                    "options": [
+                        {
+                            "ar": "سعة الاهتزازة (Amplitude)",
+                            "en": "Amplitude"
+                        },
+                        {
+                            "ar": "الزمن الدوري (Period)",
+                            "en": "Period"
+                        },
+                        {
+                            "ar": "التردد الموجي (Frequency)",
+                            "en": "Frequency"
+                        },
+                        {
+                            "ar": "الرنين الميكانيكي (Resonance)",
+                            "en": "Resonance"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "سعة الاهتزازة هي أقصى إزاحة للجسم المهتز عن موضع سكونه أو اتزانه.",
+                        "en": "Amplitude is the maximum displacement of the vibrating body from its position of rest or equilibrium."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "الزمن الذي يحتاجه الجسم المهتز لإكمال دورة كاملة يسمى:",
+                        "en": "The time required for a vibrating body to complete one full cycle is called:"
+                    },
+                    "options": [
+                        {
+                            "ar": "الزمن الدوري (T)",
+                            "en": "The Period (T)"
+                        },
+                        {
+                            "ar": "التردد بالهرتز (f)",
+                            "en": "The Frequency (f)"
+                        },
+                        {
+                            "ar": "السعة القصوى (A)",
+                            "en": "The Amplitude (A)"
+                        },
+                        {
+                            "ar": "طول الموجة الافتراضي",
+                            "en": "The Wavelength"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "الزمن الدوري هو الزمن اللازم لعمل دورة أو اهتزازة كاملة واحدة.",
+                        "en": "The period is the time needed to make one complete cycle or oscillation."
+                    }
+                }
+            ]
+        },
+        {
+            "title": {
+                "ar": "🔹 الجزء الثاني: قانون هوك والزنبرك وطاقة الوضع المرونية",
+                "en": "🔹 Part 2: Hooke's Law, Springs & Elastic Potential Energy"
+            },
+            "questions": [
+                {
+                    "q": {
+                        "ar": "ينص قانون هوك على أن القوة المؤثرة في زنبرك تتناسب طردياً مع مقدار الاستطالة وفق العلاقة:",
+                        "en": "Hooke's Law states that the force exerted on a spring is directly proportional to the elongation according to the relation:"
+                    },
+                    "options": [
+                        {
+                            "ar": "F = -kx",
+                            "en": "F = -kx"
+                        },
+                        {
+                            "ar": "F = -mv",
+                            "en": "F = -mv"
+                        },
+                        {
+                            "ar": "F = -mg",
+                            "en": "F = -mg"
+                        },
+                        {
+                            "ar": "F = -kx²",
+                            "en": "F = -kx²"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "قانون هوك يعبر عنه رياضياً بالصيغة F = -kx حيث k هو ثابت الزنبرك وx هو الاستطالة والرمز السالب يدل على القوة المعيدة.",
+                        "en": "Hooke's Law is mathematically expressed as F = -kx, where k is the spring constant and x is the elongation."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "ما هي وحدة قياس ثابت الزنبرك (k) في النظام الدولي للوحدات (SI)؟",
+                        "en": "What is the SI unit of measurement for the spring constant (k)?"
+                    },
+                    "options": [
+                        {
+                            "ar": "N/m",
+                            "en": "N/m"
+                        },
+                        {
+                            "ar": "N·m",
+                            "en": "N·m"
+                        },
+                        {
+                            "ar": "kg·m/s",
+                            "en": "kg·m/s"
+                        },
+                        {
+                            "ar": "J/m²",
+                            "en": "J/m²"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "ثابت الزنبرك يقاس بوحدة نيوتن لكل متر (N/m) وهي تعبر عن مدى صلابة ومقاومة الزنبرك.",
+                        "en": "The spring constant is measured in Newtons per meter (N/m), expressing the stiffness of the spring."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "إذا علق جسم وزنه 15 N في زنبرك فاستطال بمقدار 0.3 m، فما قيمة ثابت هذا الزنبرك؟",
+                        "en": "If an object weighing 15 N is suspended from a spring causing it to stretch by 0.3 m, what is the spring constant?"
+                    },
+                    "options": [
+                        {
+                            "ar": "50 N/m",
+                            "en": "50 N/m"
+                        },
+                        {
+                            "ar": "4.5 N/m",
+                            "en": "4.5 N/m"
+                        },
+                        {
+                            "ar": "5 N/m",
+                            "en": "5 N/m"
+                        },
+                        {
+                            "ar": "150 N/m",
+                            "en": "150 N/m"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "ثابت الزنبرك k = F / x = 15 / 0.3 = 50 N/m.",
+                        "en": "The spring constant k = F / x = 15 / 0.3 = 50 N/m."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "تساوي طاقة الوضع المرونية (PE) المختزنة في زنبرك مستطيل بالصيغة:",
+                        "en": "The elastic potential energy (PE) stored in a stretched spring is equal to:"
+                    },
+                    "options": [
+                        {
+                            "ar": "PE = 0.5 k x²",
+                            "en": "PE = 0.5 k x²"
+                        },
+                        {
+                            "ar": "PE = k x",
+                            "en": "PE = k x"
+                        },
+                        {
+                            "ar": "PE = m g h",
+                            "en": "PE = m g h"
+                        },
+                        {
+                            "ar": "PE = 0.5 m v²",
+                            "en": "PE = 0.5 m v²"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "طاقة الوضع المرونية المختزنة في الزنبرك تساوي نصف ثابت الزنبرك مضروباً في مربع الاستطالة.",
+                        "en": "The elastic potential energy stored in a spring is equal to half the spring constant times the square of the stretch."
+                    }
+                }
+            ]
+        },
+        {
+            "title": {
+                "ar": "🔹 الجزء الثالث: البندول البسيط وقوانينه والجاذبية",
+                "en": "🔹 Part 3: The Simple Pendulum, its Laws & Gravity"
+            },
+            "questions": [
+                {
+                    "q": {
+                        "ar": "يتكون البندول البسيط من خيط خفيف معلق به كتلة، ويعتمد زمنه الدوري (T) بشكل أساسي على:",
+                        "en": "A simple pendulum consists of a light string with a suspended mass, and its period (T) depends on:"
+                    },
+                    "options": [
+                        {
+                            "ar": "طول خيط البندول وتسارع الجاذبية فقط",
+                            "en": "Length of the pendulum string and gravitational acceleration only"
+                        },
+                        {
+                            "ar": "كتلة الثقل المعلق وسعة الاهتزازة فقط",
+                            "en": "Mass of the suspended weight and amplitude only"
+                        },
+                        {
+                            "ar": "كتلة الثقل وطول خيط البندول معاً",
+                            "en": "Mass of the weight and length of the pendulum string together"
+                        },
+                        {
+                            "ar": "سعة الاهتزازة ونوع المادة المصنوع منها الخيط",
+                            "en": "Amplitude and the type of material the string is made of"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "يعتمد الزمن الدوري للبندول البسيط على طول الخيط L وتسارع الجاذبية g وفق العلاقة T = 2π√(L/g) ولا يعتمد على الكتلة في السعات الصغيرة.",
+                        "en": "The period of a simple pendulum depends on string length L and gravitational acceleration g according to T = 2π√(L/g) and is independent of mass."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "ماذا يحدث للزمن الدوري للبندول البسيط إذا قمنا بزيادة طول الخيط إلى أربعة أمثاله؟",
+                        "en": "What happens to the period of a simple pendulum if we increase the string length to four times its original length?"
+                    },
+                    "options": [
+                        {
+                            "ar": "يزداد الزمن الدوري إلى الضعف",
+                            "en": "The period increases to double"
+                        },
+                        {
+                            "ar": "يزداد الزمن الدوري إلى أربعة أمثاله",
+                            "en": "The period increases to four times"
+                        },
+                        {
+                            "ar": "يقل الزمن الدوري إلى النصف",
+                            "en": "The period decreases to half"
+                        },
+                        {
+                            "ar": "يبقى الزمن الدوري ثابتاً دون أي تغيير",
+                            "en": "The period remains constant without any change"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "بما أن T تتناسب طردياً مع الجذر التربيعي للطول، فإن زيادة الطول 4 مرات تزيد الزمن الدوري بمقدار √4 = 2 (أي إلى الضعف).",
+                        "en": "Since T is directly proportional to the square root of length, increasing the length 4 times increases the period by √4 = 2 (i.e., doubles it)."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "احسب الزمن الدوري التقريبي لبندول بسيط طول خيطه 0.99 m على سطح الأرض حيث تسارع الجاذبية g = 9.8 m/s²؟",
+                        "en": "Calculate the approximate period of a simple pendulum with string length of 0.99 m on Earth, where g = 9.8 m/s²?"
+                    },
+                    "options": [
+                        {
+                            "ar": "2.0 s",
+                            "en": "2.0 s"
+                        },
+                        {
+                            "ar": "1.0 s",
+                            "en": "1.0 s"
+                        },
+                        {
+                            "ar": "3.14 s",
+                            "en": "3.14 s"
+                        },
+                        {
+                            "ar": "0.5 s",
+                            "en": "0.5 s"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "باستخدام القانون: T = 2π√(L/g) = 2 × 3.1416 × √(0.99 / 9.8) ≈ 2.0 s.",
+                        "en": "Using the formula: T = 2π√(L/g) = 2 × 3.1416 × √(0.99 / 9.8) ≈ 2.0 s."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "عند أي نقطة تكون طاقة الحركة للبندول البسيط في قيمتها العظمى؟",
+                        "en": "At which point is the kinetic energy of a simple pendulum at its maximum value?"
+                    },
+                    "options": [
+                        {
+                            "ar": "عند موضع الاتزان (أخفض نقطة)",
+                            "en": "At the equilibrium position (lowest point)"
+                        },
+                        {
+                            "ar": "عند أقصى إزاحة يميناً في حركته",
+                            "en": "At the maximum displacement to the right"
+                        },
+                        {
+                            "ar": "عند أقصى إزاحة يساراً في حركته",
+                            "en": "At the maximum displacement to the left"
+                        },
+                        {
+                            "ar": "تكون ثابتة ومتساوية عند جميع نقاط المسار",
+                            "en": "It is constant and equal at all points of the path"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "تكون السرعة وبالتالي طاقة الحركة أكبر ما يمكن عند مرور البندول بموضع الاتزان حيث تكون طاقة الوضع صفرية.",
+                        "en": "The velocity and thus kinetic energy are maximum when the pendulum passes the equilibrium position, where potential energy is zero."
+                    }
+                }
+            ]
+        },
+        {
+            "title": {
+                "ar": "🔹 الجزء الرابع: ظاهرة الرنين والجاذبية وتطبيقاتها الميكانيكية",
+                "en": "🔹 Part 4: Resonance, Gravity & Mechanical Applications"
+            },
+            "questions": [
+                {
+                    "q": {
+                        "ar": "تسمى الحالة التي تحدث عندما يتم تطبيق قوى صغيرة في فترات زمنية منتظمة على جسم مهتز، مما يؤدي إلى زيادة سعة الاهتزاز بـ:",
+                        "en": "The phenomenon that occurs when small forces are applied at regular intervals to a vibrating body, leading to an increase in amplitude is:"
+                    },
+                    "options": [
+                        {
+                            "ar": "الرنين (Resonance)",
+                            "en": "Resonance"
+                        },
+                        {
+                            "ar": "التخميد (Damping)",
+                            "en": "Damping"
+                        },
+                        {
+                            "ar": "السرعة الحدية الميكانيكية",
+                            "en": "Terminal velocity"
+                        },
+                        {
+                            "ar": "تأثير دوبلر السمعي",
+                            "en": "Doppler Effect"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "الرنين يحدث عندما يتوافق تردد القوة الخارجية المؤثرة مع التردد الطبيعي لاهتزاز الجسم.",
+                        "en": "Resonance occurs when the frequency of the external force matches the natural frequency of the vibrating body."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "أي مما يلي يعد تطبيقاً مباشراً على ظاهرة الرنين في الفيزياء الميكانيكية وحياتنا اليومية؟",
+                        "en": "Which of the following is a direct application of resonance in mechanical physics and daily life?"
+                    },
+                    "options": [
+                        {
+                            "ar": "دفع شخص على الأرجوحة بتوقيت دوري متوافق لزيادة الارتفاع",
+                            "en": "Pushing someone on a swing with regular matching timing to increase height"
+                        },
+                        {
+                            "ar": "تصميم فرامل السيارات لزيادة الاحتكاك",
+                            "en": "Designing car brakes to increase friction"
+                        },
+                        {
+                            "ar": "تقليص طول الزنبرك لزيادة ثابته",
+                            "en": "Shortening the spring to increase its constant"
+                        },
+                        {
+                            "ar": "استخدام جدران عازلة للصوت في غرف التسجيل",
+                            "en": "Using soundproof walls in recording rooms"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "دفع الأرجوحة في أوقات محددة يتطابق مع ترددها الطبيعي هو من أشهر أمثلة الرنين الميكانيكي لزيادة السعة.",
+                        "en": "Pushing a swing at specific times corresponding to its natural frequency is one of the most famous examples of mechanical resonance."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "ما هو مصدر القوة المعيدة التي تسبب الحركة التوافقية للبندول البسيط عند إزاحته عن مركزه؟",
+                        "en": "What is the source of the restoring force causing simple harmonic motion in a pendulum when displaced?"
+                    },
+                    "options": [
+                        {
+                            "ar": "مركبة قوة الجاذبية الموازية لمسار الحركة دائرية التماس",
+                            "en": "The component of gravitational force parallel to the circular path of motion"
+                        },
+                        {
+                            "ar": "قوة الشد في الخيط المعلق التي تسحبه للأعلى",
+                            "en": "The tension force in the suspended string pulling it up"
+                        },
+                        {
+                            "ar": "قوة مقاومة الهواء التي تدفعه لتثبيته في اتجاه محدد",
+                            "en": "The air resistance force pushing it to stabilize"
+                        },
+                        {
+                            "ar": "القوة الناتجة عن القصور الذاتي للكتلة المعلقة في نهايته",
+                            "en": "The force resulting from the inertia of the suspended mass at its end"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "مركبة قوة الجاذبية الأرضية (mg sin θ) الموازية لمسار حركة البندول هي القوة المعيدة المسؤولة عن حركته الاهتزازية المرتجعة.",
+                        "en": "The component of gravity (mg sin θ) parallel to the pendulum's motion is the restoring force responsible for its oscillation."
+                    }
+                },
+                {
+                    "q": {
+                        "ar": "إذا قمنا بنقل بندول بسيط يمتلك زمناً دورياً مقداره 2s على الأرض إلى القمر حيث تسارع الجاذبية سدس جاذبية الأرض، فماذا يحدث لزمنه الدوري؟",
+                        "en": "If we transport a simple pendulum with a period of 2s on Earth to the Moon where gravity is one-sixth of Earth's, what happens to its period?"
+                    },
+                    "options": [
+                        {
+                            "ar": "يزداد الزمن الدوري للبندول بشكل ملحوظ",
+                            "en": "The period of the pendulum increases significantly"
+                        },
+                        {
+                            "ar": "يقل الزمن الدوري للبندول ويتحرك أسرع",
+                            "en": "The period of the pendulum decreases and it moves faster"
+                        },
+                        {
+                            "ar": "يبقى الزمن الدوري ثابتاً كما هو دون تأثير",
+                            "en": "The period remains exactly the same without effect"
+                        },
+                        {
+                            "ar": "ينعدم الزمن الدوري للبندول ويتوقف فوراً عن الاهتزاز",
+                            "en": "The period vanishes and it stops oscillating immediately"
+                        }
+                    ],
+                    "correct": 0,
+                    "answer": {
+                        "ar": "بما أن الجاذبية على القمر أقل، وبما أن الزمن الدوري يتناسب عكسياً مع جذر الجاذبية، فإن الزمن الدوري سيزداد بمقدار √6 مرات.",
+                        "en": "Since gravity on the Moon is lower, and because the period is inversely proportional to the square root of gravity, the period will increase."
+                    }
+                }
+            ]
+        }
+    ]
+};
+
+function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Physics.floor(Physics.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+let examData;
+let correctAnswersMap = {};
+let currentLang = 'ar';
+let timeRemaining = 3600;
+let timerInterval;
+
+function prepareShuffledExam() {
+    examData = JSON.parse(JSON.stringify(originalExamData));
+    correctAnswersMap = {};
+    let globalIdx = 0;
+    
+    examData.sections.forEach((section) => {
+        section.questions = shuffleArray(section.questions);
+        
+        section.questions.forEach((q) => {
+            const optionsWithCorrect = q.options.map((opt, idx) => ({
+                option: opt,
+                isCorrect: idx === q.correct
+            }));
+            
+            const shuffledOptions = shuffleArray(optionsWithCorrect);
+            q.options = shuffledOptions.map(o => o.option);
+            
+            const newCorrectIndex = shuffledOptions.findIndex(o => o.isCorrect);
+            q.correct = newCorrectIndex;
+            
+            correctAnswersMap[globalIdx] = String.fromCharCode(97 + newCorrectIndex);
+            globalIdx++;
+        });
+    });
+}
+
+function reshuffleExam() {
+    prepareShuffledExam();
+    renderExam();
+    document.querySelectorAll('input[type="radio"]:checked').forEach(r => r.checked = false);
+    document.getElementById('results-panel').classList.add('hidden');
+    document.querySelectorAll('.correct, .incorrect').forEach(el => {
+        el.classList.remove('correct', 'incorrect');
+    });
+    alert(currentLang === 'ar' 
+        ? '🔀 تم إعادة خلط الأسئلة والخيارات بنجاح!' 
+        : '🔀 Questions and options have been reshuffled successfully!');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    
+    document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    
+    document.body.classList.toggle('en-mode', lang === 'en');
+    
+    document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+    });
+    
+    renderExam();
+}
+
+function renderExam() {
+    const container = document.getElementById('exam-content');
+    const labels = {
+        ar: { option: ['أ', 'ب', 'ج', 'د'], answer: '✅ الإجابة الصحيحة:' },
+        en: { option: ['A', 'B', 'C', 'D'], answer: '✅ Correct Answer:' }
+    };
+    const lbl = labels[currentLang];
+    const isRTL = currentLang === 'ar';
+    
+    let html = '';
+    let globalIdx = 0;
+    
+    examData.sections.forEach((section) => {
+        html += `
+        <section class="bg-white p-6 rounded-xl shadow-lg">
+            <h2 class="text-xl font-bold mb-4 text-teal-700">${section.title[currentLang]}</h2>
+            <ol class="space-y-4 text-sm">`;
+            
+        section.questions.forEach((q) => {
+            const borderSide = isRTL ? 'border-r-4 pr-4' : 'border-l-4 pl-4';
+            html += `
+                <li class="${borderSide} border-teal-500 py-2" id="q-${globalIdx}">
+                    <strong>${globalIdx + 1}.</strong> ${q.q[currentLang]}<br>`;
+                    
+            q.options.forEach((opt, oIdx) => {
+                const radioSide = isRTL ? 'mr-4 ml-2' : 'ml-4 mr-2';
+                html += `
+                    <label class="cursor-pointer block mt-1 ${isRTL ? 'mr-4' : 'ml-4'}">
+                        <input type="radio" name="q${globalIdx}" value="${String.fromCharCode(97 + oIdx)}" class="${radioSide}"> 
+                        ${lbl.option[oIdx]}) ${opt[currentLang]}
+                    </label>`;
+            });
+            
+            html += `
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">
+                        ${lbl.answer} ${lbl.option[q.correct]}) ${q.options[q.correct][currentLang]} — ${q.answer[currentLang]}
+                    </div>
+                </li>`;
+            globalIdx++;
+        });
+        
+        html += `
+            </ol>
+        </section>`;
+    });
+    
+    container.innerHTML = html;
+}
+
+function startTimer() {
+    document.getElementById('timer-container').style.display = 'block';
+    timerInterval = setInterval(() => {
+        timeRemaining--;
+        const minutes = Physics.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+        const timerEl = document.getElementById('timer');
+        timerEl.textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+        if (timeRemaining <= 300) timerEl.classList.add('timer-warning');
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            alert(currentLang === 'ar' ? "انتهى الوقت! سيتم تسليم الامتحان تلقائياً." : "Time's up! Exam will be submitted automatically.");
+            gradeExam();
+        }
+    }, 1000);
+}
+
+function toggleAnswers() {
+    document.querySelectorAll('.answer-box').forEach(el => el.classList.toggle('hidden'));
+}
+
+function gradeExam() {
+    let correctCount = 0;
+    let sec1 = 0, sec2 = 0, sec3 = 0, sec4 = 0, sec5 = 0;
+    
+    for (let i = 0; i < 20; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        const li = document.getElementById(`q-${i}`);
+        const correctAnswer = correctAnswersMap[i];
+        
+        if (li) {
+            const isCorrect = selected && selected.value === correctAnswer;
+            
+            if (isCorrect) {
+                correctCount++;
+                li.classList.add('correct');
+                li.classList.remove('incorrect');
+            } else {
+                li.classList.add('incorrect');
+                li.classList.remove('correct');
+            }
+
+            if (isCorrect) {
+                if (i < 4) sec1++;
+                else if (i < 8) sec2++;
+                else if (i < 12) sec3++;
+                else if (i < 16) sec4++;
+                else sec5++;
+            }
+        }
+    }
+
+    const score = (correctCount / 20) * 100;
+    const successRate = Physics.round(score);
+    
+    document.getElementById('res-total').textContent = `${successRate} / 100`;
+    document.getElementById('res-name').textContent = document.getElementById('studentName').value || (currentLang === 'ar' ? 'طالب' : 'Student');
+    document.getElementById('res-date').textContent = new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-AE' : 'en-US');
+    
+    document.getElementById('sec1-score').textContent = `${sec1}/4`;
+    document.getElementById('sec2-score').textContent = `${sec2}/4`;
+    document.getElementById('sec3-score').textContent = `${sec3}/4`;
+    document.getElementById('sec4-score').textContent = `${sec4}/4`;
+    document.getElementById('sec5-score').textContent = `${sec5}/4`;
+    
+    const badge = document.getElementById('success-badge');
+    const percent = document.getElementById('success-percent');
+    percent.textContent = `${successRate}%`;
+    
+    if (currentLang === 'ar') {
+        if (successRate >= 90) { badge.textContent = 'ممتاز'; badge.className = 'success-badge grade-excellent'; }
+        else if (successRate >= 75) { badge.textContent = 'جيد جداً'; badge.className = 'success-badge grade-good'; }
+        else if (successRate >= 50) { badge.textContent = 'جيد'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = 'يحتاج تحسين'; badge.className = 'success-badge grade-fail'; }
+    } else {
+        if (successRate >= 90) { badge.textContent = 'Excellent'; badge.className = 'success-badge grade-excellent'; }
+        else if (successRate >= 75) { badge.textContent = 'Very Good'; badge.className = 'success-badge grade-good'; }
+        else if (successRate >= 50) { badge.textContent = 'Good'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = 'Needs Improvement'; badge.className = 'success-badge grade-fail'; }
+    }
+    
+    document.getElementById('results-panel').classList.remove('hidden');
+    document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('sendEmailBtn').classList.remove('hidden');
+}
+
+function sendResultsToEmail() {
+    const btn = document.getElementById('sendEmailBtn');
+    const status = document.getElementById('emailStatus');
+    btn.disabled = true;
+    btn.textContent = currentLang === 'ar' ? '⏳ جاري الإرسال...' : '📤 Sending...';
+
+    const name = document.getElementById('studentName').value || 'N/A';
+    const studentClass = document.getElementById('studentClass').value || 'N/A';
+    const date = document.querySelector('input[type="text"]').value || new Date().toLocaleDateString();
+    const score = document.getElementById('res-total').textContent;
+    const successRate = document.getElementById('success-percent').textContent;
+    const badge = document.getElementById('success-badge').textContent;
+
+    const sectionNames = {
+        ar: [
+            "الجزء الأول: المفاهيم والقواعد الأساسية والتعريفات",
+            "الجزء الثاني: العمليات الحسابية والحلول العددية الدقيقة",
+            "الجزء الثالث: المهارات المتقدمة والتطبيقات والمسائل",
+            "الجزء الرابع: النمذجة الرياضية والتمثيل البياني والمسائل العملية",
+            "الجزء الخامس: مهارات التفكير العليا والتحليل والربط المنطقي"
+        ],
+        en: [
+            "Part 1: Basic Concepts, Rules, and Definitions",
+            "Part 2: Calculations and Exact Numerical Solutions",
+            "Part 3: Advanced Skills, Applications, and Problems",
+            "Part 4: Physicsematical Modeling, Graphing, and Practical Problems",
+            "Part 5: Higher-Order Thinking, Analysis, and Logical Connections"
+        ]
+    };
+    const currentSectionNames = sectionNames[currentLang];
+
+    let answersHTML = `
+        <div style="font-family: 'Segoe UI', Tahoma, Arial, sans-serif; direction: \${currentLang === 'ar' ? 'rtl' : 'ltr'}; text-align: \${currentLang === 'ar' ? 'right' : 'left'};">
+            <div style="background: linear-gradient(135deg, #0d9488, #0891b2); color: white; padding: 20px; border-radius: 10px 10px 0 0; text-align: center;">
+                <h2 style="margin: 0; font-size: 22px;">⚡ \${currentLang === 'ar' ? 'نتيجة امتحان الفيزياء والتحليل التفاعلي' : 'Physics Interactive Exam Result'}</h2>
+                <p style="margin: 5px 0 0 0; opacity: 0.9;">\${currentLang === 'ar' ? 'فيزياء الصف العاشر متقدم | الفصل الدراسي الأول' : 'Grade 10 Advanced Physics | Term 1'}</p>
+                <p style="margin: 5px 0 0 0; font-size: 12px; opacity: 0.8;">🔀 \${currentLang === 'ar' ? 'تم خلط الأسئلة تلقائياً' : 'Questions were randomly shuffled'}</p>
+            </div>
+            
+            <div style="background: #f0fdfa; padding: 15px; border: 1px solid #99f6e4;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">\${currentLang === 'ar' ? '👤 الاسم:' : '👤 Name:'}</td>
+                        <td style="padding: 8px;">\${name}</td>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">\${currentLang === 'ar' ? '🏫 الشعبة:' : '🏫 Class:'}</td>
+                        <td style="padding: 8px;">\${studentClass}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">\${currentLang === 'ar' ? '📅 التاريخ:' : '📅 Date:'}</td>
+                        <td style="padding: 8px;">\${date}</td>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">\${currentLang === 'ar' ? '🏆 التقدير:' : '🏆 Grade:'}</td>
+                        <td style="padding: 8px;">\${badge}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="background: white; padding: 20px; text-align: center; border-bottom: 2px solid #e5e7eb;">
+                <div style="display: inline-block; margin: 0 15px;">
+                    <div style="font-size: 32px; font-weight: bold; color: #0d9488;">\${score}</div>
+                    <div style="color: #6b7280; font-size: 13px;">\${currentLang === 'ar' ? 'الدرجة الكلية' : 'Total Score'}</div>
+                </div>
+                <div style="display: inline-block; margin: 0 15px;">
+                    <div style="font-size: 32px; font-weight: bold; color: #059669;">\${successRate}%</div>
+                    <div style="color: #6b7280; font-size: 13px;">\${currentLang === 'ar' ? 'نسبة النجاح' : 'Success Rate'}</div>
+                </div>
+            </div>
+
+            <h3 style="background: #f3f4f6; padding: 12px; margin: 0; color: #1f2937; border-bottom: 2px solid #d1d5db;">
+                \${currentLang === 'ar' ? '📝 تفاصيل الإجابات' : '📝 Answer Details'}
+            </h3>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="background: #0d9488; color: white;">
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 8%;">#</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 32%;">\${currentLang === 'ar' ? 'القسم' : 'Section'}</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 15%;">\${currentLang === 'ar' ? 'الإجابة' : 'Answer'}</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 15%;">\${currentLang === 'ar' ? 'الصحيحة' : 'Correct'}</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 15%;">\${currentLang === 'ar' ? 'النتيجة' : 'Status'}</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    let sectionScores = [sec1, sec2, sec3, sec4, sec5];
+    let sectionTotals = [4, 4, 4, 4, 4];
+
+    for (let i = 0; i < 20; i++) {
+        const selected = document.querySelector(`input[name="q\${i}"]:checked`);
+        const selectedValue = selected ? selected.value : '-';
+        const correctValue = correctAnswersMap[i];
+        const isCorrect = selectedValue === correctValue;
+        
+        const sectionIndex = Physics.floor(i / 4);
+
+        const rowBg = i % 2 === 0 ? '#f9fafb' : '#ffffff';
+        const statusBg = isCorrect ? '#dcfce7' : '#fee2e2';
+        const statusColor = isCorrect ? '#166534' : '#991b1b';
+        const statusIcon = isCorrect ? '✅' : '❌';
+        const statusText = isCorrect 
+            ? (currentLang === 'ar' ? 'صحيح' : 'Correct') 
+            : (currentLang === 'ar' ? 'خطأ' : 'Wrong');
+
+        answersHTML += `
+            <tr style="background: \${rowBg};">
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold;">\${i + 1}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb;">\${currentSectionNames[sectionIndex]}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold;">\${selectedValue.toUpperCase()}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold; color: #059669;">\${correctValue.toUpperCase()}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; background: \${statusBg}; color: \${statusColor}; font-weight: bold;">
+                    \${statusIcon} \${statusText}
+                </td>
+            </tr>
+        `;
+    }
+
+    answersHTML += `
+                </tbody>
+            </table>
+
+            <h3 style="background: #f3f4f6; padding: 12px; margin: 0; color: #1f2937; border-bottom: 2px solid #d1d5db; border-top: 3px solid #0d9488;">
+                📊 \${currentLang === 'ar' ? 'تفصيل الأداء' : 'Performance Breakdown'}
+            </h3>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="background: #7c3aed; color: white;">
+                        <th style="padding: 10px; border: 1px solid #6d28d9;">\${currentLang === 'ar' ? 'القسم' : 'Section'}</th>
+                        <th style="padding: 10px; border: 1px solid #6d28d9; width: 20%;">\${currentLang === 'ar' ? 'النتيجة' : 'Score'}</th>
+                        <th style="padding: 10px; border: 1px solid #6d28d9; width: 20%;">\${currentLang === 'ar' ? 'النسبة' : 'Percentage'}</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    for (let i = 0; i < 5; i++) {
+        const percentage = Physics.round((sectionScores[i] / sectionTotals[i]) * 100);
+        const barColor = percentage >= 75 ? '#10b981' : percentage >= 50 ? '#f59e0b' : '#ef4444';
+        const rowBg = i % 2 === 0 ? '#f9fafb' : '#ffffff';
+        
+        answersHTML += `
+            <tr style="background: \${rowBg};">
+                <td style="padding: 10px; border: 1px solid #e5e7eb; font-weight: 600;">\${currentSectionNames[i]}</td>
+                <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold; color: #0d9488;">
+                    \${sectionScores[i]} / \${sectionTotals[i]}
+                </td>
+                <td style="padding: 10px; border: 1px solid #e5e7eb;">
+                    <div style="background: #e5e7eb; border-radius: 10px; overflow: hidden; height: 20px; position: relative;">
+                        <div style="background: \${barColor}; width: \${percentage}%; height: 100%;"></div>
+                        <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 11px; font-weight: bold; color: #1f2937;">
+                            \${percentage}%
+                        </span>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }
+
+    answersHTML += `
+                </tbody>
+            </table>
+
+            <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 15px; border-radius: 0 0 10px 10px; border-top: 2px solid #f59e0b;">
+                <p style="margin: 0; color: #78350f; text-align: center; font-size: 13px;">
+                    💡 <strong>\${currentLang === 'ar' ? 'ملاحظة:' : 'Note:'}</strong> 
+                    \${currentLang === 'ar' 
+                        ? 'تم إرسال هذا التقرير تلقائياً من منصة 4U التعليمية | Mr. Mohammed Hesham' 
+                        : 'This report was automatically sent from 4U Educational Platform | Mr. Mohammed Hesham'}
+                </p>
+            </div>
+        </div>
+    `;
+
+    const templateParams = {
+        to_email: TARGET_EMAIL,
+        student_name: name,
+        student_class: studentClass,
+        exam_date: date,
+        total_score: score,
+        success_rate: successRate,
+        grade: badge,
+        answers_table: answersHTML
+    };
+
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
+        .then(() => {
+            status.textContent = currentLang === 'ar' 
+                ? '✅ تم إرسال النتائج بنجاح!' 
+                : '✅ Results sent successfully!';
+            status.style.color = '#059669';
+            btn.textContent = currentLang === 'ar' ? '✓ تم الإرسال' : '✓ Sent';
+        })
+        .catch(err => {
+            status.textContent = currentLang === 'ar' 
+                ? '❌ فشل الإرسال، حاول مرة أخرى' 
+                : '❌ Failed to send, try again';
+            status.style.color = '#dc2626';
+            btn.disabled = false;
+            btn.textContent = currentLang === 'ar' ? '📧 إعادة المحاولة' : '📧 Retry Send';
+            console.error('EmailJS Error:', err);
+        });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    prepareShuffledExam();
+    renderExam();
+    startTimer();
+    console.log('🔀 تم خلط الأسئلة والخيارات عشوائياً!');
+});
+</script>
+</body>
+</html>

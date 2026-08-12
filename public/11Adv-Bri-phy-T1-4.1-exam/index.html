@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Grade 11 Advanced Physics - Force & Motion (Unit 4 - Lesson 1)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        body.en-mode { font-family: 'Inter', sans-serif; }
+        .correct { background-color: #dcfce7 !important; border-color: #16a34a !important; }
+        .incorrect { background-color: #fee2e2 !important; border-color: #dc2626 !important; }
+        .formula { font-family: 'Times New Roman', serif; letter-spacing: 0.5px; direction: ltr; display: inline-block; font-style: italic; }
+        .timer-warning { color: #dc2626 !important; animation: pulse 1s infinite; }
+        @keyframes pulse { 50% { opacity: 0.7; } }
+        @media print { .no-print { display: none !important; } }
+        .success-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.875rem; }
+        .grade-excellent { background: #dcfce7; color: #166534; }
+        .grade-good { background: #fef3c7; color: #92400e; }
+        .grade-pass { background: #dbeafe; color: #1e40af; }
+        .grade-fail { background: #fee2e2; color: #991b1b; }
+        .lang-switch {
+            position: fixed; top: 16px; left: 16px; z-index: 100;
+            background: white; padding: 6px; border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; gap: 4px;
+            border: 2px solid #0d9488;
+        }
+        [dir="ltr"] .lang-switch { left: auto; right: 16px; }
+        .lang-btn {
+            padding: 6px 14px; border-radius: 20px; cursor: pointer; font-weight: bold;
+            transition: all 0.3s; border: none; font-size: 0.875rem;
+            background: transparent; color: #6b7280;
+        }
+        .lang-btn.active { background: #0d9488; color: white; box-shadow: 0 2px 6px rgba(13,148,136,0.4); }
+        .lang-btn:hover:not(.active) { background: #f0fdfa; color: #0d9488; }
+        .shuffle-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 md:p-8 min-h-screen">
+
+    <div class="lang-switch no-print">
+        <button class="lang-btn active" onclick="setLanguage('ar')" id="btn-ar">عربي</button>
+        <button class="lang-btn" onclick="setLanguage('en')" id="btn-en">EN</button>
+    </div>
+
+    <div id="timer-container" class="max-w-4xl mx-auto mb-4 text-center no-print">
+        <div class="bg-white p-4 rounded-xl shadow-md inline-block border-2 border-teal-100">
+            <span class="text-gray-600 ml-2" data-ar="⏱️ الوقت المتبقي:" data-en="⏱️ Time Remaining:">⏱️ الوقت المتبقي:</span>
+            <span id="timer" class="text-2xl font-bold text-teal-600 font-mono">60:00</span>
+            <span class="shuffle-badge" data-ar="🔀 أسئلة عشوائية" data-en="🔀 Random Questions">🔀 أسئلة عشوائية</span>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto mb-6 flex flex-wrap gap-3 justify-center no-print">
+        <button onclick="toggleAnswers()" class="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="👁️ إظهار / إخفاء الإجابات" data-en="👁️ Show / Hide Answers">👁️ إظهار / إخفاء الإجابات</button>
+        <button onclick="window.print()" class="bg-gray-800 hover:bg-gray-900 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="🖨️ طباعة / PDF" data-en="🖨️ Print / PDF">🖨️ طباعة / PDF</button>
+        <button onclick="reshuffleExam()" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="🔀 إعادة خلط الأسئلة" data-en="🔀 Reshuffle Questions">🔀 إعادة خلط الأسئلة</button>
+    </div>
+
+    <header class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-md mb-8 border-r-4 border-teal-600">
+        <div class="text-center">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2" data-ar="⚡ فيزياء الصف الحادي عشر متقدم (بريدج)" data-en="⚡ Grade 11 Advanced Physics (Bridge)">⚡ فيزياء الصف الحادي عشر متقدم (بريدج)</h1>
+            <h2 class="text-lg text-teal-600 font-semibold" data-ar="الدرس الأول: القوة والحركة (الوحدة الرابعة)" data-en="Lesson 1: Force & Motion (Unit 4)">الدرس الأول: القوة والحركة (الوحدة الرابعة)</h2>
+            <p class="text-sm text-gray-600 mt-2" data-ar="مفهوم القوة، أنواع القوى، مخطط الجسم الحر، القوة المحصلة، وقانون نيوتن الأول (القصور الذاتي)" data-en="Force concept, types of forces, free-body diagram, net force, and Newton's first law of inertia">مفهوم القوة، أنواع القوى، مخطط الجسم الحر، القوة المحصلة، وقانون نيوتن الأول (القصور الذاتي)</p>
+            <p class="text-xs text-orange-600 mt-2 font-semibold" data-ar="⚠️ ملاحظة: يتم خلط ترتيب الأسئلة والخيارات تلقائياً مع كل تحديث للصفحة" data-en="⚠️ Note: Questions and options are randomly shuffled on every page refresh">⚠️ ملاحظة: يتم خلط ترتيب الأسئلة والخيارات تلقائياً مع كل تحديث للصفحة</p>
+        </div>
+        <div class="mt-4 flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+            <span><span data-ar="📅 التاريخ:" data-en="📅 Date:">📅 التاريخ:</span> <input type="text" class="border-b border-gray-400 bg-transparent w-28 text-center"></span>
+            <span><span data-ar="👤 الاسم:" data-en="👤 Name:">👤 الاسم:</span> <input type="text" id="studentName" class="border-b border-gray-400 bg-transparent w-32 text-center" placeholder="Enter name"></span>
+            <span><span data-ar="🏫 الشعبة:" data-en="🏫 Class:">🏫 الشعبة:</span> <input type="text" id="studentClass" class="border-b border-gray-400 bg-transparent w-28 text-center" placeholder="Class"></span>
+            <span><span data-ar="⏱️ المدة: 60 دقيقة" data-en="⏱️ Duration: 60 min">⏱️ المدة: 60 دقيقة</span></span>
+            <span><span data-ar="📊 المجموع: 100 درجة" data-en="📊 Total: 100 pts">📊 المجموع: 100 درجة</span></span>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto space-y-8" id="exam-content"></main>
+
+    <div class="text-center no-print pb-8 mt-8">
+        <button onclick="gradeExam()" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-lg px-10 py-4 rounded-xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer" data-ar="📝 تسليم وتصحيح الامتحان" data-en="📝 Submit & Grade Exam">📝 تسليم وتصحيح الامتحان</button>
+    </div>
+
+    <div id="results-panel" class="max-w-4xl mx-auto mt-8 bg-white p-8 rounded-2xl shadow-2xl border-t-4 border-emerald-500 hidden no-print">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center" data-ar="📊 نتائج الامتحان" data-en="📊 Exam Results">📊 نتائج الامتحان</h2>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div class="bg-blue-50 p-4 rounded-xl text-center"><p data-ar="اسم الطالب" data-en="Student Name">اسم الطالب</p><p id="res-name" class="font-bold text-xl text-teal-700">-</p></div>
+            <div class="bg-purple-50 p-4 rounded-xl text-center"><p data-ar="التاريخ" data-en="Date">التاريخ</p><p id="res-date" class="font-bold text-xl text-purple-700">-</p></div>
+            <div class="bg-emerald-50 p-4 rounded-xl text-center"><p data-ar="المجموع" data-en="Score">المجموع</p><p id="res-total" class="font-bold text-3xl text-emerald-600">0 / 100</p></div>
+        </div>
+        <div class="text-center mb-6">
+            <span id="success-badge" class="success-badge grade-excellent">-</span>
+            <p id="success-percent" class="text-4xl font-bold text-emerald-600 mt-2">100%</p>
+            <p class="text-sm text-gray-500" data-ar="نسبة النجاح" data-en="Success Rate">نسبة النجاح</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-xl mb-6">
+            <h3 class="font-bold text-lg mb-4 text-gray-800" data-ar="📈 تفصيل الأداء حسب القسم:" data-en="📈 Performance Breakdown:">📈 تفصيل الأداء حسب القسم:</h3>
+            <div class="space-y-3">
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="مفهوم القوة وتمثيلها" data-en="Concept of Force & Representation">مفهوم القوة وتمثيلها</span>
+                    <span id="sec1-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="أنواع القوى ومخطط الجسم الحر" data-en="Types of Forces & Free-Body Diagram">أنواع القوى ومخطط الجسم الحر</span>
+                    <span id="sec2-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="القوة المحصلة وجمع المتجهات" data-en="Net Force & Vector Addition">القوة المحصلة وجمع المتجهات</span>
+                    <span id="sec3-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="قانون نيوتن الأول والقصور الذاتي" data-en="Newton's First Law & Inertia">قانون نيوتن الأول والقصور الذاتي</span>
+                    <span id="sec4-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="الاتزان وتطبيقات القوة" data-en="Equilibrium & Force Applications">الاتزان وتطبيقات القوة</span>
+                    <span id="sec5-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mb-6">
+            <button id="sendEmailBtn" onclick="sendResultsToEmail()" class="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white text-lg px-8 py-3 rounded-xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer" data-ar="📧 إرسال النتائج للمعلم" data-en="📧 Send Results to Teacher">📧 إرسال النتائج للمعلم</button>
+            <p id="emailStatus" class="text-sm mt-2 text-center font-medium"></p>
+        </div>
+        <div class="flex gap-3 justify-center">
+            <button onclick="window.print()" class="bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold" data-ar="🖨️ طباعة النتائج" data-en="🖨️ Print Results">🖨️ طباعة النتائج</button>
+        </div>
+    </div>
+
+    <footer class="max-w-4xl mx-auto mt-10 mb-8 text-center text-gray-500 text-sm no-print">
+        © <span data-ar="فيزياء الصف 11 متقدم بريدج | الدرس الأول: القوة والحركة" data-en="Grade 11 Advanced Bridge Physics | Lesson 1: Force & Motion">فيزياء الصف 11 متقدم بريدج | الدرس الأول: القوة والحركة</span> | Mr. Mohammed Hesham
+    </footer>
+
+<script>
+// ==================== إعدادات EmailJS ====================
+const PUBLIC_KEY = "Rb3Lq8tXaFmc5YHUH";
+const SERVICE_ID = "service_w15m64i";
+const TEMPLATE_ID = "template_5b0u2tq";
+const TARGET_EMAIL = "mohammedhesham872@gmail.com";
+
+// تهيئة EmailJS عند تحميل الصفحة
+emailjs.init(PUBLIC_KEY);
+
+const originalExamData = {
+    sections: [
+        {
+            id: 'sec1',
+            title: { ar: '🔹 الجزء الأول: مفهوم القوة وتمثيلها', en: '🔹 Part 1: Concept of Force & Representation' },
+            questions: [
+                {
+                    q: { ar: 'ما هو التعريف الفيزيائي الصحيح للقوة؟', en: 'What is the correct physical definition of force?' },
+                    options: [
+                        { ar: 'مؤثر خارجي يغير أو يحاول تغيير حالة الجسم الحركية أو شكله', en: 'An external agent that changes or attempts to change the state of motion or shape of an object' },
+                        { ar: 'كمية قياسية تعبر عن الطاقة الحركية الكلية للجسم', en: 'A scalar quantity representing the total kinetic energy of an object' },
+                        { ar: 'المعدل الزمني للشغل المبذول بواسطة الجسم', en: 'The time rate of work done by an object' },
+                        { ar: 'ممانعة الجسم لأي تغيير في حالته الحركية', en: 'The resistance of an object to any change in its state of motion' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'القوة هي سحب أو دفع يؤثر في جسم ما، ويغير من سرعته المتجهة أو اتجاهه أو شكله.', en: 'Force is a push or pull exerted on an object, which changes its velocity, direction, or shape.' }
+                },
+                {
+                    q: { ar: 'أي من العبارات التالية تصف القوة بشكل صحيح من حيث طبيعتها الرياضية؟', en: 'Which of the following statements correctly describes force in terms of its mathematical nature?' },
+                    options: [
+                        { ar: 'كمية متجهة تحدد بالمقدار والاتجاه معاً', en: 'A vector quantity specified by both magnitude and direction' },
+                        { ar: 'كمية قياسية تحدد بالمقدار فقط', en: 'A scalar quantity specified by magnitude only' },
+                        { ar: 'كمية أساسية لا يمكن اشتقاقها من كميات أخرى', en: 'A fundamental quantity that cannot be derived from other quantities' },
+                        { ar: 'كمية ثابتة لا تتغير بتغير الموقع', en: 'A constant quantity that does not change with location' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'القوة كمية متجهة لأنها تعتمد على المقدار والاتجاه معاً لتحديد تأثيرها.', en: 'Force is a vector quantity because it requires both magnitude and direction to determine its effect.' }
+                },
+                {
+                    q: { ar: 'ما هي وحدة قياس القوة في النظام الدولي للوحدات (SI) وما يعادلها بالوحدات الأساسية؟', en: 'What is the SI unit of force and its equivalent in fundamental units?' },
+                    options: [
+                        { ar: 'النيوتن ويعادل <span class="formula">1 kg·m/s²</span>', en: 'Newton, equivalent to <span class="formula">1 kg·m/s²</span>' },
+                        { ar: 'الجول ويعادل <span class="formula">1 kg·m²/s²</span>', en: 'Joule, equivalent to <span class="formula">1 kg·m²/s²</span>' },
+                        { ar: 'النيوتن ويعادل <span class="formula">1 kg·m/s</span>', en: 'Newton, equivalent to <span class="formula">1 kg·m/s</span>' },
+                        { ar: 'الباسكال ويعادل <span class="formula">1 kg/(m·s²)</span>', en: 'Pascal, equivalent to <span class="formula">1 kg/(m·s²)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'وحدة قياس القوة هي النيوتن، وبتطبيق قانون نيوتن الثاني (<span class="formula">F = ma</span>) فإن <span class="formula">1 N = 1 kg·m/s²</span>.', en: 'The SI unit of force is the Newton, and by Newton\'s Second Law (<span class="formula">F = ma</span>), <span class="formula">1 N = 1 kg·m/s²</span>.' }
+                },
+                {
+                    q: { ar: 'إذا كانت القوة المؤثرة على جسم تساوي صفراً، فكيف يظهر تأثيرها على مخطط الحركة؟', en: 'If the force acting on an object is zero, how does its effect appear on a motion diagram?' },
+                    options: [
+                        { ar: 'تكون المسافات بين النقاط متساوية تماماً', en: 'The distances between the points are perfectly equal' },
+                        { ar: 'تتباعد النقاط تدريجياً وبانتظام', en: 'The points space out gradually and regularly' },
+                        { ar: 'تتقارب النقاط تدريجياً حتى تتوقف تماماً', en: 'The points get closer together until they completely stop' },
+                        { ar: 'تتوزع النقاط بشكل عشوائي غير منظم', en: 'The points are distributed in an unorganized random pattern' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'عندما تكون القوة المحصلة صفراً، يتحرك الجسم بسرعة متجهة ثابتة، وبالتالي تكون المسافات بين النقاط في مخطط الحركة متساوية.', en: 'When the net force is zero, the object moves at a constant velocity, so the spaces between points in the motion diagram are equal.' }
+                }
+            ]
+        },
+        {
+            id: 'sec2',
+            title: { ar: '🔹 الجزء الثاني: أنواع القوى ومخطط الجسم الحر', en: '🔹 Part 2: Types of Forces & Free-Body Diagram' },
+            questions: [
+                {
+                    q: { ar: 'أي من القوى التالية تُصنف كقوة تلامس (Contact Force)؟', en: 'Which of the following forces is classified as a contact force?' },
+                    options: [
+                        { ar: 'قوة الاحتكاك', en: 'Friction force' },
+                        { ar: 'قوة الجاذبية الأرضية', en: 'Gravitational force' },
+                        { ar: 'القوة المغناطيسية', en: 'Magnetic force' },
+                        { ar: 'القوة الكهربائية الساكنة', en: 'Electrostatic force' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'قوة الاحتكاك تتطلب تلامساً فيزيائياً مباشراً بين السطحين المتلامسين، لذا فهي قوة تلامس.', en: 'Friction requires direct physical contact between the two surfaces, making it a contact force.' }
+                },
+                {
+                    q: { ar: 'ما العبارة الصحيحة التي تصف قوة المجال (Field Force)؟', en: 'What is the correct statement describing a field force?' },
+                    options: [
+                        { ar: 'تؤثر في الأجسام بغض النظر عن وجود تلامس فيزيائي مباشر أم لا', en: 'It acts on objects regardless of whether there is direct physical contact or not' },
+                        { ar: 'تنشأ فقط عندما يتلامس جسمان صلبان بشكل مباشر', en: 'It arises only when two solid objects touch directly' },
+                        { ar: 'تعتمد دائماً على مساحة السطح المتلامس بين الأجسام', en: 'It always depends on the contact surface area between objects' },
+                        { ar: 'قوة تقاوم حركة الأجسام في الأوساط السائلة فقط', en: 'A force that resists the movement of objects in liquid media only' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'قوى المجال تؤثر عن بعد دون الحاجة لتلامس مباشر، مثل الجاذبية والمغناطيسية.', en: 'Field forces act through space without requiring direct contact, such as gravity and magnetism.' }
+                },
+                {
+                    q: { ar: 'ما هو مخطط الجسم الحر (Free-Body Diagram) في الفيزياء؟', en: 'What is a Free-Body Diagram in physics?' },
+                    options: [
+                        { ar: 'نموذج فيزيائي يمثل القوى المؤثرة على جسم باستخدام متجهات مرسومة من نقطة واحدة', en: 'A physical model representing the forces acting on an object using vectors drawn from a single point' },
+                        { ar: 'رسم تخطيطي يعرض مسار حركة الجسم والمواقع التي يمر بها', en: 'A schematic showing the path of motion of an object and the positions it passes' },
+                        { ar: 'رسم بياني يوضح العلاقة بين موقع الجسم والزمن المنقضي', en: 'A graphical plot showing the relationship between object position and elapsed time' },
+                        { ar: 'مخطط يبين التركيب الداخلي للجسم وتوزيع ذراته', en: 'A diagram showing the internal structure of an object and its atom distribution' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'مخطط الجسم الحر يبسط الجسم إلى نقطة ويرسم جميع القوى المؤثرة عليه كمتجهات تنطلق من هذه النقطة.', en: 'A free-body diagram simplifies the object into a point and represents all forces acting on it as vectors originating from that point.' }
+                },
+                {
+                    q: { ar: 'كتاب مستقر على طاولة أفقية، ما هي القوى التي يجب تمثيلها في مخطط الجسم الحر للكتاب؟', en: 'A book is resting on a horizontal table, what forces must be represented in its free-body diagram?' },
+                    options: [
+                        { ar: 'قوة الجاذبية لأسفل والقوة العمودية لأعلى', en: 'Gravitational force downward and normal force upward' },
+                        { ar: 'قوة الجاذبية لأسفل فقط', en: 'Gravitational force downward only' },
+                        { ar: 'قوة الجاذبية لأسفل وقوة دفع الطاولة لأسفل', en: 'Gravitational force downward and table push downward' },
+                        { ar: 'القوة العمودية لأعلى وقوة الاحتكاك أفقياً', en: 'Normal force upward and friction force horizontally' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'تؤثر قوة الجاذبية الأرضية (<span class="formula">Fg</span>) لأسفل، وتوازنها القوة العمودية السطحية (<span class="formula">F_N</span>) لأعلى.', en: 'Gravitational force (<span class="formula">Fg</span>) acts downward, balanced by normal force (<span class="formula">F_N</span>) acting upward.' }
+                }
+            ]
+        },
+        {
+            id: 'sec3',
+            title: { ar: '🔹 الجزء الثالث: القوة المحصلة وجمع المتجهات', en: '🔹 Part 3: Net Force & Vector Addition' },
+            questions: [
+                {
+                    q: { ar: 'إذا أثرت قوتان مقداراهما <span class="formula">15 N</span> شرقاً و <span class="formula">20 N</span> غرباً على الجسم نفسه، ما مقدار واتجاه القوة المحصلة؟', en: 'If two forces of magnitudes 15 N East and 20 N West act on the same object, what is the magnitude and direction of the net force?' },
+                    options: [
+                        { ar: '<span class="formula">5 N</span> غرباً', en: '5 N West' },
+                        { ar: '<span class="formula">35 N</span> شرقاً', en: '35 N East' },
+                        { ar: '<span class="formula">5 N</span> شرقاً', en: '5 N East' },
+                        { ar: '<span class="formula">25 N</span> شمالاً غربياً', en: '25 N North-West' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'القوتان متعاكستان في الاتجاه، لذا نطرحهما وتكون المحصلة في اتجاه القوة الأكبر: <span class="formula">20 - 15 = 5 N</span> غرباً.', en: 'The forces are opposite in direction, so we subtract them, and the net force is in the direction of the larger force: 20 - 15 = 5 N West.' }
+                },
+                {
+                    q: { ar: 'تؤثر قوتان متعامدتان على حلقة معدنية، الأولى مقدارها <span class="formula">3.0 N</span> شمالاً والثانية <span class="formula">4.0 N</span> شرقاً. ما هو مقدار القوة المحصلة المؤثرة على الحلقة؟', en: 'Two perpendicular forces act on a metal ring: 3.0 N North and 4.0 N East. What is the magnitude of the net force acting on the ring?' },
+                    options: [
+                        { ar: '<span class="formula">5.0 N</span>', en: '5.0 N' },
+                        { ar: '<span class="formula">7.0 N</span>', en: '7.0 N' },
+                        { ar: '<span class="formula">1.0 N</span>', en: '1.0 N' },
+                        { ar: '<span class="formula">12.0 N</span>', en: '12.0 N' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'نستخدم نظرية فيثاغورس للقوى المتعامدة: <span class="formula">F_net = √(3.0² + 4.0²) = 5.0 N</span>.', en: 'We use the Pythagorean theorem for perpendicular forces: <span class="formula">F_net = √(3.0² + 4.0²) = 5.0 N</span>.' }
+                },
+                {
+                    q: { ar: 'متى تكون القوة المحصلة المؤثرة على جسم ما مساوية للصفر تماماً؟', en: 'When is the net force acting on an object exactly equal to zero?' },
+                    options: [
+                        { ar: 'عندما يكون الجسم ساكناً تماماً أو يتحرك بسرعة متجهة ثابتة', en: 'When the object is completely at rest or moving with a constant velocity' },
+                        { ar: 'عندما يدور الجسم في مسار دائري بسرعة ثابتة المقدار', en: 'When the object rotates in a circular path at constant speed' },
+                        { ar: 'عندما يقذف الجسم رأسياً لأعلى ويصل لأقصى ارتفاع', en: 'When the object is thrown vertically upward and reaches maximum height' },
+                        { ar: 'عندما يسقط الجسم سقوطاً حراً في الفراغ', en: 'When the object falls freely in vacuum' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'ينص قانون نيوتن الأول على أن القوة المحصلة تكون صفراً في حالتي السكون والسرعة المتجهة الثابتة (الاتزان).', en: 'Newton\'s First Law states that the net force is zero when an object is at rest or moving with a constant velocity (equilibrium).' }
+                },
+                {
+                    q: { ar: 'يسحب طالب صندوقاً بقوة مقدارها <span class="formula">50 N</span> بزاوية <span class="formula">30°</span> بالنسبة للأفق. ما مقدار المركبة الأفقية لهذه القوة؟', en: 'A student pulls a box with a force of 50 N at an angle of 30° relative to the horizontal. What is the horizontal component of this force?' },
+                    options: [
+                        { ar: '<span class="formula">43.3 N</span>', en: '43.3 N' },
+                        { ar: '<span class="formula">25.0 N</span>', en: '25.0 N' },
+                        { ar: '<span class="formula">50.0 N</span>', en: '50.0 N' },
+                        { ar: '<span class="formula">10.0 N</span>', en: '10.0 N' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'المركبة الأفقية هي: <span class="formula">Fx = F cos(θ) = 50 · cos(30°) ≈ 43.3 N</span>.', en: 'The horizontal component is: <span class="formula">Fx = F cos(θ) = 50 · cos(30°) ≈ 43.3 N</span>.' }
+                }
+            ]
+        },
+        {
+            id: 'sec4',
+            title: { ar: '🔹 الجزء الرابع: قانون نيوتن الأول والقصور الذاتي', en: '🔹 Part 4: Newton\'s First Law & Inertia' },
+            questions: [
+                {
+                    q: { ar: 'كيف يُعرف القصور الذاتي (Inertia) لجسم ما، وعلى ماذا يعتمد؟', en: 'How is the inertia of an object defined, and what does it depend on?' },
+                    options: [
+                        { ar: 'ممانعة الجسم للتغيير في حالته الحركية، ويعتمد فقط على كتلته', en: 'The resistance of an object to any change in its state of motion, depending only on its mass' },
+                        { ar: 'سرعة الجسم القصوى في السقوط الحر، ويعتمد على حجم الجسم', en: 'The maximum speed of an object in free fall, depending on its size' },
+                        { ar: 'قوة جذب الأرض للجسم، ويعتمد على تسارع الجاذبية', en: 'The gravitational pull on an object, depending on gravitational acceleration' },
+                        { ar: 'الطاقة المخزونة داخل الجسم، ويعتمد على درجة حرارته', en: 'The energy stored inside an object, depending on its temperature' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'القصور الذاتي هو ممانعة الجسم لأي تغيير في حركته وهو مقياس للكتلة؛ فكلما زادت الكتلة زاد القصور الذاتي.', en: 'Inertia is the tendency of an object to resist changes in its state of motion, and mass is its quantitative measure.' }
+                },
+                {
+                    q: { ar: 'شاحنة ضخمة وسيارة صغيرة تتحركان بالسرعة نفسها. أي منهما يسهل إيقافها، ولماذا؟', en: 'A huge truck and a small car are moving with the same velocity. Which one is easier to stop, and why?' },
+                    options: [
+                        { ar: 'السيارة الصغيرة لأن كتلتها أقل وقصورها الذاتي أصغر', en: 'The small car because its mass is less and its inertia is smaller' },
+                        { ar: 'الشاحنة الكبيرة لأن لديها فرامل أكبر وقوة احتكاك أعلى', en: 'The big truck because it has larger brakes and higher friction force' },
+                        { ar: 'كلاهما يتطلب القوة نفسها لإيقافهما طالما لهما السرعة نفسها', en: 'Both require the same force to stop as long as they have the same speed' },
+                        { ar: 'الشاحنة لأن طاقتها الحركية تتشتت بسرعة أكبر في الإطارات', en: 'The truck because its kinetic energy dissipates faster in its tires' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'بما أن كتلة السيارة أصغر، فإن قصورها الذاتي أصغر، ومقاومتها لتغيير حالتها الحركية أقل، فيسهل إيقافها.', en: 'Since the car\'s mass is smaller, its inertia is smaller, meaning it has less resistance to stopping.' }
+                },
+                {
+                    q: { ar: 'عند توقف حافلة مسرعة فجأة، يندفع الركاب إلى الأمام. ما التفسير الفيزيائي الصحيح لهذه الظاهرة؟', en: 'When a speeding bus stops suddenly, passengers lurch forward. What is the correct physical explanation of this phenomenon?' },
+                    options: [
+                        { ar: 'القصور الذاتي للركاب يجعلهم يحافظون على حالتهم الحركية السابقة (مستمرين للأمام)', en: 'The inertia of the passengers makes them maintain their previous state of motion (continuing forward)' },
+                        { ar: 'قوة الطرد المركزي تدفع الركاب باتجاه عجلة الحافلة', en: 'Centrifugal force pushes passengers towards the bus steering wheel' },
+                        { ar: 'قوة الاحتكاك بين أقدام الركاب وأرضية الحافلة تدفعهم للأمام', en: 'Friction between passenger feet and the floor pushes them forward' },
+                        { ar: 'قوة الجاذبية تزداد فجأة عند توقف محرك الحافلة', en: 'Gravity suddenly increases when the bus engine stops' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'يندف الركاب للأمام بسبب القصور الذاتي؛ حيث تحاول أجسادهم الحفاظ على السرعة التي كانوا يتحركون بها مع الحافلة.', en: 'Passengers lurch forward due to inertia; their bodies attempt to maintain the velocity they had before the bus stopped.' }
+                },
+                {
+                    q: { ar: 'يُطلق على قانون نيوتن الأول أحياناً اسم:', en: 'Newton\'s First Law is sometimes referred to as:' },
+                    options: [
+                        { ar: 'قانون القصور الذاتي', en: 'The Law of Inertia' },
+                        { ar: 'قانون الفعل ورد الفعل', en: 'The Law of Action and Reaction' },
+                        { ar: 'قانون تسارع الأجسام', en: 'The Law of Acceleration' },
+                        { ar: 'قانون الجذب العام', en: 'The Law of Universal Gravitation' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'يُعرف قانون نيوتن الأول بقانون القصور الذاتي لأنه يصف ميل الأجسام لمقاومة التغير في حركتها.', en: 'Newton\'s First Law is called the Law of Inertia because it describes the tendency of objects to resist changes in their motion.' }
+                }
+            ]
+        },
+        {
+            id: 'sec5',
+            title: { ar: '🔹 الجزء الخامس: الاتزان وتطبيقات القوة', en: '🔹 Part 5: Equilibrium & Force Applications' },
+            questions: [
+                {
+                    q: { ar: 'متى يُقال أن جسماً ما في حالة اتزان انتقالي كامل؟', en: 'When is an object said to be in complete translational equilibrium?' },
+                    options: [
+                        { ar: 'عندما تكون القوة المحصلة المؤثرة عليه مساوية للصفر', en: 'When the net force acting on it is equal to zero' },
+                        { ar: 'عندما يتحرك بعجلة ثابتة المقدار والاتجاه', en: 'When it moves with a constant magnitude and direction of acceleration' },
+                        { ar: 'عندما تكون سرعته متغيرة بانتظام مع الزمن', en: 'When its velocity varies regularly with time' },
+                        { ar: 'عندما تكون القوة العمودية المؤثرة عليه أكبر من وزنه', en: 'When the normal force acting on it is greater than its weight' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'يكون الجسم في حالة اتزان انتقالي عندما تكون القوة المحصلة المؤثرة عليه صفراً (<span class="formula">ΣF = 0</span>).', en: 'An object is in translational equilibrium when the net force on it is zero (<span class="formula">ΣF = 0</span>).' }
+                },
+                {
+                    q: { ar: 'علقت لوحة إعلانية كتلتها <span class="formula">10.0 kg</span> بحبلين رأسيين متماثلين تماماً. ما هو مقدار قوة الشد في كل حبل؟ (بفرض <span class="formula">g = 9.8 m/s²</span>)', en: 'A signboard of mass 10.0 kg is hung by two identical vertical ropes. What is the tension force in each rope? (Assume g = 9.8 m/s²)' },
+                    options: [
+                        { ar: '<span class="formula">49.0 N</span>', en: '49.0 N' },
+                        { ar: '<span class="formula">98.0 N</span>', en: '98.0 N' },
+                        { ar: '<span class="formula">10.0 N</span>', en: '10.0 N' },
+                        { ar: '<span class="formula">196.0 N</span>', en: '196.0 N' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'وزن اللوحة هو <span class="formula">Fg = m·g = 98 N</span>. بما أن الحبلين يحملان الوزن بالتساوي رأسيّاً: <span class="formula">2T = Fg ⇒ T = 49.0 N</span>.', en: 'Weight is Fg = mg = 98 N. Since two vertical ropes share the load: 2T = Fg => T = 49.0 N.' }
+                },
+                {
+                    q: { ar: 'إذا كان هناك جسم ساكن على سطح أفقي خشن، ولم تؤثر عليه أي قوة سحب أفقية، فما هو مقدار قوة الاحتكاك السكوني المؤثرة عليه؟', en: 'If an object is at rest on a rough horizontal surface and no horizontal pulling force acts on it, what is the static friction force?' },
+                    options: [
+                        { ar: 'صفراً تماماً', en: 'Exactly zero' },
+                        { ar: 'مساوية للقيمة القصوى للاحتكاك السكوني (<span class="formula">μ_s F_N</span>)', en: 'Equal to the maximum value of static friction (<span class="formula">μ_s F_N</span>)' },
+                        { ar: 'مساوية لوزن الجسم (<span class="formula">mg</span>)', en: 'Equal to the weight of the object (<span class="formula">mg</span>)' },
+                        { ar: 'تعتمد على معامل الاحتكاك الحركي للسطح', en: 'Depends on the coefficient of kinetic friction of the surface' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الاحتكاك السكوني قوة مقاومة متغيرة وتعديل ذاتي؛ فإذا كانت قوة السحب الأفقية صفراً، تكون قوة الاحتكاك السكوني صفراً أيضاً.', en: 'Static friction is a self-adjusting reactive force; if there is no applied horizontal force, static friction is zero.' }
+                },
+                {
+                    q: { ar: 'تسير سيارة بسرعة متجهة ثابتة مقدارها <span class="formula">120 km/h</span> على طريق سريع مستقيم. إذا كانت قوة دفع المحرك للأمام تساوي <span class="formula">2000 N</span>، فكم تكون قوة مقاومة الهواء والاحتكاك الإجمالية للخلف؟', en: 'A car travels at a constant velocity of 120 km/h on a straight highway. If the engine\'s forward push is 2000 N, what is the backward force of air resistance and friction?' },
+                    options: [
+                        { ar: '<span class="formula">2000 N</span>', en: '2000 N' },
+                        { ar: 'أكبر من <span class="formula">2000 N</span> لتمنع زيادة السرعة', en: 'Greater than 2000 N to prevent speed increase' },
+                        { ar: 'أقل من <span class="formula">2000 N</span> لتسمح باستمرار الحركة', en: 'Less than 2000 N to allow continuous movement' },
+                        { ar: 'صفراً لأن سرعة السيارة عالية جداً وثابتة', en: 'Zero because the speed of the car is very high and constant' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'بما أن السيارة تتحرك بسرعة متجهة ثابتة، فإنها في حالة اتزان (القوة المحصلة = صفراً)، وبالتالي يجب أن تتساوى قوى الدفع للأمام مع قوى المقاومة للخلف تماماً.', en: 'Since the car is moving at constant velocity, it is in equilibrium (net force = zero). Thus, forward thrust matches resistance exactly.' }
+                }
+            ]
+        }
+    ]
+};
+
+// خلط مصفوفة
+function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+let examData;
+let correctAnswersMap = {};
+let currentLang = 'ar';
+let timeRemaining = 3600;
+let timerInterval;
+
+function prepareShuffledExam() {
+    examData = JSON.parse(JSON.stringify(originalExamData));
+    correctAnswersMap = {};
+    let globalIdx = 0;
+    
+    examData.sections.forEach((section) => {
+        section.questions = shuffleArray(section.questions);
+        
+        section.questions.forEach((q) => {
+            const optionsWithCorrect = q.options.map((opt, idx) => ({
+                option: opt,
+                isCorrect: idx === q.correct
+            }));
+            
+            const shuffledOptions = shuffleArray(optionsWithCorrect);
+            q.options = shuffledOptions.map(o => o.option);
+            
+            const newCorrectIndex = shuffledOptions.findIndex(o => o.isCorrect);
+            q.correct = newCorrectIndex;
+            
+            correctAnswersMap[globalIdx] = String.fromCharCode(97 + newCorrectIndex);
+            globalIdx++;
+        });
+    });
+}
+
+function reshuffleExam() {
+    prepareShuffledExam();
+    renderExam();
+    document.querySelectorAll('input[type="radio"]:checked').forEach(r => r.checked = false);
+    document.getElementById('results-panel').classList.add('hidden');
+    document.querySelectorAll('.correct, .incorrect').forEach(el => {
+        el.classList.remove('correct', 'incorrect');
+    });
+    alert(currentLang === 'ar' 
+        ? '🔀 تم إعادة خلط الأسئلة والخيارات بنجاح!' 
+        : '🔀 Questions and options have been reshuffled successfully!');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    
+    document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    
+    document.body.classList.toggle('en-mode', lang === 'en');
+    
+    document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+    });
+    
+    renderExam();
+}
+
+function renderExam() {
+    const container = document.getElementById('exam-content');
+    const labels = {
+        ar: { option: ['أ', 'ب', 'ج', 'د'], answer: '✅ الإجابة الصحيحة:' },
+        en: { option: ['A', 'B', 'C', 'D'], answer: '✅ Correct Answer:' }
+    };
+    const lbl = labels[currentLang];
+    const isRTL = currentLang === 'ar';
+    
+    let html = '';
+    let globalIdx = 0;
+    
+    examData.sections.forEach((section) => {
+        html += `
+        <section class="bg-white p-6 rounded-xl shadow-lg">
+            <h2 class="text-xl font-bold mb-4 text-teal-700">${section.title[currentLang]}</h2>
+            <ol class="space-y-4 text-sm">`;
+            
+        section.questions.forEach((q) => {
+            const borderSide = isRTL ? 'border-r-4 pr-4' : 'border-l-4 pl-4';
+            html += `
+                <li class="${borderSide} border-teal-500 py-2" id="q-${globalIdx}">
+                    <strong>${globalIdx + 1}.</strong> ${q.q[currentLang]}<br>`;
+                    
+            q.options.forEach((opt, oIdx) => {
+                const radioSide = isRTL ? 'mr-4 ml-2' : 'ml-4 mr-2';
+                html += `
+                    <label class="cursor-pointer block mt-1 ${isRTL ? 'mr-4' : 'ml-4'}">
+                        <input type="radio" name="q${globalIdx}" value="${String.fromCharCode(97 + oIdx)}" class="${radioSide}"> 
+                        ${lbl.option[oIdx]}) ${opt[currentLang]}
+                    </label>`;
+            });
+            
+            html += `
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">
+                        ${lbl.answer} ${lbl.option[q.correct]}) ${q.options[q.correct][currentLang]} — ${q.answer[currentLang]}
+                    </div>
+                </li>`;
+            globalIdx++;
+        });
+        
+        html += `
+            </ol>
+        </section>`;
+    });
+    
+    container.innerHTML = html;
+}
+
+function startTimer() {
+    document.getElementById('timer-container').style.display = 'block';
+    timerInterval = setInterval(() => {
+        timeRemaining--;
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+        const timerEl = document.getElementById('timer');
+        timerEl.textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+        if (timeRemaining <= 300) timerEl.classList.add('timer-warning');
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            alert(currentLang === 'ar' ? "انتهى الوقت! سيتم تسليم الامتحان تلقائياً." : "Time's up! Exam will be submitted automatically.");
+            gradeExam();
+        }
+    }, 1000);
+}
+
+function toggleAnswers() {
+    document.querySelectorAll('.answer-box').forEach(el => el.classList.toggle('hidden'));
+}
+
+function gradeExam() {
+    let correctCount = 0;
+    let sec1 = 0, sec2 = 0, sec3 = 0, sec4 = 0, sec5 = 0;
+    
+    for (let i = 0; i < 20; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        const li = document.getElementById(`q-${i}`);
+        const correctAnswer = correctAnswersMap[i];
+        
+        if (li) {
+            const isCorrect = selected && selected.value === correctAnswer;
+            
+            if (isCorrect) {
+                correctCount++;
+                li.classList.add('correct');
+                li.classList.remove('incorrect');
+            } else {
+                li.classList.add('incorrect');
+                li.classList.remove('correct');
+            }
+
+            // تتبع أقسام الأسئلة بالتفصيل
+            const isReallyCorrect = isCorrect;
+            if (isReallyCorrect) {
+                if (i < 4) sec1++;
+                else if (i < 8) sec2++;
+                else if (i < 12) sec3++;
+                else if (i < 16) sec4++;
+                else sec5++;
+            }
+        }
+    }
+
+    const score = (correctCount / 20) * 100;
+    const successRate = Math.round(score);
+    
+    document.getElementById('res-total').textContent = `${Math.round(score)} / 100`;
+    document.getElementById('res-name').textContent = document.getElementById('studentName').value || (currentLang === 'ar' ? 'طالب' : 'Student');
+    document.getElementById('res-date').textContent = new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-AE' : 'en-US');
+    
+    document.getElementById('sec1-score').textContent = `${sec1}/4`;
+    document.getElementById('sec2-score').textContent = `${sec2}/4`;
+    document.getElementById('sec3-score').textContent = `${sec3}/4`;
+    document.getElementById('sec4-score').textContent = `${sec4}/4`;
+    document.getElementById('sec5-score').textContent = `${sec5}/4`;
+    
+    const badge = document.getElementById('success-badge');
+    const percent = document.getElementById('success-percent');
+    percent.textContent = `${successRate}%`;
+    
+    if (currentLang === 'ar') {
+        if (successRate >= 90) { badge.textContent = 'ممتاز'; badge.className = 'success-badge grade-excellent'; }
+        else if (successRate >= 75) { badge.textContent = 'جيد جداً'; badge.className = 'success-badge grade-good'; }
+        else if (successRate >= 50) { badge.textContent = 'جيد'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = 'يحتاج تحسين'; badge.className = 'success-badge grade-fail'; }
+    } else {
+        if (successRate >= 90) { badge.textContent = 'Excellent'; badge.className = 'success-badge grade-excellent'; }
+        else if (successRate >= 75) { badge.textContent = 'Very Good'; badge.className = 'success-badge grade-good'; }
+        else if (successRate >= 50) { badge.textContent = 'Good'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = 'Needs Improvement'; badge.className = 'success-badge grade-fail'; }
+    }
+    
+    document.getElementById('results-panel').classList.remove('hidden');
+    document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('sendEmailBtn').classList.remove('hidden');
+}
+
+function sendResultsToEmail() {
+    const btn = document.getElementById('sendEmailBtn');
+    const status = document.getElementById('emailStatus');
+    btn.disabled = true;
+    btn.textContent = currentLang === 'ar' ? '⏳ جاري الإرسال...' : '📤 Sending...';
+
+    const name = document.getElementById('studentName').value || 'N/A';
+    const studentClass = document.getElementById('studentClass').value || 'N/A';
+    const date = document.querySelector('input[type="text"]').value || new Date().toLocaleDateString();
+    const score = document.getElementById('res-total').textContent;
+    const successRate = document.getElementById('success-percent').textContent;
+    const badge = document.getElementById('success-badge').textContent;
+
+    const sectionNames = {
+        ar: ['مفهوم القوة وتمثيلها', 'أنواع القوى ومخطط الجسم الحر', 'القوة المحصلة وجمع المتجهات', 'قانون نيوتن الأول والقصور الذاتي', 'الاتزان وتطبيقات القوة'],
+        en: ['Concept of Force & Representation', 'Types of Forces & Free-Body Diagram', 'Net Force & Vector Addition', 'Newton\'s First Law & Inertia', 'Equilibrium & Force Applications']
+    };
+    const currentSectionNames = sectionNames[currentLang];
+
+    let answersHTML = `
+        <div style="font-family: 'Segoe UI', Tahoma, Arial, sans-serif; direction: ${currentLang === 'ar' ? 'rtl' : 'ltr'};">
+            <div style="background: linear-gradient(135deg, #0d9488, #0891b2); color: white; padding: 20px; border-radius: 10px 10px 0 0; text-align: center;">
+                <h2 style="margin: 0; font-size: 22px;">⚡ ${currentLang === 'ar' ? 'نتيجة امتحان القوة والحركة' : 'Force & Motion Exam Result'}</h2>
+                <p style="margin: 5px 0 0 0; opacity: 0.9;">${currentLang === 'ar' ? 'فيزياء الصف الحادي عشر متقدم (بريدج) | الفصل الدراسي الأول' : 'Grade 11 Advanced Physics (Bridge) | Term 1'}</p>
+                <p style="margin: 5px 0 0 0; font-size: 12px; opacity: 0.8;">🔀 ${currentLang === 'ar' ? 'تم خلط الأسئلة تلقائياً' : 'Questions were randomly shuffled'}</p>
+            </div>
+            
+            <div style="background: #f0fdfa; padding: 15px; border: 1px solid #99f6e4;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">${currentLang === 'ar' ? '👤 الاسم:' : '👤 Name:'}</td>
+                        <td style="padding: 8px;">${name}</td>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">${currentLang === 'ar' ? '🏫 الشعبة:' : '🏫 Class:'}</td>
+                        <td style="padding: 8px;">${studentClass}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">${currentLang === 'ar' ? '📅 التاريخ:' : '📅 Date:'}</td>
+                        <td style="padding: 8px;">${date}</td>
+                        <td style="padding: 8px; font-weight: bold; color: #0f766e;">${currentLang === 'ar' ? '🏆 التقدير:' : '🏆 Grade:'}</td>
+                        <td style="padding: 8px;">${badge}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="background: white; padding: 20px; text-align: center; border-bottom: 2px solid #e5e7eb;">
+                <div style="display: inline-block; margin: 0 15px;">
+                    <div style="font-size: 32px; font-weight: bold; color: #0d9488;">${score}</div>
+                    <div style="color: #6b7280; font-size: 13px;">${currentLang === 'ar' ? 'الدرجة الكلية' : 'Total Score'}</div>
+                </div>
+                <div style="display: inline-block; margin: 0 15px;">
+                    <div style="font-size: 32px; font-weight: bold; color: #059669;">${successRate}</div>
+                    <div style="color: #6b7280; font-size: 13px;">${currentLang === 'ar' ? 'نسبة النجاح' : 'Success Rate'}</div>
+                </div>
+            </div>
+
+            <h3 style="background: #f3f4f6; padding: 12px; margin: 0; color: #1f2937; border-bottom: 2px solid #d1d5db;">
+                ** ${currentLang === 'ar' ? 'تفاصيل الإجابات' : 'Answer Details'}
+            </h3>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="background: #0d9488; color: white;">
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 8%;">#</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 32%;">${currentLang === 'ar' ? 'القسم' : 'Section'}</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 15%;">${currentLang === 'ar' ? 'الإجابة' : 'Answer'}</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 15%;">${currentLang === 'ar' ? 'الصحيحة' : 'Correct'}</th>
+                        <th style="padding: 10px; border: 1px solid #0b7d73; width: 15%;">${currentLang === 'ar' ? 'النتيجة' : 'Status'}</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    let sectionScores = [0, 0, 0, 0, 0];
+    let sectionTotals = [4, 4, 4, 4, 4];
+
+    for (let i = 0; i < 20; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        const selectedValue = selected ? selected.value : '-';
+        const correctValue = correctAnswersMap[i];
+        const isCorrect = selectedValue === correctValue;
+        
+        const sectionIndex = Math.floor(i / 4);
+        if (isCorrect) sectionScores[sectionIndex]++;
+
+        const rowBg = i % 2 === 0 ? '#f9fafb' : '#ffffff';
+        const statusBg = isCorrect ? '#dcfce7' : '#fee2e2';
+        const statusColor = isCorrect ? '#166534' : '#991b1b';
+        const statusIcon = isCorrect ? '✅' : '❌';
+        const statusText = isCorrect 
+            ? (currentLang === 'ar' ? 'صحيح' : 'Correct') 
+            : (currentLang === 'ar' ? 'خطأ' : 'Wrong');
+
+        answersHTML += `
+            <tr style="background: ${rowBg};">
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold;">${i + 1}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb;">${currentSectionNames[sectionIndex]}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold;">${selectedValue.toUpperCase()}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold; color: #059669;">${correctValue.toUpperCase()}</td>
+                <td style="padding: 8px; border: 1px solid #e5e7eb; text-align: center; background: ${statusBg}; color: ${statusColor}; font-weight: bold;">
+                    ${statusIcon} ${statusText}
+                </td>
+            </tr>
+        `;
+    }
+
+    answersHTML += `
+                </tbody>
+            </table>
+
+            <h3 style="background: #f3f4f6; padding: 12px; margin: 0; color: #1f2937; border-bottom: 2px solid #d1d5db; border-top: 3px solid #0d9488;">
+                📊 ${currentLang === 'ar' ? 'تفصيل الأداء' : 'Performance Breakdown'}
+            </h3>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="background: #7c3aed; color: white;">
+                        <th style="padding: 10px; border: 1px solid #6d28d9;">${currentLang === 'ar' ? 'القسم' : 'Section'}</th>
+                        <th style="padding: 10px; border: 1px solid #6d28d9; width: 20%;">${currentLang === 'ar' ? 'النتيجة' : 'Score'}</th>
+                        <th style="padding: 10px; border: 1px solid #6d28d9; width: 20%;">${currentLang === 'ar' ? 'النسبة' : 'Percentage'}</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    for (let i = 0; i < 5; i++) {
+        const percentage = Math.round((sectionScores[i] / sectionTotals[i]) * 100);
+        const barColor = percentage >= 75 ? '#10b981' : percentage >= 50 ? '#f59e0b' : '#ef4444';
+        const rowBg = i % 2 === 0 ? '#f9fafb' : '#ffffff';
+        
+        answersHTML += `
+            <tr style="background: ${rowBg};">
+                <td style="padding: 10px; border: 1px solid #e5e7eb; font-weight: 600;">${currentSectionNames[i]}</td>
+                <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: center; font-weight: bold; color: #0d9488;">
+                    ${sectionScores[i]} / ${sectionTotals[i]}
+                </td>
+                <td style="padding: 10px; border: 1px solid #e5e7eb;">
+                    <div style="background: #e5e7eb; border-radius: 10px; overflow: hidden; height: 20px; position: relative;">
+                        <div style="background: ${barColor}; width: ${percentage}%; height: 100%;"></div>
+                        <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 11px; font-weight: bold; color: #1f2937;">
+                            ${percentage}%
+                        </span>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }
+
+    answersHTML += `
+                </tbody>
+            </table>
+
+            <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 15px; border-radius: 0 0 10px 10px; border-top: 2px solid #f59e0b;">
+                <p style="margin: 0; color: #78350f; text-align: center; font-size: 13px;">
+                    💡 <strong>${currentLang === 'ar' ? 'ملاحظة:' : 'Note:'}</strong> 
+                    ${currentLang === 'ar' 
+                        ? 'تم إرسال هذا التقرير تلقائياً من منصة 4U التعليمية | Mr. Mohammed Hesham' 
+                        : 'This report was automatically sent from 4U Educational Platform | Mr. Mohammed Hesham'}
+                </p>
+            </div>
+        </div>
+    `;
+
+    const templateParams = {
+        to_email: TARGET_EMAIL,
+        student_name: name,
+        student_class: studentClass,
+        exam_date: date,
+        total_score: score,
+        success_rate: successRate,
+        grade: badge,
+        answers_table: answersHTML
+    };
+
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
+        .then(() => {
+            status.textContent = currentLang === 'ar' 
+                ? '✅ تم إرسال النتائج بنجاح!' 
+                : '✅ Results sent successfully!';
+            status.style.color = '#059669';
+            btn.textContent = currentLang === 'ar' ? '✓ تم الإرسال' : '✓ Sent';
+        })
+        .catch(err => {
+            status.textContent = currentLang === 'ar' 
+                ? '❌ فشل الإرسال، حاول مرة أخرى' 
+                : '❌ Failed to send, try again';
+            status.style.color = '#dc2626';
+            btn.disabled = false;
+            btn.textContent = currentLang === 'ar' ? '📧 إعادة المحاولة' : '📧 Retry Send';
+            console.error('EmailJS Error:', err);
+        });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    prepareShuffledExam();
+    renderExam();
+    startTimer();
+    console.log('🔀 تم خلط الأسئلة والخيارات عشوائياً!');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,330 @@
+import { IgQuestion } from '../types';
+
+export const QUESTIONS_2005: IgQuestion[] = [
+  // MAY/JUNE 2005 - PAPER 1 (Core 0580/01)
+  {
+    id: 'IG-2005-MJ-01-01',
+    code: '0580/01/M/J/05 Q1',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2005,
+    session: 'May/June',
+    paper: 'Paper 1 (Core)',
+    topicEn: 'Significant Figures & Rounding',
+    topicAr: 'الأرقام المعنوية والتقريب',
+    questionEn: 'The diameter of the Sun is 1,392,530 kilometres. Write this value correct to 4 significant figures.',
+    questionAr: 'قطر الشمس هو 1,392,530 كيلومتراً. اكتب هذه القيمة مقربة لأقرب 4 أرقام معنوية.',
+    options: [
+      { id: 'A', textEn: '1,393,000 km', textAr: '1,393,000 كم' },
+      { id: 'B', textEn: '1,392,000 km', textAr: '1,392,000 كم' },
+      { id: 'C', textEn: '1,392,500 km', textAr: '1,392,500 كم' },
+      { id: 'D', textEn: '1,390,000 km', textAr: '1,390,000 كم' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'The first 4 significant figures are 1, 3, 9, 2. Since the next digit is 5, we round up 2 to 3, giving 1,393,000 km.',
+    explanationAr: 'الأرقام المعنوية الأربعة الأولى هي 1، 3، 9، 2. وبما أن الرقم التالي هو 5، نقرب 2 إلى 3 لنحصل على 1,393,000 كم.',
+    solutionStepsEn: ['Step 1: Identify 4th significant digit (2).', 'Step 2: Next digit is 5 => round up => 1,393,000.'],
+    solutionStepsAr: ['الخطوة 1: تحديد الرقم المعنوي الرابع (2).', 'الخطوة 2: الرقم التالي 5 => نقرب لأعلى => 1,393,000.'],
+    marks: 1
+  },
+  {
+    id: 'IG-2005-MJ-01-02',
+    code: '0580/01/M/J/05 Q2',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2005,
+    session: 'May/June',
+    paper: 'Paper 1 (Core)',
+    topicEn: 'Probability',
+    topicAr: 'الاحتمالات',
+    questionEn: 'A bag contains 30 sweets: 8 chocolates, 13 nougats, and 9 toffees. A sweet is chosen at random. What is the probability that it is a toffee?',
+    questionAr: 'كيس يحتوي على 30 حلوى: 8 شوكولاتة، 13 نوجا، و 9 توفي. تم اختيار حلوى عشوائياً. ما احتمال أن تكون حلوى التوفي؟',
+    options: [
+      { id: 'A', textEn: '3/10 (or 0.3)', textAr: '3/10 (أو 0.3)' },
+      { id: 'B', textEn: '9/21', textAr: '9/21' },
+      { id: 'C', textEn: '4/15', textAr: '4/15' },
+      { id: 'D', textEn: '13/30', textAr: '13/30' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Probability = number of toffees / total sweets = 9 / 30 = 3 / 10 = 0.3.',
+    explanationAr: 'الاحتمال = عدد التوفي ÷ العدد الكلي = 9 ÷ 30 = 3/10 = 0.3.',
+    solutionStepsEn: ['Step 1: Number of toffees = 9, total sweets = 30.', 'Step 2: 9/30 = 3/10.'],
+    solutionStepsAr: ['الخطوة 1: عدد التوفي = 9، المجموع = 30.', 'الخطوة 2: التبسيط 9 ÷ 30 = 3/10.'],
+    marks: 1
+  },
+  {
+    id: 'IG-2005-MJ-01-10',
+    code: '0580/01/M/J/05 Q10',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2005,
+    session: 'May/June',
+    paper: 'Paper 1 (Core)',
+    topicEn: 'Right-Angled Trigonometry',
+    topicAr: 'حساب المثلثات القائمة',
+    questionEn: 'A ramp from a car park to a shopping centre slopes upward at an angle of 16° to the horizontal. The length of the ramp is 12 metres. Calculate the difference in height, h metres, between the car park and the shopping centre.',
+    questionAr: 'منحدر من موقف سيارات إلى مركز تسوق يصعد بزاوية 16° عن الأفقي. طول المنحدر 12 متراً. احسب الفرق في الارتفاع h بالأمتار بين موقف السيارات ومركز التسوق.',
+    diagramTitle: 'Ramp Geometry / هندسة المنحدر',
+    diagramSvg: `<svg viewBox="0 0 220 120" class="w-52 h-28 mx-auto text-slate-800 dark:text-slate-100">
+      <polygon points="20,100 190,100 190,40" fill="none" stroke="currentColor" stroke-width="2" />
+      <text x="105" y="65" font-size="10" fill="#0d9488">12 m</text>
+      <text x="200" y="75" font-size="11" font-weight="bold" fill="currentColor">h</text>
+      <text x="50" y="94" font-size="10" fill="#0d9488">16°</text>
+    </svg>`,
+    options: [
+      { id: 'A', textEn: '3.31 m', textAr: '3.31 متر' },
+      { id: 'B', textEn: '3.44 m', textAr: '3.44 متر' },
+      { id: 'C', textEn: '11.54 m', textAr: '11.54 متر' },
+      { id: 'D', textEn: '4.13 m', textAr: '4.13 متر' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'sin(16°) = h / 12 => h = 12 × sin(16°) ≈ 12 × 0.275637 = 3.308 ≈ 3.31 m.',
+    explanationAr: 'sin(16°) = h / 12 => h = 12 × sin(16°) = 3.31 متراً.',
+    solutionStepsEn: ['Step 1: sin(16°) = opposite / hypotenuse = h / 12.', 'Step 2: h = 12 × sin(16°) = 3.31 m.'],
+    solutionStepsAr: ['الخطوة 1: sin(16°) = المقابل ÷ الوتر = h ÷ 12.', 'الخطوة 2: h = 12 × sin(16°) = 3.31 متراً.'],
+    marks: 2
+  },
+  {
+    id: 'IG-2005-MJ-01-14',
+    code: '0580/01/M/J/05 Q14',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2005,
+    session: 'May/June',
+    paper: 'Paper 1 (Core)',
+    topicEn: 'Volume of Cylinder',
+    topicAr: 'حجم الأسطوانة',
+    questionEn: 'An ancient Greek coin is a cylinder with diameter 30 mm and thickness 2 mm. Calculate the volume of the coin in mm³ (V = πr²h).',
+    questionAr: 'عملة يونانية قديمة على شكل أسطوانة قطرها 30 ملم وسماكتها 2 ملم. احسب حجم العملة بالملم³ (حجم الأسطوانة = πr²h).',
+    options: [
+      { id: 'A', textEn: '1414 mm³ (or 450π)', textAr: '1414 ملم³ (أو 450π)' },
+      { id: 'B', textEn: '5655 mm³', textAr: '5655 ملم³' },
+      { id: 'C', textEn: '942 mm³', textAr: '942 ملم³' },
+      { id: 'D', textEn: '1885 mm³', textAr: '1885 ملم³' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Radius r = 15 mm, height h = 2 mm. V = π × 15² × 2 = 450π ≈ 1413.7 ≈ 1414 mm³.',
+    explanationAr: 'نصف القطر r = 15 ملم، الارتفاع = 2 ملم. الحجم = π × 225 × 2 = 450π ≈ 1414 ملم³.',
+    solutionStepsEn: ['Step 1: Radius = 30 / 2 = 15 mm.', 'Step 2: V = π × 15² × 2 = 450π = 1414 mm³.'],
+    solutionStepsAr: ['الخطوة 1: نصف القطر = 30 ÷ 2 = 15 ملم.', 'الخطوة 2: الحجم = π × 225 × 2 = 1414 ملم³.'],
+    marks: 2
+  },
+
+  // MAY/JUNE 2005 - PAPER 2 (Extended 0580/02)
+  {
+    id: 'IG-2005-MJ-02-02',
+    code: '0580/02/M/J/05 Q2',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2005,
+    session: 'May/June',
+    paper: 'Paper 2 (Extended)',
+    topicEn: 'Right-Angled Triangle Trigonometry',
+    topicAr: 'حساب المثلثات في المثلث القائم',
+    questionEn: 'A shop has a wheelchair ramp from pavement to entrance. Length of ramp is 3.17 m and inclined at 5° to horizontal. Calculate height h (in metres) of entrance above pavement.',
+    questionAr: 'متجر به منحدر للكراسي المتحركة من الرصيف إلى المدخل. طول المنحدر 3.17 متر ومائل بزاوية 5° عن الأفقي. احسب الارتفاع h (بالأمتار) للمدخل فوق الرصيف.',
+    options: [
+      { id: 'A', textEn: '0.276 m', textAr: '0.276 متر' },
+      { id: 'B', textEn: '0.317 m', textAr: '0.317 متر' },
+      { id: 'C', textEn: '0.250 m', textAr: '0.250 متر' },
+      { id: 'D', textEn: '0.158 m', textAr: '0.158 متر' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'sin(5°) = h / 3.17 => h = 3.17 × sin(5°) ≈ 0.27628 ≈ 0.276 m.',
+    explanationAr: 'sin(5°) = h / 3.17 => h = 3.17 × sin(5°) = 0.276 متراً.',
+    solutionStepsEn: ['Step 1: sin(5°) = h / 3.17.', 'Step 2: h = 3.17 × sin(5°) = 0.276 m.'],
+    solutionStepsAr: ['الخطوة 1: sin(5°) = h ÷ 3.17.', 'الخطوة 2: h = 3.17 × sin(5°) = 0.276 متراً.'],
+    marks: 2
+  },
+  {
+    id: 'IG-2005-MJ-02-08',
+    code: '0580/02/M/J/05 Q8',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2005,
+    session: 'May/June',
+    paper: 'Paper 2 (Extended)',
+    topicEn: 'Simultaneous Linear Equations',
+    topicAr: 'المعادلات الخطية الآنية',
+    questionEn: 'Solve the simultaneous equations: (1/2)x + 2y = 16 and 2x + (1/2)y = 19.',
+    questionAr: 'حل المعادلتين الآنيتين: (1/2)x + 2y = 16 و 2x + (1/2)y = 19.',
+    options: [
+      { id: 'A', textEn: 'x = 8, y = 6', textAr: 'x = 8, y = 6' },
+      { id: 'B', textEn: 'x = 6, y = 8', textAr: 'x = 6, y = 8' },
+      { id: 'C', textEn: 'x = 10, y = 4', textAr: 'x = 10, y = 4' },
+      { id: 'D', textEn: 'x = 4, y = 7', textAr: 'x = 4, y = 7' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Multiply first equation by 4: 2x + 8y = 64. Subtract second equation (2x + 0.5y = 19): 7.5y = 45 => y = 6. Substitute y = 6 into (1/2)x + 12 = 16 => (1/2)x = 4 => x = 8.',
+    explanationAr: 'بضرب المعادلة الأولى في 4: 2x + 8y = 64. بطرح المعادلة الثانية: 7.5y = 45 => y = 6. بالتعويض نجد x = 8.',
+    solutionStepsEn: ['Step 1: 4 × Eq1: 2x + 8y = 64.', 'Step 2: Subtract Eq2: 7.5y = 45 => y = 6.', 'Step 3: 0.5x + 12 = 16 => x = 8.'],
+    solutionStepsAr: ['الخطوة 1: بضرب المعادلة الأولى في 4 => 2x + 8y = 64.', 'الخطوة 2: بطرح المعادلة الثانية => y = 6.', 'الخطوة 3: بالتعويض نجد x = 8.'],
+    marks: 3
+  },
+  {
+    id: 'IG-2005-MJ-02-09',
+    code: '0580/02/M/J/05 Q9',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2005,
+    session: 'May/June',
+    paper: 'Paper 2 (Extended)',
+    topicEn: 'Inverse Proportion',
+    topicAr: 'التناسب العكسي',
+    questionEn: 'Wavelength w of a radio signal is inversely proportional to frequency f. When f = 200, w = 1500. Find: (a) formula for w in terms of f, (b) value of f when w = 600.',
+    questionAr: 'الطول الموجي w لإشارة راديو يتناسب عكسياً مع ترددها f. عندما f = 200 يكون w = 1500. أوجد: (أ) معادلة تربط بين f و w، (ب) قيمة f عندما w = 600.',
+    options: [
+      { id: 'A', textEn: '(a) w = 300,000 / f, (b) f = 500', textAr: '(أ) w = 300,000 / f، (ب) f = 500' },
+      { id: 'B', textEn: '(a) w = 300,000 / f, (b) f = 450', textAr: '(أ) w = 300,000 / f، (ب) f = 450' },
+      { id: 'C', textEn: '(a) w = 150,000 / f, (b) f = 250', textAr: '(أ) w = 150,000 / f، (ب) f = 250' },
+      { id: 'D', textEn: '(a) w = 7.5f, (b) f = 80', textAr: '(أ) w = 7.5f، (ب) f = 80' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'w = k / f => k = w × f = 1500 × 200 = 300,000. So w = 300,000 / f. When w = 600: f = 300,000 / 600 = 500.',
+    explanationAr: 'k = 1500 × 200 = 300,000. إذن w = 300,000 / f. عندما w = 600 تكون f = 300,000 / 600 = 500.',
+    solutionStepsEn: ['Step 1: k = 1500 × 200 = 300,000.', 'Step 2: w = 300,000 / f.', 'Step 3: f = 300,000 / 600 = 500.'],
+    solutionStepsAr: ['الخطوة 1: ثابت التناسب = 300,000.', 'الخطوة 2: المعادلة w = 300,000 / f.', 'الخطوة 3: f = 300,000 ÷ 600 = 500.'],
+    marks: 3
+  },
+  {
+    id: 'IG-2005-MJ-02-16',
+    code: '0580/02/M/J/05 Q16',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2005,
+    session: 'May/June',
+    paper: 'Paper 2 (Extended)',
+    topicEn: 'Algebraic Fraction Simplification',
+    topicAr: 'تبسيط الكسور الجبرية',
+    questionEn: 'Simplify as a single fraction in its simplest form: (x + 2)/2 + x/(x - 2)',
+    questionAr: 'بسّط المقدار: (x + 2)/2 + x/(x - 2). اكتب إجابتك في صورة كسر في أبسط صورة.',
+    options: [
+      { id: 'A', textEn: '(x² + 2x - 4) / [2(x - 2)]', textAr: '(x² + 2x - 4) / [2(x - 2)]' },
+      { id: 'B', textEn: '(x² - 4) / [2(x - 2)]', textAr: '(x² - 4) / [2(x - 2)]' },
+      { id: 'C', textEn: '(x² + 4x - 4) / [2(x - 2)]', textAr: '(x² + 4x - 4) / [2(x - 2)]' },
+      { id: 'D', textEn: '(2x + 2) / x', textAr: '(2x + 2) / x' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Common denominator is 2(x - 2). Numerator becomes (x + 2)(x - 2) + 2x = x² - 4 + 2x = x² + 2x - 4.',
+    explanationAr: 'المقام المشترك هو 2(x - 2). البسط يصبح (x + 2)(x - 2) + 2x = x² - 4 + 2x = x² + 2x - 4.',
+    solutionStepsEn: ['Step 1: Common denominator 2(x - 2).', 'Step 2: Numerator = (x² - 4) + 2x = x² + 2x - 4.'],
+    solutionStepsAr: ['الخطوة 1: توحيد المقامات 2(x - 2).', 'الخطوة 2: تبسيط البسط = x² + 2x - 4.'],
+    marks: 3
+  },
+
+  // OCT/NOV 2005 - PAPER 1 (Core 0580/01)
+  {
+    id: 'IG-2005-ON-01-05',
+    code: '0580/01/O/N/05 Q5',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2005,
+    session: 'Oct/Nov',
+    paper: 'Paper 1 (Core)',
+    topicEn: 'Linear Equation',
+    topicAr: 'المعادلة الخطية',
+    questionEn: 'Solve the equation: 5x - 7 = 8',
+    questionAr: 'حل المعادلة: 5x - 7 = 8',
+    options: [
+      { id: 'A', textEn: 'x = 3', textAr: 'x = 3' },
+      { id: 'B', textEn: 'x = 1', textAr: 'x = 1' },
+      { id: 'C', textEn: 'x = 15', textAr: 'x = 15' },
+      { id: 'D', textEn: 'x = -3', textAr: 'x = -3' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: '5x - 7 = 8 => 5x = 8 + 7 = 15 => x = 3.',
+    explanationAr: 'بإضافة 7 للطرفين: 5x = 15 => بالقسمة على 5 نجد x = 3.',
+    solutionStepsEn: ['Step 1: Add 7 => 5x = 15.', 'Step 2: Divide by 5 => x = 3.'],
+    solutionStepsAr: ['الخطوة 1: إضافة 7 => 5x = 15.', 'الخطوة 2: القسمة على 5 => x = 3.'],
+    marks: 2
+  },
+  {
+    id: 'IG-2005-ON-01-12',
+    code: '0580/01/O/N/05 Q12',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2005,
+    session: 'Oct/Nov',
+    paper: 'Paper 1 (Core)',
+    topicEn: 'Right-Angled Triangle Height',
+    topicAr: 'ارتفاع المثلث القائم الزاوية',
+    questionEn: 'A path ST goes up a hill. The length of the path is 1.2 kilometres and it slopes at an angle of 21° to the horizontal. Calculate the height of the hill in metres.',
+    questionAr: 'مسار ST يصعد تلاً. طول المسار 1.2 كيلومتر ومائل بزاوية 21° عن الأفقي. احسب ارتفاع التل بالمتر.',
+    options: [
+      { id: 'A', textEn: '430 m', textAr: '430 متراً' },
+      { id: 'B', textEn: '450 m', textAr: '450 متراً' },
+      { id: 'C', textEn: '1120 m', textAr: '1120 متراً' },
+      { id: 'D', textEn: '380 m', textAr: '380 متراً' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: '1.2 km = 1200 m. sin(21°) = h / 1200 => h = 1200 × sin(21°) = 1200 × 0.358368 ≈ 430.04 ≈ 430 m.',
+    explanationAr: '1.2 كم = 1200 متر. sin(21°) = h / 1200 => h = 1200 × sin(21°) = 430 متراً.',
+    solutionStepsEn: ['Step 1: Convert 1.2 km = 1200 m.', 'Step 2: h = 1200 × sin(21°) = 430 m.'],
+    solutionStepsAr: ['الخطوة 1: التحويل 1.2 كم = 1200 متر.', 'الخطوة 2: h = 1200 × sin(21°) = 430 متراً.'],
+    marks: 3
+  },
+
+  // OCT/NOV 2005 - PAPER 2 (Extended 0580/02)
+  {
+    id: 'IG-2005-ON-02-10',
+    code: '0580/02/O/N/05 Q10',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2005,
+    session: 'Oct/Nov',
+    paper: 'Paper 2 (Extended)',
+    topicEn: 'Planetary Mass & Scientific Notation',
+    topicAr: 'كتلة الكواكب والصيغة العلمية',
+    questionEn: 'The mass of Earth is 1/95 of the mass of Saturn. The mass of Earth is 5.97 × 10²⁴ kilograms. Calculate the mass of Saturn in standard form correct to 2 significant figures.',
+    questionAr: 'كتلة الأرض هي 1/95 من كتلة كوكب زحل. كتلة الأرض هي 5.97 × 10²⁴ كيلوجراماً. احسب كتلة كوكب زحل، معطياً إجابتك بالصيغة العلمية مقربة لرقمين معنويين.',
+    options: [
+      { id: 'A', textEn: '5.7 × 10²⁶ kg', textAr: '5.7 × 10²⁶ كجم' },
+      { id: 'B', textEn: '5.67 × 10²⁶ kg', textAr: '5.67 × 10²⁶ كجم' },
+      { id: 'C', textEn: '5.7 × 10²⁵ kg', textAr: '5.7 × 10²⁵ كجم' },
+      { id: 'D', textEn: '6.0 × 10²⁶ kg', textAr: '6.0 × 10²⁶ كجم' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: 'Saturn mass = 95 × 5.97 × 10²⁴ = 567.15 × 10²⁴ = 5.6715 × 10²⁶ ≈ 5.7 × 10²⁶ kg.',
+    explanationAr: 'كتلة زحل = 95 × 5.97 × 10²⁴ = 5.6715 × 10²⁶ كجم، ومقربة لرقمين معنويين تصبح 5.7 × 10²⁶ كجم.',
+    solutionStepsEn: ['Step 1: Multiply Earth mass by 95.', 'Step 2: Round 5.6715 × 10²⁶ to 2 s.f. => 5.7 × 10²⁶ kg.'],
+    solutionStepsAr: ['الخطوة 1: ضرب كتلة الأرض في 95.', 'الخطوة 2: التقريب لرقمين معنويين => 5.7 × 10²⁶ كجم.'],
+    marks: 3
+  },
+  {
+    id: 'IG-2005-ON-02-16',
+    code: '0580/02/O/N/05 Q16',
+    subjectId: 'maths',
+    boardId: 'cambridge',
+    levelId: 'o_level_igcse',
+    year: 2005,
+    session: 'Oct/Nov',
+    paper: 'Paper 2 (Extended)',
+    topicEn: 'Linear Inequality Solving',
+    topicAr: 'حل المتباينات الخطية',
+    questionEn: 'Solve the inequality: 4 - 5x < 2(x + 4)',
+    questionAr: 'حل المتباينة: 4 - 5x < 2(x + 4)',
+    options: [
+      { id: 'A', textEn: 'x > -4/7', textAr: 'x > -4/7' },
+      { id: 'B', textEn: 'x < -4/7', textAr: 'x < -4/7' },
+      { id: 'C', textEn: 'x > 4/7', textAr: 'x > 4/7' },
+      { id: 'D', textEn: 'x > -4/3', textAr: 'x > -4/3' }
+    ],
+    correctAnswer: 'A',
+    explanationEn: '4 - 5x < 2x + 8 => 4 - 8 < 2x + 5x => -4 < 7x => x > -4/7.',
+    explanationAr: 'بفك الأقواس: 4 - 5x < 2x + 8 => بجمع 5x وطرح 8 نجد: -4 < 7x أي x > -4/7.',
+    solutionStepsEn: ['Step 1: Expand right side: 4 - 5x < 2x + 8.', 'Step 2: Collect terms: -4 < 7x => x > -4/7.'],
+    solutionStepsAr: ['الخطوة 1: فك الأقواس 4 - 5x < 2x + 8.', 'الخطوة 2: تجميع الحدود => x > -4/7.'],
+    marks: 3
+  }
+];

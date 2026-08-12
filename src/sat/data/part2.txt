@@ -1,0 +1,691 @@
+=== Module 1 - Question 1 [Problem-Solving & Data Analysis | Easy] ===
+[AR] يمثل الرسم البياني الخطي النسبة المئوية للسيارات المعروضة للبيع في معرض سيارات مستعملة حسب سنة الموديل. في أي سنة موديل تكون النسبة المئوية للسيارات المعروضة للبيع هي الأصغر؟
+[EN] The line graph shows the percent of cars for sale at a used car lot on a given day by model year. For what model year is the percent of cars for sale the smallest?
+Choices:
+  A) 2012 / أ) 2012
+  B) 2013 / ب) 2013
+  C) 2014 / ج) 2014
+  D) 2015 / د) 2015
+Correct Answer: C
+Solution (AR): بالنظر إلى الرسم البياني، تقع أدنى نقطة عند موديل عام 2014 (عند حوالي 4%).
+Solution (EN): Looking at the line graph, the lowest point occurs at model year 2014 (at approximately 4%).
+
+----------------------------------------
+
+=== Module 1 - Question 2 [Algebra | Easy] ===
+[AR] يُظهر الرسم البياني نظاماً من المعادلتين الخطيتين. ما حل النظام (x, y)؟
+[EN] The graph of a system of linear equations is shown. What is the solution (x, y) to the system?
+Choices:
+  A) (4, -5) / أ) (4, -5)
+  B) (0, 3) / ب) (0, 3)
+  C) (0, -2) / ج) (0, -2)
+  D) (-2, 3) / د) (-2, 3)
+Correct Answer: D
+Solution (AR): حل نظام المعادلتين بيانياً هو نقطة تقاطع المستقيمين، والتي تقع عند النقطة (-2, 3).
+Solution (EN): The solution to a system of equations represented visually is the point where the two lines intersect. The lines intersect at (-2, 3).
+
+----------------------------------------
+
+=== Module 1 - Question 3 [Algebra | Easy] ===
+[AR] تتكون التكلفة الإجمالية بالدولار لاستئجار لوح ركوب الأمواج من رسوم خدمة قدرها 25 دولاراً ورسوم استئجار 10 دولارات لكل ساعة. استأجر شخص لوحاً لمدة t ساعة وينوي إنفاق 75 دولاراً كحد أقصى. أي متباينة تمثل هذا الموقف؟
+[EN] The total cost, in dollars, to rent a surfboard consists of a $25 service fee and a $10 per hour rental fee. A person rents a surfboard for t hours and intends to spend a maximum of $75. Which inequality represents this situation?
+Choices:
+  A) 10t ≤ 75 / أ) 10t ≤ 75
+  B) 10 + 25t ≤ 75 / ب) 10 + 25t ≤ 75
+  C) 25t ≤ 75 / ج) 25t ≤ 75
+  D) 25 + 10t ≤ 75 / د) 25 + 10t ≤ 75
+Correct Answer: D
+Solution (AR): رسوم الخدمة الثابتة (25) + أجرة الساعات (10t) يجب ألا تتجاوز 75 دولاراً، أي: 25 + 10t ≤ 75.
+Solution (EN): The service fee ($25) plus $10 per hour (10t) must be less than or equal to $75, giving 25 + 10t ≤ 75.
+
+----------------------------------------
+
+=== Module 1 - Question 4 [Advanced Math | Easy] ===
+[AR] الرسم البياني المعطى (قطع مكافئ رأسه عند (3, -3)) تمت إزاحته لأعلى بمقدار 4 وحدات. أي من الخيارات يمثل الرسم الناتج؟
+[EN] The graph shown (parabola with vertex at (3, -3)) will be translated up 4 units. Which of the choices will be the resulting graph?
+Choices:
+  A) Vertex at (3, 3) / أ) الرأس عند (3, 3)
+  B) Vertex at (3, 1) / ب) الرأس عند (3, 1)
+  C) Vertex at (-2, -2) / ج) الرأس عند (-2, -2)
+  D) Vertex at (7, -1) / د) الرأس عند (7, -1)
+Correct Answer: B
+Solution (AR): إزاحة الرسم لأعلى بمقدار 4 وحدات تضيف 4 إلى إحداثي y لكل نقطة. ينتقل الرأس من (3, -3) إلى (3, 1).
+Solution (EN): Translating a graph up by 4 units adds 4 to the y-coordinate of every point. The vertex (3, -3) moves to (3, -3 + 4) = (3, 1).
+
+----------------------------------------
+
+=== Module 1 - Question 5 [Algebra | Easy] ===
+[AR] تعطي المعادلة s = 40 + 3t السرعة s بميل/ساعة لسيارة بعد t ثوانٍ من التسارع. ما السرعة بالميل في الساعة بعد 5 ثوانٍ من بدء التسارع؟
+[EN] s = 40 + 3t gives the speed s in mph of a car t seconds after accelerating. What is the speed, in miles per hour, 5 seconds after it began to accelerate?
+Choices:
+  A) 40 / أ) 40
+  B) 43 / ب) 43
+  C) 45 / ج) 45
+  D) 55 / د) 55
+Correct Answer: D
+Solution (AR): بالتعويض عن t بـ 5: s = 40 + 3(5) = 55 ميل/ساعة.
+Solution (EN): Substitute t = 5 into s = 40 + 3t: s = 40 + 3(5) = 40 + 15 = 55 mph.
+
+----------------------------------------
+
+=== Module 1 - Question 6 [Advanced Math | Easy] ===
+[AR] الدالة f معرفة بالمعادلة f(x) = x² + x + 71. ما قيمة f(2)؟
+[EN] The function f is defined by f(x) = x² + x + 71. What is the value of f(2)?
+Correct Answer: 77
+Solution (AR): f(2) = (2)² + 2 + 71 = 4 + 2 + 71 = 77.
+Solution (EN): f(2) = (2)² + (2) + 71 = 4 + 2 + 71 = 77.
+
+----------------------------------------
+
+=== Module 1 - Question 7 [Algebra | Easy] ===
+[AR] يتكلف تنظيم حفلة رسوماً ثابته 35 دولاراً بالإضافة إلى 10.25 دولار لكل شخص. ميزانية الحفلة 300 دولار. ما أكبر عدد ممكن من الحضور دون تجاوز الميزانية؟
+[EN] An event planner charges $35 venue fee plus $10.25 per attendee. With a budget of $300, what is the greatest number of attendees possible without exceeding budget?
+Correct Answer: 25
+Solution (AR): 35 + 10.25n ≤ 300 => 10.25n ≤ 265 => n ≤ 25.85. أكبر عدد صحيح من الحضور هو 25.
+Solution (EN): 35 + 10.25n ≤ 300 => 10.25n ≤ 265 => n ≤ 25.85. The maximum number of whole attendees is 25.
+
+----------------------------------------
+
+=== Module 1 - Question 8 [Problem-Solving & Data Analysis | Easy] ===
+[AR] صوت 80 طالباً لاختيار تميمة المدرسة: الغرير (22)، الأسد (20)، لونجهورن (14)، النمر (24). إذا أختير طالب عشوائياً، ما احتمال أن يكون قد صوت للأسد؟
+[EN] A total of 80 students voted for a mascot: Badger (22), Lion (20), Longhorn (14), Tiger (24). If one student is selected at random, what is the probability that their vote was for a lion?
+Choices:
+  A) 1/9 / أ) 1/9
+  B) 1/5 / ب) 1/5
+  C) 1/4 / ج) 1/4
+  D) 2/3 / د) 2/3
+Correct Answer: C
+Solution (AR): الاحتمال = أصوات الأسد ÷ الإجمالي = 20 ÷ 80 = 1/4.
+Solution (EN): Probability = Lion votes / Total votes = 20 / 80 = 1 / 4.
+
+----------------------------------------
+
+=== Module 1 - Question 9 [Geometry & Trigonometry | Easy] ===
+[AR] المثلثان ABC و DEF متطابقان، حيث A تنظر D، والزاويتان B و E قائمتان. قياس الزاوية A هو 18°. ما قياس الزاوية F؟
+[EN] Triangles ABC and DEF are congruent, where A corresponds to D, and angles B and E are right angles. The measure of angle A is 18°. What is the measure of angle F?
+Choices:
+  A) 18° / أ) 18°
+  B) 72° / ب) 72°
+  C) 90° / ج) 90°
+  D) 162° / د) 162°
+Correct Answer: B
+Solution (AR): في المثلث القائم ABC، الزاوية C = 90° - 18° = 72°. وبما أن المثلثين متطابقان، فإن الزاوية F تناظر C وتساوي 72°.
+Solution (EN): In right triangle ABC, angle C = 90° - 18° = 72°. Since ABC is congruent to DEF, angle F corresponds to angle C, so angle F = 72°.
+
+----------------------------------------
+
+=== Module 1 - Question 10 [Algebra | Medium] ===
+[AR] إذا كان 4x + 2 = 12، فما قيمة 16x + 8؟
+[EN] If 4x + 2 = 12, what is the value of 16x + 8?
+Choices:
+  A) 40 / أ) 40
+  B) 48 / ب) 48
+  C) 56 / ج) 56
+  D) 60 / د) 60
+Correct Answer: B
+Solution (AR): نلاحظ أن 16x + 8 = 4(4x + 2). وبما أن 4x + 2 = 12، فإن 16x + 8 = 4 × 12 = 48.
+Solution (EN): Notice 16x + 8 = 4(4x + 2). Since 4x + 2 = 12, 16x + 8 = 4(12) = 48.
+
+----------------------------------------
+
+=== Module 1 - Question 11 [Advanced Math | Medium] ===
+[AR] أي مقدار مما يلي يكافئ المقدار (m⁴ q⁴ z⁻¹)(m q⁵ z³)، حيث m, q, z أعداد موجبة؟
+[EN] Which expression is equivalent to (m⁴ q⁴ z⁻¹)(m q⁵ z³), where m, q, and z are positive?
+Choices:
+  A) m⁴ q²⁰ z⁻³ / أ) m⁴ q²⁰ z⁻³
+  B) m⁵ q⁹ z² / ب) m⁵ q⁹ z²
+  C) m⁶ q⁸ z⁻¹ / ج) m⁶ q⁸ z⁻¹
+  D) m²⁰ q¹² z⁻² / د) m²⁰ q¹² z⁻²
+Correct Answer: B
+Solution (AR): بجمع أسس الحدود ذات الأساسات المتشابهة: m^(4+1) q^(4+5) z^(-1+3) = m⁵ q⁹ z².
+Solution (EN): Multiply terms with same bases: m^(4+1) × q^(4+5) × z^(-1+3) = m⁵ q⁹ z².
+
+----------------------------------------
+
+=== Module 1 - Question 12 [Algebra | Medium] ===
+[AR] تهبط طائرة من ارتفاع 9,500 قدم إلى 5,000 قدم بمعدل ثابت قدره 400 قدم في الدقيقة. أي نوع من الدوال يمثل أفضل نمذجة للعلاقة بين الارتفاع والزمن؟
+[EN] An airplane descends from 9,500 feet to 5,000 feet at a constant rate of 400 feet per minute. What type of function best models the relationship between altitude and time?
+Choices:
+  A) Decreasing exponential / أ) أسية متناقصة
+  B) Decreasing linear / ب) خطية متناقصة
+  C) Increasing exponential / ج) أسية متزايدة
+  D) Increasing linear / د) خطية متزايدة
+Correct Answer: B
+Solution (AR): المعدل الثابت للتغير يدل على دالة خطية. وبما أن الارتفاع ينخفض بمرور الوقت، فإن الدالة خطية متناقصة.
+Solution (EN): A constant rate of change indicates a linear function. Since the altitude is decreasing over time, it is a decreasing linear function.
+
+----------------------------------------
+
+=== Module 1 - Question 13 [Algebra | Medium] ===
+[AR] 3x + 6y = 4
+3x + 4y = 2
+حل نظام المعادلتين هو (x, y). ما قيمة y؟
+[EN] 3x + 6y = 4
+3x + 4y = 2
+The solution to the given system of equations is (x, y). What is the value of y?
+Correct Answer: 1
+Solution (AR): بطرح المعادلة الثانية من الأولى: (3x + 6y) - (3x + 4y) = 4 - 2 => 2y = 2 => y = 1.
+Solution (EN): Subtract the second equation from the first: (3x + 6y) - (3x + 4y) = 4 - 2 => 2y = 2 => y = 1.
+
+----------------------------------------
+
+=== Module 1 - Question 14 [Advanced Math | Medium] ===
+[AR] الدالة f معرفة بـ f(x) = (x - 6)(x - 2)(x + 6). رسم y = g(x) ناتج عن إزاحة f(x) لأعلى بمقدار 4 وحدات. ما قيمة g(0)؟
+[EN] The function f is defined by f(x) = (x - 6)(x - 2)(x + 6). In the xy-plane, graph of y = g(x) is result of translating y = f(x) up 4 units. What is value of g(0)?
+Correct Answer: 76
+Solution (AR): g(x) = f(x) + 4. يحسب f(0) = (-6)(-2)(6) = 72. إذن g(0) = 72 + 4 = 76.
+Solution (EN): g(x) = f(x) + 4. f(0) = (0 - 6)(0 - 2)(0 + 6) = (-6)(-2)(6) = 72. So g(0) = 72 + 4 = 76.
+
+----------------------------------------
+
+=== Module 1 - Question 15 [Advanced Math | Medium] ===
+[AR] تعطي الدالة f(w) = 6w² مساحة مستطيل بالقدم المربع إذا كان عرضه w قدم. ما أفضل تفسير للعبارة f(14) = 1,176؟
+[EN] The function f(w) = 6w² gives the area of a rectangle in sq ft if width is w ft. What is the best interpretation of f(14) = 1,176?
+Choices:
+  A) If the width of the rectangle is 14 ft, then the area of the rectangle is 1,176 ft². / أ) إذا كان عرض المستطيل 14 قدماً، فإن مساحته تساوي 1,176 قدماً مربعاً.
+  B) If the width of the rectangle is 14 ft, then the length of the rectangle is 1,176 ft. / ب) إذا كان عرض المستطيل 14 قدماً، فإن طوله يساوي 1,176 قدماً.
+  C) If the width of the rectangle is 1,176 ft, then the length of the rectangle is 14 ft. / ج) إذا كان عرض المستطيل 1,176 قدماً، فإن طوله يساوي 14 قدماً.
+  D) If the width of the rectangle is 1,176 ft, then the area of the rectangle is 14 ft². / د) إذا كان عرض المستطيل 1,176 قدماً، فإن مساحته تساوي 14 قدماً مربعاً.
+Correct Answer: A
+Solution (AR): المدخل w = 14 يمثل العرض بالقدم، والخرج f(14) = 1,176 يمثل المساحة الكلية بالقدم المربع.
+Solution (EN): The input w = 14 represents width in feet, and the output f(14) = 1,176 represents total area in square feet.
+
+----------------------------------------
+
+=== Module 1 - Question 16 [Advanced Math | Medium] ===
+[AR] يتضاعف عدد البكتيريا كل يوم. العدد الأولي هو 44,000. أي معادلة تمثل عدد البكتيريا y بعد t يوماً؟
+[EN] Bacteria doubles every day. Initial count is 44,000. Which equation represents number of bacteria y after t days?
+Choices:
+  A) y = 1/2 (44,000)ᵗ / أ) y = 1/2 (44,000)ᵗ
+  B) y = 2 (44,000)ᵗ / ب) y = 2 (44,000)ᵗ
+  C) y = 44,000 (1/2)ᵗ / ج) y = 44,000 (1/2)ᵗ
+  D) y = 44,000 (2)ᵗ / د) y = 44,000 (2)ᵗ
+Correct Answer: D
+Solution (AR): نموذج النمو الأسي: y = a · bᵗ، حيث القيمة الأولية a = 44,000 ومعامل التضاعف b = 2.
+Solution (EN): Exponential growth model: y = a · bᵗ, where a = 44,000 (initial) and b = 2 (doubling factor). So y = 44,000(2)ᵗ.
+
+----------------------------------------
+
+=== Module 1 - Question 17 [Advanced Math | Medium] ===
+[AR] جدول دالة أسية: (0, 1.23)، (2, 1.54)، (4, 1.94). أي دالة مما يلي تمثل هذه العلاقة بشكل أفضل؟
+[EN] Exponential table: (0, 1.23), (2, 1.54), (4, 1.94). Which function best represents this relationship for x ≤ 4?
+Choices:
+  A) h(x) = 1.12(0.23)ˣ / أ) h(x) = 1.12(0.23)ˣ
+  B) h(x) = 1.12(1.23)ˣ / ب) h(x) = 1.12(1.23)ˣ
+  C) h(x) = 1.23(0.12)ˣ / ج) h(x) = 1.23(0.12)ˣ
+  D) h(x) = 1.23(1.12)ˣ / د) h(x) = 1.23(1.12)ˣ
+Correct Answer: D
+Solution (AR): عند x = 0، القيمة الأولية هي 1.23 ومعامل النمو حوالي 1.12.
+Solution (EN): At x = 0, initial value h(0) = 1.23. Growth rate per unit is approx 1.12 (since 1.23 × 1.12² ≈ 1.54). Thus h(x) = 1.23(1.12)ˣ.
+
+----------------------------------------
+
+=== Module 1 - Question 18 [Algebra | Medium] ===
+[AR] الدالة h معرفة بـ h(x) = 4x + 28. للرسم البياني مقطع x عند (a, 0) ومقطع y عند (0, b). ما قيمة a + b؟
+[EN] Function h is defined by h(x) = 4x + 28. Graph has x-intercept at (a, 0) and y-intercept at (0, b). What is the value of a + b?
+Choices:
+  A) 21 / أ) 21
+  B) 28 / ب) 28
+  C) 32 / ج) 32
+  D) 35 / د) 35
+Correct Answer: A
+Solution (AR): مقطع x: 4a + 28 = 0 => a = -7. مقطع y: b = 28. إذن a + b = -7 + 28 = 21.
+Solution (EN): x-intercept: 4a + 28 = 0 => a = -7. y-intercept: b = h(0) = 28. So a + b = -7 + 28 = 21.
+
+----------------------------------------
+
+=== Module 1 - Question 19 [Algebra | Hard] ===
+[AR] المتباينة: y < 5x + 6. في أي جدول تكون جميع قيم x و y حلاً للمتباينة المعطاة؟
+[EN] y < 5x + 6. For which table are all values of x and y solutions to the given inequality?
+Choices:
+  A) (3, 17), (5, 27), (7, 37) / أ) (3, 17), (5, 27), (7, 37)
+  B) (3, 17), (5, 35), (7, 37) / ب) (3, 17), (5, 35), (7, 37)
+  C) (3, 25), (5, 35), (7, 45) / ج) (3, 25), (5, 35), (7, 45)
+  D) (3, 21), (5, 31), (7, 41) / د) (3, 21), (5, 31), (7, 41)
+Correct Answer: A
+Solution (AR): باختبار الجدول أ: عند x=3 يكون y=17 < 21 (صحيح)، وعند x=5 يكون y=27 < 31 (صحيح)، وعند x=7 يكون y=37 < 41 (صحيح).
+Solution (EN): Test Table A: x=3 => 5(3)+6=21, y=17 < 21 (True); x=5 => 5(5)+6=31, y=27 < 31 (True); x=7 => 5(7)+6=41, y=37 < 41 (True). All points in Table A satisfy y < 5x + 6.
+
+----------------------------------------
+
+=== Module 1 - Question 20 [Algebra | Hard] ===
+[AR] y = 4x + 1
+4y = 15x - 8
+حل النظام هو (x, y). ما قيمة x - y؟
+[EN] y = 4x + 1
+4y = 15x - 8
+The solution is (x, y). What is the value of x - y?
+Correct Answer: 35
+Solution (AR): بالتعويض عن y بـ 4x + 1: 4(4x + 1) = 15x - 8 => x = -12. ومنها y = -47. إذن x - y = -12 - (-47) = 35.
+Solution (EN): Substitute y = 4x + 1 into second equation: 4(4x + 1) = 15x - 8 => 16x + 4 = 15x - 8 => x = -12. Then y = 4(-12) + 1 = -47. Value of x - y = -12 - (-47) = 35.
+
+----------------------------------------
+
+=== Module 1 - Question 21 [Geometry & Trigonometry | Hard] ===
+[AR] مثلث قائم الساوية طولا ساقيه 24 سم و 21 سم. إذا كان طول الوتر يمكن كتابته بصيغة 3√d حيث d عدد صحيح، فما قيمة d؟
+[EN] A right triangle has legs with lengths 24 cm and 21 cm. If hypotenuse length can be written as 3√d, where d is an integer, what is the value of d?
+Correct Answer: 113
+Solution (AR): طول الوتر = جذر(24² + 21²) = جذر(1017) = جذر(9 × 113) = 3√113. إذن d = 113.
+Solution (EN): Hypotenuse = √(24² + 21²) = √(576 + 441) = √1017. Factoring out 9: √1017 = √(9 × 113) = 3√113. Therefore, d = 113.
+
+----------------------------------------
+
+=== Module 1 - Question 22 [Geometry & Trigonometry | Hard] ===
+[AR] مساحة أرضية قاعة احتفالات 600 م². صمم مهندس نموذجاً مصغراً بأبعاد تساوي 1/10 الأبعاد الحقيقية. ما مساحة النموذج المصغر بالمتر المربع؟
+[EN] A ballroom floor has an area of 600 m². A scale model has side lengths 1/10 of the actual floor. What is the area in sq meters of the scale model?
+Choices:
+  A) 6 / أ) 6
+  B) 10 / ب) 10
+  C) 60 / ج) 60
+  D) 150 / د) 150
+Correct Answer: A
+Solution (AR): تتغير المساحة بمربع معامل التكبير/التصغير: مساحة النموذج = 600 × (1/10)² = 600 ÷ 100 = 6 م².
+Solution (EN): Area scales by the square of the linear scale factor: Area_model = Actual_Area × (1/10)² = 600 × 1/100 = 6 m².
+
+----------------------------------------
+
+=== Module 1 - Question 23 [Geometry & Trigonometry | Hard] ===
+[AR] أي من المعادلات التالية تمثل دائرة في المستوى x-y تتقاطع مع المحور y في نقطة واحدة فقط؟
+[EN] Which equation represents a circle in the xy-plane that intersects the y-axis at exactly one point?
+Choices:
+  A) (x - 8)² + (y - 8)² = 16 / أ) (x - 8)² + (y - 8)² = 16
+  B) (x - 8)² + (y - 4)² = 16 / ب) (x - 8)² + (y - 4)² = 16
+  C) (x - 4)² + (y - 9)² = 16 / ج) (x - 4)² + (y - 9)² = 16
+  D) x² + (y - 9)² = 16 / د) x² + (y - 9)² = 16
+Correct Answer: C
+Solution (AR): الدائرة ذات نصف القطر r = 4 تمس المحور y في نقطة واحدة إذا كان إحداثي x لمركزه يساوي 4 أو -4. المعادلة ج مركزها (4, 9) ونصف قطرها 4.
+Solution (EN): A circle of radius r = √16 = 4 intersects the y-axis at exactly one point (tangent to y-axis) if the x-coordinate of its center is equal to 4 or -4. Equation C has center (4, 9) and radius 4, so it touches y-axis at (0, 9).
+
+----------------------------------------
+
+=== Module 1 - Question 24 [Geometry & Trigonometry | Hard] ===
+[AR] في المثلثين ABC و DEF، قياس كل من الزاويتين B و E هو 27°، وقياس C و F هو 41°. أي معلومة إضافية تكفي لإثبات تطابق المثلثين؟
+[EN] In triangles ABC and DEF, angles B and E each measure 27°, and angles C and F each measure 41°. Which additional information is sufficient to determine if ABC is congruent to DEF?
+Choices:
+  A) The measure of angle A / أ) قياس الزاوية A
+  B) The length of side AB / ب) طول الضلع AB
+  C) The lengths of sides BC and EF / ج) طاولا الضلعين المتقابلين BC و EF
+  D) No additional information is necessary. / د) لا داعي لأي معلومات إضافية.
+Correct Answer: C
+Solution (AR): الزوايا المتساوية تثبت التشابه فقط. لإثبات التطابق يلزم معرفة طولي ضلعين متناظرين مثل BC و EF لتطبيق مسلمة التطابق (ASA أو AAS).
+Solution (EN): By AA similarity, the triangles are similar. To prove congruence, we need at least one corresponding side length pair to be equal (e.g. knowing BC = EF lets us use ASA/AAS congruence). Option C gives the lengths of corresponding sides BC and EF.
+
+----------------------------------------
+
+=== Module 1 - Question 25 [Problem-Solving & Data Analysis | Hard] ===
+[AR] نتيجة زيادة الكمية x بنسبة 1,800% هي 684. ما قيمة x؟
+[EN] The result of increasing the quantity x by 1,800% is 684. What is the value of x?
+Choices:
+  A) 12,996 / أ) 12,996
+  B) 12,312 / ب) 12,312
+  C) 38 / ج) 38
+  D) 36 / د) 36
+Correct Answer: D
+Solution (AR): زيادة x بنسبة 1,800% تعني x + 18x = 19x = 684. بالتالي x = 684 ÷ 19 = 36.
+Solution (EN): Increasing x by 1,800% means x + 18.00x = 19x. Thus 19x = 684 => x = 684 / 19 = 36.
+
+----------------------------------------
+
+=== Module 1 - Question 26 [Algebra | Hard] ===
+[AR] يتقاضى فني إصلاح 220 دولاراً لأول ساعتين بالإضافة إلى رسوم بالساعة لكل ساعة إضافية. التكلفة الإجمالية لـ 5 ساعات هي 400 دولار. أي دالة f تعطي التكلفة الإجمالية لـ x ساعة حيث x ≥ 2؟
+[EN] A window specialist charges $220 for the first two hours plus an hourly fee for each additional hour. Total cost for 5 hours is $400. Which function f gives total cost for x hours of repair, where x ≥ 2?
+Choices:
+  A) f(x) = 60x + 100 / أ) f(x) = 60x + 100
+  B) f(x) = 60x + 220 / ب) f(x) = 60x + 220
+  C) f(x) = 80x / ج) f(x) = 80x
+  D) f(x) = 80x + 220 / د) f(x) = 80x + 220
+Correct Answer: A
+Solution (AR): التكلفة لـ 3 ساعات إضافية = 400 - 220 = 180 دولار، أي 60 دولاراً لكل ساعة إضافية. للدالة عند x ≥ 2: f(x) = 220 + 60(x - 2) = 60x + 100.
+Solution (EN): 5 hours includes 2 base hours + 3 additional hours. Extra cost = 400 - 220 = $180 for 3 hours => $60/hr. For x ≥ 2, f(x) = 220 + 60(x - 2) = 220 + 60x - 120 = 60x + 100.
+
+----------------------------------------
+
+=== Module 1 - Question 27 [Advanced Math | Hard] ===
+[AR] x(x + 1) - 56 = 4x(x - 7). ما مجموع حلي هذه المعادلة؟
+[EN] x(x + 1) - 56 = 4x(x - 7). What is the sum of the solutions to the given equation?
+Correct Answer: 29/3
+Solution (AR): بفك الأقواس والتبسيط: 3x² - 29x + 56 = 0. مجموع الجذرين في المعادلة التربيعية = -b/a = 29/3.
+Solution (EN): Expand both sides: x² + x - 56 = 4x² - 28x => 3x² - 29x + 56 = 0. The sum of solutions to a quadratic ax² + bx + c = 0 is -b/a = -(-29)/3 = 29/3 (or approx 9.667).
+
+----------------------------------------
+
+=== Module 2 - Question 1 [Problem-Solving & Data Analysis | Easy] ===
+[AR] سرعة جسم 64 ياردة في الثانية. ما سرعته بالقدم في الثانية؟ (1 ياردة = 3 أقدام)
+[EN] An object's speed is 64 yards per second. What is the object's speed, in feet per second? (1 yard = 3 feet)
+Choices:
+  A) 61 / أ) 61
+  B) 67 / ب) 67
+  C) 94 / ج) 94
+  D) 192 / د) 192
+Correct Answer: D
+Solution (AR): بالضرب في 3 (تحويل من ياردة إلى قدم): 64 × 3 = 192 قدم/ثانية.
+Solution (EN): Multiply by 3 feet per yard: 64 × 3 = 192 ft/s.
+
+----------------------------------------
+
+=== Module 2 - Question 2 [Algebra | Easy] ===
+[AR] يُظهر مخطط التشتت العلاقة بين المتغيرين x و y مع خط أفضل مطابقة. أي من المعادلات التالية يمثل أفضل تمثيل لهذا الخط؟
+[EN] The scatterplot shows the relationship between x and y with line of best fit. Which equation best represents the line of best fit shown?
+Choices:
+  A) y = x + 3.4 / أ) y = x + 3.4
+  B) y = x - 3.4 / ب) y = x - 3.4
+  C) y = -x + 3.4 / ج) y = -x + 3.4
+  D) y = -x - 3.4 / د) y = -x - 3.4
+Correct Answer: A
+Solution (AR): الخط يقطع المحور y عند قيمة موجبة 3.4 وميله موجب يساوي 1 تقريباً، إذن: y = x + 3.4.
+Solution (EN): The line has a positive y-intercept at around 3.4 and a positive slope of approx 1, giving y = x + 3.4.
+
+----------------------------------------
+
+=== Module 2 - Question 3 [Algebra | Easy] ===
+[AR] يُظهر الرسم البياني خطاً خطياً يمثل العلاقة بين x و y. أي جدول يعطي ثلاث قيم لـ x والقيم المقابلة لها لـ y؟
+[EN] The graph shows the linear relationship between x and y. Which table gives three values of x and their corresponding values of y for this relationship?
+Choices:
+  A) (0, 0), (1, -7), (2, -9) / أ) (0, 0), (1, -7), (2, -9)
+  B) (0, 0), (1, -3), (2, -1) / ب) (0, 0), (1, -3), (2, -1)
+  C) (0, -5), (1, -7), (2, -9) / ج) (0, -5), (1, -7), (2, -9)
+  D) (0, -5), (1, -3), (2, -1) / د) (0, -5), (1, -3), (2, -1)
+Correct Answer: D
+Solution (AR): يمر المستقيم بالمقطع y عند (0, -5) وبالنقطتين (1, -3) و (2, -1)، وهذا يطابق الجدول د.
+Solution (EN): The line passes through y-intercept (0, -5) and points (1, -3) and (2, -1) with slope 2. Table D correctly lists these values.
+
+----------------------------------------
+
+=== Module 2 - Question 4 [Geometry & Trigonometry | Easy] ===
+[AR] ما محيط مستطيل بالبوصة طوله 4 بوصات وعرضه 9 بوصات؟
+[EN] What is the perimeter, in inches, of a rectangle with a length of 4 inches and a width of 9 inches?
+Choices:
+  A) 13 / أ) 13
+  B) 17 / ب) 17
+  C) 22 / ج) 22
+  D) 26 / د) 26
+Correct Answer: D
+Solution (AR): المحيط = 2 × (الطول + العرض) = 2 × (4 + 9) = 26 بوصة.
+Solution (EN): Perimeter = 2(length + width) = 2(4 + 9) = 2(13) = 26 inches.
+
+----------------------------------------
+
+=== Module 2 - Question 5 [Algebra | Easy] ===
+[AR] 7m = 2(n + p). أي معادلة تُعبر عن m بدلالة n و p؟
+[EN] 7m = 2(n + p). Which equation correctly gives m in terms of n and p?
+Choices:
+  A) m = 2(n + p) / 7 / أ) m = 2(n + p) / 7
+  B) m = 2(n + p) / ب) m = 2(n + p)
+  C) m = 2(n + p) - 7 / ج) m = 2(n + p) - 7
+  D) m = 2 - n - p - 7 / د) m = 2 - n - p - 7
+Correct Answer: A
+Solution (AR): بقسمة طرفي المعادلة على 7 نحصل على m = 2(n + p) / 7.
+Solution (EN): Divide both sides of 7m = 2(n + p) by 7 to get m = 2(n + p) / 7.
+
+----------------------------------------
+
+=== Module 2 - Question 6 [Problem-Solving & Data Analysis | Easy] ===
+[AR] 73, 74, 75, 77, 79, 82, 84, 85, 91. ما الوسيط لهذه البيانات؟
+[EN] 73, 74, 75, 77, 79, 82, 84, 85, 91. What is the median of the data shown?
+Correct Answer: 79
+Solution (AR): هناك 9 أعداد مرتبة. الوسيط هو العدد الخامس وتساوي قيمته 79.
+Solution (EN): There are 9 ordered numbers. The median is the 5th number, which is 79.
+
+----------------------------------------
+
+=== Module 2 - Question 7 [Algebra | Easy] ===
+[AR] الدالة f معرفة بـ f(x) = 4x. عند أي قيمة لـ x يكون f(x) = 8؟
+[EN] The function f is defined by f(x) = 4x. For what value of x does f(x) = 8?
+Correct Answer: 2
+Solution (AR): 4x = 8 => x = 2.
+Solution (EN): Set 4x = 8 => x = 2.
+
+----------------------------------------
+
+=== Module 2 - Question 8 [Problem-Solving & Data Analysis | Easy] ===
+[AR] من بين 300,000 مشبك أوراق، 234,000 مشبك من الحجم الكبير. ما النسبة المئوية للمشابك ذات الحجم الكبير؟
+[EN] Of 300,000 paper clips, 234,000 are size large. What percentage of the paper clips are size large?
+Choices:
+  A) 22% / أ) 22%
+  B) 33% / ب) 33%
+  C) 66% / ج) 66%
+  D) 78% / د) 78%
+Correct Answer: D
+Solution (AR): النسبة المئوية = (234,000 ÷ 300,000) × 100% = 78%.
+Solution (EN): Percentage = (234,000 / 300,000) × 100% = 0.78 × 100% = 78%.
+
+----------------------------------------
+
+=== Module 2 - Question 9 [Algebra | Easy] ===
+[AR] تعطي الدالة f(x) = 8x + 4 الارتفاع التقديري بالقدم لشجرة صفصاف بعد x سنة من قياسها لأول مرة. ما أفضل تفسير للعدد 4؟
+[EN] f(x) = 8x + 4 gives the estimated height in feet of a willow tree x years after first measured. Which statement is the best interpretation of 4?
+Choices:
+  A) The tree will be measured each year for 4 years. / أ) سيتم قياس الشجرة سنوياً لمدة 4 سنوات.
+  B) The tree is estimated to grow to a maximum height of 4 feet. / ب) يُقدر أن تنمو الشجرة إلى أقصى ارتفاع قدره 4 أقدام.
+  C) The estimated height of the tree increased by 4 feet each year. / ج) ازداد الارتفاع التقديري بمقدار 4 أقدام كل عام.
+  D) The estimated height of the tree was 4 feet when it was first measured. / د) كان الارتفاع التقديري للشجرة 4 أقدام عند قياسها لأول مرة.
+Correct Answer: D
+Solution (AR): الحد الثابت 4 يمثل مقطع y (الارتفاع الابتدائي عند بداية القياس x = 0).
+Solution (EN): The constant 4 is the y-intercept (value at x = 0), representing initial height when first measured.
+
+----------------------------------------
+
+=== Module 2 - Question 10 [Algebra | Medium] ===
+[AR] الرسمان البيانيان للمعادلتين y = 76 و y = x² - 5 يتقاطعان عند (x, y). ما القيمة الممكنة لـ x؟
+[EN] y = 76 and y = x² - 5 intersect at (x, y). What is a possible value of x?
+Choices:
+  A) -76/5 / أ) -76/5
+  B) -9 / ب) -9
+  C) 5 / ج) 5
+  D) 76 / د) 76
+Correct Answer: B
+Solution (AR): 76 = x² - 5 => x² = 81 => x = 9 أو -9. الخيار المتاح هو -9.
+Solution (EN): Substitute y = 76 into second equation: 76 = x² - 5 => x² = 81 => x = 9 or -9.
+
+----------------------------------------
+
+=== Module 2 - Question 11 [Geometry & Trigonometry | Medium] ===
+[AR] ضُرب طول ضلع مثلث متساوي الأضلاع S في معامل مقياس k لتكوين مثلث T. طول ضلع T أكبر من طول ضلع S. أي قيمة يمكن أن تكون لـ k؟
+[EN] Side of equilateral triangle S is multiplied by scale factor k to create triangle T. Side of T is greater than side of S. Which could be value of k?
+Choices:
+  A) 29/28 / أ) 29/28
+  B) 1 / ب) 1
+  C) 28/29 / ج) 28/29
+  D) 0 / د) 0
+Correct Answer: A
+Solution (AR): بما أن أضلاع المثلث T أكبر من S، يجب أن يكون معامل المقياس k أكبر من 1. العدد 29/28 أكبر من 1.
+Solution (EN): Since triangle T is larger than S, the scale factor k must be greater than 1. 29/28 > 1.
+
+----------------------------------------
+
+=== Module 2 - Question 12 [Algebra | Medium] ===
+[AR] 66x = 66x. كم حلاً لهذه المعادلة؟
+[EN] 66x = 66x. How many solutions does the given equation have?
+Choices:
+  A) Exactly one / أ) حل واحد بالضبط
+  B) Exactly two / ب) حلان بالضبط
+  C) Infinitely many / ج) عدد لا نهائي من الحلول
+  D) Zero / د) صفر من الحلول
+Correct Answer: C
+Solution (AR): المعادلة مطابقة صحيحة دائماً (0 = 0) لجميع قيم x، إذن لها عدد لا نهائي من الحلول.
+Solution (EN): The equation simplifies to 0 = 0, which is true for all real values of x, so there are infinitely many solutions.
+
+----------------------------------------
+
+=== Module 2 - Question 13 [Algebra | Medium] ===
+[AR] اشترت فيفيان قبعات حفلات وكعكات مقابل 71 دولاراً. حزمة القبعات بـ 3 دولارات والكعكة بـ 1 دولار. إذا اشترت 10 حزم قبعات، فكم كعكة اشترت؟
+[EN] Vivian bought party hats and cupcakes for $71. Each package of hats cost $3, and each cupcake cost $1. If Vivian bought 10 packages of party hats, how many cupcakes did she buy?
+Correct Answer: 41
+Solution (AR): ثمن القبعات = 10 × 3 = 30 دولاراً. المتبقي للكعك = 71 - 30 = 41 دولاراً، أي 41 كعكة.
+Solution (EN): Total hats cost = 10 × $3 = $30. Cupcakes cost = $71 - $30 = $41. At $1 each, she bought 41 cupcakes.
+
+----------------------------------------
+
+=== Module 2 - Question 14 [Advanced Math | Medium] ===
+[AR] الدالة الأسية g معرفة بـ g(x) = 19 · aˣ. إذا كان g(3) = 2,375، فما قيمة g(4)؟
+[EN] The exponential function g is defined by g(x) = 19 · aˣ, where a > 0. If g(3) = 2,375, what is the value of g(4)?
+Correct Answer: 11875
+Solution (AR): 19 · a³ = 2375 => a³ = 125 => a = 5. بالتالي g(4) = 19 × 5⁴ = 19 × 625 = 11,875.
+Solution (EN): g(3) = 19 · a³ = 2375 => a³ = 125 => a = 5. Then g(4) = 19 · 5⁴ = 19 · 625 = 11,875.
+
+----------------------------------------
+
+=== Module 2 - Question 15 [Geometry & Trigonometry | Medium] ===
+[AR] في المثلث القائم RST، مجموع الزاويتين R و S يساوي 90°. إذا كان sin(R) = √15 / 4، فما قيمة cos(S)؟
+[EN] In right triangle RST, sum of R and S is 90°. Value of sin(R) is √15 / 4. What is the value of cos(S)?
+Choices:
+  A) √15 / 15 / أ) √15 / 15
+  B) √15 / 4 / ب) √15 / 4
+  C) 4√15 / 15 / ج) 4√15 / 15
+  D) √15 / د) √15
+Correct Answer: B
+Solution (AR): للزاويتين المتتامتين R و S: cos(S) = sin(R) = √15 / 4.
+Solution (EN): For complementary angles R and S (R + S = 90°), cos(S) = sin(R) = √15 / 4.
+
+----------------------------------------
+
+=== Module 2 - Question 16 [Algebra | Medium] ===
+[AR] يُظهر الرسم البياني العلاقة بين عدد أسهم الشركة A (x) والشركة B (y). أي معادلة تمثل هذه العلاقة؟
+[EN] The graph shows relationship between shares of Company A (x) and Company B (y) Simone can buy. Which equation represents this relationship?
+Choices:
+  A) y = 8x + 12 / أ) y = 8x + 12
+  B) 8x + 12y = 480 / ب) 8x + 12y = 480
+  C) y = 12x + 8 / ج) y = 12x + 8
+  D) 12x + 8y = 480 / د) 12x + 8y = 480
+Correct Answer: B
+Solution (AR): يقطع الخط المحور x عند 60 والمحور y عند 40. المعادلة 8x + 12y = 480 تحقق هاتين النقطتين.
+Solution (EN): The graph shows x-intercept at (60, 0) and y-intercept at (0, 40). Testing 8x + 12y = 480: at x=60 => 480=480 (True); at y=40 => 480=480 (True).
+
+----------------------------------------
+
+=== Module 2 - Question 17 [Advanced Math | Hard] ===
+[AR] أي مقدار يكافئ المقدار [8x(x - 7) - 3(x - 7)] ÷ (2x - 14)، حيث x > 7؟
+[EN] Which expression is equivalent to [8x(x - 7) - 3(x - 7)] / (2x - 14), for x > 7?
+Choices:
+  A) (x - 7) / 5 / أ) (x - 7) / 5
+  B) (8x - 3) / 2 / ب) (8x - 3) / 2
+  C) (8x² - 3x - 14) / (2x - 14) / ج) (8x² - 3x - 14) / (2x - 14)
+  D) (8x² - 3x - 77) / (2x - 14) / د) (8x² - 3x - 77) / (2x - 14)
+Correct Answer: B
+Solution (AR): بتحليل البسط إلى (8x - 3)(x - 7) والمقام إلى 2(x - 7) والاختصار نحصل على (8x - 3) ÷ 2.
+Solution (EN): Factor the numerator: (8x - 3)(x - 7). Factor denominator: 2(x - 7). Cancel (x - 7): (8x - 3) / 2.
+
+----------------------------------------
+
+=== Module 2 - Question 18 [Advanced Math | Hard] ===
+[AR] الدالة f(x) = (-8)(2)ˣ + 22. ما مقطع y للرسم البياني للدالة y = f(x)؟
+[EN] f(x) = (-8)(2)ˣ + 22. What is the y-intercept of the graph of y = f(x) in the xy-plane?
+Choices:
+  A) (0, 14) / أ) (0, 14)
+  B) (0, 2) / ب) (0, 2)
+  C) (0, 22) / ج) (0, 22)
+  D) (0, -8) / د) (0, -8)
+Correct Answer: A
+Solution (AR): عند x = 0، f(0) = (-8)(1) + 22 = 14. إذن نقطة مقطع y هي (0, 14).
+Solution (EN): At x = 0, f(0) = (-8)(2)⁰ + 22 = -8(1) + 22 = 14. Thus y-intercept is (0, 14).
+
+----------------------------------------
+
+=== Module 2 - Question 19 [Algebra | Hard] ===
+[AR] ملأ كينان x مرطباناً صغيراً و y مرطباناً كبيراً بـ 32 كوباً من المرق: 3x + 5y = 32. ما أفضل تفسير للمقدار 5y؟
+[EN] Keenan filled x small jars and y large jars with 32 cups broth. 3x + 5y = 32. Which is best interpretation of 5y?
+Choices:
+  A) The number of large jars Keenan filled / أ) عدد المرطبانات الكبيرة التي ملأها كينان
+  B) The number of small jars Keenan filled / ب) عدد المرطبانات الصغيرة التي ملأها كينان
+  C) The total number of cups of vegetable broth in the large jars / ج) إجمالي عدد أكواب المرق في المرطبانات الكبيرة
+  D) The total number of cups of vegetable broth in the small jars / د) إجمالي عدد أكواب المرق في المرطبانات الصغيرة
+Correct Answer: C
+Solution (AR): بما أن y هو عدد المرطبانات الكبيرة وسعة كل منها 5 أكواب، فإن 5y يمثل الحجم الكلي للمرق في المرطبانات الكبيرة.
+Solution (EN): Since y is the number of large jars and each holds 5 cups, 5y represents the total volume of broth in the large jars.
+
+----------------------------------------
+
+=== Module 2 - Question 20 [Geometry & Trigonometry | Hard] ===
+[AR] دائرة قطرها يمر بالنقطتين (2, 4) و (2, 14). معادلتها (x - 2)² + (y - 9)² = r². ما قيمة r؟
+[EN] A circle has diameter with endpoints (2, 4) and (2, 14). Equation is (x - 2)² + (y - 9)² = r². What is value of r?
+Correct Answer: 5
+Solution (AR): طول القطر = 14 - 4 = 10. إذن نصف القطر r = 10 ÷ 2 = 5.
+Solution (EN): Diameter length = 14 - 4 = 10. Radius r = 10 / 2 = 5.
+
+----------------------------------------
+
+=== Module 2 - Question 21 [Algebra | Hard] ===
+[AR] المستقيم ℓ معادلته 3y + 12x = 5. المستقيم n عمودي على ℓ. ما ميل المستقيم n؟
+[EN] Line ℓ is defined by 3y + 12x = 5. Line n is perpendicular to line ℓ. What is the slope of line n?
+Correct Answer: 1/4
+Solution (AR): ميل ℓ يساوي -4. الميل العمودي عليه هو المقلوب السالب أي 1/4.
+Solution (EN): Slope of ℓ: 3y = -12x + 5 => y = -4x + 5/3 (m₁ = -4). Perpendicular slope m₂ = -1/m₁ = 1/4.
+
+----------------------------------------
+
+=== Module 2 - Question 22 [Algebra | Hard] ===
+[AR] |-5x + 13| = 73. ما مجموع حلي هذه المعادلة؟
+[EN] |-5x + 13| = 73. What is the sum of the solutions to the given equation?
+Choices:
+  A) -146/5 / أ) -146/5
+  B) -12 / ب) -12
+  C) 0 / ج) 0
+  D) 26/5 / د) 26/5
+Correct Answer: D
+Solution (AR): الحل الأول: x₁ = -12. الحل الثاني: x₂ = 86/5. المجموع = -12 + 86/5 = 26/5.
+Solution (EN): Case 1: -5x + 13 = 73 => -5x = 60 => x₁ = -12. Case 2: -5x + 13 = -73 => -5x = -86 => x₂ = 86/5. Sum = -12 + 86/5 = (-60 + 86)/5 = 26/5.
+
+----------------------------------------
+
+=== Module 2 - Question 23 [Advanced Math | Hard] ===
+[AR] f(1) = k لدالة أسية f. أي صيغة مكافئة تظهر k كمعامل أو أساس بشكل مباشر؟
+[EN] f(1) = k for exponential function f. Which equivalent form shows k as the coefficient or base?
+Choices:
+  A) f(x) = 50(1.6)ˣ⁺¹ / أ) f(x) = 50(1.6)ˣ⁺¹
+  B) f(x) = 80(1.6)ˣ / ب) f(x) = 80(1.6)ˣ
+  C) f(x) = 128(1.6)ˣ⁻¹ / ج) f(x) = 128(1.6)ˣ⁻¹
+  D) f(x) = 204.8(1.6)ˣ⁻² / د) f(x) = 204.8(1.6)ˣ⁻²
+Correct Answer: C
+Solution (AR): عند x = 1، f(1) = 128 × (1.6)⁰ = 128. الصيغة ج تظهر القيمة k = 128 كمعامل مباشر.
+Solution (EN): At x = 1, f(1) = 128(1.6)⁰ = 128. Option C explicitly displays k = 128 as the leading coefficient.
+
+----------------------------------------
+
+=== Module 2 - Question 24 [Advanced Math | Hard] ===
+[AR] -9x² + 30x + c = 0 لها حل واحد فقط. ما قيمة c؟
+[EN] -9x² + 30x + c = 0 has exactly one solution. What is the value of c?
+Choices:
+  A) 3 / أ) 3
+  B) 0 / ب) 0
+  C) -25 / ج) -25
+  D) -53 / د) -53
+Correct Answer: C
+Solution (AR): لكي يكون للمعادلة التربيعية حل واحد فقط، يجب أن يكون المميز مساوياً للصفر: 30² - 4(-9)(c) = 0 => 900 + 36c = 0 => c = -25.
+Solution (EN): For exactly one solution, discriminant = 0: b² - 4ac = (30)² - 4(-9)(c) = 0 => 900 + 36c = 0 => 36c = -900 => c = -25.
+
+----------------------------------------
+
+=== Module 2 - Question 25 [Advanced Math | Hard] ===
+[AR] أي من المقادير التالية يحتوي على العامل (x + 2b)، حيث b ثابتاً صحيحاً موجباً؟
+[EN] Which expression has a factor of (x + 2b), where b is a positive integer constant?
+Choices:
+  A) 3x² + 7x + 14b / أ) 3x² + 7x + 14b
+  B) 3x² + 28x + 14b / ب) 3x² + 28x + 14b
+  C) 3x² + 42x + 14b / ج) 3x² + 42x + 14b
+  D) 3x² + 49x + 14b / د) 3x² + 49x + 14b
+Correct Answer: D
+Solution (AR): تحليل 3x² + Ax + 14b بحضور العامل (x + 2b) يعطي العامل الآخر (3x + 7). المجموع للحد الأوسط = 6b + 7. إذا كان b = 7، يكون معامل x هو 49.
+Solution (EN): If (x + 2b) is a factor of 3x² + Ax + 14b, then 3x² + Ax + 14b = (x + 2b)(3x + 7) = 3x² + (6b + 7)x + 14b. Thus A = 6b + 7. For b = 7, A = 6(7) + 7 = 49. Option D gives 3x² + 49x + 14b.
+
+----------------------------------------
+
+=== Module 2 - Question 26 [Problem-Solving & Data Analysis | Hard] ===
+[AR] مجموعتان من البيانات تتكون كل منهما من 23 عدداً صحيحاً ممثلتان بمخططين تكراريين متطابقين في التوزيع التكراري. ما أصغر فرق ممكن بين متوسط المجموعتين A و B؟
+[EN] Two data sets of 23 integers are summarized in histograms with identical frequency distributions. What is the smallest possible difference between the mean of Data Set A and mean of Data Set B?
+Choices:
+  A) 0 / أ) 0
+  B) 1 / ب) 1
+  C) 10 / ج) 10
+  D) 23 / د) 23
+Correct Answer: A
+Solution (AR): بما أن التوزيع التكراري متطابق تماماً في الفئات لكلتا المجموعتين، يمكن اختيار نفس الأعداد الصحيحة لكلتا المجموعتين، مما يجعل الفرق الأدنى بين المتوسطين مساوياً لـ 0.
+Solution (EN): Since both data sets have identical frequency counts across every bin, all 23 numbers in Set A can be chosen to be identical to the 23 numbers in Set B, making the smallest difference in means equal to 0.
+
+----------------------------------------
+
+=== Module 2 - Question 27 [Geometry & Trigonometry | Hard] ===
+[AR] محيط مثلث متساوي الأضلاع 624 سم. ارتفاعه k√3 سم. ما قيمة k؟
+[EN] The perimeter of an equilateral triangle is 624 cm. The height is k√3 cm. What is the value of k?
+Correct Answer: 104
+Solution (AR): طول الضلع s = 624 ÷ 3 = 208 سم. الارتفاع = (s ÷ 2)√3 = (208 ÷ 2)√3 = 104√3. إذن k = 104.
+Solution (EN): Side length s = 624 / 3 = 208 cm. In a 30-60-90 triangle, height = (s / 2)√3 = (208 / 2)√3 = 104√3. Thus k = 104.
